@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e1726">
+<title>OpScan · Radar de opciones</title>
+<style>
+  :root{
+    --bg:#0b1220; --card:#121c2e; --card2:#0f1828; --line:#22304a;
+    --txt:#e7eef9; --mut:#8aa0c0; --accent:#3b82f6;
+    --hi:#22c55e; --mid:#f59e0b; --lo:#64748b; --err:#ef4444;
+    --call:#22c55e; --put:#ef4444;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       background:var(--bg);color:var(--txt);-webkit-text-size-adjust:100%}
+  header{position:sticky;top:0;z-index:5;background:rgba(11,18,32,.95);backdrop-filter:blur(8px);
+         padding:14px 16px calc(8px + env(safe-area-inset-top));border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand h1{font-size:18px;margin:0;letter-spacing:.5px}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+  .meta{color:var(--mut);font-size:12px;margin-top:4px}
+  .tabs{display:flex;gap:8px;margin-top:12px}
+  .tab{flex:1;text-align:center;padding:9px;border:1px solid var(--line);border-radius:10px;
+       color:var(--mut);font-size:14px;font-weight:600;cursor:pointer;user-select:none}
+  .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .wrap{padding:14px 12px 60px;max-width:760px;margin:0 auto}
+  .search{width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--line);
+          background:var(--card2);color:var(--txt);font-size:15px;margin-bottom:12px}
+  .search::placeholder{color:var(--mut)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin-bottom:11px}
+  .row1{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .tk{font-size:18px;font-weight:700}
+  .nm{color:var(--mut);font-size:12px;font-weight:400}
+  .price{font-size:15px;font-weight:600;text-align:right}
+  .badge{display:inline-block;padding:4px 9px;border-radius:999px;font-size:12px;font-weight:700}
+  .b-ALTA{background:rgba(34,197,94,.16);color:var(--hi);border:1px solid var(--hi)}
+  .b-MEDIA{background:rgba(245,158,11,.16);color:var(--mid);border:1px solid var(--mid)}
+  .b-BAJA{background:rgba(100,116,139,.16);color:var(--lo);border:1px solid var(--lo)}
+  .b-ERR{background:rgba(239,68,68,.16);color:var(--err);border:1px solid var(--err)}
+  .scorebar{height:6px;border-radius:4px;background:var(--card2);margin:10px 0;overflow:hidden}
+  .scorebar > i{display:block;height:100%;background:linear-gradient(90deg,#3b82f6,#22c55e)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:7px 14px;margin-top:8px}
+  .kv{display:flex;justify-content:space-between;font-size:13px;border-bottom:1px dashed var(--line);padding:3px 0}
+  .kv b{font-weight:600}
+  .kv .mut{color:var(--mut)}
+  .cat{margin-top:9px;font-size:13px;background:var(--card2);border-radius:9px;padding:7px 10px}
+  .cat .soon{color:var(--mid);font-weight:700}
+  details{margin-top:9px}
+  summary{cursor:pointer;color:var(--accent);font-size:13px;font-weight:600}
+  table.u{width:100%;border-collapse:collapse;margin-top:8px;font-size:12px}
+  table.u th,table.u td{padding:5px 6px;text-align:right;border-bottom:1px solid var(--line)}
+  table.u th{color:var(--mut);font-weight:600;text-align:right}
+  table.u td.l,table.u th.l{text-align:left}
+  .kind-CALL{color:var(--call);font-weight:700}
+  .kind-PUT{color:var(--put);font-weight:700}
+  .reasons{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font-size:11px;color:var(--mut);background:var(--card2);border:1px solid var(--line);
+        border-radius:999px;padding:3px 8px}
+  .calrow{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
+          border-radius:12px;padding:11px 13px;margin-bottom:9px}
+  .calrow .d{min-width:54px;text-align:center}
+  .calrow .d .n{font-size:22px;font-weight:800;line-height:1}
+  .calrow .d .u{font-size:11px;color:var(--mut)}
+  .calrow .info{flex:1}
+  .calrow .info .t{font-weight:700}
+  .calrow .info .s{color:var(--mut);font-size:12px}
+  .empty{color:var(--mut);text-align:center;padding:40px 10px}
+  .foot{color:var(--mut);font-size:11px;text-align:center;margin-top:18px;line-height:1.5}
+  a{color:var(--accent)}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><span class="dot"></span><h1>OpScan</h1></div>
+  <div class="meta" id="meta">Cargando datos…</div>
+  <div class="tabs">
+    <div class="tab active" data-tab="radar" onclick="switchTab('radar')">Radar</div>
+    <div class="tab" data-tab="cal" onclick="switchTab('cal')">Calendario</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="view-radar">
+    <input class="search" id="q" placeholder="Filtrar por ticker o nombre…" oninput="render()">
+    <div id="list"></div>
+  </div>
+  <div id="view-cal" style="display:none"><div id="callist"></div></div>
+
+  <div class="foot">
+    Datos de Yahoo Finance (con retardo). Solo material educativo — no es asesoramiento financiero.<br>
+    El volumen inusual y los ratios son señales públicas, no certezas. Las opciones pueden perder el 100%.
+  </div>
+</div>
+
+<script>
+let DATA = null;
+const $ = s => document.querySelector(s);
+
+function fmtNum(n){
+  if(n===null||n===undefined) return "—";
+  const a=Math.abs(n);
+  if(a>=1e9) return (n/1e9).toFixed(1)+"B";
+  if(a>=1e6) return (n/1e6).toFixed(1)+"M";
+  if(a>=1e3) return (n/1e3).toFixed(1)+"K";
+  return (Math.round(n*100)/100).toLocaleString("es-ES");
+}
+function pct(n){ return (n===null||n===undefined)?"—":(n>0?"+":"")+n+"%"; }
+
+function switchTab(t){
+  document.querySelectorAll(".tab").forEach(e=>e.classList.toggle("active",e.dataset.tab===t));
+  $("#view-radar").style.display = t==="radar"?"":"none";
+  $("#view-cal").style.display   = t==="cal"?"":"none";
+}
+
+function cardHTML(r){
+  const sig = r.signal||"BAJA";
+  const score = r.score||0;
+  let cats="";
+  if(r.next_catalyst){
+    const d=r.next_catalyst_days;
+    const soon = d!==null && d<=10;
+    cats = `<div class="cat">📅 Próximo: <span class="${soon?'soon':''}">${r.next_catalyst}</span>`+
+           (d!==null?` · en ${d} día(s)`:``)+`</div>`;
+  }
+  let kvs = "";
+  const add=(k,v)=>{kvs+=`<div class="kv"><span class="mut">${k}</span><b>${v}</b></div>`;};
+  add("Ratio C/P (vol)", r.cp_vol_ratio??"—");
+  add("Ratio C/P (OI)",  r.cp_oi_ratio??"—");
+  add("Vol/OI total",    r.total_vol_oi??"—");
+  add("IV ATM",          r.atm_iv!=null?(r.atm_iv*100).toFixed(1)+"%":"—");
+  add("IV percentil",    r.iv_percentile!=null?r.iv_percentile:"—");
+  add("Inusuales",       r.unusual_count??0);
+  add("Upside consenso", pct(r.upside_pct));
+  add("% Institucional", r.inst_pct!=null?(r.inst_pct*100).toFixed(0)+"%":"—");
+
+  let u="";
+  if(r.unusual && r.unusual.length){
+    u = `<details><summary>Ver ${r.unusual.length} contratos con volumen inusual</summary>
+      <table class="u"><tr><th class="l">Tipo</th><th>Strike</th><th>Vto</th><th>Vol</th><th>OI</th><th>V/OI</th><th>IV</th></tr>`+
+      r.unusual.map(c=>`<tr>
+        <td class="l kind-${c.kind}">${c.kind}</td>
+        <td>${c.strike}</td><td>${(c.expiration||'').slice(5)}</td>
+        <td>${fmtNum(c.volume)}</td><td>${fmtNum(c.openInterest)}</td>
+        <td>${c.vol_oi}</td><td>${(c.iv*100).toFixed(0)}%</td></tr>`).join("")+
+      `</table></details>`;
+  }
+  const reasons = (r.reasons||[]).map(x=>`<span class="chip">${x}</span>`).join("");
+
+  return `<div class="card">
+    <div class="row1">
+      <div><div class="tk">${r.ticker} <span class="badge b-${sig}">${sig}</span></div>
+           <div class="nm">${r.name||""}</div></div>
+      <div><div class="price">${r.price!=null?"$"+r.price:"—"}</div>
+           <div class="nm" style="text-align:right">score ${score}</div></div>
+    </div>
+    <div class="scorebar"><i style="width:${Math.max(4,score)}%"></i></div>
+    ${cats}
+    <div class="grid">${kvs}</div>
+    ${reasons?`<div class="reasons">${reasons}</div>`:""}
+    ${u}
+    ${r.error?`<div class="nm" style="color:var(--err);margin-top:8px">⚠ ${r.error}</div>`:""}
+  </div>`;
+}
+
+function render(){
+  if(!DATA){return;}
+  const q=($("#q").value||"").toLowerCase().trim();
+  let recs=DATA.records||[];
+  if(q) recs=recs.filter(r=>(r.ticker||"").toLowerCase().includes(q)||(r.name||"").toLowerCase().includes(q));
+  $("#list").innerHTML = recs.length?recs.map(cardHTML).join(""):`<div class="empty">Sin resultados</div>`;
+}
+
+function renderCal(){
+  if(!DATA){return;}
+  const items=[];
+  (DATA.records||[]).forEach(r=>(r.catalysts||[]).forEach(c=>{
+    items.push({ticker:r.ticker,...c});
+  }));
+  items.sort((a,b)=>a.days-b.days);
+  $("#callist").innerHTML = items.length?items.map(c=>{
+    const [y,m,d]=(c.date||"").split("-");
+    const meses=["","ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
+    const soon=c.days<=10;
+    return `<div class="calrow">
+      <div class="d"><div class="n" style="${soon?'color:var(--mid)':''}">${d||"?"}</div>
+                     <div class="u">${meses[parseInt(m)]||""}</div></div>
+      <div class="info"><div class="t">${c.ticker} · ${c.type||""}</div>
+        <div class="s">${c.note||""} · en ${c.days} día(s)</div></div>
+    </div>`;
+  }).join(""):`<div class="empty">No hay catalizadores próximos.<br>Añádelos en config/catalysts.csv</div>`;
+}
+
+async function load(){
+  try{
+    const res=await fetch("data/latest.json?ts="+Date.now());
+    DATA=await res.json();
+    const dt=new Date(DATA.generated_at);
+    $("#meta").textContent = `${DATA.count} valores · actualizado ${dt.toLocaleString("es-ES")}`;
+    render(); renderCal();
+  }catch(e){
+    $("#meta").textContent="No se pudieron cargar los datos todavía.";
+    $("#list").innerHTML=`<div class="empty">Aún no hay datos.<br>Ejecuta el escáner (GitHub Action) para generarlos.</div>`;
+  }
+}
+load();
+</script>
+</body>
+</html>
