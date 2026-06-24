@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>OpScan · Radar de opciones</title>
+<style>
+  :root{
+    --bg:#f3f5f8; --surface:#ffffff; --surface2:#f8fafc; --line:#e5e9f0;
+    --txt:#0f1b2d; --mut:#647084; --pri:#1e63ff; --pri-soft:#eaf0ff;
+    --up:#15a35b; --down:#e0344b;
+    --alta:#15a35b; --alta-bg:#e7f7ee; --media:#d68a00; --media-bg:#fdf3e0;
+    --baja:#7a8699; --baja-bg:#eef1f5;
+    --shadow:0 1px 2px rgba(16,27,45,.06),0 2px 8px rgba(16,27,45,.05);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       background:var(--bg);color:var(--txt);font-size:14px;line-height:1.45;
+       -webkit-text-size-adjust:100%}
+  a{color:var(--pri);text-decoration:none}
+
+  /* Top bar */
+  header{position:sticky;top:0;z-index:20;background:var(--surface);
+         border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:19px;letter-spacing:-.3px}
+  .logo .mark{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,#1e63ff,#15a35b);
+              display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:900}
+  .logo small{font-weight:600;color:var(--mut);font-size:11px;margin-left:2px}
+  .updated{font-size:11px;color:var(--mut);text-align:right;white-space:nowrap}
+  .tabs{display:flex;gap:24px;margin-top:10px}
+  .tab{padding:10px 2px 12px;font-weight:700;font-size:14px;color:var(--mut);
+       cursor:pointer;border-bottom:3px solid transparent;user-select:none}
+  .tab.active{color:var(--txt);border-color:var(--pri)}
+
+  .wrap{max-width:920px;margin:0 auto;padding:14px 12px 60px}
+
+  /* KPI tiles */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;box-shadow:var(--shadow)}
+  .kpi .lbl{font-size:11px;color:var(--mut);font-weight:600}
+  .kpi .val{font-size:22px;font-weight:800;margin-top:2px;letter-spacing:-.5px}
+  .kpi .val.g{color:var(--alta)} .kpi .val.b{color:var(--pri)} .kpi .val.o{color:var(--media)}
+  @media(max-width:560px){.kpis{grid-template-columns:repeat(2,1fr)} .kpi .val{font-size:19px}}
+
+  /* toolbar */
+  .toolbar{display:flex;gap:8px;margin-bottom:10px}
+  .search{flex:1;padding:10px 13px;border:1px solid var(--line);border-radius:10px;background:var(--surface);
+          font-size:14px;color:var(--txt);box-shadow:var(--shadow)}
+  .search::placeholder{color:var(--mut)}
+  select.sort{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);
+              font-size:13px;color:var(--txt);box-shadow:var(--shadow)}
+
+  /* table */
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+  .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{width:100%;border-collapse:collapse;min-width:640px}
+  thead th{position:sticky;top:0;background:var(--surface2);color:var(--mut);font-size:11px;
+           text-transform:uppercase;letter-spacing:.4px;font-weight:700;text-align:right;
+           padding:11px 12px;border-bottom:1px solid var(--line);cursor:pointer;white-space:nowrap}
+  thead th.l{text-align:left}
+  thead th .arr{opacity:.5;font-size:10px}
+  tbody td{padding:11px 12px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+  tbody td.l{text-align:left}
+  tbody tr.main{cursor:pointer}
+  tbody tr.main:hover{background:var(--surface2)}
+  .tk{font-weight:800;font-size:15px}
+  .nm{color:var(--mut);font-size:11px;font-weight:500;max-width:160px;overflow:hidden;text-overflow:ellipsis}
+  .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-weight:800;font-size:12px}
+  .pill.ALTA{background:var(--alta-bg);color:var(--alta)} .pill.MEDIA{background:var(--media-bg);color:var(--media)}
+  .pill.BAJA{background:var(--baja-bg);color:var(--baja)} .pill.ERR{background:#fde8ea;color:var(--down)}
+  .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+  .mini{display:inline-block;width:46px;height:6px;border-radius:4px;background:var(--baja-bg);overflow:hidden;vertical-align:middle;margin-left:6px}
+  .mini > i{display:block;height:100%;background:linear-gradient(90deg,#1e63ff,#15a35b)}
+  .up{color:var(--up);font-weight:700} .down{color:var(--down);font-weight:700}
+  .soonbadge{color:var(--media);font-weight:800}
+  .muted{color:var(--mut)}
+  /* expand row */
+  tr.detail td{background:var(--surface2);padding:0;border-bottom:1px solid var(--line)}
+  .detail-in{padding:12px 14px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .chip{font-size:11px;color:#34507a;background:var(--pri-soft);border-radius:999px;padding:3px 9px;font-weight:600}
+  .ftab{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+  .ftab div{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:7px 9px}
+  .ftab .k{font-size:10px;color:var(--mut)} .ftab .v{font-weight:700;font-size:13px}
+  @media(max-width:560px){.ftab{grid-template-columns:repeat(2,1fr)}}
+  table.u{min-width:0;width:100%;margin-top:4px}
+  table.u th,table.u td{font-size:12px;padding:6px 8px}
+  .kc{color:var(--up);font-weight:800} .kp{color:var(--down);font-weight:800}
+
+  /* calendar */
+  .segs{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+  .seg{font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;border:1px solid var(--line);
+       background:var(--surface);color:var(--mut);cursor:pointer;box-shadow:var(--shadow)}
+  .seg.active{background:var(--pri);color:#fff;border-color:var(--pri)}
+  .cal{display:flex;align-items:center;gap:13px;background:var(--surface);border:1px solid var(--line);
+       border-radius:12px;padding:11px 13px;margin-bottom:9px;box-shadow:var(--shadow)}
+  .cal .day{min-width:50px;text-align:center;border-right:1px solid var(--line);padding-right:11px}
+  .cal .day .n{font-size:22px;font-weight:800;line-height:1}
+  .cal .day .mo{font-size:10px;color:var(--mut);font-weight:700;letter-spacing:.5px}
+  .cal .meta{flex:1;min-width:0}
+  .cal .meta .t{font-weight:700}
+  .cal .meta .s{color:var(--mut);font-size:12px;overflow:hidden;text-overflow:ellipsis}
+  .tag{display:inline-block;font-size:10px;font-weight:800;padding:2px 7px;border-radius:6px;
+       background:var(--pri-soft);color:#34507a;margin-left:6px;vertical-align:middle}
+  .d-soon{color:var(--media)}
+  .empty{color:var(--mut);text-align:center;padding:38px 12px}
+  .foot{color:var(--mut);font-size:11px;text-align:center;margin-top:20px;line-height:1.6}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="logo"><span class="mark">O</span>OpScan <small>radar de opciones</small></div>
+    <div class="updated" id="updated">cargando…</div>
+  </div>
+  <div class="tabs">
+    <div class="tab active" data-tab="radar" onclick="switchTab('radar')">Radar</div>
+    <div class="tab" data-tab="cal" onclick="switchTab('cal')">Calendario</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <!-- RADAR -->
+  <div id="view-radar">
+    <div class="kpis" id="kpis"></div>
+    <div class="toolbar">
+      <input class="search" id="q" placeholder="Buscar ticker o empresa…" oninput="renderTable()">
+      <select class="sort" id="sort" onchange="renderTable()">
+        <option value="score">Ordenar: Score</option>
+        <option value="cp_vol_ratio">Ratio C/P</option>
+        <option value="atm_iv">IV</option>
+        <option value="unusual_count">Inusuales</option>
+        <option value="next_catalyst_days">Catalizador</option>
+        <option value="price">Precio</option>
+      </select>
+    </div>
+    <div class="panel"><div class="tscroll">
+      <table id="tbl">
+        <thead><tr>
+          <th class="l" data-k="ticker">Activo</th>
+          <th data-k="price">Precio</th>
+          <th data-k="score">Score</th>
+          <th data-k="cp_vol_ratio">C/P vol</th>
+          <th data-k="atm_iv">IV</th>
+          <th data-k="unusual_count">Inus.</th>
+          <th data-k="upside_pct">Upside</th>
+          <th data-k="next_catalyst_days">Catalizador</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div></div>
+    <div class="foot">
+      Datos de Yahoo Finance (con retardo) · solo fines educativos, no es asesoramiento financiero.<br>
+      El volumen inusual y los ratios son señales públicas, no certezas. Las opciones pueden perder el 100%.
+    </div>
+  </div>
+
+  <!-- CALENDARIO -->
+  <div id="view-cal" style="display:none">
+    <div class="segs" id="segs"></div>
+    <div id="callist"></div>
+    <div class="foot">Fuentes: ClinicalTrials.gov · SEC EDGAR · Finnhub · FDA · FMP · manual.</div>
+  </div>
+</div>
+
+<script>
+let DATA=null, SORT="score", SORTDIR=-1, CALFILTER="", OPEN=null;
+const $=s=>document.querySelector(s);
+const MES=["","ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+
+function fmtN(n){
+  if(n===null||n===undefined||n==="") return "—";
+  const a=Math.abs(n);
+  if(a>=1e9)return (n/1e9).toFixed(1)+"B";
+  if(a>=1e6)return (n/1e6).toFixed(1)+"M";
+  if(a>=1e3)return (n/1e3).toFixed(1)+"K";
+  return (Math.round(n*100)/100).toLocaleString("es-ES");
+}
+function pctTxt(n){ if(n===null||n===undefined)return "—"; return (n>0?"+":"")+n+"%"; }
+
+function switchTab(t){
+  document.querySelectorAll(".tab").forEach(e=>e.classList.toggle("active",e.dataset.tab===t));
+  $("#view-radar").style.display=t==="radar"?"":"none";
+  $("#view-cal").style.display=t==="cal"?"":"none";
+}
+
+function renderKPIs(){
+  const r=DATA.records||[];
+  const alta=r.filter(x=>x.signal==="ALTA").length;
+  const inus=r.filter(x=>(x.unusual_count||0)>0).length;
+  const cal=(window.CAL&&window.CAL.events||[]).filter(e=>e.days<=7).length;
+  $("#kpis").innerHTML=`
+    <div class="kpi"><div class="lbl">Valores</div><div class="val b">${r.length}</div></div>
+    <div class="kpi"><div class="lbl">Señal ALTA</div><div class="val g">${alta}</div></div>
+    <div class="kpi"><div class="lbl">Con vol. inusual</div><div class="val o">${inus}</div></div>
+    <div class="kpi"><div class="lbl">Catalizador ≤7d</div><div class="val">${cal}</div></div>`;
+}
+
+function renderTable(){
+  if(!DATA)return;
+  SORT=$("#sort").value;
+  const q=($("#q").value||"").toLowerCase().trim();
+  let r=(DATA.records||[]).slice();
+  if(q) r=r.filter(x=>(x.ticker||"").toLowerCase().includes(q)||(x.name||"").toLowerCase().includes(q));
+  r.sort((a,b)=>{
+    const va=a[SORT], vb=b[SORT];
+    if(va===null||va===undefined)return 1; if(vb===null||vb===undefined)return -1;
+    return (va<vb?-1:va>vb?1:0)*(SORT==="ticker"? 1 : SORTDIR);
+  });
+  $("#tbody").innerHTML=r.map((x,i)=>rowHTML(x,i)).join("")||`<tr><td colspan="8" class="empty">Sin resultados</td></tr>`;
+  // marcar header activo
+  document.querySelectorAll("thead th").forEach(th=>{
+    th.querySelector(".arr")&&th.querySelector(".arr").remove();
+    if(th.dataset.k===SORT) th.insertAdjacentHTML("beforeend",` <span class="arr">${SORTDIR<0?"▼":"▲"}</span>`);
+  });
+}
+
+function rowHTML(x,i){
+  const sig=x.signal||"BAJA", sc=x.score||0;
+  const cat = x.next_catalyst_days!=null
+    ? `<span class="${x.next_catalyst_days<=10?'soonbadge':''}">${x.next_catalyst||""}<br><span class="muted">en ${x.next_catalyst_days}d</span></span>`
+    : `<span class="muted">—</span>`;
+  const up = x.upside_pct!=null ? `<span class="${x.upside_pct>=0?'up':'down'}">${pctTxt(x.upside_pct)}</span>` : "—";
+  const main=`<tr class="main" onclick="toggle(${i})">
+    <td class="l"><div class="tk">${x.ticker}</div><div class="nm">${x.name||""}</div></td>
+    <td>${x.price!=null?"$"+x.price:"—"}</td>
+    <td><span class="pill ${sig}"><span class="dot"></span>${sc}</span><span class="mini"><i style="width:${Math.max(5,sc)}%"></i></span></td>
+    <td>${x.cp_vol_ratio??"—"}</td>
+    <td>${x.atm_iv!=null?(x.atm_iv*100).toFixed(0)+"%":"—"}</td>
+    <td>${x.unusual_count||0}</td>
+    <td>${up}</td>
+    <td>${cat}</td>
+  </tr>`;
+  if(OPEN!==i) return main;
+  return main+detailHTML(x);
+}
+
+function detailHTML(x){
+  const chips=(x.reasons||[]).map(t=>`<span class="chip">${t}</span>`).join("") || `<span class="muted">Sin señales destacadas.</span>`;
+  const f=(k,v)=>`<div><div class="k">${k}</div><div class="v">${v}</div></div>`;
+  const fund=`<div class="ftab">
+    ${f("Ratio C/P (OI)",x.cp_oi_ratio??"—")}
+    ${f("Vol/OI total",x.total_vol_oi??"—")}
+    ${f("IV percentil",x.iv_percentile!=null?x.iv_percentile:"—")}
+    ${f("% Institucional",x.inst_pct!=null?(x.inst_pct*100).toFixed(0)+"%":"—")}
+  </div>`;
+  let u="";
+  if(x.unusual&&x.unusual.length){
+    u=`<table class="u"><thead><tr><th class="l">Tipo</th><th>Strike</th><th>Vto</th><th>Vol</th><th>OI</th><th>V/OI</th><th>IV</th></tr></thead><tbody>`+
+      x.unusual.map(c=>`<tr><td class="l ${c.kind==='CALL'?'kc':'kp'}">${c.kind}</td>
+      <td>${c.strike}</td><td>${(c.expiration||'').slice(5)}</td><td>${fmtN(c.volume)}</td>
+      <td>${fmtN(c.openInterest)}</td><td>${c.vol_oi}</td><td>${(c.iv*100).toFixed(0)}%</td></tr>`).join("")+
+      `</tbody></table>`;
+  }
+  return `<tr class="detail"><td colspan="8"><div class="detail-in">
+    <div class="chips">${chips}</div>${fund}${u}
+    ${x.error?`<div class="down" style="margin-top:8px">⚠ ${x.error}</div>`:""}
+  </div></td></tr>`;
+}
+
+function toggle(i){ OPEN = OPEN===i?null:i; renderTable(); }
+
+// click en cabecera => ordenar / invertir
+document.querySelectorAll("thead th").forEach(th=>{
+  th.addEventListener("click",()=>{
+    const k=th.dataset.k;
+    if(SORT===k) SORTDIR*=-1; else { SORT=k; SORTDIR = k==="ticker"?1:-1; }
+    $("#sort").value=["score","cp_vol_ratio","atm_iv","unusual_count","next_catalyst_days","price","upside_pct"].includes(k)?k:SORT;
+    OPEN=null; renderTable();
+  });
+});
+
+function renderCal(){
+  const cal=window.CAL;
+  if(!cal||!cal.events){$("#callist").innerHTML=`<div class="empty">Aún no hay calendario.<br>Ejecuta el escáner (GitHub Action).</div>`;$("#segs").innerHTML="";return;}
+  const types=Object.keys(cal.by_type||{}).sort();
+  const seg=(t,lab,n)=>`<span class="seg ${CALFILTER===t?'active':''}" onclick="setCal('${t}')">${lab} ${n!=null?'· '+n:''}</span>`;
+  $("#segs").innerHTML=[seg("","Todos",cal.count)].concat(types.map(t=>seg(t,t,cal.by_type[t]))).join("");
+  const items=(cal.events||[]).filter(c=>!CALFILTER||c.type===CALFILTER);
+  $("#callist").innerHTML=items.length?items.map(c=>{
+    const p=(c.date||"").split("-"),mo=p[1],d=p[2],soon=c.days<=10,who=c.ticker||c.company||"";
+    const link=c.url?` <a href="${c.url}" target="_blank">↗</a>`:"";
+    return `<div class="cal">
+      <div class="day"><div class="n ${soon?'d-soon':''}">${d||"?"}</div><div class="mo">${(MES[parseInt(mo)]||"").toUpperCase()}</div></div>
+      <div class="meta"><div class="t">${who}<span class="tag">${c.type||""}</span>${link}</div>
+        <div class="s">${(c.title||"").slice(0,100)} · en ${c.days}d · ${c.source||""}</div></div>
+    </div>`;
+  }).join(""):`<div class="empty">Sin eventos para este filtro.</div>`;
+}
+function setCal(t){ CALFILTER=t; renderCal(); }
+
+async function load(){
+  try{
+    DATA=await (await fetch("latest.json?ts="+Date.now())).json();
+    const dd=new Date(DATA.generated_at);
+    $("#updated").textContent="Actualizado "+dd.toLocaleString("es-ES");
+  }catch(e){
+    $("#updated").textContent="sin datos aún";
+    $("#tbody").innerHTML=`<tr><td colspan="8" class="empty">Aún no hay datos. Ejecuta el escáner (GitHub Action).</td></tr>`;
+  }
+  try{ window.CAL=await (await fetch("catalysts.json?ts="+Date.now())).json(); }catch(e){ window.CAL=null; }
+  if(DATA){ renderKPIs(); renderTable(); }
+  renderCal();
+}
+load();
+</script>
+</body>
+</html>

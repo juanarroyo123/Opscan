@@ -1,0 +1,76 @@
+{
+  "generated_at": "2026-06-24T10:36:30+00:00",
+  "mode": "market",
+  "horizon_days": 90,
+  "count": 6,
+  "by_type": {
+    "PDUFA": 1,
+    "AdCom (FDA)": 1,
+    "Ensayo Fase 3": 1,
+    "Earnings": 1,
+    "M&A / 8-K": 1,
+    "Macro": 1
+  },
+  "events": [
+    {
+      "date": "2026-06-25",
+      "type": "PDUFA",
+      "ticker": "RCKT",
+      "company": "RCKT",
+      "title": "Decision FDA KRESLADI (ejemplo)",
+      "source": "Manual",
+      "url": "",
+      "days": 1
+    },
+    {
+      "date": "2026-06-30",
+      "type": "AdCom (FDA)",
+      "ticker": "",
+      "company": "",
+      "title": "Oncologic Drugs Advisory Committee (ejemplo)",
+      "source": "FDA.gov",
+      "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar",
+      "days": 6
+    },
+    {
+      "date": "2026-07-03",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Dyne Therapeutics",
+      "title": "FORCE DMD topline (ejemplo)",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/",
+      "days": 9
+    },
+    {
+      "date": "2026-07-06",
+      "type": "Earnings",
+      "ticker": "NVDA",
+      "company": "NVDA",
+      "title": "Resultados (amc)",
+      "source": "Finnhub",
+      "url": "",
+      "days": 12
+    },
+    {
+      "date": "2026-07-14",
+      "type": "M&A / 8-K",
+      "ticker": "XYZ",
+      "company": "Acme Corp",
+      "title": "8-K - merger agreement (ejemplo)",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/",
+      "days": 20
+    },
+    {
+      "date": "2026-07-22",
+      "type": "Macro",
+      "ticker": "",
+      "company": "US",
+      "title": "CPI YoY (imp: High)",
+      "source": "FMP",
+      "url": "",
+      "days": 28
+    }
+  ]
+}

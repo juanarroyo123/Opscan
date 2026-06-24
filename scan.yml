@@ -1,0 +1,43 @@
+name: OpScan diario
+
+on:
+  schedule:
+    # 21:30 UTC de lunes a viernes (poco despues del cierre de Wall Street).
+    # Ajusta la hora si quieres. Cron usa UTC.
+    - cron: "30 21 * * 1-5"
+  workflow_dispatch: {}   # permite lanzarlo a mano desde la pestana Actions
+
+permissions:
+  contents: write          # para poder hacer commit de los datos
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Ejecutar escaner de opciones
+        run: python scan.py
+
+      - name: Generar calendario de catalizadores
+        env:
+          FINNHUB_TOKEN: ${{ secrets.FINNHUB_TOKEN }}
+          FMP_TOKEN: ${{ secrets.FMP_TOKEN }}
+        run: python catalyst_calendar.py
+
+      - name: Commit de los datos
+        run: |
+          git config user.name  "opscan-bot"
+          git config user.email "opscan-bot@users.noreply.github.com"
+          git add latest.json catalysts.json history.csv
+          git commit -m "datos: actualizacion $(date -u +%Y-%m-%dT%H:%MZ)" || echo "sin cambios"
+          git push

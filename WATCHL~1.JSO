@@ -1,0 +1,42 @@
+{
+  "_comentario": "Edita esta lista a tu gusto. Mezcla de biotech con catalizador, megacaps liquidas e indices/ETFs. Anade o quita tickers libremente.",
+  "tickers": [
+    "CRNX",
+    "RCKT",
+    "DYN",
+    "CADL",
+    "AUPH",
+    "ACHV",
+    "ZVRA",
+    "IOVA",
+    "NVDA",
+    "AAPL",
+    "MSFT",
+    "TSLA",
+    "META",
+    "AMD",
+    "MELI",
+    "SPY",
+    "QQQ",
+    "SPXL",
+    "SPXS",
+    "VIXY"
+  ],
+  "max_expirations": 3,
+  "max_days_out": 70,
+  "unusual_min_volume": 250,
+  "unusual_vol_oi_mult": 1.0,
+  "catalyst_horizon_days": 45,
+  "calendar_mode": "market",
+  "calendar_horizon_days": 90,
+  "trial_phases": [
+    "PHASE2",
+    "PHASE3"
+  ],
+  "sec_terms": [
+    "merger agreement",
+    "tender offer",
+    "acquisition agreement"
+  ],
+  "_comentario_calendario": "calendar_mode: 'market' trae todo el mercado, 'watchlist' solo tus tickers."
+}
