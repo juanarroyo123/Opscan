@@ -1,130 +1,1640 @@
 {
-  "generated_at": "2026-06-24T10:01:56+00:00",
+  "generated_at": "2026-06-24T16:55:13+00:00",
   "config": {
     "max_expirations": 3,
     "max_days_out": 70,
     "unusual_min_volume": 250,
     "catalyst_horizon_days": 45
   },
-  "count": 3,
+  "count": 20,
   "records": [
     {
-      "ticker": "CRNX",
-      "name": "Crinetics Pharma (ejemplo)",
-      "price": 41.2,
-      "signal": "ALTA",
-      "score": 92.0,
-      "cp_vol_ratio": 0.07,
-      "cp_oi_ratio": 0.09,
-      "total_vol_oi": 0.61,
-      "atm_iv": 1.85,
-      "iv_percentile": 99,
-      "unusual_count": 4,
-      "upside_pct": 120,
-      "inst_pct": 1.0,
-      "next_catalyst": "PDUFA 2026-06-25",
-      "next_catalyst_days": 1,
-      "catalysts": [
-        {
-          "date": "2026-06-25",
-          "type": "PDUFA",
-          "note": "Decision FDA (ejemplo)",
-          "days": 1
-        }
+      "ticker": "MSFT",
+      "error": null,
+      "price": 372.75,
+      "name": "Microsoft Corporation",
+      "market_cap": 2768949215232,
+      "cash": 78227996672,
+      "debt": 125431996416,
+      "inst_pct": 0.75773,
+      "short_pct": 0.0119,
+      "target_mean": 561.38763,
+      "upside_pct": 50.6,
+      "expirations": [
+        "2026-06-24",
+        "2026-06-26",
+        "2026-06-29"
       ],
-      "reasons": [
-        "Catalizador en 1d (+29)",
-        "Ratio C/P extremo (+25)",
-        "4 contratos inusuales (+25)",
-        "Vol/OI agregado alto (+10)"
-      ],
+      "call_vol": 144305,
+      "put_vol": 66982,
+      "call_oi": 243221,
+      "put_oi": 76361,
+      "cp_vol_ratio": 2.154,
+      "cp_oi_ratio": 3.185,
+      "total_vol_oi": 0.661,
+      "atm_iv": 0.1575,
       "unusual": [
         {
           "kind": "CALL",
-          "strike": 40,
-          "expiration": "2026-07-19",
-          "volume": 5200,
-          "openInterest": 300,
-          "vol_oi": 17.3,
-          "iv": 1.85,
-          "lastPrice": 1.3
+          "strike": 375.0,
+          "expiration": "2026-06-24",
+          "volume": 26671,
+          "openInterest": 2394,
+          "vol_oi": 11.14,
+          "iv": 0.1787,
+          "lastPrice": 0.55
         },
         {
           "kind": "CALL",
-          "strike": 45,
-          "expiration": "2026-07-19",
-          "volume": 3100,
-          "openInterest": 900,
-          "vol_oi": 3.4,
-          "iv": 1.7,
-          "lastPrice": 0.9
+          "strike": 377.5,
+          "expiration": "2026-06-24",
+          "volume": 24584,
+          "openInterest": 3442,
+          "vol_oi": 7.14,
+          "iv": 0.1748,
+          "lastPrice": 0.12
+        },
+        {
+          "kind": "CALL",
+          "strike": 380.0,
+          "expiration": "2026-06-24",
+          "volume": 24352,
+          "openInterest": 5908,
+          "vol_oi": 4.12,
+          "iv": 0.1914,
+          "lastPrice": 0.03
+        },
+        {
+          "kind": "PUT",
+          "strike": 375.0,
+          "expiration": "2026-06-24",
+          "volume": 13352,
+          "openInterest": 1087,
+          "vol_oi": 12.28,
+          "iv": 0.0,
+          "lastPrice": 1.93
+        },
+        {
+          "kind": "PUT",
+          "strike": 370.0,
+          "expiration": "2026-06-24",
+          "volume": 13062,
+          "openInterest": 2658,
+          "vol_oi": 4.91,
+          "iv": 0.1284,
+          "lastPrice": 0.15
+        },
+        {
+          "kind": "PUT",
+          "strike": 372.5,
+          "expiration": "2026-06-24",
+          "volume": 12881,
+          "openInterest": 2002,
+          "vol_oi": 6.43,
+          "iv": 0.1025,
+          "lastPrice": 0.64
+        },
+        {
+          "kind": "CALL",
+          "strike": 385.0,
+          "expiration": "2026-06-24",
+          "volume": 7356,
+          "openInterest": 2766,
+          "vol_oi": 2.66,
+          "iv": 0.2695,
+          "lastPrice": 0.02
+        },
+        {
+          "kind": "CALL",
+          "strike": 382.5,
+          "expiration": "2026-06-24",
+          "volume": 5915,
+          "openInterest": 3786,
+          "vol_oi": 1.56,
+          "iv": 0.2227,
+          "lastPrice": 0.01
         }
       ],
-      "error": null
-    },
-    {
-      "ticker": "NVDA",
-      "name": "NVIDIA Corp (ejemplo)",
-      "price": 172.4,
-      "signal": "MEDIA",
-      "score": 48.0,
-      "cp_vol_ratio": 1.9,
-      "cp_oi_ratio": 1.4,
-      "total_vol_oi": 0.31,
-      "atm_iv": 0.52,
-      "iv_percentile": 68,
-      "unusual_count": 1,
-      "upside_pct": 15,
-      "inst_pct": 0.67,
-      "next_catalyst": "Earnings 2026-07-06",
-      "next_catalyst_days": 12,
+      "unusual_count": 12,
+      "iv_percentile": null,
       "catalysts": [
         {
-          "date": "2026-07-06",
+          "date": "2026-07-29",
           "type": "Earnings",
           "note": "Yahoo",
-          "days": 12
+          "days": 35
         }
       ],
+      "next_catalyst_days": 35,
+      "next_catalyst": "Earnings 2026-07-29",
+      "score": 56.7,
+      "signal": "MEDIA",
       "reasons": [
-        "Catalizador en 12d (+22)",
+        "Catalizador en 35d (+7)",
         "Ratio C/P marcado (+15)",
-        "1 contrato(s) inusual(es) (+12)"
+        "12 contratos inusuales (+25)",
+        "Vol/OI agregado alto (+10)"
+      ]
+    },
+    {
+      "ticker": "TSLA",
+      "error": null,
+      "price": 378.67,
+      "name": "Tesla, Inc.",
+      "market_cap": 1422108524544,
+      "cash": 44743000064,
+      "debt": 15889999872,
+      "inst_pct": 0.44928002,
+      "short_pct": 0.023,
+      "target_mean": 421.1561,
+      "upside_pct": 11.2,
+      "expirations": [
+        "2026-06-24",
+        "2026-06-26",
+        "2026-06-29"
       ],
+      "call_vol": 658366,
+      "put_vol": 575135,
+      "call_oi": 437678,
+      "put_oi": 343434,
+      "cp_vol_ratio": 1.145,
+      "cp_oi_ratio": 1.274,
+      "total_vol_oi": 1.579,
+      "atm_iv": 0.2893,
+      "unusual": [
+        {
+          "kind": "PUT",
+          "strike": 380.0,
+          "expiration": "2026-06-24",
+          "volume": 127702,
+          "openInterest": 8189,
+          "vol_oi": 15.59,
+          "iv": 0.0,
+          "lastPrice": 0.86
+        },
+        {
+          "kind": "CALL",
+          "strike": 385.0,
+          "expiration": "2026-06-24",
+          "volume": 124988,
+          "openInterest": 6353,
+          "vol_oi": 19.67,
+          "iv": 0.3115,
+          "lastPrice": 0.49
+        },
+        {
+          "kind": "CALL",
+          "strike": 382.5,
+          "expiration": "2026-06-24",
+          "volume": 74339,
+          "openInterest": 5069,
+          "vol_oi": 14.67,
+          "iv": 0.3411,
+          "lastPrice": 1.17
+        },
+        {
+          "kind": "CALL",
+          "strike": 390.0,
+          "expiration": "2026-06-24",
+          "volume": 69897,
+          "openInterest": 10028,
+          "vol_oi": 6.97,
+          "iv": 0.3066,
+          "lastPrice": 0.08
+        },
+        {
+          "kind": "PUT",
+          "strike": 382.5,
+          "expiration": "2026-06-24",
+          "volume": 54252,
+          "openInterest": 3856,
+          "vol_oi": 14.07,
+          "iv": 0.0,
+          "lastPrice": 2.15
+        },
+        {
+          "kind": "PUT",
+          "strike": 375.0,
+          "expiration": "2026-06-24",
+          "volume": 47388,
+          "openInterest": 5994,
+          "vol_oi": 7.91,
+          "iv": 0.146,
+          "lastPrice": 0.14
+        },
+        {
+          "kind": "PUT",
+          "strike": 377.5,
+          "expiration": "2026-06-24",
+          "volume": 42370,
+          "openInterest": 3245,
+          "vol_oi": 13.06,
+          "iv": 0.104,
+          "lastPrice": 0.35
+        },
+        {
+          "kind": "CALL",
+          "strike": 387.5,
+          "expiration": "2026-06-24",
+          "volume": 41034,
+          "openInterest": 6613,
+          "vol_oi": 6.21,
+          "iv": 0.3042,
+          "lastPrice": 0.19
+        }
+      ],
+      "unusual_count": 12,
+      "iv_percentile": null,
+      "catalysts": [
+        {
+          "date": "2026-07-22",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 28
+        }
+      ],
+      "next_catalyst_days": 28,
+      "next_catalyst": "Earnings 2026-07-22",
+      "score": 46.3,
+      "signal": "MEDIA",
+      "reasons": [
+        "Catalizador en 28d (+11)",
+        "12 contratos inusuales (+25)",
+        "Vol/OI agregado alto (+10)"
+      ]
+    },
+    {
+      "ticker": "DYN",
+      "error": null,
+      "price": 20.98,
+      "name": "Dyne Therapeutics, Inc.",
+      "market_cap": 3468283392,
+      "cash": 972156032,
+      "debt": 168679008,
+      "inst_pct": 1.15531,
+      "short_pct": 0.17879999,
+      "target_mean": 38.25,
+      "upside_pct": 82.3,
+      "expirations": [
+        "2026-07-17"
+      ],
+      "call_vol": 305,
+      "put_vol": 33,
+      "call_oi": 478,
+      "put_oi": 117,
+      "cp_vol_ratio": 9.242,
+      "cp_oi_ratio": 4.085,
+      "total_vol_oi": 0.568,
+      "atm_iv": 0.9807,
+      "unusual": [],
+      "unusual_count": 0,
+      "iv_percentile": null,
+      "catalysts": [
+        {
+          "date": "2026-07-27",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 33
+        },
+        {
+          "date": "2026-08-01",
+          "type": "Datos clinicos",
+          "note": "Plataforma FORCE DMD/DM1 (EJEMPLO",
+          "days": 38
+        }
+      ],
+      "next_catalyst_days": 33,
+      "next_catalyst": "Earnings 2026-07-27",
+      "score": 43.0,
+      "signal": "MEDIA",
+      "reasons": [
+        "Catalizador en 33d (+8)",
+        "Ratio C/P extremo (+25)",
+        "Vol/OI agregado alto (+10)"
+      ]
+    },
+    {
+      "ticker": "AUPH",
+      "error": null,
+      "price": 19.09,
+      "name": "Aurinia Pharmaceuticals Inc",
+      "market_cap": 2455005952,
+      "cash": 378524000,
+      "debt": 68640000,
+      "inst_pct": 0.60263,
+      "short_pct": 0.076,
+      "target_mean": 17.0,
+      "upside_pct": -10.9,
+      "expirations": [
+        "2026-07-17",
+        "2026-08-21"
+      ],
+      "call_vol": 1539,
+      "put_vol": 54,
+      "call_oi": 6315,
+      "put_oi": 2520,
+      "cp_vol_ratio": 28.5,
+      "cp_oi_ratio": 2.506,
+      "total_vol_oi": 0.18,
+      "atm_iv": 0.5098,
       "unusual": [
         {
           "kind": "CALL",
-          "strike": 180,
-          "expiration": "2026-07-08",
-          "volume": 48000,
-          "openInterest": 31000,
-          "vol_oi": 1.5,
-          "iv": 0.55,
-          "lastPrice": 3.2
+          "strike": 22.0,
+          "expiration": "2026-07-17",
+          "volume": 353,
+          "openInterest": 12,
+          "vol_oi": 29.42,
+          "iv": 0.5781,
+          "lastPrice": 0.25
+        },
+        {
+          "kind": "CALL",
+          "strike": 20.0,
+          "expiration": "2026-08-21",
+          "volume": 259,
+          "openInterest": 213,
+          "vol_oi": 1.22,
+          "iv": 0.5244,
+          "lastPrice": 1.2
         }
       ],
-      "error": null
+      "unusual_count": 2,
+      "iv_percentile": null,
+      "catalysts": [
+        {
+          "date": "2026-07-30",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 36
+        }
+      ],
+      "next_catalyst_days": 36,
+      "next_catalyst": "Earnings 2026-07-30",
+      "score": 43.0,
+      "signal": "MEDIA",
+      "reasons": [
+        "Catalizador en 36d (+6)",
+        "Ratio C/P extremo (+25)",
+        "2 contrato(s) inusual(es) (+12)"
+      ]
+    },
+    {
+      "ticker": "CADL",
+      "error": null,
+      "price": 9.45,
+      "name": "Candel Therapeutics, Inc.",
+      "market_cap": 692403776,
+      "cash": 194834000,
+      "debt": 49271000,
+      "inst_pct": 0.5977,
+      "short_pct": 0.2518,
+      "target_mean": 20.28571,
+      "upside_pct": 114.7,
+      "expirations": [
+        "2026-07-17",
+        "2026-08-21"
+      ],
+      "call_vol": 690,
+      "put_vol": 174,
+      "call_oi": 2281,
+      "put_oi": 376,
+      "cp_vol_ratio": 3.966,
+      "cp_oi_ratio": 6.066,
+      "total_vol_oi": 0.325,
+      "atm_iv": 0.9365,
+      "unusual": [
+        {
+          "kind": "CALL",
+          "strike": 3.0,
+          "expiration": "2026-07-17",
+          "volume": 330,
+          "openInterest": 244,
+          "vol_oi": 1.35,
+          "iv": 0.0,
+          "lastPrice": 2.12
+        }
+      ],
+      "unusual_count": 1,
+      "iv_percentile": null,
+      "catalysts": [
+        {
+          "date": "2026-08-13",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 50
+        },
+        {
+          "date": "2026-09-30",
+          "type": "Ensayo Fase3",
+          "note": "CAN-2409 topline (EJEMPLO",
+          "days": 98
+        }
+      ],
+      "next_catalyst_days": 50,
+      "next_catalyst": "Earnings 2026-08-13",
+      "score": 42.0,
+      "signal": "MEDIA",
+      "reasons": [
+        "Ratio C/P extremo (+25)",
+        "1 contrato(s) inusual(es) (+12)",
+        "Vol/OI agregado medio (+5)"
+      ]
+    },
+    {
+      "ticker": "META",
+      "error": null,
+      "price": 559.78,
+      "name": "Meta Platforms, Inc.",
+      "market_cap": 1420958629888,
+      "cash": 81180000256,
+      "debt": 86769000448,
+      "inst_pct": 0.79335,
+      "short_pct": 0.0147,
+      "target_mean": 827.3183,
+      "upside_pct": 47.8,
+      "expirations": [
+        "2026-06-24",
+        "2026-06-26",
+        "2026-06-29"
+      ],
+      "call_vol": 101432,
+      "put_vol": 62054,
+      "call_oi": 133948,
+      "put_oi": 64889,
+      "cp_vol_ratio": 1.635,
+      "cp_oi_ratio": 2.064,
+      "total_vol_oi": 0.822,
+      "atm_iv": 0.2356,
+      "unusual": [
+        {
+          "kind": "CALL",
+          "strike": 570.0,
+          "expiration": "2026-06-24",
+          "volume": 17944,
+          "openInterest": 2206,
+          "vol_oi": 8.13,
+          "iv": 0.2476,
+          "lastPrice": 0.25
+        },
+        {
+          "kind": "CALL",
+          "strike": 565.0,
+          "expiration": "2026-06-24",
+          "volume": 13667,
+          "openInterest": 1554,
+          "vol_oi": 8.79,
+          "iv": 0.2857,
+          "lastPrice": 1.33
+        },
+        {
+          "kind": "PUT",
+          "strike": 560.0,
+          "expiration": "2026-06-24",
+          "volume": 12070,
+          "openInterest": 1301,
+          "vol_oi": 9.28,
+          "iv": 0.0342,
+          "lastPrice": 0.48
+        },
+        {
+          "kind": "CALL",
+          "strike": 567.5,
+          "expiration": "2026-06-24",
+          "volume": 9909,
+          "openInterest": 728,
+          "vol_oi": 13.61,
+          "iv": 0.2542,
+          "lastPrice": 0.55
+        },
+        {
+          "kind": "PUT",
+          "strike": 562.5,
+          "expiration": "2026-06-24",
+          "volume": 7094,
+          "openInterest": 511,
+          "vol_oi": 13.88,
+          "iv": 0.0,
+          "lastPrice": 1.11
+        },
+        {
+          "kind": "CALL",
+          "strike": 562.5,
+          "expiration": "2026-06-24",
+          "volume": 6785,
+          "openInterest": 374,
+          "vol_oi": 18.14,
+          "iv": 0.3408,
+          "lastPrice": 2.7
+        },
+        {
+          "kind": "PUT",
+          "strike": 555.0,
+          "expiration": "2026-06-24",
+          "volume": 6168,
+          "openInterest": 1371,
+          "vol_oi": 4.5,
+          "iv": 0.1133,
+          "lastPrice": 0.08
+        },
+        {
+          "kind": "CALL",
+          "strike": 575.0,
+          "expiration": "2026-06-24",
+          "volume": 5754,
+          "openInterest": 2328,
+          "vol_oi": 2.47,
+          "iv": 0.2705,
+          "lastPrice": 0.08
+        }
+      ],
+      "unusual_count": 12,
+      "iv_percentile": null,
+      "catalysts": [
+        {
+          "date": "2026-07-29",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 35
+        }
+      ],
+      "next_catalyst_days": 35,
+      "next_catalyst": "Earnings 2026-07-29",
+      "score": 41.7,
+      "signal": "MEDIA",
+      "reasons": [
+        "Catalizador en 35d (+7)",
+        "12 contratos inusuales (+25)",
+        "Vol/OI agregado alto (+10)"
+      ]
+    },
+    {
+      "ticker": "RCKT",
+      "error": null,
+      "price": 3.42,
+      "name": "Rocket Pharmaceuticals, Inc.",
+      "market_cap": 373987904,
+      "cash": 144379008,
+      "debt": 24764000,
+      "inst_pct": 0.89873004,
+      "short_pct": 0.2523,
+      "target_mean": 9.38636,
+      "upside_pct": 174.1,
+      "expirations": [
+        "2026-07-17"
+      ],
+      "call_vol": 250,
+      "put_vol": 27,
+      "call_oi": 13168,
+      "put_oi": 211,
+      "cp_vol_ratio": 9.259,
+      "cp_oi_ratio": 62.408,
+      "total_vol_oi": 0.021,
+      "atm_iv": 1.2188,
+      "unusual": [],
+      "unusual_count": 0,
+      "iv_percentile": null,
+      "catalysts": [
+        {
+          "date": "2026-07-15",
+          "type": "PDUFA",
+          "note": "KRESLADI gene therapy - fecha PDUFA estimada (EJEMPLO",
+          "days": 21
+        },
+        {
+          "date": "2026-08-06",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 43
+        }
+      ],
+      "next_catalyst_days": 21,
+      "next_catalyst": "PDUFA 2026-07-15",
+      "score": 41.0,
+      "signal": "MEDIA",
+      "reasons": [
+        "Catalizador en 21d (+16)",
+        "Ratio C/P extremo (+25)"
+      ]
+    },
+    {
+      "ticker": "AAPL",
+      "error": null,
+      "price": 297.0,
+      "name": "Apple Inc.",
+      "market_cap": 4362438180864,
+      "cash": 68507000832,
+      "debt": 84710998016,
+      "inst_pct": 0.65822,
+      "short_pct": 0.0106,
+      "target_mean": 314.4238,
+      "upside_pct": 5.9,
+      "expirations": [
+        "2026-06-24",
+        "2026-06-26",
+        "2026-06-29"
+      ],
+      "call_vol": 282179,
+      "put_vol": 288051,
+      "call_oi": 202670,
+      "put_oi": 142857,
+      "cp_vol_ratio": 0.98,
+      "cp_oi_ratio": 1.419,
+      "total_vol_oi": 1.65,
+      "atm_iv": 0.1378,
+      "unusual": [
+        {
+          "kind": "CALL",
+          "strike": 300.0,
+          "expiration": "2026-06-24",
+          "volume": 85162,
+          "openInterest": 8840,
+          "vol_oi": 9.63,
+          "iv": 0.1934,
+          "lastPrice": 0.26
+        },
+        {
+          "kind": "CALL",
+          "strike": 297.5,
+          "expiration": "2026-06-24",
+          "volume": 68356,
+          "openInterest": 6830,
+          "vol_oi": 10.01,
+          "iv": 0.2532,
+          "lastPrice": 1.36
+        },
+        {
+          "kind": "PUT",
+          "strike": 295.0,
+          "expiration": "2026-06-24",
+          "volume": 67598,
+          "openInterest": 7624,
+          "vol_oi": 8.87,
+          "iv": 0.1113,
+          "lastPrice": 0.09
+        },
+        {
+          "kind": "PUT",
+          "strike": 297.5,
+          "expiration": "2026-06-24",
+          "volume": 43008,
+          "openInterest": 3651,
+          "vol_oi": 11.78,
+          "iv": 0.0225,
+          "lastPrice": 0.48
+        },
+        {
+          "kind": "PUT",
+          "strike": 292.5,
+          "expiration": "2026-06-24",
+          "volume": 42366,
+          "openInterest": 4845,
+          "vol_oi": 8.74,
+          "iv": 0.1582,
+          "lastPrice": 0.03
+        },
+        {
+          "kind": "PUT",
+          "strike": 290.0,
+          "expiration": "2026-06-24",
+          "volume": 33126,
+          "openInterest": 19738,
+          "vol_oi": 1.68,
+          "iv": 0.2149,
+          "lastPrice": 0.01
+        },
+        {
+          "kind": "CALL",
+          "strike": 302.5,
+          "expiration": "2026-06-24",
+          "volume": 24078,
+          "openInterest": 9094,
+          "vol_oi": 2.65,
+          "iv": 0.1914,
+          "lastPrice": 0.03
+        },
+        {
+          "kind": "CALL",
+          "strike": 295.0,
+          "expiration": "2026-06-24",
+          "volume": 18398,
+          "openInterest": 1719,
+          "vol_oi": 10.7,
+          "iv": 0.4048,
+          "lastPrice": 3.49
+        }
+      ],
+      "unusual_count": 12,
+      "iv_percentile": null,
+      "catalysts": [
+        {
+          "date": "2026-07-30",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 36
+        }
+      ],
+      "next_catalyst_days": 36,
+      "next_catalyst": "Earnings 2026-07-30",
+      "score": 41.0,
+      "signal": "MEDIA",
+      "reasons": [
+        "Catalizador en 36d (+6)",
+        "12 contratos inusuales (+25)",
+        "Vol/OI agregado alto (+10)"
+      ]
+    },
+    {
+      "ticker": "CRNX",
+      "error": null,
+      "price": 36.7,
+      "name": "Crinetics Pharmaceuticals, Inc.",
+      "market_cap": 3869655808,
+      "cash": 1291305984,
+      "debt": 47855000,
+      "inst_pct": 1.20169,
+      "short_pct": 0.14039999,
+      "target_mean": 83.14286,
+      "upside_pct": 126.5,
+      "expirations": [
+        "2026-07-17",
+        "2026-08-21"
+      ],
+      "call_vol": 379,
+      "put_vol": 2,
+      "call_oi": 389,
+      "put_oi": 116,
+      "cp_vol_ratio": 189.5,
+      "cp_oi_ratio": 3.353,
+      "total_vol_oi": 0.754,
+      "atm_iv": 0.6355,
+      "unusual": [],
+      "unusual_count": 0,
+      "iv_percentile": null,
+      "catalysts": [
+        {
+          "date": "2026-08-06",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 43
+        }
+      ],
+      "next_catalyst_days": 43,
+      "next_catalyst": "Earnings 2026-08-06",
+      "score": 36.3,
+      "signal": "MEDIA",
+      "reasons": [
+        "Catalizador en 43d (+1)",
+        "Ratio C/P extremo (+25)",
+        "Vol/OI agregado alto (+10)"
+      ]
+    },
+    {
+      "ticker": "NVDA",
+      "error": null,
+      "price": 199.38,
+      "name": "NVIDIA Corporation",
+      "market_cap": 4828698771456,
+      "cash": 53171998720,
+      "debt": 12814000128,
+      "inst_pct": 0.70869005,
+      "short_pct": 0.012200001,
+      "target_mean": 298.9322,
+      "upside_pct": 49.9,
+      "expirations": [
+        "2026-06-24",
+        "2026-06-26",
+        "2026-06-29"
+      ],
+      "call_vol": 687658,
+      "put_vol": 487633,
+      "call_oi": 704487,
+      "put_oi": 449930,
+      "cp_vol_ratio": 1.41,
+      "cp_oi_ratio": 1.566,
+      "total_vol_oi": 1.018,
+      "atm_iv": 0.1768,
+      "unusual": [
+        {
+          "kind": "CALL",
+          "strike": 202.5,
+          "expiration": "2026-06-24",
+          "volume": 173695,
+          "openInterest": 12954,
+          "vol_oi": 13.41,
+          "iv": 0.2588,
+          "lastPrice": 0.16
+        },
+        {
+          "kind": "PUT",
+          "strike": 200.0,
+          "expiration": "2026-06-24",
+          "volume": 128156,
+          "openInterest": 12591,
+          "vol_oi": 10.18,
+          "iv": 0.0,
+          "lastPrice": 0.31
+        },
+        {
+          "kind": "PUT",
+          "strike": 197.5,
+          "expiration": "2026-06-24",
+          "volume": 97449,
+          "openInterest": 13059,
+          "vol_oi": 7.46,
+          "iv": 0.1289,
+          "lastPrice": 0.05
+        },
+        {
+          "kind": "CALL",
+          "strike": 205.0,
+          "expiration": "2026-06-24",
+          "volume": 96382,
+          "openInterest": 18142,
+          "vol_oi": 5.31,
+          "iv": 0.2774,
+          "lastPrice": 0.03
+        },
+        {
+          "kind": "CALL",
+          "strike": 200.0,
+          "expiration": "2026-06-24",
+          "volume": 77224,
+          "openInterest": 7764,
+          "vol_oi": 9.95,
+          "iv": 0.3535,
+          "lastPrice": 1.15
+        },
+        {
+          "kind": "PUT",
+          "strike": 195.0,
+          "expiration": "2026-06-24",
+          "volume": 46203,
+          "openInterest": 16075,
+          "vol_oi": 2.87,
+          "iv": 0.2305,
+          "lastPrice": 0.03
+        },
+        {
+          "kind": "CALL",
+          "strike": 207.5,
+          "expiration": "2026-06-24",
+          "volume": 30801,
+          "openInterest": 15981,
+          "vol_oi": 1.93,
+          "iv": 0.3516,
+          "lastPrice": 0.02
+        },
+        {
+          "kind": "PUT",
+          "strike": 200.0,
+          "expiration": "2026-06-26",
+          "volume": 27304,
+          "openInterest": 20452,
+          "vol_oi": 1.34,
+          "iv": 0.2363,
+          "lastPrice": 2.02
+        }
+      ],
+      "unusual_count": 12,
+      "iv_percentile": null,
+      "catalysts": [
+        {
+          "date": "2026-08-26",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 63
+        }
+      ],
+      "next_catalyst_days": 63,
+      "next_catalyst": "Earnings 2026-08-26",
+      "score": 35.0,
+      "signal": "MEDIA",
+      "reasons": [
+        "12 contratos inusuales (+25)",
+        "Vol/OI agregado alto (+10)"
+      ]
     },
     {
       "ticker": "SPY",
-      "name": "SPDR S&P 500 (ejemplo)",
-      "price": 612.1,
-      "signal": "BAJA",
-      "score": 12.0,
-      "cp_vol_ratio": 0.95,
-      "cp_oi_ratio": 1.1,
-      "total_vol_oi": 0.18,
-      "atm_iv": 0.12,
-      "iv_percentile": 22,
-      "unusual_count": 0,
-      "upside_pct": null,
+      "error": null,
+      "price": 735.58,
+      "name": "State Street SPDR S&P 500 ETF T",
+      "market_cap": null,
+      "cash": null,
+      "debt": null,
       "inst_pct": null,
-      "next_catalyst": null,
-      "next_catalyst_days": null,
+      "short_pct": null,
+      "target_mean": null,
+      "expirations": [
+        "2026-06-24",
+        "2026-06-25",
+        "2026-06-26"
+      ],
+      "call_vol": 2616284,
+      "put_vol": 2844999,
+      "call_oi": 580988,
+      "put_oi": 1035754,
+      "cp_vol_ratio": 0.92,
+      "cp_oi_ratio": 0.561,
+      "total_vol_oi": 3.378,
+      "atm_iv": 0.1108,
+      "unusual": [
+        {
+          "kind": "CALL",
+          "strike": 740.0,
+          "expiration": "2026-06-24",
+          "volume": 360042,
+          "openInterest": 12969,
+          "vol_oi": 27.76,
+          "iv": 0.1458,
+          "lastPrice": 0.68
+        },
+        {
+          "kind": "PUT",
+          "strike": 735.0,
+          "expiration": "2026-06-24",
+          "volume": 270388,
+          "openInterest": 10837,
+          "vol_oi": 24.95,
+          "iv": 0.0361,
+          "lastPrice": 0.32
+        },
+        {
+          "kind": "CALL",
+          "strike": 739.0,
+          "expiration": "2026-06-24",
+          "volume": 264371,
+          "openInterest": 5400,
+          "vol_oi": 48.96,
+          "iv": 0.158,
+          "lastPrice": 1.09
+        },
+        {
+          "kind": "PUT",
+          "strike": 738.0,
+          "expiration": "2026-06-24",
+          "volume": 259743,
+          "openInterest": 2619,
+          "vol_oi": 99.18,
+          "iv": 0.0,
+          "lastPrice": 1.06
+        },
+        {
+          "kind": "CALL",
+          "strike": 738.0,
+          "expiration": "2026-06-24",
+          "volume": 246863,
+          "openInterest": 5279,
+          "vol_oi": 46.76,
+          "iv": 0.171,
+          "lastPrice": 1.58
+        },
+        {
+          "kind": "PUT",
+          "strike": 736.0,
+          "expiration": "2026-06-24",
+          "volume": 236105,
+          "openInterest": 3493,
+          "vol_oi": 67.59,
+          "iv": 0.0117,
+          "lastPrice": 0.47
+        },
+        {
+          "kind": "PUT",
+          "strike": 737.0,
+          "expiration": "2026-06-24",
+          "volume": 230085,
+          "openInterest": 3479,
+          "vol_oi": 66.14,
+          "iv": 0.0,
+          "lastPrice": 0.73
+        },
+        {
+          "kind": "CALL",
+          "strike": 737.0,
+          "expiration": "2026-06-24",
+          "volume": 200758,
+          "openInterest": 7331,
+          "vol_oi": 27.38,
+          "iv": 0.1935,
+          "lastPrice": 2.3
+        }
+      ],
+      "unusual_count": 12,
+      "iv_percentile": null,
       "catalysts": [],
-      "reasons": [],
+      "next_catalyst_days": null,
+      "next_catalyst": null,
+      "score": 35.0,
+      "signal": "MEDIA",
+      "reasons": [
+        "12 contratos inusuales (+25)",
+        "Vol/OI agregado alto (+10)"
+      ]
+    },
+    {
+      "ticker": "QQQ",
+      "error": null,
+      "price": 712.67,
+      "name": "Invesco QQQ Trust, Series 1",
+      "market_cap": null,
+      "cash": null,
+      "debt": null,
+      "inst_pct": null,
+      "short_pct": null,
+      "target_mean": null,
+      "expirations": [
+        "2026-06-24",
+        "2026-06-25",
+        "2026-06-26"
+      ],
+      "call_vol": 1425778,
+      "put_vol": 1673617,
+      "call_oi": 364235,
+      "put_oi": 783079,
+      "cp_vol_ratio": 0.852,
+      "cp_oi_ratio": 0.465,
+      "total_vol_oi": 2.701,
+      "atm_iv": 0.2027,
+      "unusual": [
+        {
+          "kind": "CALL",
+          "strike": 720.0,
+          "expiration": "2026-06-24",
+          "volume": 174231,
+          "openInterest": 10049,
+          "vol_oi": 17.34,
+          "iv": 0.2358,
+          "lastPrice": 0.99
+        },
+        {
+          "kind": "PUT",
+          "strike": 715.0,
+          "expiration": "2026-06-24",
+          "volume": 161143,
+          "openInterest": 16622,
+          "vol_oi": 9.69,
+          "iv": 0.0,
+          "lastPrice": 1.61
+        },
+        {
+          "kind": "CALL",
+          "strike": 717.0,
+          "expiration": "2026-06-24",
+          "volume": 149656,
+          "openInterest": 1948,
+          "vol_oi": 76.83,
+          "iv": 0.2683,
+          "lastPrice": 2.19
+        },
+        {
+          "kind": "CALL",
+          "strike": 718.0,
+          "expiration": "2026-06-24",
+          "volume": 128780,
+          "openInterest": 1671,
+          "vol_oi": 77.07,
+          "iv": 0.2544,
+          "lastPrice": 1.71
+        },
+        {
+          "kind": "PUT",
+          "strike": 716.0,
+          "expiration": "2026-06-24",
+          "volume": 116794,
+          "openInterest": 1626,
+          "vol_oi": 71.83,
+          "iv": 0.0,
+          "lastPrice": 1.98
+        },
+        {
+          "kind": "PUT",
+          "strike": 717.0,
+          "expiration": "2026-06-24",
+          "volume": 97971,
+          "openInterest": 1241,
+          "vol_oi": 78.95,
+          "iv": 0.0,
+          "lastPrice": 2.4
+        },
+        {
+          "kind": "PUT",
+          "strike": 710.0,
+          "expiration": "2026-06-24",
+          "volume": 95571,
+          "openInterest": 13491,
+          "vol_oi": 7.08,
+          "iv": 0.1035,
+          "lastPrice": 0.56
+        },
+        {
+          "kind": "CALL",
+          "strike": 715.0,
+          "expiration": "2026-06-24",
+          "volume": 89321,
+          "openInterest": 3179,
+          "vol_oi": 28.1,
+          "iv": 0.3081,
+          "lastPrice": 3.47
+        }
+      ],
+      "unusual_count": 12,
+      "iv_percentile": null,
+      "catalysts": [],
+      "next_catalyst_days": null,
+      "next_catalyst": null,
+      "score": 35.0,
+      "signal": "MEDIA",
+      "reasons": [
+        "12 contratos inusuales (+25)",
+        "Vol/OI agregado alto (+10)"
+      ]
+    },
+    {
+      "ticker": "AMD",
+      "error": null,
+      "price": 515.84,
+      "name": "Advanced Micro Devices, Inc.",
+      "market_cap": 841194012672,
+      "cash": 12346999808,
+      "debt": 3871000064,
+      "inst_pct": 0.72156996,
+      "short_pct": 0.0271,
+      "target_mean": 487.89584,
+      "upside_pct": -5.4,
+      "expirations": [
+        "2026-06-26",
+        "2026-07-02",
+        "2026-07-10"
+      ],
+      "call_vol": 50524,
+      "put_vol": 42896,
+      "call_oi": 141221,
+      "put_oi": 192808,
+      "cp_vol_ratio": 1.178,
+      "cp_oi_ratio": 0.732,
+      "total_vol_oi": 0.28,
+      "atm_iv": 0.7757,
+      "unusual": [
+        {
+          "kind": "PUT",
+          "strike": 90.0,
+          "expiration": "2026-06-26",
+          "volume": 5865,
+          "openInterest": 5865,
+          "vol_oi": 1.0,
+          "iv": 5.375,
+          "lastPrice": 0.01
+        },
+        {
+          "kind": "CALL",
+          "strike": 520.0,
+          "expiration": "2026-06-26",
+          "volume": 4942,
+          "openInterest": 1978,
+          "vol_oi": 2.5,
+          "iv": 0.9188,
+          "lastPrice": 15.5
+        },
+        {
+          "kind": "CALL",
+          "strike": 525.0,
+          "expiration": "2026-06-26",
+          "volume": 2579,
+          "openInterest": 1289,
+          "vol_oi": 2.0,
+          "iv": 0.9047,
+          "lastPrice": 12.76
+        },
+        {
+          "kind": "PUT",
+          "strike": 515.0,
+          "expiration": "2026-06-26",
+          "volume": 2506,
+          "openInterest": 1467,
+          "vol_oi": 1.71,
+          "iv": 0.6013,
+          "lastPrice": 10.8
+        },
+        {
+          "kind": "CALL",
+          "strike": 522.5,
+          "expiration": "2026-06-26",
+          "volume": 2002,
+          "openInterest": 512,
+          "vol_oi": 3.91,
+          "iv": 0.9099,
+          "lastPrice": 14.1
+        },
+        {
+          "kind": "PUT",
+          "strike": 512.5,
+          "expiration": "2026-06-26",
+          "volume": 1713,
+          "openInterest": 415,
+          "vol_oi": 4.13,
+          "iv": 0.6137,
+          "lastPrice": 9.97
+        },
+        {
+          "kind": "CALL",
+          "strike": 517.5,
+          "expiration": "2026-06-26",
+          "volume": 1357,
+          "openInterest": 426,
+          "vol_oi": 3.19,
+          "iv": 0.9272,
+          "lastPrice": 16.37
+        },
+        {
+          "kind": "PUT",
+          "strike": 475.0,
+          "expiration": "2026-06-26",
+          "volume": 1328,
+          "openInterest": 1086,
+          "vol_oi": 1.22,
+          "iv": 0.7524,
+          "lastPrice": 1.83
+        }
+      ],
+      "unusual_count": 12,
+      "iv_percentile": null,
+      "catalysts": [
+        {
+          "date": "2026-08-04",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 41
+        }
+      ],
+      "next_catalyst_days": 41,
+      "next_catalyst": "Earnings 2026-08-04",
+      "score": 32.7,
+      "signal": "BAJA",
+      "reasons": [
+        "Catalizador en 41d (+3)",
+        "12 contratos inusuales (+25)",
+        "Vol/OI agregado medio (+5)"
+      ]
+    },
+    {
+      "ticker": "ACHV",
+      "error": null,
+      "price": 5.29,
+      "name": "Achieve Life Sciences, Inc.",
+      "market_cap": 543066432,
+      "cash": 29269000,
+      "debt": 14952000,
+      "inst_pct": 0.60969,
+      "short_pct": 0.0752,
+      "target_mean": 13.11111,
+      "upside_pct": 147.8,
+      "expirations": [
+        "2026-07-17",
+        "2026-08-21"
+      ],
+      "call_vol": 87,
+      "put_vol": 464,
+      "call_oi": 3647,
+      "put_oi": 1216,
+      "cp_vol_ratio": 0.188,
+      "cp_oi_ratio": 2.999,
+      "total_vol_oi": 0.113,
+      "atm_iv": 0.8281,
       "unusual": [],
-      "error": null
+      "unusual_count": 0,
+      "iv_percentile": null,
+      "catalysts": [
+        {
+          "date": "2026-08-06",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 43
+        }
+      ],
+      "next_catalyst_days": 43,
+      "next_catalyst": "Earnings 2026-08-06",
+      "score": 26.3,
+      "signal": "BAJA",
+      "reasons": [
+        "Catalizador en 43d (+1)",
+        "Ratio C/P extremo (+25)"
+      ]
+    },
+    {
+      "ticker": "ZVRA",
+      "error": null,
+      "price": 13.1,
+      "name": "Zevra Therapeutics, Inc.",
+      "market_cap": 774407616,
+      "cash": 200616000,
+      "debt": 1147000,
+      "inst_pct": 0.71758,
+      "short_pct": 0.1021,
+      "target_mean": 27.88889,
+      "upside_pct": 112.9,
+      "expirations": [
+        "2026-07-17",
+        "2026-08-21"
+      ],
+      "call_vol": 238,
+      "put_vol": 41,
+      "call_oi": 6173,
+      "put_oi": 220,
+      "cp_vol_ratio": 5.805,
+      "cp_oi_ratio": 28.059,
+      "total_vol_oi": 0.044,
+      "atm_iv": 0.6929,
+      "unusual": [],
+      "unusual_count": 0,
+      "iv_percentile": null,
+      "catalysts": [],
+      "next_catalyst_days": null,
+      "next_catalyst": null,
+      "score": 25.0,
+      "signal": "BAJA",
+      "reasons": [
+        "Ratio C/P extremo (+25)"
+      ]
+    },
+    {
+      "ticker": "SPXS",
+      "error": null,
+      "price": 27.64,
+      "name": "Direxion Daily S&P 500 Bear 3X ",
+      "market_cap": null,
+      "cash": null,
+      "debt": null,
+      "inst_pct": null,
+      "short_pct": null,
+      "target_mean": null,
+      "expirations": [
+        "2026-06-26",
+        "2026-07-02",
+        "2026-07-10"
+      ],
+      "call_vol": 7770,
+      "put_vol": 6822,
+      "call_oi": 34287,
+      "put_oi": 32657,
+      "cp_vol_ratio": 1.139,
+      "cp_oi_ratio": 1.05,
+      "total_vol_oi": 0.218,
+      "atm_iv": 0.4932,
+      "unusual": [
+        {
+          "kind": "PUT",
+          "strike": 40.0,
+          "expiration": "2026-06-26",
+          "volume": 2017,
+          "openInterest": 2,
+          "vol_oi": 1008.5,
+          "iv": 4.25,
+          "lastPrice": 12.28
+        },
+        {
+          "kind": "CALL",
+          "strike": 35.0,
+          "expiration": "2026-07-10",
+          "volume": 1518,
+          "openInterest": 1000,
+          "vol_oi": 1.52,
+          "iv": 0.6953,
+          "lastPrice": 0.11
+        },
+        {
+          "kind": "CALL",
+          "strike": 37.0,
+          "expiration": "2026-07-02",
+          "volume": 901,
+          "openInterest": 654,
+          "vol_oi": 1.38,
+          "iv": 1.2266,
+          "lastPrice": 0.13
+        },
+        {
+          "kind": "CALL",
+          "strike": 23.0,
+          "expiration": "2026-07-10",
+          "volume": 800,
+          "openInterest": 0,
+          "vol_oi": 800.0,
+          "iv": 0.5938,
+          "lastPrice": 3.7
+        },
+        {
+          "kind": "CALL",
+          "strike": 24.0,
+          "expiration": "2026-06-26",
+          "volume": 725,
+          "openInterest": 0,
+          "vol_oi": 725.0,
+          "iv": 0.8984,
+          "lastPrice": 2.71
+        },
+        {
+          "kind": "PUT",
+          "strike": 39.0,
+          "expiration": "2026-06-26",
+          "volume": 557,
+          "openInterest": 2,
+          "vol_oi": 278.5,
+          "iv": 3.5898,
+          "lastPrice": 11.49
+        },
+        {
+          "kind": "PUT",
+          "strike": 33.0,
+          "expiration": "2026-07-02",
+          "volume": 500,
+          "openInterest": 205,
+          "vol_oi": 2.44,
+          "iv": 0.6211,
+          "lastPrice": 7.08
+        },
+        {
+          "kind": "PUT",
+          "strike": 37.0,
+          "expiration": "2026-07-10",
+          "volume": 402,
+          "openInterest": 400,
+          "vol_oi": 1.0,
+          "iv": 0.5938,
+          "lastPrice": 11.2
+        }
+      ],
+      "unusual_count": 12,
+      "iv_percentile": null,
+      "catalysts": [],
+      "next_catalyst_days": null,
+      "next_catalyst": null,
+      "score": 25.0,
+      "signal": "BAJA",
+      "reasons": [
+        "12 contratos inusuales (+25)"
+      ]
+    },
+    {
+      "ticker": "IOVA",
+      "error": null,
+      "price": 4.28,
+      "name": "Iovance Biotherapeutics, Inc.",
+      "market_cap": 1913262720,
+      "cash": 313443008,
+      "debt": 47776000,
+      "inst_pct": 0.6752,
+      "short_pct": 0.2499,
+      "target_mean": 8.8,
+      "upside_pct": 105.4,
+      "expirations": [
+        "2026-06-26",
+        "2026-07-02",
+        "2026-07-10"
+      ],
+      "call_vol": 1309,
+      "put_vol": 648,
+      "call_oi": 16943,
+      "put_oi": 3010,
+      "cp_vol_ratio": 2.02,
+      "cp_oi_ratio": 5.629,
+      "total_vol_oi": 0.098,
+      "atm_iv": 1.6289,
+      "unusual": [],
+      "unusual_count": 0,
+      "iv_percentile": null,
+      "catalysts": [
+        {
+          "date": "2026-08-06",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 43
+        }
+      ],
+      "next_catalyst_days": 43,
+      "next_catalyst": "Earnings 2026-08-06",
+      "score": 16.3,
+      "signal": "BAJA",
+      "reasons": [
+        "Catalizador en 43d (+1)",
+        "Ratio C/P marcado (+15)"
+      ]
+    },
+    {
+      "ticker": "VIXY",
+      "error": null,
+      "price": 22.8,
+      "name": "VIX Short-Term Futures ETF",
+      "market_cap": null,
+      "cash": null,
+      "debt": null,
+      "inst_pct": null,
+      "short_pct": null,
+      "target_mean": null,
+      "expirations": [
+        "2026-07-17",
+        "2026-08-21"
+      ],
+      "call_vol": 206,
+      "put_vol": 465,
+      "call_oi": 7937,
+      "put_oi": 1975,
+      "cp_vol_ratio": 0.443,
+      "cp_oi_ratio": 4.019,
+      "total_vol_oi": 0.068,
+      "atm_iv": 0.5493,
+      "unusual": [],
+      "unusual_count": 0,
+      "iv_percentile": null,
+      "catalysts": [],
+      "next_catalyst_days": null,
+      "next_catalyst": null,
+      "score": 15.0,
+      "signal": "BAJA",
+      "reasons": [
+        "Ratio C/P marcado (+15)"
+      ]
+    },
+    {
+      "ticker": "MELI",
+      "error": null,
+      "price": 1672.19,
+      "name": "MercadoLibre, Inc.",
+      "market_cap": 84775075840,
+      "cash": 5664000000,
+      "debt": 12376000512,
+      "inst_pct": 0.8316,
+      "short_pct": 0.0218,
+      "target_mean": 2216.9583,
+      "upside_pct": 32.6,
+      "expirations": [
+        "2026-06-26",
+        "2026-07-02",
+        "2026-07-10"
+      ],
+      "call_vol": 1996,
+      "put_vol": 1576,
+      "call_oi": 4491,
+      "put_oi": 4027,
+      "cp_vol_ratio": 1.266,
+      "cp_oi_ratio": 1.115,
+      "total_vol_oi": 0.419,
+      "atm_iv": 0.502,
+      "unusual": [],
+      "unusual_count": 0,
+      "iv_percentile": null,
+      "catalysts": [
+        {
+          "date": "2026-08-05",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 42
+        }
+      ],
+      "next_catalyst_days": 42,
+      "next_catalyst": "Earnings 2026-08-05",
+      "score": 7.0,
+      "signal": "BAJA",
+      "reasons": [
+        "Catalizador en 42d (+2)",
+        "Vol/OI agregado medio (+5)"
+      ]
+    },
+    {
+      "ticker": "SPXL",
+      "error": null,
+      "price": 259.99,
+      "name": "Direxion Daily S&P 500 Bull 3X ",
+      "market_cap": null,
+      "cash": null,
+      "debt": null,
+      "inst_pct": null,
+      "short_pct": null,
+      "target_mean": null,
+      "expirations": [
+        "2026-06-26",
+        "2026-07-02",
+        "2026-07-10"
+      ],
+      "call_vol": 1225,
+      "put_vol": 696,
+      "call_oi": 4130,
+      "put_oi": 3479,
+      "cp_vol_ratio": 1.76,
+      "cp_oi_ratio": 1.187,
+      "total_vol_oi": 0.252,
+      "atm_iv": 0.5159,
+      "unusual": [],
+      "unusual_count": 0,
+      "iv_percentile": null,
+      "catalysts": [],
+      "next_catalyst_days": null,
+      "next_catalyst": null,
+      "score": 5.0,
+      "signal": "BAJA",
+      "reasons": [
+        "Vol/OI agregado medio (+5)"
+      ]
     }
   ]
 }
