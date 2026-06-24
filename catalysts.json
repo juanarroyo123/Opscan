@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-24T17:14:43+00:00",
+  "generated_at": "2026-06-24T22:45:25+00:00",
   "mode": "market",
   "horizon_days": 90,
-  "count": 1838,
+  "count": 1886,
   "by_type": {
-    "M&A / 8-K": 32,
-    "IPO": 5,
+    "M&A / 8-K": 77,
+    "IPO": 8,
     "Ensayo Fase 1, Fase 2": 58,
     "Ensayo Fase 2": 172,
     "Ensayo Fase 2, Fase 3": 14,
@@ -156,6 +156,156 @@
       "days": -2
     },
     {
+      "date": "2026-06-22",
+      "type": "M&A / 8-K",
+      "ticker": "OTF",
+      "company": "Blue Owl Technology Finance Corp.",
+      "title": "8-K - merger agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001747777&type=8-K",
+      "days": -2
+    },
+    {
+      "date": "2026-06-22",
+      "type": "M&A / 8-K",
+      "ticker": "ADPT",
+      "company": "Adaptive Biotechnologies Corp",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001478320&type=8-K",
+      "days": -2
+    },
+    {
+      "date": "2026-06-22",
+      "type": "M&A / 8-K",
+      "ticker": "NEO",
+      "company": "NEOGENOMICS INC",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001077183&type=8-K",
+      "days": -2
+    },
+    {
+      "date": "2026-06-22",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "Apollo Debt Solutions BDC",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001837532&type=8-K",
+      "days": -2
+    },
+    {
+      "date": "2026-06-22",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "T. Rowe Price OHA Select Private Credit Fund",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001901164&type=8-K",
+      "days": -2
+    },
+    {
+      "date": "2026-06-22",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "Greenland Mines Ltd  (GRML, GRMLW)",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001907223&type=8-K",
+      "days": -2
+    },
+    {
+      "date": "2026-06-22",
+      "type": "M&A / 8-K",
+      "ticker": "PLBY",
+      "company": "Playboy, Inc.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001803914&type=8-K",
+      "days": -2
+    },
+    {
+      "date": "2026-06-22",
+      "type": "M&A / 8-K",
+      "ticker": "GNVR",
+      "company": "Genvor Inc",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001792941&type=8-K",
+      "days": -2
+    },
+    {
+      "date": "2026-06-22",
+      "type": "M&A / 8-K",
+      "ticker": "CRVO",
+      "company": "CervoMed Inc.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001053691&type=8-K",
+      "days": -2
+    },
+    {
+      "date": "2026-06-22",
+      "type": "M&A / 8-K",
+      "ticker": "NXTS",
+      "company": "Nexentis Technologies Inc.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001789192&type=8-K",
+      "days": -2
+    },
+    {
+      "date": "2026-06-22",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "QXO, Inc.  (QXO, QXO-PB)",
+      "title": "8-K - acquisition agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001236275&type=8-K",
+      "days": -2
+    },
+    {
+      "date": "2026-06-22",
+      "type": "M&A / 8-K",
+      "ticker": "BLD",
+      "company": "TopBuild Corp",
+      "title": "8-K - acquisition agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001633931&type=8-K",
+      "days": -2
+    },
+    {
+      "date": "2026-06-22",
+      "type": "M&A / 8-K",
+      "ticker": "CRH",
+      "company": "CRH PUBLIC LTD CO",
+      "title": "8-K - acquisition agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000849395&type=8-K",
+      "days": -2
+    },
+    {
+      "date": "2026-06-22",
+      "type": "M&A / 8-K",
+      "ticker": "ACA",
+      "company": "Arcosa, Inc.",
+      "title": "8-K - acquisition agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001739445&type=8-K",
+      "days": -2
+    },
+    {
+      "date": "2026-06-22",
+      "type": "M&A / 8-K",
+      "ticker": "APGE",
+      "company": "Apogee Therapeutics, Inc.",
+      "title": "8-K - acquisition agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001974640&type=8-K",
+      "days": -2
+    },
+    {
       "date": "2026-06-23",
       "type": "M&A / 8-K",
       "ticker": "",
@@ -276,6 +426,106 @@
       "days": -1
     },
     {
+      "date": "2026-06-23",
+      "type": "M&A / 8-K",
+      "ticker": "DXLG",
+      "company": "DESTINATION XL GROUP, INC.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000813298&type=8-K",
+      "days": -1
+    },
+    {
+      "date": "2026-06-23",
+      "type": "M&A / 8-K",
+      "ticker": "FCFS",
+      "company": "FirstCash Holdings, Inc.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000840489&type=8-K",
+      "days": -1
+    },
+    {
+      "date": "2026-06-23",
+      "type": "M&A / 8-K",
+      "ticker": "CBRS",
+      "company": "Cerebras Systems Inc.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002021728&type=8-K",
+      "days": -1
+    },
+    {
+      "date": "2026-06-23",
+      "type": "M&A / 8-K",
+      "ticker": "DAIO",
+      "company": "DATA I/O CORP",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000351998&type=8-K",
+      "days": -1
+    },
+    {
+      "date": "2026-06-23",
+      "type": "M&A / 8-K",
+      "ticker": "SBET",
+      "company": "Sharplink, Inc.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001981535&type=8-K",
+      "days": -1
+    },
+    {
+      "date": "2026-06-23",
+      "type": "M&A / 8-K",
+      "ticker": "BLZE",
+      "company": "Backblaze, Inc.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001462056&type=8-K",
+      "days": -1
+    },
+    {
+      "date": "2026-06-23",
+      "type": "M&A / 8-K",
+      "ticker": "BZH",
+      "company": "BEAZER HOMES USA INC",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000915840&type=8-K",
+      "days": -1
+    },
+    {
+      "date": "2026-06-23",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "HeartSciences Inc.  (HSCS, HSCSW)",
+      "title": "8-K - acquisition agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001468492&type=8-K",
+      "days": -1
+    },
+    {
+      "date": "2026-06-23",
+      "type": "M&A / 8-K",
+      "ticker": "FAST",
+      "company": "FASTENAL CO",
+      "title": "8-K - acquisition agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000815556&type=8-K",
+      "days": -1
+    },
+    {
+      "date": "2026-06-23",
+      "type": "M&A / 8-K",
+      "ticker": "QUBT",
+      "company": "Quantum Computing Inc.",
+      "title": "8-K - acquisition agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001758009&type=8-K",
+      "days": -1
+    },
+    {
       "date": "2026-06-24",
       "type": "M&A / 8-K",
       "ticker": "GBCS",
@@ -298,16 +548,6 @@
     {
       "date": "2026-06-24",
       "type": "M&A / 8-K",
-      "ticker": "JTAI",
-      "company": "Jet.AI Inc.",
-      "title": "8-K - merger agreement",
-      "source": "SEC EDGAR",
-      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001861622&type=8-K",
-      "days": 0
-    },
-    {
-      "date": "2026-06-24",
-      "type": "M&A / 8-K",
       "ticker": "GDOT",
       "company": "GREEN DOT CORP",
       "title": "8-K - merger agreement",
@@ -318,21 +558,231 @@
     {
       "date": "2026-06-24",
       "type": "M&A / 8-K",
-      "ticker": "EEX",
-      "company": "Emerald Holding, Inc.",
-      "title": "8-K - merger agreement",
+      "ticker": "OII",
+      "company": "OCEANEERING INTERNATIONAL INC",
+      "title": "8-K - tender offer",
       "source": "SEC EDGAR",
-      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001579214&type=8-K",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000073756&type=8-K",
       "days": 0
     },
     {
       "date": "2026-06-24",
       "type": "M&A / 8-K",
-      "ticker": "ESQ",
-      "company": "Esquire Financial Holdings, Inc.",
-      "title": "8-K - merger agreement",
+      "ticker": "GBCS",
+      "company": "SELECTIS HEALTH, INC.",
+      "title": "8-K - tender offer",
       "source": "SEC EDGAR",
-      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001531031&type=8-K",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000727346&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "HERTZ GLOBAL HOLDINGS, INC  (HTZ, HTZWW)",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001657853&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "PASG",
+      "company": "Passage BIO, Inc.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001787297&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "GHXI",
+      "company": "Gores Holdings XI, Inc.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002086438&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "Wilco 63 Corp  (WLCO, WLCOU)",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002101470&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "Texas Ventures Acquisition IV Corp  (TVIV, TVIVU)",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002096755&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "Yorkville International Capital Corp.  (YICC, YICCU)",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002130386&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "INVE",
+      "company": "Identiv, Inc.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001036044&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "CEA Industries Inc.  (BNC, BNCWW, BNCWZ)",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001482541&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "ABSI",
+      "company": "Absci Corp",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001672688&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "OPRT",
+      "company": "Oportun Financial Corp",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001538716&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "WKSP",
+      "company": "Worksport Ltd",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001096275&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "CALC",
+      "company": "CalciMedica, Inc.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001534133&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "Churchill Capital Corp XI  (CCXI, CCXIU, CCXIW)",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002074973&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "UPXI",
+      "company": "UPEXI, INC.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001775194&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "RSG",
+      "company": "REPUBLIC SERVICES, INC.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001060391&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "DFTX",
+      "company": "Definium Therapeutics, Inc.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001813814&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "GHXI",
+      "company": "Gores Holdings XI, Inc.",
+      "title": "8-K - acquisition agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002086438&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "INVE",
+      "company": "Identiv, Inc.",
+      "title": "8-K - acquisition agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001036044&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "PASG",
+      "company": "Passage BIO, Inc.",
+      "title": "8-K - acquisition agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001787297&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "CBAN",
+      "company": "COLONY BANKCORP INC",
+      "title": "8-K - acquisition agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000711669&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-06-24",
+      "type": "M&A / 8-K",
+      "ticker": "CHWY",
+      "company": "Chewy, Inc.",
+      "title": "8-K - acquisition agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001766502&type=8-K",
       "days": 0
     },
     {
@@ -1328,9 +1778,39 @@
     {
       "date": "2026-07-01",
       "type": "IPO",
+      "ticker": "SIND",
+      "company": "Sinda Ltd.",
+      "title": "IPO NYSE 11.25-13.25",
+      "source": "Finnhub",
+      "url": "",
+      "days": 7
+    },
+    {
+      "date": "2026-07-01",
+      "type": "IPO",
+      "ticker": "BSP",
+      "company": "Bending Spoons S.p.A.",
+      "title": "IPO NASDAQ Global Select 26.00-28.00",
+      "source": "Finnhub",
+      "url": "",
+      "days": 7
+    },
+    {
+      "date": "2026-07-01",
+      "type": "IPO",
       "ticker": "ITG",
       "company": "ITG, Inc./DE/",
       "title": "IPO NASDAQ Global Select 19.00-22.00",
+      "source": "Finnhub",
+      "url": "",
+      "days": 7
+    },
+    {
+      "date": "2026-07-01",
+      "type": "IPO",
+      "ticker": "CUX",
+      "company": "CopperTech Metals Inc.",
+      "title": "IPO NYSE 16.00-18.00",
       "source": "Finnhub",
       "url": "",
       "days": 7
