@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-13T11:34:56+00:00",
+  "generated_at": "2026-07-13T11:47:13+00:00",
   "config": {
     "max_expirations": 3,
     "max_days_out": 70,
@@ -125,11 +125,11 @@
       ],
       "call_vol": 273035,
       "put_vol": 94900,
-      "call_oi": 134651,
-      "put_oi": 60226,
+      "call_oi": 357506,
+      "put_oi": 76154,
       "cp_vol_ratio": 2.877,
-      "cp_oi_ratio": 2.236,
-      "total_vol_oi": 1.888,
+      "cp_oi_ratio": 4.695,
+      "total_vol_oi": 0.848,
       "atm_iv": 0.0039,
       "unusual": [
         {
@@ -157,8 +157,8 @@
           "strike": 700.0,
           "expiration": "2026-07-13",
           "volume": 16310,
-          "openInterest": 0,
-          "vol_oi": 16310.0,
+          "openInterest": 4597,
+          "vol_oi": 3.55,
           "iv": 0.25,
           "lastPrice": 1.41
         },
@@ -167,8 +167,8 @@
           "strike": 750.0,
           "expiration": "2026-07-17",
           "volume": 13408,
-          "openInterest": 0,
-          "vol_oi": 13408.0,
+          "openInterest": 11761,
+          "vol_oi": 1.14,
           "iv": 0.25,
           "lastPrice": 1.69
         },
@@ -177,8 +177,8 @@
           "strike": 675.0,
           "expiration": "2026-07-13",
           "volume": 10412,
-          "openInterest": 0,
-          "vol_oi": 10412.0,
+          "openInterest": 1847,
+          "vol_oi": 5.64,
           "iv": 0.0313,
           "lastPrice": 5.95
         },
@@ -187,8 +187,8 @@
           "strike": 720.0,
           "expiration": "2026-07-17",
           "volume": 7188,
-          "openInterest": 0,
-          "vol_oi": 7188.0,
+          "openInterest": 4865,
+          "vol_oi": 1.48,
           "iv": 0.125,
           "lastPrice": 4.13
         },
@@ -950,11 +950,11 @@
       ],
       "call_vol": 531920,
       "put_vol": 387161,
-      "call_oi": 189587,
+      "call_oi": 600393,
       "put_oi": 505823,
       "cp_vol_ratio": 1.374,
-      "cp_oi_ratio": 0.375,
-      "total_vol_oi": 1.322,
+      "cp_oi_ratio": 1.187,
+      "total_vol_oi": 0.831,
       "atm_iv": 0.002,
       "unusual": [
         {
@@ -962,8 +962,8 @@
           "strike": 410.0,
           "expiration": "2026-07-13",
           "volume": 56641,
-          "openInterest": 0,
-          "vol_oi": 56641.0,
+          "openInterest": 4574,
+          "vol_oi": 12.38,
           "iv": 0.0313,
           "lastPrice": 3.45
         },
@@ -972,8 +972,8 @@
           "strike": 415.0,
           "expiration": "2026-07-13",
           "volume": 40656,
-          "openInterest": 0,
-          "vol_oi": 40656.0,
+          "openInterest": 5060,
+          "vol_oi": 8.03,
           "iv": 0.0625,
           "lastPrice": 1.8
         },
@@ -982,8 +982,8 @@
           "strike": 420.0,
           "expiration": "2026-07-13",
           "volume": 37697,
-          "openInterest": 0,
-          "vol_oi": 37697.0,
+          "openInterest": 6356,
+          "vol_oi": 5.93,
           "iv": 0.125,
           "lastPrice": 0.91
         },
@@ -992,8 +992,8 @@
           "strike": 420.0,
           "expiration": "2026-07-17",
           "volume": 26366,
-          "openInterest": 0,
-          "vol_oi": 26366.0,
+          "openInterest": 20692,
+          "vol_oi": 1.27,
           "iv": 0.0625,
           "lastPrice": 4.75
         },
@@ -1394,6 +1394,24 @@
           "pub_date": "2026-07-12T12:30:00Z"
         },
         {
+          "title": "This Is Why ASML Is a No-Brainer Buy Before July 15 Earnings",
+          "link": "https://247wallst.com/investing/2026/07/13/this-is-why-asml-is-a-no-brainer-buy-before-july-15-earnings/",
+          "publisher": "24/7 Wall St.",
+          "pub_date": "2026-07-13T11:30:23Z"
+        },
+        {
+          "title": "Nvidia's Biggest Risk Isn't Custom AI Chips From Broadcom or AMD -- It's Something That's Hidden in Plain Sight",
+          "link": "https://www.fool.com/investing/2026/07/13/nvda-biggest-risk-isnt-custom-ai-chips-avgo-or-amd/",
+          "publisher": "Motley Fool",
+          "pub_date": "2026-07-13T11:26:00Z"
+        },
+        {
+          "title": "Does Berkshire Hathaway CEO Greg Abel's New Favorite Stock, Alphabet, Achieve the Rule of 40?",
+          "link": "https://www.fool.com/investing/2026/07/13/does-berkshire-hathaway-ceo-greg-abels-new-favorit/",
+          "publisher": "Motley Fool",
+          "pub_date": "2026-07-13T11:20:00Z"
+        },
+        {
           "title": "Here's What to Buy to Prepare for the Next Crypto Bull Market (Hint: It's Not Just Bitcoin)",
           "link": "https://www.fool.com/investing/2026/07/13/heres-what-to-buy-to-prepare-for-the-next-crypto-b/",
           "publisher": "Motley Fool",
@@ -1404,24 +1422,6 @@
           "link": "https://www.fool.com/investing/2026/07/13/argan-vs-comfort-systems-usa-which-ai-infrastructu/",
           "publisher": "Motley Fool",
           "pub_date": "2026-07-13T11:13:00Z"
-        },
-        {
-          "title": "Nothing Is Perfect: The Pros and Cons of Index Funds",
-          "link": "https://www.fool.com/investing/2026/07/13/nothing-is-perfect-the-pros-and-cons-of-index-fund/",
-          "publisher": "Motley Fool",
-          "pub_date": "2026-07-13T11:03:00Z"
-        },
-        {
-          "title": "TSMC Delivers Record Second-Quarter Revenue as AI Chip Demand Accelerates (TSM)",
-          "link": "https://investorshub.advfn.com/market-news/article/31708/tsmc-delivers-record-second-quarter-revenue-as-ai-chip-demand-accelerates-tsm",
-          "publisher": "InvestorsHub",
-          "pub_date": "2026-07-13T10:58:11Z"
-        },
-        {
-          "title": "Prediction: After Losing $1 Trillion in Market Cap Since its IPO, SpaceX Stock Will Rebound in Epic Fashion. Here's Why.",
-          "link": "https://www.fool.com/investing/2026/07/13/prediction-after-losing-over-1-trillion-in-market/",
-          "publisher": "Motley Fool",
-          "pub_date": "2026-07-13T10:50:00Z"
         }
       ],
       "institutional_holders": [
@@ -1475,11 +1475,11 @@
       ],
       "call_vol": 1067371,
       "put_vol": 445144,
-      "call_oi": 194199,
+      "call_oi": 1287558,
       "put_oi": 906832,
       "cp_vol_ratio": 2.398,
-      "cp_oi_ratio": 0.214,
-      "total_vol_oi": 1.374,
+      "cp_oi_ratio": 1.42,
+      "total_vol_oi": 0.689,
       "atm_iv": 0.0156,
       "unusual": [
         {
@@ -1487,8 +1487,8 @@
           "strike": 210.0,
           "expiration": "2026-07-17",
           "volume": 119010,
-          "openInterest": 0,
-          "vol_oi": 119010.0,
+          "openInterest": 90733,
+          "vol_oi": 1.31,
           "iv": 0.0,
           "lastPrice": 4.75
         },
@@ -1497,8 +1497,8 @@
           "strike": 210.0,
           "expiration": "2026-07-13",
           "volume": 105254,
-          "openInterest": 0,
-          "vol_oi": 105254.0,
+          "openInterest": 12732,
+          "vol_oi": 8.27,
           "iv": 0.0,
           "lastPrice": 2.37
         },
@@ -1507,20 +1507,10 @@
           "strike": 212.5,
           "expiration": "2026-07-13",
           "volume": 63908,
-          "openInterest": 0,
-          "vol_oi": 63908.0,
+          "openInterest": 15097,
+          "vol_oi": 4.23,
           "iv": 0.0313,
           "lastPrice": 1.2
-        },
-        {
-          "kind": "CALL",
-          "strike": 220.0,
-          "expiration": "2026-07-17",
-          "volume": 61854,
-          "openInterest": 0,
-          "vol_oi": 61854.0,
-          "iv": 0.0625,
-          "lastPrice": 1.14
         },
         {
           "kind": "CALL",
@@ -1537,10 +1527,20 @@
           "strike": 205.0,
           "expiration": "2026-07-13",
           "volume": 46734,
-          "openInterest": 0,
-          "vol_oi": 46734.0,
+          "openInterest": 11318,
+          "vol_oi": 4.13,
           "iv": 0.0,
           "lastPrice": 6.25
+        },
+        {
+          "kind": "CALL",
+          "strike": 207.5,
+          "expiration": "2026-07-13",
+          "volume": 46029,
+          "openInterest": 4317,
+          "vol_oi": 10.66,
+          "iv": 0.0,
+          "lastPrice": 4.15
         },
         {
           "kind": "PUT",
@@ -1613,6 +1613,12 @@
       },
       "news": [
         {
+          "title": "Nvidia's Biggest Risk Isn't Custom AI Chips From Broadcom or AMD -- It's Something That's Hidden in Plain Sight",
+          "link": "https://www.fool.com/investing/2026/07/13/nvda-biggest-risk-isnt-custom-ai-chips-avgo-or-amd/",
+          "publisher": "Motley Fool",
+          "pub_date": "2026-07-13T11:26:00Z"
+        },
+        {
           "title": "Will Memory Giants Micron, Sandisk, and SK Hynix Continue to Soar? History Is Strikingly Clear About What Happens Next.",
           "link": "https://www.fool.com/investing/2026/07/13/will-memory-giants-micron-sandisk-and-sk-hynix-con/",
           "publisher": "Motley Fool",
@@ -1641,12 +1647,6 @@
           "link": "https://stocktwits.com/news-articles/markets/equity/tsm-stock-dips-premarket-as-36-q2-sales-surge-fails-to-offset-iran-driven-market-jitters/cZmzjZaR7o8",
           "publisher": "Stocktwits",
           "pub_date": "2026-07-13T08:26:58Z"
-        },
-        {
-          "title": "INTC, AMD, NVDA, AVGO: Chip Stocks Slide As Fresh US-Iran Strikes Test Peace Deal",
-          "link": "https://stocktwits.com/news-articles/markets/equity/intc-amd-nvda-avgo-chip-stocks-slide-as-fresh-us-iran-strikes-test-peace-deal/cZmzgG5R7oh",
-          "publisher": "Stocktwits",
-          "pub_date": "2026-07-13T04:58:19Z"
         }
       ],
       "institutional_holders": [
@@ -2199,170 +2199,6 @@
       ]
     },
     {
-      "ticker": "MELI",
-      "error": null,
-      "price": 1852.22,
-      "name": "MercadoLibre, Inc.",
-      "market_cap": 93902340096,
-      "cash": 5664000000,
-      "debt": 12376000512,
-      "inst_pct": 0.82492995,
-      "short_pct": 0.0198,
-      "target_mean": 2208.625,
-      "target_low": 1750.0,
-      "target_high": 2800.0,
-      "recommendation_key": "buy",
-      "analyst_count": 24,
-      "upside_pct": 19.2,
-      "buy_target": 1852.22,
-      "sell_target": 2208.62,
-      "potential_gain_pct": 19.2,
-      "is_signal": true,
-      "analyst_breakdown": {
-        "strongBuy": 5,
-        "buy": 15,
-        "hold": 4,
-        "sell": 0,
-        "strongSell": 0
-      },
-      "news": [
-        {
-          "title": "This eBay Rival Has Delivered Over 30% Quarterly Revenue Growth For Seven Straight Years — So Why Is The Stock Still Falling?",
-          "link": "https://stocktwits.com/news-articles/markets/equity/this-ebay-rival-has-delivered-over-30-percent-quarterly-revenue-growth-for-seven-straight-years/cZmzjemR7oF",
-          "publisher": "Stocktwits",
-          "pub_date": "2026-07-13T08:12:49Z"
-        },
-        {
-          "title": "Skip Broad Latin America. This Single-Country Fund Is Where the Reform Rally Is",
-          "link": "https://247wallst.com/investing/2026/07/12/skip-broad-latin-america-this-single-country-fund-is-where-the-reform-rally-is/",
-          "publisher": "24/7 Wall St.",
-          "pub_date": "2026-07-12T21:27:05Z"
-        },
-        {
-          "title": "MercadoLibre (MELI) Outpaces Stock Market Gains: What You Should Know",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mercadolibre-meli-outpaces-stock-market-215003807.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-07-10T21:50:03Z"
-        },
-        {
-          "title": "MercadoLibre (MELI) Stock Trades Up, Here Is Why",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mercadolibre-meli-stock-trades-why-211920278.html",
-          "publisher": "StockStory",
-          "pub_date": "2026-07-10T21:19:20Z"
-        },
-        {
-          "title": "With MercadoLibre Trading Under $2,000, Is a Stock Split Still on the Table for 2026?",
-          "link": "https://www.fool.com/investing/2026/07/10/with-mercadolibre-trading-under-2000-is-a-stock-sp/",
-          "publisher": "Motley Fool",
-          "pub_date": "2026-07-10T11:05:00Z"
-        },
-        {
-          "title": "How EBAY Stock’s British Experiment Signaled A 50% Surge",
-          "link": "https://www.trefis.com/articles/606186/how-ebay-stocks-british-experiment-signaled-a-50-surge/2026-07-08",
-          "publisher": "Trefis",
-          "pub_date": "2026-07-08T16:52:27Z"
-        }
-      ],
-      "institutional_holders": [
-        {
-          "holder": "BAILLIE GIFFORD & CO",
-          "shares": 3233259,
-          "value": 5988706890.0,
-          "pct": 6.38,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Capital Research Global Investors",
-          "shares": 2717172,
-          "value": 5032800242.0,
-          "pct": 5.36,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Capital World Investors",
-          "shares": 2194481,
-          "value": 4064661533.0,
-          "pct": 4.33,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Capital International Investors",
-          "shares": 1737559,
-          "value": 3218341480.0,
-          "pct": 3.43,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Morgan Stanley",
-          "shares": 1585256,
-          "value": 2936242821.0,
-          "pct": 3.13,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Blackrock Inc.",
-          "shares": 1367064,
-          "value": 2532103242.0,
-          "pct": 2.7,
-          "date_reported": "2026-03-31"
-        }
-      ],
-      "expirations": [
-        "2026-07-17",
-        "2026-07-24",
-        "2026-07-31"
-      ],
-      "call_vol": 3407,
-      "put_vol": 3170,
-      "call_oi": 2461,
-      "put_oi": 3646,
-      "cp_vol_ratio": 1.075,
-      "cp_oi_ratio": 0.675,
-      "total_vol_oi": 1.077,
-      "atm_iv": 0.001,
-      "unusual": [
-        {
-          "kind": "CALL",
-          "strike": 1950.0,
-          "expiration": "2026-07-17",
-          "volume": 379,
-          "openInterest": 0,
-          "vol_oi": 379.0,
-          "iv": 0.0625,
-          "lastPrice": 8.0
-        },
-        {
-          "kind": "PUT",
-          "strike": 1400.0,
-          "expiration": "2026-07-17",
-          "volume": 300,
-          "openInterest": 0,
-          "vol_oi": 300.0,
-          "iv": 0.5,
-          "lastPrice": 0.05
-        }
-      ],
-      "unusual_count": 2,
-      "iv_percentile": 7.1,
-      "catalysts": [
-        {
-          "date": "2026-08-05",
-          "type": "Earnings",
-          "note": "Yahoo",
-          "days": 23
-        }
-      ],
-      "next_catalyst_days": 23,
-      "next_catalyst": "Earnings 2026-08-05",
-      "score": 36.7,
-      "signal": "MEDIA",
-      "reasons": [
-        "Catalizador en 23d (+15)",
-        "2 contrato(s) inusual(es) (+12)",
-        "Vol/OI agregado alto (+10)"
-      ]
-    },
-    {
       "ticker": "SPY",
       "error": null,
       "price": 754.95,
@@ -2594,11 +2430,11 @@
       ],
       "call_vol": 391711,
       "put_vol": 446240,
-      "call_oi": 98434,
-      "put_oi": 248079,
+      "call_oi": 191283,
+      "put_oi": 391589,
       "cp_vol_ratio": 0.878,
-      "cp_oi_ratio": 0.397,
-      "total_vol_oi": 2.418,
+      "cp_oi_ratio": 0.488,
+      "total_vol_oi": 1.438,
       "atm_iv": 0.002,
       "unusual": [
         {
@@ -2606,8 +2442,8 @@
           "strike": 725.0,
           "expiration": "2026-07-13",
           "volume": 37313,
-          "openInterest": 0,
-          "vol_oi": 37313.0,
+          "openInterest": 6065,
+          "vol_oi": 6.15,
           "iv": 0.0039,
           "lastPrice": 2.93
         },
@@ -2616,8 +2452,8 @@
           "strike": 725.0,
           "expiration": "2026-07-13",
           "volume": 34966,
-          "openInterest": 0,
-          "vol_oi": 34966.0,
+          "openInterest": 3986,
+          "vol_oi": 8.77,
           "iv": 0.0,
           "lastPrice": 3.77
         },
@@ -2626,8 +2462,8 @@
           "strike": 730.0,
           "expiration": "2026-07-13",
           "volume": 26080,
-          "openInterest": 0,
-          "vol_oi": 26080.0,
+          "openInterest": 4819,
+          "vol_oi": 5.41,
           "iv": 0.0313,
           "lastPrice": 1.38
         },
@@ -2646,8 +2482,8 @@
           "strike": 720.0,
           "expiration": "2026-07-13",
           "volume": 23593,
-          "openInterest": 0,
-          "vol_oi": 23593.0,
+          "openInterest": 4851,
+          "vol_oi": 4.86,
           "iv": 0.0313,
           "lastPrice": 1.54
         },
@@ -2656,8 +2492,8 @@
           "strike": 723.0,
           "expiration": "2026-07-13",
           "volume": 23118,
-          "openInterest": 0,
-          "vol_oi": 23118.0,
+          "openInterest": 2449,
+          "vol_oi": 9.44,
           "iv": 0.0156,
           "lastPrice": 2.24
         },
@@ -2666,8 +2502,8 @@
           "strike": 723.0,
           "expiration": "2026-07-13",
           "volume": 22106,
-          "openInterest": 0,
-          "vol_oi": 22106.0,
+          "openInterest": 1229,
+          "vol_oi": 17.99,
           "iv": 0.0,
           "lastPrice": 5.06
         },
@@ -2676,8 +2512,8 @@
           "strike": 724.0,
           "expiration": "2026-07-13",
           "volume": 20459,
-          "openInterest": 0,
-          "vol_oi": 20459.0,
+          "openInterest": 2406,
+          "vol_oi": 8.5,
           "iv": 0.0,
           "lastPrice": 4.41
         }
@@ -3251,11 +3087,11 @@
       ],
       "call_vol": 387,
       "put_vol": 114,
-      "call_oi": 4587,
-      "put_oi": 611,
+      "call_oi": 7044,
+      "put_oi": 886,
       "cp_vol_ratio": 3.395,
-      "cp_oi_ratio": 7.507,
-      "total_vol_oi": 0.096,
+      "cp_oi_ratio": 7.95,
+      "total_vol_oi": 0.063,
       "atm_iv": 0.0313,
       "unusual": [],
       "unusual_count": 0,
@@ -3267,6 +3103,148 @@
       "signal": "BAJA",
       "reasons": [
         "Ratio C/P extremo (+25)"
+      ]
+    },
+    {
+      "ticker": "MELI",
+      "error": null,
+      "price": 1852.22,
+      "name": "MercadoLibre, Inc.",
+      "market_cap": 93902340096,
+      "cash": 5664000000,
+      "debt": 12376000512,
+      "inst_pct": 0.82492995,
+      "short_pct": 0.0198,
+      "target_mean": 2208.625,
+      "target_low": 1750.0,
+      "target_high": 2800.0,
+      "recommendation_key": "buy",
+      "analyst_count": 24,
+      "upside_pct": 19.2,
+      "buy_target": 1852.22,
+      "sell_target": 2208.62,
+      "potential_gain_pct": 19.2,
+      "is_signal": true,
+      "analyst_breakdown": {
+        "strongBuy": 5,
+        "buy": 15,
+        "hold": 4,
+        "sell": 0,
+        "strongSell": 0
+      },
+      "news": [
+        {
+          "title": "This eBay Rival Has Delivered Over 30% Quarterly Revenue Growth For Seven Straight Years — So Why Is The Stock Still Falling?",
+          "link": "https://stocktwits.com/news-articles/markets/equity/this-ebay-rival-has-delivered-over-30-percent-quarterly-revenue-growth-for-seven-straight-years/cZmzjemR7oF",
+          "publisher": "Stocktwits",
+          "pub_date": "2026-07-13T08:12:49Z"
+        },
+        {
+          "title": "Skip Broad Latin America. This Single-Country Fund Is Where the Reform Rally Is",
+          "link": "https://247wallst.com/investing/2026/07/12/skip-broad-latin-america-this-single-country-fund-is-where-the-reform-rally-is/",
+          "publisher": "24/7 Wall St.",
+          "pub_date": "2026-07-12T21:27:05Z"
+        },
+        {
+          "title": "MercadoLibre (MELI) Outpaces Stock Market Gains: What You Should Know",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mercadolibre-meli-outpaces-stock-market-215003807.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-07-10T21:50:03Z"
+        },
+        {
+          "title": "MercadoLibre (MELI) Stock Trades Up, Here Is Why",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mercadolibre-meli-stock-trades-why-211920278.html",
+          "publisher": "StockStory",
+          "pub_date": "2026-07-10T21:19:20Z"
+        },
+        {
+          "title": "With MercadoLibre Trading Under $2,000, Is a Stock Split Still on the Table for 2026?",
+          "link": "https://www.fool.com/investing/2026/07/10/with-mercadolibre-trading-under-2000-is-a-stock-sp/",
+          "publisher": "Motley Fool",
+          "pub_date": "2026-07-10T11:05:00Z"
+        },
+        {
+          "title": "How EBAY Stock’s British Experiment Signaled A 50% Surge",
+          "link": "https://www.trefis.com/articles/606186/how-ebay-stocks-british-experiment-signaled-a-50-surge/2026-07-08",
+          "publisher": "Trefis",
+          "pub_date": "2026-07-08T16:52:27Z"
+        }
+      ],
+      "institutional_holders": [
+        {
+          "holder": "BAILLIE GIFFORD & CO",
+          "shares": 3233259,
+          "value": 5988706890.0,
+          "pct": 6.38,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Capital Research Global Investors",
+          "shares": 2717172,
+          "value": 5032800242.0,
+          "pct": 5.36,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Capital World Investors",
+          "shares": 2194481,
+          "value": 4064661533.0,
+          "pct": 4.33,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Capital International Investors",
+          "shares": 1737559,
+          "value": 3218341480.0,
+          "pct": 3.43,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Morgan Stanley",
+          "shares": 1585256,
+          "value": 2936242821.0,
+          "pct": 3.13,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Blackrock Inc.",
+          "shares": 1367064,
+          "value": 2532103242.0,
+          "pct": 2.7,
+          "date_reported": "2026-03-31"
+        }
+      ],
+      "expirations": [
+        "2026-07-17",
+        "2026-07-24",
+        "2026-07-31"
+      ],
+      "call_vol": 3407,
+      "put_vol": 3170,
+      "call_oi": 8043,
+      "put_oi": 7419,
+      "cp_vol_ratio": 1.075,
+      "cp_oi_ratio": 1.084,
+      "total_vol_oi": 0.425,
+      "atm_iv": 0.001,
+      "unusual": [],
+      "unusual_count": 0,
+      "iv_percentile": 7.1,
+      "catalysts": [
+        {
+          "date": "2026-08-05",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 23
+        }
+      ],
+      "next_catalyst_days": 23,
+      "next_catalyst": "Earnings 2026-08-05",
+      "score": 19.7,
+      "signal": "BAJA",
+      "reasons": [
+        "Catalizador en 23d (+15)",
+        "Vol/OI agregado medio (+5)"
       ]
     },
     {
