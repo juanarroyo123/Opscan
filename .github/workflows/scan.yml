@@ -34,10 +34,13 @@ jobs:
           FMP_TOKEN: ${{ secrets.FMP_TOKEN }}
         run: python catalyst_calendar.py
 
+      - name: Generar Political Flow (trades de congresistas)
+        run: python political_flow.py
+
       - name: Commit de los datos
         run: |
           git config user.name  "opscan-bot"
           git config user.email "opscan-bot@users.noreply.github.com"
-          git add latest.json catalysts.json history.csv
+          git add latest.json catalysts.json history.csv political.json
           git commit -m "datos: actualizacion $(date -u +%Y-%m-%dT%H:%MZ)" || echo "sin cambios"
           git push
