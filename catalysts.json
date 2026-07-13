@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-07-13T10:35:51+00:00",
+  "generated_at": "2026-07-13T11:09:41+00:00",
   "mode": "market",
   "horizon_days": 90,
-  "count": 1768,
+  "count": 1769,
   "by_type": {
     "Ensayo Fase 2": 143,
     "Ensayo Fase 3": 59,
-    "M&A / 8-K": 3,
+    "M&A / 8-K": 4,
     "PDUFA": 1,
     "Ensayo Fase 2, Fase 3": 12,
     "IPO": 2,
@@ -44,6 +44,16 @@
       "title": "8-K - merger agreement",
       "source": "SEC EDGAR",
       "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002010653&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-07-13",
+      "type": "M&A / 8-K",
+      "ticker": "AEBI",
+      "company": "Aebi Schmidt Holding AG",
+      "title": "8-K - merger agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002048519&type=8-K",
       "days": 0
     },
     {
