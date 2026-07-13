@@ -322,6 +322,34 @@ def process_ticker(ticker, cfg, catalysts, hist):
         except Exception:
             pass
 
+        # principales holders institucionales (13F trimestral, best effort via Yahoo)
+        rec["institutional_holders"] = []
+        try:
+            ih = t.institutional_holders
+            if ih is not None and len(ih):
+                for _, row in ih.head(6).iterrows():
+                    dr = row.get("Date Reported")
+                    dr_iso = None
+                    if dr is not None and hasattr(dr, "strftime"):
+                        try:
+                            dr_iso = dr.strftime("%Y-%m-%d")
+                        except Exception:
+                            dr_iso = None
+                    pct = row.get("pctHeld")
+                    if pct is None:
+                        pct = row.get("% Out")
+                    shares = row.get("Shares")
+                    value = row.get("Value")
+                    rec["institutional_holders"].append({
+                        "holder": row.get("Holder"),
+                        "shares": int(shares) if shares is not None else None,
+                        "value": float(value) if value is not None else None,
+                        "pct": round(float(pct) * 100, 2) if pct is not None else None,
+                        "date_reported": dr_iso,
+                    })
+        except Exception:
+            pass
+
         # vencimientos cercanos
         exps = list(t.options or [])
         chosen = []

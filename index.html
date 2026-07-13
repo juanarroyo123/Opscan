@@ -370,6 +370,22 @@ function newsHTML(news){
   return `<div class="newslist"><div class="k" style="font-size:11px;color:var(--mut);margin-bottom:4px">Noticias recientes</div>${items}</div>`;
 }
 
+function holdersHTML(list){
+  if(!list||!list.length) return "";
+  const rows=list.map(h=>`<tr>
+      <td class="l">${h.holder||"—"}</td>
+      <td>${h.pct!=null?h.pct+"%":"—"}</td>
+      <td>${h.shares!=null?fmtN(h.shares):"—"}</td>
+      <td>${h.value!=null?"$"+fmtN(h.value):"—"}</td>
+      <td>${h.date_reported||"—"}</td>
+    </tr>`).join("");
+  return `<div class="newslist">
+    <div class="k" style="font-size:11px;color:var(--mut);margin-bottom:4px">Grandes inversores institucionales (último 13F)</div>
+    <table class="u"><thead><tr><th class="l">Holder</th><th>% del total</th><th>Acciones</th><th>Valor</th><th>Reportado</th></tr></thead>
+    <tbody>${rows}</tbody></table>
+  </div>`;
+}
+
 function detailHTML(x){
   const chips=(x.reasons||[]).map(t=>`<span class="chip">${t}</span>`).join("") || `<span class="muted">Sin señales destacadas.</span>`;
   const f=(k,v)=>`<div><div class="k">${k}</div><div class="v">${v}</div></div>`;
@@ -389,7 +405,7 @@ function detailHTML(x){
   }
   return `<tr class="detail"><td colspan="8"><div class="detail-in">
     <div class="chips">${chips}</div>${fund}${u}
-    ${gaugeHTML(x.analyst_breakdown)}${newsHTML(x.news)}
+    ${gaugeHTML(x.analyst_breakdown)}${holdersHTML(x.institutional_holders)}${newsHTML(x.news)}
     ${x.error?`<div class="down" style="margin-top:8px">⚠ ${x.error}</div>`:""}
   </div></td></tr>`;
 }
