@@ -132,6 +132,7 @@
   <div class="tabs">
     <div class="tab active" data-tab="radar" onclick="switchTab('radar')">Radar</div>
     <div class="tab" data-tab="signals" onclick="switchTab('signals')">Señales</div>
+    <div class="tab" data-tab="pol" onclick="switchTab('pol')">Congreso</div>
     <div class="tab" data-tab="cal" onclick="switchTab('cal')">Calendario</div>
   </div>
 </header>
@@ -196,6 +197,32 @@
     </div>
   </div>
 
+  <!-- CONGRESO (political flow) -->
+  <div id="view-pol" style="display:none">
+    <div class="kpis" id="pkpis"></div>
+    <div class="toolbar">
+      <input class="search" id="pq" placeholder="Buscar ticker, empresa o congresista…" oninput="renderPolitical()">
+    </div>
+    <div class="panel"><div class="tscroll">
+      <table id="ptbl">
+        <thead><tr>
+          <th class="l">Activo</th>
+          <th class="l">Congresista</th>
+          <th class="l">Cámara</th>
+          <th>Operación</th>
+          <th>Importe</th>
+          <th>Fecha</th>
+        </tr></thead>
+        <tbody id="ptbody"></tbody>
+      </table>
+    </div></div>
+    <div class="foot">
+      Fuente: disclosures públicos del STOCK Act (Senado vía senatestockwatcher.com,
+      Cámara vía housestockwatcher.com). El importe es un rango declarado, no la cifra exacta.<br>
+      Esto no implica insider trading ni asesoramiento: son operaciones públicas, la correlación no es causalidad.
+    </div>
+  </div>
+
   <!-- CALENDARIO -->
   <div id="view-cal" style="display:none">
     <div class="segs" id="segs"></div>
@@ -223,8 +250,10 @@ function switchTab(t){
   document.querySelectorAll(".tab").forEach(e=>e.classList.toggle("active",e.dataset.tab===t));
   $("#view-radar").style.display=t==="radar"?"":"none";
   $("#view-signals").style.display=t==="signals"?"":"none";
+  $("#view-pol").style.display=t==="pol"?"":"none";
   $("#view-cal").style.display=t==="cal"?"":"none";
   if(t==="signals") renderSignals();
+  if(t==="pol") renderPolitical();
 }
 
 function renderKPIs(){
@@ -377,6 +406,32 @@ document.querySelectorAll("thead th").forEach(th=>{
   });
 });
 
+function renderPolitical(){
+  const p=window.POL;
+  if(!p||!p.trades){ $("#pkpis").innerHTML=""; $("#ptbody").innerHTML=`<tr><td colspan="6" class="empty">Aún no hay datos. Ejecuta el escáner (GitHub Action).</td></tr>`; return; }
+  const q=($("#pq")&&$("#pq").value||"").toLowerCase().trim();
+  let r=(p.trades||[]).slice();
+  if(q) r=r.filter(x=>(x.ticker||"").toLowerCase().includes(q)||(x.company||"").toLowerCase().includes(q)||(x.member||"").toLowerCase().includes(q));
+  const nTickers=new Set(r.map(x=>x.ticker)).size;
+  const nCompras=r.filter(x=>x.direction==="Purchase").length;
+  $("#pkpis").innerHTML=`
+    <div class="kpi"><div class="lbl">Operaciones</div><div class="val b">${r.length}</div></div>
+    <div class="kpi"><div class="lbl">Valores distintos</div><div class="val">${nTickers}</div></div>
+    <div class="kpi"><div class="lbl">Compras</div><div class="val g">${nCompras}</div></div>
+    <div class="kpi"><div class="lbl">Ventana</div><div class="val o">${p.horizon_days||"—"}d</div></div>`;
+  $("#ptbody").innerHTML=r.map(x=>{
+    const dcls = x.direction==="Purchase"?"up":x.direction==="Sale"?"down":"muted";
+    return `<tr>
+      <td class="l"><div class="tk">${x.ticker}</div><div class="nm">${x.company||""}</div></td>
+      <td class="l">${x.member||"—"}</td>
+      <td class="l"><span class="tag">${x.chamber||""}</span></td>
+      <td><span class="${dcls}" style="font-weight:700">${x.direction}</span></td>
+      <td>${x.amount||"—"}</td>
+      <td>${x.transaction_date||"—"}<br><span class="muted">hace ${x.days}d</span></td>
+    </tr>`;
+  }).join("") || `<tr><td colspan="6" class="empty">Sin resultados</td></tr>`;
+}
+
 function renderCal(){
   const cal=window.CAL;
   if(!cal||!cal.events){$("#callist").innerHTML=`<div class="empty">Aún no hay calendario.<br>Ejecuta el escáner (GitHub Action).</div>`;$("#segs").innerHTML="";return;}
@@ -406,6 +461,7 @@ async function load(){
     $("#tbody").innerHTML=`<tr><td colspan="8" class="empty">Aún no hay datos. Ejecuta el escáner (GitHub Action).</td></tr>`;
   }
   try{ window.CAL=await (await fetch("catalysts.json?ts="+Date.now())).json(); }catch(e){ window.CAL=null; }
+  try{ window.POL=await (await fetch("political.json?ts="+Date.now())).json(); }catch(e){ window.POL=null; }
   if(DATA){ renderKPIs(); renderTable(); }
   renderCal();
 }
