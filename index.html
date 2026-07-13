@@ -217,9 +217,11 @@
       </table>
     </div></div>
     <div class="foot">
-      Fuente: disclosures públicos del STOCK Act (Senado vía senatestockwatcher.com,
-      Cámara vía housestockwatcher.com). El importe es un rango declarado, no la cifra exacta.<br>
-      Esto no implica insider trading ni asesoramiento: son operaciones públicas, la correlación no es causalidad.
+      Fuente: disclosures públicos de la Cámara de Representantes y del poder ejecutivo (gabinete/altos
+      cargos vía OGE), agregados por congress.kadoa.com. El Senado no está incluido: efdsearch.senate.gov
+      bloquea el scraping automático y no hay fuente gratuita activa a día de hoy.<br>
+      El importe es un rango declarado, no la cifra exacta. Esto no implica insider trading ni asesoramiento:
+      son operaciones públicas, la correlación no es causalidad.
     </div>
   </div>
 
@@ -439,7 +441,7 @@ function renderPolitical(){
     const dcls = x.direction==="Purchase"?"up":x.direction==="Sale"?"down":"muted";
     return `<tr>
       <td class="l"><div class="tk">${x.ticker}</div><div class="nm">${x.company||""}</div></td>
-      <td class="l">${x.member||"—"}</td>
+      <td class="l">${x.member||"—"}${x.office?`<div class="nm">${x.office}</div>`:""}</td>
       <td class="l"><span class="tag">${x.chamber||""}</span></td>
       <td><span class="${dcls}" style="font-weight:700">${x.direction}</span></td>
       <td>${x.amount||"—"}</td>
