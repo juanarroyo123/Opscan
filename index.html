@@ -108,6 +108,19 @@
   .d-soon{color:var(--media)}
   .empty{color:var(--mut);text-align:center;padding:38px 12px}
   .foot{color:var(--mut);font-size:11px;text-align:center;margin-top:20px;line-height:1.6}
+  .gauge{margin:10px 0}
+  .gauge .lbl{display:flex;justify-content:space-between;font-size:11px;color:var(--mut);margin-bottom:4px}
+  .gauge .track{display:flex;height:10px;border-radius:6px;overflow:hidden;background:var(--baja-bg)}
+  .gauge .seg{height:100%}
+  .gauge .seg.sb{background:#0d8a4a} .gauge .seg.b{background:#15a35b}
+  .gauge .seg.h{background:#d68a00} .gauge .seg.s{background:#e0344b}
+  .gauge .seg.ss{background:#8a1626}
+  .gauge .verdict{font-weight:800;font-size:13px;margin-top:6px}
+  .newslist{margin-top:10px}
+  .newsit{padding:7px 0;border-bottom:1px solid var(--line);font-size:12px}
+  .newsit:last-child{border-bottom:none}
+  .newsit a{color:var(--txt);font-weight:600}
+  .newsit .meta{color:var(--mut);font-size:11px;margin-top:2px}
 </style>
 </head>
 <body>
@@ -289,6 +302,45 @@ function rowHTML(x,i){
   return main+detailHTML(x);
 }
 
+function gaugeHTML(b){
+  if(!b) return "";
+  const total = (b.strongBuy||0)+(b.buy||0)+(b.hold||0)+(b.sell||0)+(b.strongSell||0);
+  if(!total) return "";
+  const pct = n => (n/total*100).toFixed(1)+"%";
+  const score = ((b.strongBuy||0)*5+(b.buy||0)*4+(b.hold||0)*3+(b.sell||0)*2+(b.strongSell||0)*1)/total;
+  let verdict="Mantener", vcls="media";
+  if(score>=4.3){verdict="Compra fuerte";vcls="alta";}
+  else if(score>=3.5){verdict="Compra";vcls="alta";}
+  else if(score>=2.5){verdict="Mantener";vcls="media";}
+  else if(score>=1.7){verdict="Venta";vcls="baja";}
+  else {verdict="Venta fuerte";vcls="baja";}
+  return `<div class="gauge">
+    <div class="lbl"><span>Consenso de ${total} analistas</span><span>Strong Sell → Strong Buy</span></div>
+    <div class="track">
+      <div class="seg ss" style="width:${pct(b.strongSell)}" title="Strong Sell ${b.strongSell}"></div>
+      <div class="seg s" style="width:${pct(b.sell)}" title="Sell ${b.sell}"></div>
+      <div class="seg h" style="width:${pct(b.hold)}" title="Hold ${b.hold}"></div>
+      <div class="seg b" style="width:${pct(b.buy)}" title="Buy ${b.buy}"></div>
+      <div class="seg sb" style="width:${pct(b.strongBuy)}" title="Strong Buy ${b.strongBuy}"></div>
+    </div>
+    <div class="verdict pill ${vcls==='alta'?'ALTA':vcls==='baja'?'BAJA':'MEDIA'}" style="display:inline-flex;margin-top:6px">${verdict}</div>
+  </div>`;
+}
+
+function newsHTML(news){
+  if(!news||!news.length) return "";
+  const items=news.slice(0,5).map(n=>{
+    let when="";
+    if(n.pub_date){
+      const d=new Date(isNaN(n.pub_date)?n.pub_date:parseInt(n.pub_date)*(String(n.pub_date).length<=10?1000:1));
+      if(!isNaN(d.getTime())) when=d.toLocaleDateString("es-ES");
+    }
+    return `<div class="newsit"><a href="${n.link}" target="_blank" rel="noopener">${n.title}</a>
+      <div class="meta">${n.publisher||""}${when?" · "+when:""}</div></div>`;
+  }).join("");
+  return `<div class="newslist"><div class="k" style="font-size:11px;color:var(--mut);margin-bottom:4px">Noticias recientes</div>${items}</div>`;
+}
+
 function detailHTML(x){
   const chips=(x.reasons||[]).map(t=>`<span class="chip">${t}</span>`).join("") || `<span class="muted">Sin señales destacadas.</span>`;
   const f=(k,v)=>`<div><div class="k">${k}</div><div class="v">${v}</div></div>`;
@@ -308,6 +360,7 @@ function detailHTML(x){
   }
   return `<tr class="detail"><td colspan="8"><div class="detail-in">
     <div class="chips">${chips}</div>${fund}${u}
+    ${gaugeHTML(x.analyst_breakdown)}${newsHTML(x.news)}
     ${x.error?`<div class="down" style="margin-top:8px">⚠ ${x.error}</div>`:""}
   </div></td></tr>`;
 }

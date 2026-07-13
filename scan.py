@@ -281,6 +281,47 @@ def process_ticker(ticker, cfg, catalysts, hist):
             and rec["potential_gain_pct"] >= cfg["signal_min_gain_pct"]
         )
 
+        # desglose de recomendaciones de analistas (para el gauge Strong Sell..Strong Buy)
+        rec["analyst_breakdown"] = None
+        try:
+            rt = t.recommendations
+            if rt is not None and len(rt):
+                row = rt[rt["period"] == "0m"]
+                if len(row):
+                    row = row.iloc[0]
+                    rec["analyst_breakdown"] = {
+                        "strongBuy": int(row.get("strongBuy") or 0),
+                        "buy": int(row.get("buy") or 0),
+                        "hold": int(row.get("hold") or 0),
+                        "sell": int(row.get("sell") or 0),
+                        "strongSell": int(row.get("strongSell") or 0),
+                    }
+        except Exception:
+            pass
+
+        # noticias recientes (best effort, el esquema de yfinance ha cambiado con el tiempo)
+        rec["news"] = []
+        try:
+            for n in (t.news or [])[:6]:
+                c = n.get("content") if isinstance(n.get("content"), dict) else n
+                title = c.get("title")
+                link = (
+                    (c.get("canonicalUrl") or {}).get("url")
+                    or (c.get("clickThroughUrl") or {}).get("url")
+                    or c.get("link")
+                )
+                publisher = (c.get("provider") or {}).get("displayName") or c.get("publisher")
+                pub_time = c.get("pubDate") or n.get("providerPublishTime")
+                if title and link:
+                    rec["news"].append({
+                        "title": title[:140],
+                        "link": link,
+                        "publisher": publisher or "",
+                        "pub_date": str(pub_time) if pub_time else None,
+                    })
+        except Exception:
+            pass
+
         # vencimientos cercanos
         exps = list(t.options or [])
         chosen = []
