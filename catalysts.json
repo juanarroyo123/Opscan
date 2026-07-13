@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-07-13T11:09:41+00:00",
+  "generated_at": "2026-07-13T11:20:22+00:00",
   "mode": "market",
   "horizon_days": 90,
-  "count": 1769,
+  "count": 1771,
   "by_type": {
     "Ensayo Fase 2": 143,
     "Ensayo Fase 3": 59,
-    "M&A / 8-K": 4,
+    "M&A / 8-K": 6,
     "PDUFA": 1,
     "Ensayo Fase 2, Fase 3": 12,
     "IPO": 2,
@@ -34,6 +34,26 @@
       "title": "A Study to Learn About the Investigational Medicine Called PF-06821497 (Mevrometostat) in Men With mCRPC Who Were Previously Treated With Ab",
       "source": "ClinicalTrials.gov",
       "url": "https://clinicaltrials.gov/study/NCT06551324",
+      "days": 0
+    },
+    {
+      "date": "2026-07-13",
+      "type": "M&A / 8-K",
+      "ticker": "TCBK",
+      "company": "TRICO BANCSHARES /",
+      "title": "8-K - merger agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000356171&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-07-13",
+      "type": "M&A / 8-K",
+      "ticker": "FHB",
+      "company": "FIRST HAWAIIAN, INC.",
+      "title": "8-K - merger agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000036377&type=8-K",
       "days": 0
     },
     {

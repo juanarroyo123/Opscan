@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-13T11:09:37+00:00",
+  "generated_at": "2026-07-13T11:20:18+00:00",
   "config": {
     "max_expirations": 3,
     "max_days_out": 70,
@@ -400,6 +400,12 @@
       },
       "news": [
         {
+          "title": "TSMC Delivers Record Second-Quarter Revenue as AI Chip Demand Accelerates (TSM)",
+          "link": "https://investorshub.advfn.com/market-news/article/31708/tsmc-delivers-record-second-quarter-revenue-as-ai-chip-demand-accelerates-tsm",
+          "publisher": "InvestorsHub",
+          "pub_date": "2026-07-13T10:58:11Z"
+        },
+        {
           "title": "TSMC posts record revenue in second quarter on AI demand",
           "link": "https://finance.yahoo.com/video/tsmc-posts-record-revenue-second-102513810.html",
           "publisher": "Reuters Videos",
@@ -428,12 +434,6 @@
           "link": "https://stocktwits.com/news-articles/markets/equity/tsm-stock-dips-premarket-as-36-q2-sales-surge-fails-to-offset-iran-driven-market-jitters/cZmzjZaR7o8",
           "publisher": "Stocktwits",
           "pub_date": "2026-07-13T08:26:58Z"
-        },
-        {
-          "title": "Zacks Investment Ideas feature highlights: Taiwan, Nvidia and Apple",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/zacks-investment-ideas-feature-highlights-074800640.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-07-13T07:48:00Z"
         }
       ],
       "expirations": [
@@ -624,11 +624,11 @@
       ],
       "call_vol": 636,
       "put_vol": 94,
-      "call_oi": 543,
-      "put_oi": 240,
+      "call_oi": 879,
+      "put_oi": 309,
       "cp_vol_ratio": 6.766,
-      "cp_oi_ratio": 2.263,
-      "total_vol_oi": 0.932,
+      "cp_oi_ratio": 2.845,
+      "total_vol_oi": 0.614,
       "atm_iv": 2.416,
       "unusual": [],
       "unusual_count": 0,
@@ -656,122 +656,6 @@
         "Ratio C/P extremo (+25)",
         "Vol/OI agregado alto (+10)",
         "IV en percentil 70+ (+5)"
-      ]
-    },
-    {
-      "ticker": "SPXL",
-      "error": null,
-      "price": 279.18,
-      "name": "Direxion Daily S&P 500 Bull 3X ",
-      "market_cap": null,
-      "cash": null,
-      "debt": null,
-      "inst_pct": null,
-      "short_pct": null,
-      "target_mean": null,
-      "target_low": null,
-      "target_high": null,
-      "recommendation_key": null,
-      "analyst_count": null,
-      "buy_target": 279.18,
-      "sell_target": null,
-      "potential_gain_pct": null,
-      "is_signal": false,
-      "analyst_breakdown": null,
-      "news": [
-        {
-          "title": "The $95-a-Year Fee Nobody Notices: Why SPXL Underperforms Its Own Math",
-          "link": "https://247wallst.com/investing/2026/07/01/the-95-a-year-fee-nobody-notices-why-spxl-underperforms-its-own-math/",
-          "publisher": "24/7 Wall St.",
-          "pub_date": "2026-07-01T20:36:26Z"
-        },
-        {
-          "title": "Ceasefire Hopes Lift Risk Appetite: Leveraged ETFs for Tactical Play",
-          "link": "https://finance.yahoo.com/markets/options/articles/ceasefire-hopes-lift-risk-appetite-142600303.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-06-12T14:26:00Z"
-        },
-        {
-          "title": "Guide to the S&P 500 ETF Investing",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/guide-p-500-etf-investing-160000203.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-06-09T16:00:00Z"
-        },
-        {
-          "title": "Leveraged ETFs for Investors Seeking Bold Tactical Opportunities",
-          "link": "https://finance.yahoo.com/markets/options/articles/leveraged-etfs-investors-seeking-bold-140200305.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-05-29T14:02:00Z"
-        },
-        {
-          "title": "Investor Turns $70K to $4M Using This S&P 500 Bull ETF",
-          "link": "https://247wallst.com/investing/2026/05/28/investor-turns-70k-to-4m-using-this-sp-500-bull-etf/",
-          "publisher": "24/7 Wall St.",
-          "pub_date": "2026-05-28T15:00:01Z"
-        },
-        {
-          "title": "Stop Trading These 10 Leveraged ETFs Built to Lose",
-          "link": "https://finance.yahoo.com/markets/options/articles/stop-trading-10-leveraged-etfs-134800699.html",
-          "publisher": "InvestorPlace",
-          "pub_date": "2026-05-02T13:48:00Z"
-        }
-      ],
-      "expirations": [
-        "2026-07-17",
-        "2026-07-24",
-        "2026-07-31"
-      ],
-      "call_vol": 2738,
-      "put_vol": 1000,
-      "call_oi": 2700,
-      "put_oi": 2580,
-      "cp_vol_ratio": 2.738,
-      "cp_oi_ratio": 1.047,
-      "total_vol_oi": 0.708,
-      "atm_iv": 0.0039,
-      "unusual": [
-        {
-          "kind": "CALL",
-          "strike": 285.0,
-          "expiration": "2026-07-17",
-          "volume": 509,
-          "openInterest": 0,
-          "vol_oi": 509.0,
-          "iv": 0.0313,
-          "lastPrice": 1.92
-        },
-        {
-          "kind": "CALL",
-          "strike": 245.0,
-          "expiration": "2026-07-17",
-          "volume": 323,
-          "openInterest": 0,
-          "vol_oi": 323.0,
-          "iv": 0.0,
-          "lastPrice": 33.86
-        },
-        {
-          "kind": "CALL",
-          "strike": 235.0,
-          "expiration": "2026-07-17",
-          "volume": 308,
-          "openInterest": 164,
-          "vol_oi": 1.88,
-          "iv": 0.0,
-          "lastPrice": 40.8
-        }
-      ],
-      "unusual_count": 3,
-      "iv_percentile": 7.1,
-      "catalysts": [],
-      "next_catalyst_days": null,
-      "next_catalyst": null,
-      "score": 60.0,
-      "signal": "ALTA",
-      "reasons": [
-        "Ratio C/P extremo (+25)",
-        "3 contratos inusuales (+25)",
-        "Vol/OI agregado alto (+10)"
       ]
     },
     {
@@ -845,12 +729,12 @@
         "2026-07-17"
       ],
       "call_vol": 531920,
-      "put_vol": 387153,
+      "put_vol": 387161,
       "call_oi": 189587,
-      "put_oi": 187023,
+      "put_oi": 505823,
       "cp_vol_ratio": 1.374,
-      "cp_oi_ratio": 1.014,
-      "total_vol_oi": 2.44,
+      "cp_oi_ratio": 0.375,
+      "total_vol_oi": 1.322,
       "atm_iv": 0.002,
       "unusual": [
         {
@@ -925,13 +809,13 @@
         },
         {
           "kind": "PUT",
-          "strike": 170.0,
-          "expiration": "2026-07-17",
-          "volume": 22321,
-          "openInterest": 0,
-          "vol_oi": 22321.0,
-          "iv": 0.5,
-          "lastPrice": 0.01
+          "strike": 405.0,
+          "expiration": "2026-07-13",
+          "volume": 20674,
+          "openInterest": 2377,
+          "vol_oi": 8.7,
+          "iv": 0.0313,
+          "lastPrice": 3.33
         }
       ],
       "unusual_count": 12,
@@ -1210,6 +1094,12 @@
           "pub_date": "2026-07-13T11:03:00Z"
         },
         {
+          "title": "TSMC Delivers Record Second-Quarter Revenue as AI Chip Demand Accelerates (TSM)",
+          "link": "https://investorshub.advfn.com/market-news/article/31708/tsmc-delivers-record-second-quarter-revenue-as-ai-chip-demand-accelerates-tsm",
+          "publisher": "InvestorsHub",
+          "pub_date": "2026-07-13T10:58:11Z"
+        },
+        {
           "title": "Prediction: After Losing $1 Trillion in Market Cap Since its IPO, SpaceX Stock Will Rebound in Epic Fashion. Here's Why.",
           "link": "https://www.fool.com/investing/2026/07/13/prediction-after-losing-over-1-trillion-in-market/",
           "publisher": "Motley Fool",
@@ -1226,12 +1116,6 @@
           "link": "https://www.fool.com/investing/2026/07/13/will-memory-giants-micron-sandisk-and-sk-hynix-con/",
           "publisher": "Motley Fool",
           "pub_date": "2026-07-13T10:30:00Z"
-        },
-        {
-          "title": "TSMC posts record revenue in second quarter on AI demand",
-          "link": "https://finance.yahoo.com/video/tsmc-posts-record-revenue-second-102513810.html",
-          "publisher": "Reuters Videos",
-          "pub_date": "2026-07-13T10:25:13Z"
         }
       ],
       "expirations": [
@@ -1423,22 +1307,12 @@
       "call_vol": 57720,
       "put_vol": 74608,
       "call_oi": 218951,
-      "put_oi": 80091,
+      "put_oi": 229687,
       "cp_vol_ratio": 0.774,
-      "cp_oi_ratio": 2.734,
-      "total_vol_oi": 0.443,
+      "cp_oi_ratio": 0.953,
+      "total_vol_oi": 0.295,
       "atm_iv": 0.002,
       "unusual": [
-        {
-          "kind": "PUT",
-          "strike": 300.0,
-          "expiration": "2026-07-17",
-          "volume": 6043,
-          "openInterest": 0,
-          "vol_oi": 6043.0,
-          "iv": 0.5,
-          "lastPrice": 0.05
-        },
         {
           "kind": "CALL",
           "strike": 555.0,
@@ -1470,16 +1344,6 @@
           "lastPrice": 5.73
         },
         {
-          "kind": "PUT",
-          "strike": 515.0,
-          "expiration": "2026-07-17",
-          "volume": 2680,
-          "openInterest": 0,
-          "vol_oi": 2680.0,
-          "iv": 0.125,
-          "lastPrice": 7.35
-        },
-        {
           "kind": "CALL",
           "strike": 600.0,
           "expiration": "2026-07-13",
@@ -1504,10 +1368,30 @@
           "strike": 540.0,
           "expiration": "2026-07-17",
           "volume": 2031,
-          "openInterest": 0,
-          "vol_oi": 2031.0,
+          "openInterest": 1664,
+          "vol_oi": 1.22,
           "iv": 0.0625,
           "lastPrice": 14.4
+        },
+        {
+          "kind": "PUT",
+          "strike": 550.0,
+          "expiration": "2026-07-17",
+          "volume": 1736,
+          "openInterest": 1408,
+          "vol_oi": 1.23,
+          "iv": 0.0313,
+          "lastPrice": 18.9
+        },
+        {
+          "kind": "CALL",
+          "strike": 550.0,
+          "expiration": "2026-07-13",
+          "volume": 1687,
+          "openInterest": 445,
+          "vol_oi": 3.79,
+          "iv": 0.0,
+          "lastPrice": 15.5
         }
       ],
       "unusual_count": 12,
@@ -1602,10 +1486,10 @@
       "call_vol": 288,
       "put_vol": 88,
       "call_oi": 6339,
-      "put_oi": 10,
+      "put_oi": 2831,
       "cp_vol_ratio": 3.273,
-      "cp_oi_ratio": 633.9,
-      "total_vol_oi": 0.059,
+      "cp_oi_ratio": 2.239,
+      "total_vol_oi": 0.041,
       "atm_iv": 0.0156,
       "unusual": [],
       "unusual_count": 0,
@@ -1625,6 +1509,112 @@
       "reasons": [
         "Catalizador en 17d (+19)",
         "Ratio C/P extremo (+25)"
+      ]
+    },
+    {
+      "ticker": "SPXL",
+      "error": null,
+      "price": 279.18,
+      "name": "Direxion Daily S&P 500 Bull 3X ",
+      "market_cap": null,
+      "cash": null,
+      "debt": null,
+      "inst_pct": null,
+      "short_pct": null,
+      "target_mean": null,
+      "target_low": null,
+      "target_high": null,
+      "recommendation_key": null,
+      "analyst_count": null,
+      "buy_target": 279.18,
+      "sell_target": null,
+      "potential_gain_pct": null,
+      "is_signal": false,
+      "analyst_breakdown": null,
+      "news": [
+        {
+          "title": "The $95-a-Year Fee Nobody Notices: Why SPXL Underperforms Its Own Math",
+          "link": "https://247wallst.com/investing/2026/07/01/the-95-a-year-fee-nobody-notices-why-spxl-underperforms-its-own-math/",
+          "publisher": "24/7 Wall St.",
+          "pub_date": "2026-07-01T20:36:26Z"
+        },
+        {
+          "title": "Ceasefire Hopes Lift Risk Appetite: Leveraged ETFs for Tactical Play",
+          "link": "https://finance.yahoo.com/markets/options/articles/ceasefire-hopes-lift-risk-appetite-142600303.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-06-12T14:26:00Z"
+        },
+        {
+          "title": "Guide to the S&P 500 ETF Investing",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/guide-p-500-etf-investing-160000203.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-06-09T16:00:00Z"
+        },
+        {
+          "title": "Leveraged ETFs for Investors Seeking Bold Tactical Opportunities",
+          "link": "https://finance.yahoo.com/markets/options/articles/leveraged-etfs-investors-seeking-bold-140200305.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-05-29T14:02:00Z"
+        },
+        {
+          "title": "Investor Turns $70K to $4M Using This S&P 500 Bull ETF",
+          "link": "https://247wallst.com/investing/2026/05/28/investor-turns-70k-to-4m-using-this-sp-500-bull-etf/",
+          "publisher": "24/7 Wall St.",
+          "pub_date": "2026-05-28T15:00:01Z"
+        },
+        {
+          "title": "Stop Trading These 10 Leveraged ETFs Built to Lose",
+          "link": "https://finance.yahoo.com/markets/options/articles/stop-trading-10-leveraged-etfs-134800699.html",
+          "publisher": "InvestorPlace",
+          "pub_date": "2026-05-02T13:48:00Z"
+        }
+      ],
+      "expirations": [
+        "2026-07-17",
+        "2026-07-24",
+        "2026-07-31"
+      ],
+      "call_vol": 2738,
+      "put_vol": 1000,
+      "call_oi": 5418,
+      "put_oi": 4988,
+      "cp_vol_ratio": 2.738,
+      "cp_oi_ratio": 1.086,
+      "total_vol_oi": 0.359,
+      "atm_iv": 0.0039,
+      "unusual": [
+        {
+          "kind": "CALL",
+          "strike": 245.0,
+          "expiration": "2026-07-17",
+          "volume": 323,
+          "openInterest": 200,
+          "vol_oi": 1.61,
+          "iv": 0.0,
+          "lastPrice": 33.86
+        },
+        {
+          "kind": "CALL",
+          "strike": 235.0,
+          "expiration": "2026-07-17",
+          "volume": 308,
+          "openInterest": 164,
+          "vol_oi": 1.88,
+          "iv": 0.0,
+          "lastPrice": 40.8
+        }
+      ],
+      "unusual_count": 2,
+      "iv_percentile": 7.1,
+      "catalysts": [],
+      "next_catalyst_days": null,
+      "next_catalyst": null,
+      "score": 42.0,
+      "signal": "MEDIA",
+      "reasons": [
+        "Ratio C/P extremo (+25)",
+        "2 contrato(s) inusual(es) (+12)",
+        "Vol/OI agregado medio (+5)"
       ]
     },
     {
@@ -1699,11 +1689,11 @@
       ],
       "call_vol": 208,
       "put_vol": 60,
-      "call_oi": 1673,
-      "put_oi": 1180,
+      "call_oi": 7652,
+      "put_oi": 1522,
       "cp_vol_ratio": 3.467,
-      "cp_oi_ratio": 1.418,
-      "total_vol_oi": 0.094,
+      "cp_oi_ratio": 5.028,
+      "total_vol_oi": 0.029,
       "atm_iv": 0.25,
       "unusual": [],
       "unusual_count": 0,
@@ -1797,11 +1787,11 @@
       ],
       "call_vol": 1215,
       "put_vol": 796,
-      "call_oi": 127,
-      "put_oi": 2484,
+      "call_oi": 1074,
+      "put_oi": 2858,
       "cp_vol_ratio": 1.526,
-      "cp_oi_ratio": 0.051,
-      "total_vol_oi": 0.77,
+      "cp_oi_ratio": 0.376,
+      "total_vol_oi": 0.511,
       "atm_iv": 0.0156,
       "unusual": [
         {
@@ -2021,10 +2011,10 @@
       "call_vol": 902363,
       "put_vol": 988070,
       "call_oi": 159553,
-      "put_oi": 54027,
+      "put_oi": 444568,
       "cp_vol_ratio": 0.913,
-      "cp_oi_ratio": 2.953,
-      "total_vol_oi": 8.851,
+      "cp_oi_ratio": 0.359,
+      "total_vol_oi": 3.129,
       "atm_iv": 0.0003,
       "unusual": [
         {
@@ -2062,8 +2052,8 @@
           "strike": 752.0,
           "expiration": "2026-07-13",
           "volume": 90029,
-          "openInterest": 0,
-          "vol_oi": 90029.0,
+          "openInterest": 11591,
+          "vol_oi": 7.77,
           "iv": 0.0156,
           "lastPrice": 0.71
         },
@@ -2082,8 +2072,8 @@
           "strike": 750.0,
           "expiration": "2026-07-13",
           "volume": 71227,
-          "openInterest": 0,
-          "vol_oi": 71227.0,
+          "openInterest": 14913,
+          "vol_oi": 4.78,
           "iv": 0.0313,
           "lastPrice": 0.46
         },
@@ -2092,8 +2082,8 @@
           "strike": 753.0,
           "expiration": "2026-07-13",
           "volume": 66506,
-          "openInterest": 0,
-          "vol_oi": 66506.0,
+          "openInterest": 11494,
+          "vol_oi": 5.79,
           "iv": 0.0156,
           "lastPrice": 0.92
         },
@@ -2102,8 +2092,8 @@
           "strike": 754.0,
           "expiration": "2026-07-13",
           "volume": 61984,
-          "openInterest": 0,
-          "vol_oi": 61984.0,
+          "openInterest": 9888,
+          "vol_oi": 6.27,
           "iv": 0.0078,
           "lastPrice": 1.2
         }
@@ -2185,11 +2175,11 @@
       ],
       "call_vol": 391711,
       "put_vol": 446240,
-      "call_oi": 69999,
-      "put_oi": 116512,
+      "call_oi": 98434,
+      "put_oi": 143399,
       "cp_vol_ratio": 0.878,
-      "cp_oi_ratio": 0.601,
-      "total_vol_oi": 4.493,
+      "cp_oi_ratio": 0.686,
+      "total_vol_oi": 3.465,
       "atm_iv": 0.002,
       "unusual": [
         {
@@ -2683,11 +2673,11 @@
       ],
       "call_vol": 1125,
       "put_vol": 1168,
-      "call_oi": 7043,
-      "put_oi": 2855,
+      "call_oi": 7914,
+      "put_oi": 3071,
       "cp_vol_ratio": 0.963,
-      "cp_oi_ratio": 2.467,
-      "total_vol_oi": 0.232,
+      "cp_oi_ratio": 2.577,
+      "total_vol_oi": 0.209,
       "atm_iv": 0.0313,
       "unusual": [],
       "unusual_count": 0,
