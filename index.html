@@ -118,6 +118,7 @@
   </div>
   <div class="tabs">
     <div class="tab active" data-tab="radar" onclick="switchTab('radar')">Radar</div>
+    <div class="tab" data-tab="signals" onclick="switchTab('signals')">Señales</div>
     <div class="tab" data-tab="cal" onclick="switchTab('cal')">Calendario</div>
   </div>
 </header>
@@ -158,6 +159,30 @@
     </div>
   </div>
 
+  <!-- SEÑALES -->
+  <div id="view-signals" style="display:none">
+    <div class="kpis" id="skpis"></div>
+    <div class="toolbar">
+      <input class="search" id="sq" placeholder="Buscar ticker o empresa…" oninput="renderSignals()">
+    </div>
+    <div class="panel"><div class="tscroll">
+      <table id="stbl">
+        <thead><tr>
+          <th class="l">Activo</th>
+          <th>Entrada (compra)</th>
+          <th>Objetivo (venta)</th>
+          <th>Potencial</th>
+          <th>Consenso analistas</th>
+        </tr></thead>
+        <tbody id="stbody"></tbody>
+      </table>
+    </div></div>
+    <div class="foot">
+      Entrada ≈ precio actual · Objetivo = precio medio de analistas (Yahoo Finance).<br>
+      Esto NO es una recomendación de compra: son datos públicos de consenso, verifica siempre por tu cuenta.
+    </div>
+  </div>
+
   <!-- CALENDARIO -->
   <div id="view-cal" style="display:none">
     <div class="segs" id="segs"></div>
@@ -184,7 +209,9 @@ function pctTxt(n){ if(n===null||n===undefined)return "—"; return (n>0?"+":"")
 function switchTab(t){
   document.querySelectorAll(".tab").forEach(e=>e.classList.toggle("active",e.dataset.tab===t));
   $("#view-radar").style.display=t==="radar"?"":"none";
+  $("#view-signals").style.display=t==="signals"?"":"none";
   $("#view-cal").style.display=t==="cal"?"":"none";
+  if(t==="signals") renderSignals();
 }
 
 function renderKPIs(){
@@ -197,6 +224,30 @@ function renderKPIs(){
     <div class="kpi"><div class="lbl">Señal ALTA</div><div class="val g">${alta}</div></div>
     <div class="kpi"><div class="lbl">Con vol. inusual</div><div class="val o">${inus}</div></div>
     <div class="kpi"><div class="lbl">Catalizador ≤7d</div><div class="val">${cal}</div></div>`;
+}
+
+function recLabel(key){
+  const m={strongBuy:"Compra fuerte",buy:"Compra",hold:"Mantener",sell:"Venta",strongSell:"Venta fuerte"};
+  return m[key]||"—";
+}
+
+function renderSignals(){
+  if(!DATA)return;
+  const q=($("#sq")&&$("#sq").value||"").toLowerCase().trim();
+  let r=(DATA.records||[]).filter(x=>x.is_signal);
+  if(q) r=r.filter(x=>(x.ticker||"").toLowerCase().includes(q)||(x.name||"").toLowerCase().includes(q));
+  r.sort((a,b)=>(b.potential_gain_pct||0)-(a.potential_gain_pct||0));
+  const avg = r.length ? (r.reduce((s,x)=>s+(x.potential_gain_pct||0),0)/r.length) : 0;
+  $("#skpis").innerHTML=`
+    <div class="kpi"><div class="lbl">Señales</div><div class="val b">${r.length}</div></div>
+    <div class="kpi"><div class="lbl">Potencial medio</div><div class="val g">${r.length?avg.toFixed(1)+"%":"—"}</div></div>`;
+  $("#stbody").innerHTML=r.map(x=>`<tr>
+    <td class="l"><div class="tk">${x.ticker}</div><div class="nm">${x.name||""}</div></td>
+    <td>${x.buy_target!=null?"$"+x.buy_target:"—"}</td>
+    <td>${x.sell_target!=null?"$"+x.sell_target:"—"}</td>
+    <td><span class="up">${pctTxt(x.potential_gain_pct)}</span></td>
+    <td>${recLabel(x.recommendation_key)}${x.analyst_count?` <span class="muted">(${x.analyst_count})</span>`:""}</td>
+  </tr>`).join("") || `<tr><td colspan="5" class="empty">Sin señales con el filtro actual (potencial ≥ ${(DATA.config&&DATA.config.signal_min_gain_pct)||5}%).</td></tr>`;
 }
 
 function renderTable(){

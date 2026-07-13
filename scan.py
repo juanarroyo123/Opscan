@@ -30,6 +30,7 @@ DEFAULTS = {
     "unusual_min_volume": 250,   # volumen minimo de un contrato para marcarlo
     "unusual_vol_oi_mult": 1.0,  # volumen >= mult * OI  => inusual (abriendo posiciones)
     "catalyst_horizon_days": 45, # ventana para considerar un catalizador "proximo"
+    "signal_min_gain_pct": 5,    # potencial minimo (%) para que cuente como "señal" de compra
 }
 
 
@@ -263,8 +264,22 @@ def process_ticker(ticker, cfg, catalysts, hist):
         rec["inst_pct"] = info.get("heldPercentInstitutions")
         rec["short_pct"] = info.get("shortPercentOfFloat")
         rec["target_mean"] = info.get("targetMeanPrice")
+        rec["target_low"] = info.get("targetLowPrice")
+        rec["target_high"] = info.get("targetHighPrice")
+        rec["recommendation_key"] = info.get("recommendationKey")   # strongBuy/buy/hold/sell/strongSell
+        rec["analyst_count"] = info.get("numberOfAnalystOpinions")
         if rec["target_mean"] and price:
             rec["upside_pct"] = round((rec["target_mean"] / price - 1) * 100, 1)
+
+        # señal de compra/venta estilo "stock signals": entrada ~ precio actual,
+        # objetivo de venta = precio medio objetivo de los analistas.
+        rec["buy_target"] = rec["price"]
+        rec["sell_target"] = round(rec["target_mean"], 2) if rec["target_mean"] else None
+        rec["potential_gain_pct"] = rec.get("upside_pct")
+        rec["is_signal"] = bool(
+            rec["sell_target"] and rec["potential_gain_pct"] is not None
+            and rec["potential_gain_pct"] >= cfg["signal_min_gain_pct"]
+        )
 
         # vencimientos cercanos
         exps = list(t.options or [])
@@ -369,7 +384,8 @@ def main():
     out = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "config": {k: cfg[k] for k in ("max_expirations", "max_days_out",
-                                       "unusual_min_volume", "catalyst_horizon_days")},
+                                       "unusual_min_volume", "catalyst_horizon_days",
+                                       "signal_min_gain_pct")},
         "count": len(records),
         "records": records,
     }
