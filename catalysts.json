@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-08-07T01:03:40+00:00",
+  "generated_at": "2026-08-07T22:04:28+00:00",
   "mode": "market",
   "horizon_days": 90,
-  "count": 1851,
+  "count": 1880,
   "by_type": {
-    "M&A / 8-K": 69,
-    "IPO": 2,
-    "Ensayo Fase 1, Fase 2": 50,
-    "Ensayo Fase 2": 143,
-    "Ensayo Fase 3": 73,
-    "Ensayo Fase 2, Fase 3": 13,
+    "M&A / 8-K": 86,
+    "IPO": 4,
+    "Ensayo Fase 1, Fase 2": 56,
+    "Ensayo Fase 2": 159,
+    "Ensayo Fase 2, Fase 3": 14,
+    "Ensayo Fase 3": 60,
     "Ensayo Fase3": 1,
     "Earnings": 1500
   },
@@ -72,16 +72,6 @@
       "title": "8-K - merger agreement",
       "source": "SEC EDGAR",
       "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001334978&type=8-K",
-      "days": -2
-    },
-    {
-      "date": "2026-08-05",
-      "type": "M&A / 8-K",
-      "ticker": "ACA",
-      "company": "Arcosa, Inc.",
-      "title": "8-K - merger agreement",
-      "source": "SEC EDGAR",
-      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001739445&type=8-K",
       "days": -2
     },
     {
@@ -397,26 +387,6 @@
     {
       "date": "2026-08-06",
       "type": "M&A / 8-K",
-      "ticker": "LEG",
-      "company": "LEGGETT & PLATT INC",
-      "title": "8-K - merger agreement",
-      "source": "SEC EDGAR",
-      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000058492&type=8-K",
-      "days": -1
-    },
-    {
-      "date": "2026-08-06",
-      "type": "M&A / 8-K",
-      "ticker": "GSAT",
-      "company": "Globalstar, Inc.",
-      "title": "8-K - merger agreement",
-      "source": "SEC EDGAR",
-      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001366868&type=8-K",
-      "days": -1
-    },
-    {
-      "date": "2026-08-06",
-      "type": "M&A / 8-K",
       "ticker": "",
       "company": "Golub Capital Private Income Fund S",
       "title": "8-K - tender offer",
@@ -447,21 +417,21 @@
     {
       "date": "2026-08-06",
       "type": "M&A / 8-K",
-      "ticker": "DXLG",
-      "company": "DESTINATION XL GROUP, INC.",
-      "title": "8-K - tender offer",
-      "source": "SEC EDGAR",
-      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000813298&type=8-K",
-      "days": -1
-    },
-    {
-      "date": "2026-08-06",
-      "type": "M&A / 8-K",
       "ticker": "OPTU",
       "company": "Optimum Communications, Inc.",
       "title": "8-K - tender offer",
       "source": "SEC EDGAR",
       "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001702780&type=8-K",
+      "days": -1
+    },
+    {
+      "date": "2026-08-06",
+      "type": "M&A / 8-K",
+      "ticker": "DXLG",
+      "company": "DESTINATION XL GROUP, INC.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000813298&type=8-K",
       "days": -1
     },
     {
@@ -617,16 +587,6 @@
     {
       "date": "2026-08-06",
       "type": "M&A / 8-K",
-      "ticker": "TARS",
-      "company": "Tarsus Pharmaceuticals, Inc.",
-      "title": "8-K - tender offer",
-      "source": "SEC EDGAR",
-      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001819790&type=8-K",
-      "days": -1
-    },
-    {
-      "date": "2026-08-06",
-      "type": "M&A / 8-K",
       "ticker": "CNET",
       "company": "ZW Data Action Technologies Inc.",
       "title": "8-K - acquisition agreement",
@@ -706,10 +666,220 @@
     },
     {
       "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "DFH",
+      "company": "Dream Finders Homes, Inc.",
+      "title": "8-K - merger agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001825088&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "BZH",
+      "company": "BEAZER HOMES USA INC",
+      "title": "8-K - merger agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000915840&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "Pono Capital Four, Inc.  (PONO, PONOR, PONOU)",
+      "title": "8-K - merger agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002108164&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "DV",
+      "company": "DoubleVerify Holdings, Inc.",
+      "title": "8-K - merger agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001819928&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "NATH",
+      "company": "NATHANS FAMOUS, INC.",
+      "title": "8-K - merger agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000069733&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "USAR",
+      "company": "USA Rare Earth, Inc.",
+      "title": "8-K - merger agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001970622&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "QNBC",
+      "company": "QNB CORP.",
+      "title": "8-K - merger agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000750558&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "NNN",
+      "company": "NNN REIT, INC.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000751364&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "BATL",
+      "company": "BATTALION OIL CORP",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001282648&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "Pono Capital Four, Inc.  (PONO, PONOR, PONOU)",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002108164&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "Churchill Capital Corp XIII  (XIII, XIIIU)",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002114229&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "BCIC",
+      "company": "BCP Investment Corp",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001372807&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "Mercator Acquisition Corp.  (MRCO, MRCOU)",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002106436&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "AMERICAN REBEL HOLDINGS INC  (AREB, AREBW)",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001648087&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "ZARE",
+      "company": "Ares Real Estate Income Trust Inc.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001327978&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "CLS",
+      "company": "CELESTICA INC",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001030894&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "ARES INDUSTRIAL REAL ESTATE INCOME TRUST Inc.",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001625941&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "",
+      "company": "Local Bounti Corporation/DE  (LOCL, LOCLW)",
+      "title": "8-K - tender offer",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001840780&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "BZH",
+      "company": "BEAZER HOMES USA INC",
+      "title": "8-K - acquisition agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000915840&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "DFH",
+      "company": "Dream Finders Homes, Inc.",
+      "title": "8-K - acquisition agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001825088&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "M&A / 8-K",
+      "ticker": "VSTM",
+      "company": "Verastem, Inc.",
+      "title": "8-K - acquisition agreement",
+      "source": "SEC EDGAR",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001526119&type=8-K",
+      "days": 0
+    },
+    {
+      "date": "2026-08-07",
       "type": "IPO",
       "ticker": "BLSM",
       "company": "BlossomHill Therapeutics, Inc.",
-      "title": "IPO NASDAQ Global Select 15.00-17.00",
+      "title": "IPO NASDAQ Global Select 16.00",
       "source": "Finnhub",
       "url": "",
       "days": 0
@@ -719,10 +889,40 @@
       "type": "IPO",
       "ticker": "LTGO",
       "company": "Latigo Biotherapeutics, Inc.",
-      "title": "IPO NASDAQ Global Select 16.00-18.00",
+      "title": "IPO NASDAQ Global Select 18.00",
       "source": "Finnhub",
       "url": "",
       "days": 0
+    },
+    {
+      "date": "2026-08-07",
+      "type": "IPO",
+      "ticker": "OCLTU",
+      "company": "OceanLight Acquisition Corp",
+      "title": "IPO NASDAQ Global 10.00",
+      "source": "Finnhub",
+      "url": "",
+      "days": 0
+    },
+    {
+      "date": "2026-08-08",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Wigen Biomedicine Technology (Shanghai) Co., Ltd.",
+      "title": "A Study Explore WJB001 Capsules in Patients With Advanced Solid Tumors",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05773820",
+      "days": 1
+    },
+    {
+      "date": "2026-08-10",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "ModernaTX, Inc.",
+      "title": "A Dose-finding Study to Evaluate mRNA-3210 in Participants With Phenylketonuria",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06147856",
+      "days": 3
     },
     {
       "date": "2026-08-10",
@@ -735,14 +935,54 @@
       "days": 3
     },
     {
+      "date": "2026-08-10",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Shanghai Zhongshan Hospital",
+      "title": "Efficacy and Safety of LM-302 Combined With Gemcitabine CLDN 18.2 Positive Unresectable Locally Advanced or Metastatic Pancreatic Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07108504",
+      "days": 3
+    },
+    {
       "date": "2026-08-12",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Peking Union Medical College Hospital",
-      "title": "Polymeric Micellar Paclitaxel-Based Combination Therapy for Advanced Biliary Tract Cancer",
+      "company": "University of Washington",
+      "title": "Low Dose Mosunetuzumab for the Treatment of Patients With Indolent B-Cell Lymphoma",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07159204",
+      "url": "https://clinicaltrials.gov/study/NCT06442475",
       "days": 5
+    },
+    {
+      "date": "2026-08-13",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Hinova Pharmaceuticals Inc.",
+      "title": "A Trial to Evaluate the Efficacy, Safety, PK, and PD of HP515 in Non - Alcoholic Fatty Liver Disease ( NASH/MASH )",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07308548",
+      "days": 6
+    },
+    {
+      "date": "2026-08-13",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Hoffmann-La Roche",
+      "title": "Study to Assess Safety, Efficacy, Pharmacokinetics, and Pharmacodynamics of Crovalimab in Healthy Volunteers and Participants With Paroxysma",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT03157635",
+      "days": 6
+    },
+    {
+      "date": "2026-08-14",
+      "type": "Ensayo Fase 2, Fase 3",
+      "ticker": "",
+      "company": "University of Cincinnati",
+      "title": "REDEL Trial: Reduced Elective Nodal Dose for Anal Cancer Toxicity Mitigation",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05902533",
+      "days": 7
     },
     {
       "date": "2026-08-15",
@@ -758,31 +998,101 @@
       "date": "2026-08-15",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "University of Campania Luigi Vanvitelli",
-      "title": "CAPRI 2 GOIM Study: Investigate the Efficacy and Safety of a Bio-marker Driven Cetuximab-based Treatment Regimen",
+      "company": "University of Pennsylvania",
+      "title": "Open Label Trial of Oral Letermovir for CMV Prophylaxis in Thoracic Transplant Recipients",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05312398",
+      "url": "https://clinicaltrials.gov/study/NCT06066957",
+      "days": 8
+    },
+    {
+      "date": "2026-08-15",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "American University of Beirut Medical Center",
+      "title": "Vitamin C Effectiveness in Preventing Urinary Tract Infections After Gynecological Surgeries",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05913180",
+      "days": 8
+    },
+    {
+      "date": "2026-08-15",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "University of Minnesota",
+      "title": "ConnectedNest: a Digital Platform Connecting Individuals With Cancer to Social Care",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06559228",
       "days": 8
     },
     {
       "date": "2026-08-16",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "The University of Hong Kong-Shenzhen Hospital",
-      "title": "Individualized Neoantigen Therapy with Unusual Radiotherapy Enhancement (iNATURE)",
+      "company": "JenKem Technology Co., Ltd.",
+      "title": "JK-1201I Combined with Adjuvant Temozolomide in Patients with Newly Diagnosed Glioblastoma Multiforme (GBM)",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06314087",
+      "url": "https://clinicaltrials.gov/study/NCT06595186",
       "days": 9
     },
     {
-      "date": "2026-08-16",
+      "date": "2026-08-17",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Harbin Medical University",
-      "title": "Treatment of Rectal Cancer With Long-term Concurrent Chemoradiotherapy Combined With Camrelizumab",
+      "company": "Verona Pharma, Inc., a subsidiary of Merck & Co., Inc. (Rahway, New Jersey USA",
+      "title": "A Phase IIb Ensifentrine-glycopyrrolate Fixed-dose Combination Dose Ranging Study in Subjects With COPD",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06304545",
-      "days": 9
+      "url": "https://clinicaltrials.gov/study/NCT07016412",
+      "days": 10
+    },
+    {
+      "date": "2026-08-18",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Merck Sharp & Dohme LLC",
+      "title": "A Study of Raludotatug Deruxtecan (R-DXd) in People With Gastrointestinal Cancers (MK-5909-005)",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06864169",
+      "days": 11
+    },
+    {
+      "date": "2026-08-18",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "University of Sao Paulo General Hospital",
+      "title": "Estradiol and Testosterone Subdermal Implants for Menopause Treatment (ESTIME)",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06343870",
+      "days": 11
+    },
+    {
+      "date": "2026-08-19",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "M.D. Anderson Cancer Center",
+      "title": "Proton Beam Therapy for Chondrosarcoma",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT00496522",
+      "days": 12
+    },
+    {
+      "date": "2026-08-19",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "ViiV Healthcare",
+      "title": "A Study to Evaluate the Effectiveness of Long-acting (LA) Cabotegravir (CAB) + Rilpivirine (RPV) LA When Given to Participants With Detectab",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06694805",
+      "days": 12
+    },
+    {
+      "date": "2026-08-20",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Roswell Park Cancer Institute",
+      "title": "Pazopanib Hydrochloride and Bevacizumab in Treating Patients With Previously Untreated Metastatic Kidney Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT01684397",
+      "days": 13
     },
     {
       "date": "2026-08-20",
@@ -796,22 +1106,32 @@
     },
     {
       "date": "2026-08-21",
-      "type": "Ensayo Fase 1, Fase 2",
+      "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Merck Sharp & Dohme LLC",
-      "title": "Substudy 03A: A Study of Immune and Targeted Combination Therapies in Participants With First Line (1L) Renal Cell Carcinoma (MK-3475-03A)",
+      "company": "Novo Nordisk A/S",
+      "title": "A Research Study to Investigate the Effects of CagriSema Compared to Placebo in People With Type 2 Diabetes and Painful Diabetic Peripheral ",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04626479",
+      "url": "https://clinicaltrials.gov/study/NCT06797869",
+      "days": 14
+    },
+    {
+      "date": "2026-08-21",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Longboard Pharmaceuticals",
+      "title": "A Phase 3, Placebo-Controlled Study to Investigate LP352 in Children and Adults With Dravet Syndrome (DS)",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06660394",
       "days": 14
     },
     {
       "date": "2026-08-22",
-      "type": "Ensayo Fase 2",
+      "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "M.D. Anderson Cancer Center",
-      "title": "A Pilot Study of Emapalumab for the Treatment of CAR T-Cell Therapy-Associated Prolonged Cytopenia",
+      "company": "State University of New York at Buffalo",
+      "title": "Pain Control Alternatives in Pediatric Patients With Distal Radius Fractures",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06285825",
+      "url": "https://clinicaltrials.gov/study/NCT07120763",
       "days": 15
     },
     {
@@ -825,103 +1145,63 @@
       "days": 16
     },
     {
-      "date": "2026-08-23",
+      "date": "2026-08-26",
       "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "Pfizer",
-      "title": "A Study to Learn About the Study Medicine (Called PF-07220060 in Combination With PF-07104091) In Participants With Breast Cancer and Solid ",
+      "company": "Shanghai Runshi Pharmaceutical Technology Co., Ltd",
+      "title": "A PhaseⅠ/Ⅱ Study of Simmitinib or Irinotecan Liposomes Combined With DP303c in Gastric Adenocarcinoma or Gastroesophageal Junction Adenocarc",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05262400",
-      "days": 16
-    },
-    {
-      "date": "2026-08-24",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "Suzhou HepaThera Biotech Co., Ltd.",
-      "title": "A Clinical Study of HT-101 and/or HT-102 in Patients With Chronic Hepatitis B Virus Infection",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07183306",
-      "days": 17
-    },
-    {
-      "date": "2026-08-25",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Sanofi",
-      "title": "A Study to Investigate the Efficacy and Safety of Rilzabrutinib in Adult Participants With Graves' Disease",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06984627",
-      "days": 18
+      "url": "https://clinicaltrials.gov/study/NCT06577376",
+      "days": 19
     },
     {
       "date": "2026-08-26",
-      "type": "Ensayo Fase 3",
+      "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Ain Shams University",
-      "title": "Effect of Tributyrin Supplementation on Glycemic Control, Inflammation, and Cardiovascular Risk in Patients With Type 2 Diabetes",
+      "company": "Hoffmann-La Roche",
+      "title": "A Study to Assess the Efficacy and Safety of Satralizumab in Duchenne Muscular Dystrophy (DMD)",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07503548",
+      "url": "https://clinicaltrials.gov/study/NCT06450639",
       "days": 19
     },
     {
       "date": "2026-08-27",
-      "type": "Ensayo Fase 3",
+      "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "Institut Bergonié",
-      "title": "Cryoablation in Combination (or Not) With Pembrolizumab and Pemetrexed-carboplatin in 1st-line Treatment for Patients With Metastatic Lung A",
+      "company": "China Medical University Hospital",
+      "title": "Nintedanib Plus EGFR TKI In EGFR-mutated Non-small Cell Lung Cancer Patients",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04339218",
+      "url": "https://clinicaltrials.gov/study/NCT06071013",
       "days": 20
-    },
-    {
-      "date": "2026-08-27",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "On Pharma Importadora, Exportadora e Distribuidora de Medicamentos LTDA.",
-      "title": "V-IMMUNE® for Immune Thrombocytopenia",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06962631",
-      "days": 20
-    },
-    {
-      "date": "2026-08-28",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Tata Memorial Centre",
-      "title": "Use of a New Medicine \"Daratumumab\" to Treat Left-over Cancer in a Blood Cancer Called \"T Acute Lymphoblastic Leukemia\"",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07021677",
-      "days": 21
-    },
-    {
-      "date": "2026-08-29",
-      "type": "Ensayo Fase 2, Fase 3",
-      "ticker": "",
-      "company": "Panbela Therapeutics, Inc.",
-      "title": "Study of Nab-Paclitaxel and Gemcitabine With or Without SBP-101 in Pancreatic Cancer",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05254171",
-      "days": 22
     },
     {
       "date": "2026-08-30",
-      "type": "Ensayo Fase 2",
+      "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "TJ Biopharma Co., Ltd.",
-      "title": "A Study to Compare Uliledlimab Combined With Sintilimab and Chemotherapy Versus Sintilimab Combined With Chemotherapy in Patients With Previ",
+      "company": "Fujian Haixi Pharmaceuticals Co., Ltd.",
+      "title": "Assessment of the Safety and Efficacy of C019199 Plus Sintilimab in Participants With Advanced Solid Tumors",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07005336",
+      "url": "https://clinicaltrials.gov/study/NCT06220318",
       "days": 23
     },
     {
       "date": "2026-08-30",
       "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Beletalent (Zhuhai) Pharmaceutical Co., Ltd",
-      "title": "Clinical Study on the Efficacy and Safety of TNTL in the Treatment of Non-proliferative Diabetic Retinopathy",
+      "company": "University of California, Davis",
+      "title": "Tumescence in HNC Skin Graft Reconstruction",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06817265",
+      "url": "https://clinicaltrials.gov/study/NCT04967391",
+      "days": 23
+    },
+    {
+      "date": "2026-08-30",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Unity Health Toronto",
+      "title": "COntralateral CorticoSTeroid Injection in Total Knee Arthroplasty",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06809998",
       "days": 23
     },
     {
@@ -938,10 +1218,20 @@
       "date": "2026-08-30",
       "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Al-Azhar University",
-      "title": "Adding Dexmedetomidine or Tramadol to Paracetamol- An Effort to Attenuate Catheter Related Bladder Discomfort",
+      "company": "Beletalent (Zhuhai) Pharmaceutical Co., Ltd",
+      "title": "Clinical Study on the Efficacy and Safety of TNTL in the Treatment of Non-proliferative Diabetic Retinopathy",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06274333",
+      "url": "https://clinicaltrials.gov/study/NCT06817265",
+      "days": 23
+    },
+    {
+      "date": "2026-08-30",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "TCM Biotech International Corp.",
+      "title": "A Study of PTX-9908 Injection for Non-resectable HCC with TACE",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT03812874",
       "days": 23
     },
     {
@@ -958,20 +1248,10 @@
       "date": "2026-08-30",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Goldman, Butterwick, Fitzpatrick and Groff",
-      "title": "Assess Impact of Poly-L-lactic Acid on GLP1 Subjects",
+      "company": "Region Örebro County",
+      "title": "A Randomized Controlled Trial With Rituximab for Psychotic Disorder in Adults",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07217743",
-      "days": 23
-    },
-    {
-      "date": "2026-08-30",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Bai-Rong Xia",
-      "title": "Chemotherapy Combined With Propranolol Hydrochloride as Neoadjuvant Therapy for Advanced High-grade Serous Ovarian Cancer",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07125391",
+      "url": "https://clinicaltrials.gov/study/NCT05622201",
       "days": 23
     },
     {
@@ -985,23 +1265,23 @@
       "days": 23
     },
     {
-      "date": "2026-08-30",
+      "date": "2026-08-31",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "ReCode Therapeutics",
-      "title": "A Phase 2 Study Evaluating Safety and Tolerability of RCT2100 (CFTR mRNA) in Healthy Participants and in Participants With CF",
+      "company": "Brown University",
+      "title": "Alpha-1 Blockade for Alcohol Use Disorder (AUD)",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06237335",
-      "days": 23
+      "url": "https://clinicaltrials.gov/study/NCT04135846",
+      "days": 24
     },
     {
       "date": "2026-08-31",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Hubei Cancer Hospital",
-      "title": "SBRT, Chemotherapy, and AK112 Neoadjuvant Therapy for Luminal-type Breast Cancer",
+      "company": "University of Louisville",
+      "title": "LGG Supplementation in Patients With AUD and ALD",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06402435",
+      "url": "https://clinicaltrials.gov/study/NCT05178069",
       "days": 24
     },
     {
@@ -1016,72 +1296,62 @@
     },
     {
       "date": "2026-08-31",
-      "type": "Ensayo Fase 1, Fase 2",
+      "type": "Ensayo Fase 2, Fase 3",
       "ticker": "",
-      "company": "Fudan University",
-      "title": "Study of SHR-A1811 Combined With Pyrotinib and Bevacizumab in Advanced Breast Cancer With Brain Metastasis",
+      "company": "Shanghai Yinnuo Pharmaceutical Technology Co., Ltd.",
+      "title": "The Efficacy and Safety of Efsubaglutide Alfa Injection in Overweight and Obese Subjects (ENLIGHT)",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06718933",
-      "days": 24
-    },
-    {
-      "date": "2026-08-31",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Heinrich-Heine University, Duesseldorf",
-      "title": "PRIMETEST II - Clinical Stage II A/B Seminoma Treated With RA-RPLND",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06144736",
+      "url": "https://clinicaltrials.gov/study/NCT06921486",
       "days": 24
     },
     {
       "date": "2026-08-31",
       "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "University of Alabama at Birmingham",
-      "title": "Intrapartum Sildenafil in Laboring Mothers",
+      "company": "Sichuan Jishengtang Pharmaceutical Co., Ltd.",
+      "title": "Phase 3 Clinical Trial of Wujia Yizhi Granules in the Treatment of Mild-to-moderate Alzheimer's Dementia (Syndrome of Deficiency of Spleen a",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06377098",
+      "url": "https://clinicaltrials.gov/study/NCT06534723",
       "days": 24
     },
     {
       "date": "2026-08-31",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Zhongshan Hospital (Xiamen), Fudan University",
-      "title": "Selinexor Monotherapy for Cytoreduction in BCR::ABL1-Negative Myeloproliferative Neoplasms",
+      "company": "Canadian Cancer Trials Group",
+      "title": "Neoadjuvant Platform Trial in Non-Small Cell Lung Cancer",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07626021",
-      "days": 24
-    },
-    {
-      "date": "2026-08-31",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "Ipsen",
-      "title": "A Study to Assess the Safety and Efficacy of IPN10200 in Adult Participants With Moderate to Severe Upper Facial Lines",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04821089",
-      "days": 24
-    },
-    {
-      "date": "2026-08-31",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "University of Colorado, Denver",
-      "title": "Effect of Amino Acids on Hepatic Fat Content in Adolescents (AMINOS Study)",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05935826",
+      "url": "https://clinicaltrials.gov/study/NCT05714891",
       "days": 24
     },
     {
       "date": "2026-08-31",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Sun Yat-sen University",
-      "title": "Ivonescimab Combined With Chemoradiotherapy in High-Risk Locoregionally Advanced Nasopharyngeal Carcinoma",
+      "company": "National Cancer Institute (NCI)",
+      "title": "Testing Olaparib Either Alone or in Combination With Atezolizumab in BRCA Mutant Non-HER2-positive Breast Cancer",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07064902",
+      "url": "https://clinicaltrials.gov/study/NCT02849496",
+      "days": 24
+    },
+    {
+      "date": "2026-08-31",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Nantong Bencao Quadriga Medical Technology Co. Ltd.",
+      "title": "A Phase IIa Study to Evaluate NBQ72S",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06810804",
+      "days": 24
+    },
+    {
+      "date": "2026-08-31",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Shanghai Changzheng Hospital",
+      "title": "Irinotecan Hydrochloride Liposome Injection (Ⅱ) Combined with Fluorouracil, Folinic Acid, Vermofenib and Cetuximab in First-line Treatment o",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06603376",
       "days": 24
     },
     {
@@ -1096,212 +1366,112 @@
     },
     {
       "date": "2026-08-31",
-      "type": "Ensayo Fase 2",
+      "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Kyowa Kirin Co., Ltd.",
-      "title": "Study to Assess the Efficacy & Safety of KHK4951 in Patients With Neovascular Age-Related Macular Degeneration",
+      "company": "The Affiliated Nanjing Drum Tower Hospital of Nanjing University Medical School",
+      "title": "Effect of Colchicine on Perioperative Anti-inflammatory Organ Injury in Cardiac Surgery",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06116890",
+      "url": "https://clinicaltrials.gov/study/NCT06118034",
       "days": 24
     },
     {
       "date": "2026-08-31",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Imperial College London",
-      "title": "Additional Treatments to the Local Tumour for Metastatic Prostate Cancer: Assessment of Novel Treatment Algorithms",
+      "company": "Heinrich-Heine University, Duesseldorf",
+      "title": "PRIMETEST II - Clinical Stage II A/B Seminoma Treated With RA-RPLND",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT03763253",
-      "days": 24
-    },
-    {
-      "date": "2026-08-31",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "Myrtelle Inc.",
-      "title": "rAAV-Olig001-ASPA Gene Therapy for Treatment of Children With Typical Canavan Disease",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04833907",
-      "days": 24
-    },
-    {
-      "date": "2026-08-31",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Hubei Cancer Hospital",
-      "title": "SBRT, Chemotherapy, and AK104 Neoadjuvant Therapy for Triple-negative Breast Cancer (TNBC)",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06401005",
+      "url": "https://clinicaltrials.gov/study/NCT06144736",
       "days": 24
     },
     {
       "date": "2026-08-31",
       "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "M.D. Anderson Cancer Center",
-      "title": "Ph I/II Trial of Cord Blood-derived NK Cells With NY-ESO-1 TCR/IL-15 for R/R Myeloma",
+      "company": "Fudan University",
+      "title": "Study of SHR-A1811 Combined With Pyrotinib and Bevacizumab in Advanced Breast Cancer With Brain Metastasis",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06066359",
+      "url": "https://clinicaltrials.gov/study/NCT06718933",
       "days": 24
     },
     {
       "date": "2026-08-31",
-      "type": "Ensayo Fase 3",
+      "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "UCB Biopharma SRL",
-      "title": "A Study to Test the Efficacy and Safety of Staccato Alprazolam in Study Participants 12 Years of Age and Older With Stereotypical Prolonged ",
+      "company": "Verastem, Inc.",
+      "title": "Study of Avutometinib (VS-6766) +Defactinib With Gemcitabine and Nab-paclitaxel in Patients With Pancreatic Cancer",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05077904",
-      "days": 24
-    },
-    {
-      "date": "2026-08-31",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "University of Southern California",
-      "title": "Tirzepatide for Alcohol Use Disorder",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06994338",
-      "days": 24
-    },
-    {
-      "date": "2026-08-31",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Daiichi Sankyo",
-      "title": "Trastuzumab Deruxtecan for Subjects With HER2-Positive Gastric Cancer or Gastro-Esophageal Junction Adenocarcinoma After Progression on or A",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04704934",
-      "days": 24
-    },
-    {
-      "date": "2026-08-31",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "M.D. Anderson Cancer Center",
-      "title": "A Phase II Multicenter Study of Chemotherapy Versus Chemotherapy Plus Durvalumab (MEDI 4736) in Patients With Lymph Node Positive Urothelial",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05137262",
+      "url": "https://clinicaltrials.gov/study/NCT05669482",
       "days": 24
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Assistance Publique Hopitaux De Marseille",
-      "title": "Assessment of the Efficacy and Tolerance of Sub-cutaneous Re-injection of Autologous Adipose-derived REGEnerative Cells in the Local Treatme",
+      "company": "Tourmaline Bio, Inc., a Novartis Company",
+      "title": "A Study to Investigate Efficacy and Safety of TOUR006 in Participants 18 to 80 Years of Age With Thyroid Eye Disease",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT02866565",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Chulalongkorn University",
-      "title": "Transdermal Ethinyl Estradiol and Norelgestromin for Irregular Bleeding in Contraceptive Implant Users",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07083635",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Centre Hospitalier Universitaire de Nice",
-      "title": "Clinical Trial to Compare Oral Isotretinoin to Standard of Care in Moderate Acne Skin of Color Patients",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06447480",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Rophibio, Inc.",
-      "title": "A Phase 3 Clinical Trial to Compare RBS-001 to Eylea® in Subjects With Neovascular Age-Related Macular Degeneration",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06470373",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Beth Israel Deaconess Medical Center",
-      "title": "Treating Schizophrenia by Correcting Abnormal Brain Development",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT00179465",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Universidad de Almeria",
-      "title": "Tributyrin Treatment in Mild Alzheimer Disease: Assessment of Butyrate Effects Via the Gut-Brain",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06797817",
+      "url": "https://clinicaltrials.gov/study/NCT06088979",
       "days": 25
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "Stanford University",
-      "title": "Panitumumab-IRDye800 in Detecting Cancer in Participants With Lung Cancer During Surgery",
+      "company": "Moogene Medi Co., Ltd",
+      "title": "Assessment of Dutasteride Topical Solution in Male Androgenetic Alopecia",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT03582124",
+      "url": "https://clinicaltrials.gov/study/NCT07490327",
       "days": 25
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Centre Antoine Lacassagne",
-      "title": "Study of the Impact of DPD Activity on the Efficacy of Capecitabine",
+      "company": "Ruijin Hospital",
+      "title": "A Clinical Study of the Efficacy of Idebenone in the Treatment of iRBD Into Synucleinopathies",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04198727",
+      "url": "https://clinicaltrials.gov/study/NCT04534023",
       "days": 25
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "ProGen. Co., Ltd.",
-      "title": "Phase 2 Randomized Study of PG-102 vs Placebo and Semaglutide in Type 2 Diabetes Mellitus",
+      "company": "Rutgers, The State University of New Jersey",
+      "title": "Comparison of High-Dose Rate Brachytherapy and Stereotactic Ablative Radiotherapy as Monotherapy for the Treatment of Localized Prostate Can",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07187856",
+      "url": "https://clinicaltrials.gov/study/NCT04253483",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Gasherbrum Bio, Inc., a wholly owned subsidiary of Structure Therapeutics",
+      "title": "Aleniglipron Phase 2 in Type 2 Diabetes Mellitus",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07400588",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Nanjing Chia-tai Tianqing Pharmaceutical",
+      "title": "Evaluate the Efficacy and Safety of NTQ5082 Capsules in Patients With Primary IgA Nephropathy",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06982040",
       "days": 25
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "University Hospital Goettingen",
-      "title": "Phase 3 Clinical Trial with Dapagliflozin in Chronic Kidney Disease in Adolescents and Young Adult Patients",
+      "company": "Cook MyoSite",
+      "title": "Autologous Muscle Derived Cells Compared to Placebo for Urinary Sphincter Repair in Post-surgical Female Stress Incontinence",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05944016",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Wayne State University",
-      "title": "TNF-α Treatment of Blast-Induced Tinnitus",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04066348",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Institute of Mental Health, Singapore",
-      "title": "An Open-Label, Single Arm Study of the Efficacy of Accelerated Intermittent Theta Burst Stimulation in Schizophrenia Patients With Persisten",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06351514",
+      "url": "https://clinicaltrials.gov/study/NCT03104517",
       "days": 25
     },
     {
@@ -1316,42 +1486,72 @@
     },
     {
       "date": "2026-09-01",
-      "type": "Ensayo Fase 1, Fase 2",
+      "type": "Ensayo Fase 2, Fase 3",
       "ticker": "",
-      "company": "ORIC Pharmaceuticals",
-      "title": "Study of ORIC-114 in Patients With Advanced Solid Tumors Harboring an EGFR or HER2 Alteration",
+      "company": "REGENXBIO Inc.",
+      "title": "AFFINITY DUCHENNE: RGX-202 Gene Therapy in Participants With Duchenne Muscular Dystrophy (DMD)",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05315700",
+      "url": "https://clinicaltrials.gov/study/NCT05693142",
       "days": 25
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "AbbVie",
-      "title": "A Study to Assess Adverse Events, Change in Disease Activity, and How the Drug Moves Through the Body in Children With Juvenile Psoriatic Ar",
+      "company": "Supernus Pharmaceuticals, Inc.",
+      "title": "Open-label Study to Evaluate Long-term Safety and Efficacy of SPN-812 (Viloxazine Extended-release Capsule)",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06100744",
+      "url": "https://clinicaltrials.gov/study/NCT02736656",
       "days": 25
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Tianjin Medical University Cancer Institute and Hospital",
-      "title": "Phase II Clinical Study of GemOX Hepatic Arterial Infusion Combined with Lenvatinib and Toripalimab for Advanced and Unresectable Intrahepat",
+      "company": "Second Affiliated Hospital, Zhejiang University, School of Medicine",
+      "title": "A Clinical Trial of Rimegepant for Vestibular Migraine Evaluation: Pre-experiment",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06852287",
+      "url": "https://clinicaltrials.gov/study/NCT06748664",
       "days": 25
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "CHU de Quebec-Universite Laval",
-      "title": "A Phase II Trial of Bicalutamide in Patients Receiving Intravesical BCG for Non-muscle Invasive Bladder Cancer",
+      "company": "Fudan University",
+      "title": "Fluzoparib Combined With Dalpiciclib for Platinum Resistant Recurrent Ovarian Cancer",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05327647",
+      "url": "https://clinicaltrials.gov/study/NCT06552858",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Case Comprehensive Cancer Center",
+      "title": "Prehabilitation for EOC, Fallopian Tube, Primary Peritoneal Carcinoma and Pancreatic Cancer w/ NACT",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06412510",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2, Fase 3",
+      "ticker": "",
+      "company": "Stefan Holubar MD MS FACS, FASCRS",
+      "title": "Pyridostigmine Efficacy and Safety for Treatment of Ileus After Colorectal Surgery",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05334485",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2, Fase 3",
+      "ticker": "",
+      "company": "University Hospital, Angers",
+      "title": "Tolerance and Efficacy Nicotinamide (Vitamin B3) in Dominant Optic Atrophy OPA1",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06007391",
       "days": 25
     },
     {
@@ -1368,130 +1568,60 @@
       "date": "2026-09-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Lei Zheng",
-      "title": "A Neoadjuvant Study of Tislelizumab and SX-682 for Resectable Pancreas Cancer",
+      "company": "H. Lee Moffitt Cancer Center and Research Institute",
+      "title": "Study of Adaptive Immunotherapy With VEGFR-TKI in Patients With Advanced RCC",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05604560",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "Qilu Pharmaceutical Co., Ltd.",
-      "title": "A Clinical Study to Evaluate the Safety, Tolerability, and Efficacy of QLC1101 in Combination With Other Therapies in the Treatment of Patie",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06949761",
+      "url": "https://clinicaltrials.gov/study/NCT06860386",
       "days": 25
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Alliance for Clinical Trials in Oncology",
-      "title": "Testing Laser Therapy for Treatment of Vaginal Dryness in Survivors of Breast Cancer, The Revitalize Trial",
+      "company": "Alfasigma S.p.A.",
+      "title": "Filgotinib in Long-Term Extension Study of Adults With Ulcerative Colitis",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05379153",
+      "url": "https://clinicaltrials.gov/study/NCT02914535",
       "days": 25
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Design Therapeutics, Inc.",
-      "title": "DT-168 in Keratoplasty Patients With Fuchs Endothelial Corneal Dystrophy",
+      "company": "Melanoma Institute Australia",
+      "title": "Neoadjuvant Nivolumab and Relatlimab in Cutaneous Squamous Cell Carcinoma",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07024693",
+      "url": "https://clinicaltrials.gov/study/NCT06288191",
       "days": 25
     },
     {
       "date": "2026-09-01",
-      "type": "Ensayo Fase 2",
+      "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Vanderbilt University Medical Center",
-      "title": "Glucagon-Like Peptide-1 Receptor Agonist in the Treatment of Adult, Obesity-related, Symptomatic Asthma (GATA-3)",
+      "company": "CSPC Zhongnuo Pharmaceutical (Shijiazhuang) Co., Ltd.",
+      "title": "Clinical Study of Mitoxantrone Hydrochloride Liposome Injection Combined With Capecitabine Versus Capecitabine Monotherapy in Patients With ",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05254314",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Chang Gung Memorial Hospital",
-      "title": "Efficacy Biomarkers of DAOIB for Dementia",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05582161",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Karyopharm Therapeutics Inc",
-      "title": "A Study to Evaluate Single Agent Selinexor Versus Physician's Choice in Participants With Previously Treated Myelofibrosis",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04562870",
+      "url": "https://clinicaltrials.gov/study/NCT05717764",
       "days": 25
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "Suzhou Zelgen Biopharmaceuticals Co.,Ltd",
-      "title": "Study of ZG006 in Participants With Small Cell Lung Cancer or Neuroendocrine Carcinoma",
+      "company": "Nacuity Pharmaceuticals, Inc.",
+      "title": "NPI-002 Intravitreal Implant for the Delay of Cataract Progression",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05978284",
+      "url": "https://clinicaltrials.gov/study/NCT05026632",
       "days": 25
     },
     {
       "date": "2026-09-01",
-      "type": "Ensayo Fase 2",
+      "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "Fudan University",
-      "title": "Disitamab Vedotin Combined With BCG Therapy in HER2-expressing High-risk Non-muscle Invasive Bladder Cancer",
+      "company": "Chia Tai Tianqing Pharmaceutical Group Co., Ltd.",
+      "title": "Clinical Trial Evaluating TQB6411 Injection in Participant s With Esophageal Cancer",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06187506",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Loma Linda University",
-      "title": "Testing the Combination of Two Approved Chemotherapy Drugs and Radiation Prior to Surgery in Localized Pancreatic Cancer",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT03492671",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "University of Rochester",
-      "title": "Trial of Neratinib Plus Capecitabine in Subjects With HER2-Negative Metastatic Breast Cancer With Brain Metastases and Abnormally Active HER",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04965064",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Vanda Pharmaceuticals",
-      "title": "Safety, Tolerability and Efficacy of Trichostatin A in Patients With Mild to Severe Onychomycosis",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07065773",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Glaukos Corporation",
-      "title": "Evaluation of the Safety and Efficacy of GLK-321 in Subjects With Demodex Blepharitis",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07400965",
+      "url": "https://clinicaltrials.gov/study/NCT07367516",
       "days": 25
     },
     {
@@ -1508,40 +1638,180 @@
       "date": "2026-09-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Guiyang Medical University",
-      "title": "Clinical Study of Radiotherapy Combined With Nedaplatin Contrast and Cisplatin for the Treatment of Locally Advanced Head and Neck Squamous ",
+      "company": "Institut Claudius Regaud",
+      "title": "A Study to Evaluate Pre-operative HYPOfractionated Radiation Therapy in Aged (≥ 70 Years Old) or \"Fragile\" (≥ 65 Years) Patients With Limb o",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05039606",
+      "url": "https://clinicaltrials.gov/study/NCT06022159",
       "days": 25
     },
     {
       "date": "2026-09-01",
-      "type": "Ensayo Fase 1, Fase 2",
+      "type": "Ensayo Fase 2, Fase 3",
       "ticker": "",
-      "company": "Mabwell (Shanghai) Bioscience Co., Ltd.",
-      "title": "Phase I/II FIH Study of 9MW2921 in Patients With Advanced Solid Tumors",
+      "company": "Vanderbilt University Medical Center",
+      "title": "Nitric Oxide Effect on Brain and Kidney in Pediatric Patients Undergoing Cardiopulmonary Bypass",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05990452",
+      "url": "https://clinicaltrials.gov/study/NCT05101746",
       "days": 25
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Universitaire Ziekenhuizen KU Leuven",
-      "title": "[18F]AlF-NOTA-octreotide PET/MRI in Carotid Artery Disease",
+      "company": "Minneapolis Veterans Affairs Medical Center",
+      "title": "Transcranial Direct Current Stimulation (TDCS) as an Intervention for Patients With Traumatic Brain Injury",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07104487",
+      "url": "https://clinicaltrials.gov/study/NCT02849223",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Abscint NV/SA",
+      "title": "HER2 Targeted Molecular Imaging in mBC and Other Metastatic Solid Carcinomas Using 68Ga-ABS011",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06369831",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "University of California, Irvine",
+      "title": "Risk-ADAPTed Conditioning Regimen for Allogeneic Hematopoietic Stem Cell Transplantation",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06028828",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Vejle Hospital",
+      "title": "Reducing Breathlessness With Dronabinol in COPD Patients",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06473701",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Memorial Sloan Kettering Cancer Center",
+      "title": "Partial Breast Irradiation (PBI) Using 40 Gy for Select Patients With Early Invasive or Noninvasive Breast Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT01203839",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Tianjin Medical University Cancer Institute and Hospital",
+      "title": "Sacituzumab Tirumotecan Plus Tagitanlimab in Previously Treated Locally Advanced or Metastatic Triple Negative Breast Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07153965",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Ain Shams University",
+      "title": "Efficacy and Safety of Simultaneous Integrated Boost Radiotherapy in HR/VHR Prostate Cancer With EPLNI",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07693075",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Alkermes, Inc.",
+      "title": "Study to Evaluate Weight Gain as Assessed by Change in BMI Z-score in Pediatric Subjects With Schizophrenia or Bipolar I Disorder",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05303064",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Gregory Jicha, MD, PhD",
+      "title": "Safety and Modulation of ABCC9 Pathways by Nicorandil for the Treatment of Hippocampal Sclerosis of Aging",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04120766",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "European LeukemiaNet",
+      "title": "2nd or 3rd TKI-stop After 2 Years Nilotinib Pre-treatment in CML-patients",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT02917720",
       "days": 25
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "Memorial Sloan Kettering Cancer Center",
-      "title": "Combining Ipilimumab With Abiraterone Acetate Plus Prednisone in Chemotherapy and Immunotherapy-naïve Patients With Progressive Metastatic C",
+      "company": "Kaplan Medical Center",
+      "title": "Intra-articular Allocetra in Osteoarthritis of the 1st Carpo-metacarpal Joint",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT01688492",
+      "url": "https://clinicaltrials.gov/study/NCT06459063",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Stanford University",
+      "title": "Efficacy of Nitrous Oxide in OCD: Pilot Study",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT03826693",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Medstar Health Research Institute",
+      "title": "Intravesical Lactobacillus for Urinary Symptoms Among People With NLUTD Who Use Indwelling Catheters",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04323735",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "University of Alberta",
+      "title": "Fiber and Metformin Combination Therapy in Adolescents With Severe Obesity and Insulin Resistance",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04578652",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Atea Pharmaceuticals, Inc.",
+      "title": "C-BEYOND: Efficacy and Safety of BEM/RZR vs. SOF/VEL in Subjects With Chronic HCV",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06868264",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Shanghai Mental Health Center",
+      "title": "Dual-target iTBS for Youth With ADHD",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07084649",
       "days": 25
     },
     {
@@ -1556,102 +1826,32 @@
     },
     {
       "date": "2026-09-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Tarian Pharma",
-      "title": "TAR-0520 Gel in EGFR Inhibitor-induced Folliculitis",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06818058",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Massachusetts General Hospital",
-      "title": "Cannabidiol for Reduction of Brain Neuroinflammation",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05066308",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Fudan University",
-      "title": "Tislelizumab Combined With Capecitabine for Nasopharyngeal Carcinoma With Residual EBV DNA After Radiotherapy",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07067268",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "R-Pharm International, LLC",
-      "title": "Pharmacokinetics, Efficacy and Safety of Olokizumab In Patients With Juvenile Idiopathic Arthritis",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07517575",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "University of Saskatchewan",
-      "title": "Evaluation of IRDye800CW-nimotuzumab in Lung Cancer Surgery",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04459065",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
       "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Cambridge University Hospitals NHS Foundation Trust",
-      "title": "Regeneration in Cervical Degenerative Myelopathy",
+      "company": "Arthrosi Therapeutics",
+      "title": "Phase 3 Evaluation of Efficacy and Safety of AR882 in Gout Patients (AR882-301)",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04631471",
+      "url": "https://clinicaltrials.gov/study/NCT06846515",
       "days": 25
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Children's Hospital Medical Center, Cincinnati",
-      "title": "Viral Specific T-cells for Treatment of Viral Infections After Solid Organ Transplant",
+      "company": "Wayne State University",
+      "title": "TNF-α Treatment of Blast-Induced Tinnitus",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04331275",
+      "url": "https://clinicaltrials.gov/study/NCT04066348",
       "days": 25
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Chia Tai Tianqing Pharmaceutical Group Nanjing Shunxin Pharmaceutical Co., Ltd.",
-      "title": "A Clinical Trial Evaluating TQB2102 for Injection in Combination With Behmosubaisumab/Payamprolizumab With or Without Chemotherapy in Unrese",
+      "company": "Rapport Therapeutics Inc.",
+      "title": "Study Evaluating the Efficacy and Safety of RAP-219 in Adult Participants With Bipolar I Disorder",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06767800",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "Peking Union Medical College Hospital",
-      "title": "Golidocitinib Plus CHOP in Newly Diagnosed PTCL",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06739265",
-      "days": 25
-    },
-    {
-      "date": "2026-09-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Daewoong Pharmaceutical Co. LTD.",
-      "title": "Evaluate the Efficacy and Safety of DWP16001 in Type 2 Diabetic Nephropathy with Moderate Renal Impairment Patients",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06606093",
+      "url": "https://clinicaltrials.gov/study/NCT07046494",
       "days": 25
     },
     {
@@ -1668,40 +1868,90 @@
       "date": "2026-09-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Beijing Continent Pharmaceutical Co, Ltd.",
-      "title": "F573 for Injection for the Treatment of Liver Injury/Failure",
+      "company": "Laval University",
+      "title": "Serotonin Receptor Blockers in Ischemic Mitral Regurgitation",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05689645",
+      "url": "https://clinicaltrials.gov/study/NCT05469165",
       "days": 25
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "University of Cincinnati",
-      "title": "Improving Neurotrauma by Depolarization Inhibition With Combination Therapy (INDICT)",
+      "company": "University of Colorado, Denver",
+      "title": "Trial to Evaluate Safety and Efficacy of GM-CSF /Sargramostim in Down Syndrome",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05337618",
+      "url": "https://clinicaltrials.gov/study/NCT05482334",
       "days": 25
     },
     {
       "date": "2026-09-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "National Cancer Institute (NCI)",
-      "title": "Study of Radiation Therapy Followed by Atezolizumab in Stage II or III Non-small Cell Lung Cancer Patients",
+      "company": "Novo Nordisk A/S",
+      "title": "A Research Study Comparing How Well Different Doses of the Medicine NNC0519-0130 Can Reduce Kidney Damage in People Living With Chronic Kidn",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04310020",
+      "url": "https://clinicaltrials.gov/study/NCT06717698",
       "days": 25
     },
     {
       "date": "2026-09-01",
-      "type": "Ensayo Fase 1, Fase 2",
+      "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Memorial Sloan Kettering Cancer Center",
-      "title": "Radiation Therapy in Combination With Durvalumab for People With Pancreatic Cancer",
+      "company": "Oslo University Hospital",
+      "title": "Sequential Neoadjuvant Chemotherapy in Soft Tissue Sarcoma",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT03245541",
+      "url": "https://clinicaltrials.gov/study/NCT04776525",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Aleksander Krag",
+      "title": "Personalized Long-term Human Albumin Treatment in Patients With Decompensated Cirrhosis and Ascites",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05056220",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "London Health Sciences Centre Research Institute OR Lawson Research Institute of St. Joseph's",
+      "title": "Hypofractionated Whole-Pelvis Radiotherapy (WPRT) vs Conventionally-Fractionated WPRT in Prostate Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04197141",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Franziska Wachter",
+      "title": "A Pilot Study to Evaluate the Feasibility of Post-Hematopoietic Stem Cell Transplant Prophylaxis With Decitabine Combined With Filgrastim fo",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05796570",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Tanta University",
+      "title": "Zinc Sulphate in Treatment Fibrosis in HBV Patient Receiving Antiviral Therapy",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07145268",
+      "days": 25
+    },
+    {
+      "date": "2026-09-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Niguarda Hospital",
+      "title": "ObinutuzuMab AtezOlizumab and VenetocLax in RichTer transfOrmation",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04082897",
       "days": 25
     },
     {
@@ -1715,16 +1965,6 @@
       "days": 26
     },
     {
-      "date": "2026-09-04",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Clear Scientific, Inc.",
-      "title": "A Single-Dose Study to Evaluate Safety and Efficacy of CS-1103 in Participants Receiving a Single Dose of Methamphetamine",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06721494",
-      "days": 28
-    },
-    {
       "date": "2026-09-06",
       "type": "Ensayo Fase 2",
       "ticker": "",
@@ -1735,14 +1975,44 @@
       "days": 30
     },
     {
-      "date": "2026-09-08",
+      "date": "2026-09-06",
       "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Institut National de la Santé Et de la Recherche Médicale, France",
-      "title": "The Role of Peripheral Afferents in Modulating Post-stroke Central Pain",
+      "company": "Innovent Biologics (Suzhou) Co. Ltd.",
+      "title": "IBI306 Monotherapy in Non-Familial Hypercholesterolemia and Mixed Hyperlipidemia",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06446960",
+      "url": "https://clinicaltrials.gov/study/NCT07473960",
+      "days": 30
+    },
+    {
+      "date": "2026-09-07",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Hospital Universitario Dr. Jose E. Gonzalez",
+      "title": "Low Dose Teclistamab in Newly Diagnosed Multiple Myeloma Patients",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06758375",
+      "days": 31
+    },
+    {
+      "date": "2026-09-08",
+      "type": "IPO",
+      "ticker": "PTT",
+      "company": "SIYATA PTT",
+      "title": "IPO NASDAQ Capital None",
+      "source": "Finnhub",
+      "url": "",
       "days": 32
+    },
+    {
+      "date": "2026-09-10",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Essen Biotech",
+      "title": "TIL Therapy Combined With Pembrolizumab for Advanced Brain Cancer Including Gliomas and Meningiomas",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06640582",
+      "days": 34
     },
     {
       "date": "2026-09-10",
@@ -1756,32 +2026,52 @@
     },
     {
       "date": "2026-09-10",
-      "type": "Ensayo Fase 2",
+      "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Rambam Health Care Campus",
-      "title": "Pre-treatment With Azithromycin to Reduce Immunogenicity to to Anti-TNF Agents in Patients With Crohn's Disease",
+      "company": "Galaxy Therapeutics INC",
+      "title": "SEAL™IT: Saccular Endovascular Aneurysm Lattice System Interventional Pivotal Trial",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05599347",
+      "url": "https://clinicaltrials.gov/study/NCT05831202",
       "days": 34
     },
     {
       "date": "2026-09-11",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "NS Pharma, Inc.",
-      "title": "NS-089/NCNP-02-201 in Boys With Duchenne Muscular Dystrophy (DMD)",
+      "company": "Sixth Affiliated Hospital, Sun Yat-sen University",
+      "title": "Preventive Efficacy of Bergmann Enema for Acute Radiation-induced Rectal Injury in Rectal Cancer Patients Undergoing Short-course Radiothera",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05996003",
+      "url": "https://clinicaltrials.gov/study/NCT07302126",
       "days": 35
+    },
+    {
+      "date": "2026-09-13",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Madeleine Bezault",
+      "title": "Target Engagement of EXL01 in the Prevention of Post-operative Recurrence of Crohn's Disease",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06925061",
+      "days": 37
+    },
+    {
+      "date": "2026-09-13",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Centre Francois Baclesse",
+      "title": "Phase I/IIa Study of Concomitant Radiotherapy With Olaparib and Temozolomide in Unresectable High Grade Gliomas Patients",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT03212742",
+      "days": 37
     },
     {
       "date": "2026-09-15",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Jennifer Keiser",
-      "title": "Efficacy and Safety of a Single Dose of Emodepside Compared to a Single Dose of Albendazole in Adolescents and Adults Infected With Trichuri",
+      "company": "Li Zhiming",
+      "title": "Glofitamab Plus Polatuzumab Vedotin and Zuberitamab in Patients With Newly Diagnosed Diffuse Large B-cell Lymphoma",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07258173",
+      "url": "https://clinicaltrials.gov/study/NCT07231250",
       "days": 39
     },
     {
@@ -1796,122 +2086,122 @@
     },
     {
       "date": "2026-09-15",
-      "type": "Ensayo Fase 1, Fase 2",
+      "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Optimal Health Research",
-      "title": "Elimination of Prostate Cancer Treatment Side Effects Using a Nutraceutical",
+      "company": "Fundación Pública Andaluza para la gestión de la Investigación en Sevilla",
+      "title": "Comparison of Esketamine Nasal Spray vs.Aripiprazole in Treat.Resistant Major Depressive Disorder in Elderly Patients",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06643494",
+      "url": "https://clinicaltrials.gov/study/NCT07153406",
       "days": 39
     },
     {
       "date": "2026-09-16",
       "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "Ab&B Bio-tech Co., Ltd.JS",
-      "title": "Clinical Trial of Recombinant Herpes Zoster Vaccine (CHO Cell) in Healthy Chinese Population Aged 40 Years and Older",
+      "company": "Icahn School of Medicine at Mount Sinai",
+      "title": "Effects of Vagal Dysfunction on Gastrointestinal and Inflammatory Pathways in HIV",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06851832",
+      "url": "https://clinicaltrials.gov/study/NCT04353778",
       "days": 40
     },
     {
       "date": "2026-09-16",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Keymed Biosciences Co.Ltd",
+      "title": "A Study of CM512 in Patients With Chronic Rhinosinusitis With Nasal Polyposis （NEZHA-1）",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06930612",
+      "days": 40
+    },
+    {
+      "date": "2026-09-17",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Hoffmann-La Roche",
+      "title": "A Study to Assess Bioequivalence of Two Subcutaneous (SC) Formulations of Ocrelizumab in Participants With Multiple Sclerosis (MS)",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07074886",
+      "days": 41
+    },
+    {
+      "date": "2026-09-18",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Northside Hospital, Inc.",
+      "title": "GM-CSF With Post-Transplant Cyclophosphamide",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04237623",
+      "days": 42
+    },
+    {
+      "date": "2026-09-18",
       "type": "Ensayo Fase 2, Fase 3",
       "ticker": "",
-      "company": "Universitas Sriwijaya",
-      "title": "Phase II/III Randomized Trial of UC-MSC Secretome vs Sodium Hyaluronate in Knee Osteoarthritis",
+      "company": "The Netherlands Cancer Institute",
+      "title": "Contrast-enhanced Ultrasound for Sentinel Node Detection",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07337863",
-      "days": 40
+      "url": "https://clinicaltrials.gov/study/NCT07310758",
+      "days": 42
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-19",
       "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Capital Medical University",
-      "title": "Efficacy and Safety of Interleukin-6 Receptor Inhibitor Combined With Endovascular Treatment in Patients With Acute Anterior Circulation Lar",
+      "company": "Teva Branded Pharmaceutical Products R&D LLC",
+      "title": "A Randomized, Double-Blind, Placebo-Controlled Trial on Efficacy and Safety of Fluticasone Propionate/Albuterol Sulfate Combination in Parti",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07263776",
-      "days": 40
+      "url": "https://clinicaltrials.gov/study/NCT06664619",
+      "days": 43
     },
     {
-      "date": "2026-09-22",
-      "type": "Ensayo Fase 1, Fase 2",
+      "date": "2026-09-20",
+      "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Kara Yakhteh Tajhiz Azma Company",
-      "title": "Safety and Efficacy of CAR T Cell Therapy in Patients with R/r B-ALL",
+      "company": "The First Affiliated Hospital with Nanjing Medical University",
+      "title": "Phase 2 Trial of Adjuvant Adebrelimab Combined With Capecitabine in High-Risk Resected Cholangiocarcinoma: ACHIEVE",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06635330",
-      "days": 46
-    },
-    {
-      "date": "2026-09-22",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "Merck Sharp & Dohme LLC",
-      "title": "A Study of Belzutifan (MK-6482) in Combination With Palbociclib Versus Belzutifan Monotherapy in Participants With Advanced Renal Cell Carci",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05468697",
-      "days": 46
+      "url": "https://clinicaltrials.gov/study/NCT06607276",
+      "days": 44
     },
     {
       "date": "2026-09-23",
-      "type": "Ensayo Fase 3",
+      "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "ANRS, Emerging Infectious Diseases",
-      "title": "Intensified Tuberculosis Treatment to Reduce the Mortality of Patients With Tuberculous Meningitis",
+      "company": "Fox Chase Cancer Center",
+      "title": "Lymphoscintigraphy Directed Elective Neck Radiation for p16+ Favorable Risk Oropharynx Cancer",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04145258",
+      "url": "https://clinicaltrials.gov/study/NCT05800574",
       "days": 47
     },
     {
       "date": "2026-09-27",
-      "type": "Ensayo Fase 1, Fase 2",
+      "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Jiangsu Hansoh Pharmaceutical Co., Ltd.",
-      "title": "A Study to Evaluate the Safety, Tolerability, Pharmacokinetics and Preliminary Efficacy of HS-10561 Capsule in Healthy Chinese Adults and Pa",
+      "company": "On Pharma Importadora, Exportadora e Distribuidora de Medicamentos LTDA.",
+      "title": "V-IMMUNE: A Novel Immunoglobulin Therapy for Immunodeficiency",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06864507",
-      "days": 51
-    },
-    {
-      "date": "2026-09-27",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Memorial Sloan Kettering Cancer Center",
-      "title": "Study of Radiotherapy and Pembrolizumab in People With Adrenocortical Carcinoma",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06066333",
+      "url": "https://clinicaltrials.gov/study/NCT06954441",
       "days": 51
     },
     {
       "date": "2026-09-28",
-      "type": "Ensayo Fase 2",
+      "type": "Ensayo Fase 2, Fase 3",
       "ticker": "",
-      "company": "Attralus, Inc.",
-      "title": "A Study of AT-02 in Subjects With Systemic Amyloidosis.",
+      "company": "Ocugen",
+      "title": "A Phase 2/3 Trial to Assess the Efficacy and Safety of OCU410ST for Stargardt Disease",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05951049",
-      "days": 52
-    },
-    {
-      "date": "2026-09-28",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "University of Illinois at Chicago",
-      "title": "Efficacy of Locally Delivered Allogeneic Mesenchymal Stromal Cells",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05705024",
+      "url": "https://clinicaltrials.gov/study/NCT05956626",
       "days": 52
     },
     {
       "date": "2026-09-29",
       "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "Mayo Clinic",
-      "title": "Iberdomide, Daratumumab, Bortezomib, and Dexamethasone for Treatment of Newly Diagnosed Multiple Myeloma, IDEAL Study",
+      "company": "Memorial Sloan Kettering Cancer Center",
+      "title": "Retifanlimab (Anti-PD-1 Antibody) With Gemcitabine and Docetaxel in Patients With Advanced Soft Tissue Sarcoma",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05392946",
+      "url": "https://clinicaltrials.gov/study/NCT04577014",
       "days": 53
     },
     {
@@ -1936,52 +2226,102 @@
     },
     {
       "date": "2026-09-30",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Dongzhimen Hospital, Beijing",
+      "title": "Efficacy and Safety of Xinglou Chengqi Granule for Acute Ischemic Stroke",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07163702",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "920th Hospital of Joint Logistics Support Force of People's Liberation Army of China",
+      "title": "JY231 Injection for the Treatment of Active Systemic Lupus Erythematosus (SLE)",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06675422",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "The First Affiliated Hospital with Nanjing Medical University",
+      "title": "Omega-3 Supplementation and Immunotherapy in Gastric Cancer: A Phase II Trial",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07050524",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "AiCuris Anti-infective Cures AG",
+      "title": "A Study to Understand How a New, Unlicensed Drug (AIC468) Works, Compared With a Placebo, Against BK Virus in Patients Who Have Had a Kidney",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07503561",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Fudan University",
+      "title": "The Efficacy and Safety of Metformin Intervention in Elderly Overweight or Obesity With Mild Cognitive Impairment",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07395960",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Graegis Pharmaceuticals Ltd",
+      "title": "A Study of GR1014 Cutaneous Gel for the Prevention of Skin Reactions Caused by Radiation Therapy for Breast Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07192588",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Brigham and Women's Hospital",
+      "title": "A Multilevel Intervention to Improve Timely Cancer Detection and Treatment Initiation",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04141449",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "UpTru Inc.",
+      "title": "Study to Confirm the AuthenTicity of Point of Care Urine samplEs Using Oral fluoreScein Sodium in adulTs With substancE Use Disorder (ATTEST",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07356349",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Novartis Pharmaceuticals",
+      "title": "Platform Study of JDQ443 in Combinations in Patients With Advanced Solid Tumors Harboring the KRAS G12C Mutation",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05358249",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
       "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
       "company": "ImmunityBio, Inc.",
       "title": "A Study of Intravesical BCG in Combination With ALT-803 in Patients With Non-Muscle Invasive Bladder Cancer",
       "source": "ClinicalTrials.gov",
       "url": "https://clinicaltrials.gov/study/NCT02138734",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "YiLin",
-      "title": "Methylprednisolone for Stroke With Large Infarct Core and Post-stroke Lymphocytopenia",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07202143",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Bangabandhu Sheikh Mujib Medical University, Dhaka, Bangladesh",
-      "title": "Efficacy of Tofacitinib, Methotrexate Combination Therapy Versus Upadacitinib, Methotrexate Combination Therapy in Moderate to Severe Rheuma",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07008846",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Mirati Therapeutics Inc.",
-      "title": "Combination Therapies With Adagrasib in Patients With Advanced NSCLC With KRAS G12C Mutation",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05609578",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Shanghai Institute Of Biological Products",
-      "title": "Phase Ⅱ Clinical Trial of Influenza Virus Split Vaccine for Individuals Aged 60 Years and Above",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07327398",
       "days": 54
     },
     {
@@ -1996,12 +2336,152 @@
     },
     {
       "date": "2026-09-30",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Sinovac Biotech Co., Ltd",
+      "title": "Phase IIIb Clinical Trial to Evaluate Lot-to-lot Consistency of Sinovac Rabies Vaccine",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07416110",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Beijing Pearl Biotechnology Limited Liability Company",
+      "title": "A Confirmatory Clinical Study in NSCLC Patients With MET Exon 14 Mutation (KUNPENG-2)",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05989542",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Tarian Pharma",
-      "title": "Safety and Efficacy Study of TAR-0520 Gel in Prevention of Taxane-induced Peripheral Neuropathy",
+      "company": "Genethon",
+      "title": "Efficacy and Safety of GNT0003 Following Imlifidase Pre-treatment in Severe Crigler-Najjar Syndrome",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07082764",
+      "url": "https://clinicaltrials.gov/study/NCT06518005",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Cerus Corporation",
+      "title": "Biotin-Acridine Red Cell Exchange Kinetics",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07155031",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Sidney Kimmel Comprehensive Cancer Center at Johns Hopkins",
+      "title": "Platform Study of Neoadjuvant and Adjuvant Immunotherapy for Patients With Resectable Adenocarcinoma of the Pancreas",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT02451982",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Zhejiang Cancer Hospital",
+      "title": "Adebrelimab Combined With Fluzoparib in HRD-positive HR +/HER2- Advanced Breast Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06254066",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Bristol-Myers Squibb",
+      "title": "A Study of BMS-986449 With and Without Nivolumab in Participants With Advanced Solid Tumors",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05888831",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "University of Miami",
+      "title": "Understanding and Treating Traumatic Brain Injury (TBI) Associated Photophobia With Botulinum Toxin Type A (BoNT-A)",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06293300",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Abramson Cancer Center at Penn Medicine",
+      "title": "Carboplatin, Taxane And Ramucirumab for Patients With NSCLC After Pemetrexed or Pembrolizumab Maintenance",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04332367",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Johns Hopkins University",
+      "title": "Metformin IN Asthma for Overweight and Obese Individuals (MINA)",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06273072",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "University Hospital, Ghent",
+      "title": "Use of Beetroot Juice to Protect Against Postoperative Ileus Following Colorectal Surgery: BEET IT Study",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05133024",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "National Cancer Institute (NCI)",
+      "title": "Testing the Combination of Anti-Cancer Drugs, Botensilimab (AGEN1181) and Balstilimab (AGEN2034), After Standard Treatment for Colorectal Ca",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07551596",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "University of Miami",
+      "title": "Effects of CBD/CBD-A Oral Extract on Resting-state EEG and Neuropathic Pain Symptoms After SCI",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05630235",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Sidney Kimmel Comprehensive Cancer Center at Johns Hopkins",
+      "title": "Neoadjuvant Endocrine Therapy, Palbociclib, Avelumab in Estrogen Receptor Positive Breast Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT03573648",
+      "days": 54
+    },
+    {
+      "date": "2026-09-30",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Turning Point Therapeutics, Inc.",
+      "title": "A Study of Repotrectinib in Pediatric and Young Adult Subjects Harboring ALK, ROS1, OR NTRK1-3 Alterations",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04094610",
       "days": 54
     },
     {
@@ -2018,290 +2498,30 @@
       "date": "2026-09-30",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "SymBio Pharmaceuticals",
-      "title": "A Phase 2a Study of IV BCV in Subjects With Adenovirus Infection",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04706923",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "Innovent Biologics (Suzhou) Co. Ltd.",
-      "title": "Tolerance and Pharmacokinetic/Pharmacokinetic Study of IBI362 15mg in Patients With Moderate to Severe Obesity",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07000955",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "Arrowhead Pharmaceuticals",
-      "title": "Study of ARO-DIMERPA in Adult Participants With Mixed Hyperlipidemia",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07223658",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "GlaxoSmithKline",
-      "title": "Linerixibat Long-term Safety, and Tolerability Study",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04167358",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 2, Fase 3",
-      "ticker": "",
-      "company": "St. Jude Children's Research Hospital",
-      "title": "Total Therapy XVII for Newly Diagnosed Patients With Acute Lymphoblastic Leukemia and Lymphoma",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT03117751",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Instituto Mexicano del Seguro Social",
-      "title": "Safety of Transmucosal Capsaicin Sphenopalatine Ganglion Stimulation in Acute Ischemic Stroke",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07406971",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Bangladesh Medical University",
-      "title": "Effects of Intra-articular Hypertonic Dextrose and Hyaluronic Acid on Primary Knee Osteoarthritis.",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07102225",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Shanghai Pulmonary Hospital, Shanghai, China",
-      "title": "Neoadjuvant Treatment For Locally Advanced Thymic Cancer",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06019468",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "National Taiwan University Hospital",
-      "title": "Phase Ib/II Trial of Combining Pembrolizumab and Lenvatinib With SBRT for HCC Patients With Portal Vein Thrombosis.",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05286320",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
       "company": "Fudan University",
-      "title": "Study of SHR-A2102 Combined Other Antitumor Drugs in Advanced Breast Cancer",
+      "title": "A Prospective, Randomized, Controlled Clinical Study on the Prevention of Chemotherapy Related Myelosuppression in Patients with Ewing's Sar",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07041437",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Hunan Province Tumor Hospital",
-      "title": "Efficacy of Platinum-based Chemotherapy Plus Immune Checkpoint Inhibitors for EGFR/ALK/ROS1 Mutant Lung Cancer",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05284539",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "University of Washington",
-      "title": "PAH Exercise Study",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06941441",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "Beijing GoBroad Hospital",
-      "title": "Anti-CD19 Chimeric Antigen Receptor T Cells for Refractory Systemic Lupus Erythematosus",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06585514",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 2, Fase 3",
-      "ticker": "",
-      "company": "VA Office of Research and Development",
-      "title": "Veterans Affairs Seamless Phase II/III Randomized Trial of STAndard Systemic theRapy With or Without PET-directed Local Therapy for Oligomet",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04787744",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "M.D. Anderson Cancer Center",
-      "title": "Vemurafenib Neoadjuvant Trial in Locally Advanced Thyroid Cancer",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT01709292",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Beijing Continent Pharmaceutical Co, Ltd.",
-      "title": "Efficacy and Safety of Pirfenidone Capsules in the Treatment of Pneumoconiosis",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05288179",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Liverpool School of Tropical Medicine",
-      "title": "Monoclonal Antibodies in Children With Severe Anaemia or Severe Malaria to Prevent Malaria After Hospital Discharge",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07082205",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Cantex Pharmaceuticals",
-      "title": "Azeliragon in MGMT Unmethylated Glioblastoma",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05986851",
-      "days": 54
-    },
-    {
-      "date": "2026-09-30",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "920th Hospital of Joint Logistics Support Force of People's Liberation Army of China",
-      "title": "JY231 Injection for the Treatment of Active Systemic Lupus Erythematosus (SLE)",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06675422",
+      "url": "https://clinicaltrials.gov/study/NCT06699472",
       "days": 54
     },
     {
       "date": "2026-10-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "John Mascarenhas",
-      "title": "Study of Canakinumab in Patients With Myelofibrosis",
+      "company": "Memorial Sloan Kettering Cancer Center",
+      "title": "Siltuximab to Decrease Symptom Burden After Autologous Stem Cell Transplantation for Patients With Multiple Myeloma and AL Amyloidosis",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05467800",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "Philogen S.p.A.",
-      "title": "Safety and Efficacy of L19TNF Plus Temozolomide Chemoradiotherapy in Patients With Newly Diagnosed Glioblastoma",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04443010",
+      "url": "https://clinicaltrials.gov/study/NCT03315026",
       "days": 55
     },
     {
       "date": "2026-10-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Federal Research Institute of Pediatric Hematology, Oncology and Immunology",
-      "title": "Feasibility and Safety of Donor-derived NK-cell Infusions for Leukemia Relapse Prophylaxis After Hematopoietic Stem Cell Transplantation",
+      "company": "Bin Gu",
+      "title": "Study of Gecacitinib-corticosteroid as First-line Therapy for Grade II-IV Acute Graft Versus Host Disease",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07256210",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Vanda Pharmaceuticals",
-      "title": "Evaluation of Efficacy and Safety of Iloperidone for the Treatment of Participants With Uncontrolled Hypertension",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07090161",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Chinese University of Hong Kong",
-      "title": "Novel Chinese Medicine Formula for Diabetes",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06978023",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "Kathleen Dorritie",
-      "title": "Mezigdomide Plus Ixazomib and Dexamethasone for Relapsed and Refractory Multiple Myeloma",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06050512",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Fujian Medical University",
-      "title": "IGG Using in Laparoscopic Gastrectomy for Locally Advanced Gastric Cancer After Neoadjuvant Chemotherapy",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04611997",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Zhejiang Sunshine Mandi Pharmaceutical Co.,Ltd.",
-      "title": "Efficacy and Safety of Clascoterone Cream 1% in Facial Acne Vulgaris",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06403501",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Beijing Dongfang Biotech Co., Ltd.",
-      "title": "A Phase 3 Study to Evaluate the Efficacy of JY09 Compared With Dulaglutide in Combination Therapy Diabetes Mellitus Type 2 Patients With Met",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06257966",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Assiut University",
-      "title": "Effect of Intrathecal Magnesium Sulfate Versus Intravenous Magnesium Sulfate on Postoperative Pain After Abdominal Hysterectomy",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06367595",
+      "url": "https://clinicaltrials.gov/study/NCT07185633",
       "days": 55
     },
     {
@@ -2318,60 +2538,120 @@
       "date": "2026-10-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Beijing InnoCare Pharma Tech Co., Ltd.",
-      "title": "Efficacy and Safety of ICP-332 Versus Placebo in Participants With Moderate to Severe Plaque Psoriasis",
+      "company": "National Cancer Institute (NCI)",
+      "title": "Virotherapy and Natural History Study of KHSV-Associated Multricentric Castleman s Disease With Correlates of Disease Activity",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07251998",
+      "url": "https://clinicaltrials.gov/study/NCT00092222",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Advagene Biopharma Co. Ltd.",
+      "title": "A Multi-dose Study on the Safety and Efficacy of Self-administered Intranasal AD17002 Treatment for Eosinophilic Asthma",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07250594",
       "days": 55
     },
     {
       "date": "2026-10-01",
       "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Loxo Oncology, Inc.",
-      "title": "A Trial of Pirtobrutinib (LOXO-305) Plus Venetoclax and Rituximab (PVR) Versus Venetoclax and Rituximab (VR) in Previously Treated Chronic L",
+      "company": "Celldex Therapeutics",
+      "title": "A Phase 3 Study of Barzolvolimab in Participants With Chronic Spontaneous Urticaria (CSU)",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04965493",
+      "url": "https://clinicaltrials.gov/study/NCT06455202",
       "days": 55
     },
     {
       "date": "2026-10-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "University of Alberta",
-      "title": "An Adaptive Design Study of MTX228",
+      "company": "Duke University",
+      "title": "Ketones in Heart Failure With Reduced Ejection Fraction",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06474598",
+      "url": "https://clinicaltrials.gov/study/NCT06195982",
       "days": 55
     },
     {
       "date": "2026-10-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Jennifer Keiser",
-      "title": "Efficacy and Safety of Ascending Doses of Arpraziquantel in Children Infected With Opisthorchis Viverrini",
+      "company": "Centre Oscar Lambret",
+      "title": "Assessment of Compliance With Monitoring Conducted by a Physician in Person or by a Nurse in Remote Monitoring",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07262814",
+      "url": "https://clinicaltrials.gov/study/NCT05500391",
       "days": 55
     },
     {
       "date": "2026-10-01",
-      "type": "Ensayo Fase 2, Fase 3",
+      "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Ebima Clifford Okundaye",
-      "title": "Use of New Drug QRX-3 for Prevention and Treatment of Chronic Kidney Disease Progression",
+      "company": "Negovsky Reanimatology Research Institute",
+      "title": "Perioperative Argon Inhalation to Improve Neurocognitive Recovery After Carotid Surgery",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06866236",
+      "url": "https://clinicaltrials.gov/study/NCT07200180",
       "days": 55
     },
     {
       "date": "2026-10-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Gilead Sciences",
-      "title": "Study of Sacituzumab Govitecan in Patients With Solid Tumor",
+      "company": "Pharming Technologies B.V.",
+      "title": "Leniolisib for Immune Dysregulation in CVID",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05119907",
+      "url": "https://clinicaltrials.gov/study/NCT06897358",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Assiut University",
+      "title": "Comparison of Caudal Block and Sacral Erector Spinae Plane Block With Dexmedetomidine in Pediatric Penile Hypospadias Repair",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07197203",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Mirum Pharmaceuticals, Inc.",
+      "title": "Evaluation of Maralixibat in Pruritus Associated With General Cholestatic Liver Disease (EXPAND)",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06553768",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Fujian Medical University",
+      "title": "IGG Using in Laparoscopic Gastrectomy for Locally Advanced Gastric Cancer After Neoadjuvant Chemotherapy",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04611997",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "National Taiwan University Hospital",
+      "title": "Primary Tumor Resection With EGFR TKI for Stage IV NSCLC",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05215548",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "AHS Cancer Control Alberta",
+      "title": "Nutritional Supplementation in Head and Neck Cancers",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05379712",
       "days": 55
     },
     {
@@ -2388,230 +2668,80 @@
       "date": "2026-10-01",
       "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Debiopharm International SA",
-      "title": "A Study to Assess the Efficacy, Safety, and Pharmacokinetics of Debio 4326 in Pediatric Participants With Central Precocious Puberty (LIBELU",
+      "company": "University of Oxford",
+      "title": "A Randomized Trial Assessing the Effects of Inclisiran on Clinical Outcomes Among People With Cardiovascular Disease",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06129539",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "GIE Medical",
-      "title": "Paclitaxel Coated Balloon for the Treatment of Chronic bEnigN sTricture- Esophagus",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05561114",
+      "url": "https://clinicaltrials.gov/study/NCT03705234",
       "days": 55
     },
     {
       "date": "2026-10-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Peter Siesjö",
-      "title": "Effect of Salovum® on Pressure, Oxygen and Inflammation in Glioblastoma",
+      "company": "Acumen Pharmaceuticals",
+      "title": "A Study to Evaluate Efficacy and Safety of Intravenous Sabirnetug in Participants With Early Alzheimer's Disease (ALTITUDE-AD)",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07364786",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 2, Fase 3",
-      "ticker": "",
-      "company": "Gynaecologisch Oncologisch Centrum Zuid",
-      "title": "Signal TrAnsduction Pathway Activity Analysis in OVarian cancER",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT03458221",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Pharming Technologies B.V.",
-      "title": "Leniolisib for Immune Dysregulation in CVID",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06897358",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Beni-Suef University",
-      "title": "L-Citrulline Versus Tamsulosin for Medical Expulsive Therapy of Distal Ureteral Stones",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07617909",
+      "url": "https://clinicaltrials.gov/study/NCT06335173",
       "days": 55
     },
     {
       "date": "2026-10-01",
       "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "São Paulo State University",
-      "title": "Dual-Site Transcranial Magnetic Stimulation of the Supplementary Motor Area and Cerebellum for the Treatment of Essential Tremor.",
+      "company": "YOUNGIL KOH",
+      "title": "Mezigdomide and Elranatamab for Relapsed and/or Refractory Multiple Myeloma",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07344194",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Corporacion Parc Tauli",
-      "title": "Preoperative Chemoradiotherapy and Transanal Endoscopic Microsurgery Versus Ttransanal Endoscopic Microsurgery in T1 N0, M0 Rectal Cancer (T",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06450574",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Fudan University",
-      "title": "An Explorative Study of HRS-2189 Combined With Adebrelimab and BP102 for Metastatic Colorectal Cancer",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07061210",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 2, Fase 3",
-      "ticker": "",
-      "company": "Shanghai Huilun Pharmaceutical Co., Ltd.",
-      "title": "Evaluate the Safety and Efficacy of HL-1186 Tablet for Postoperative Analgesia in Orthopedic Surgery",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07699601",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Loma Linda University",
-      "title": "Diluted Aqueous Povidone-Iodine Compared to Saline to Decrease Surgical Site Infections",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06363877",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "UNICANCER",
-      "title": "Study on the Efficacy of Treatment by Radiotherapy and Pembrolizumab in Newly Diagnosed Metastatic Head & Neck Cancers",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04747054",
+      "url": "https://clinicaltrials.gov/study/NCT06645678",
       "days": 55
     },
     {
       "date": "2026-10-01",
       "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "Sernova Biotherapeutics Inc.",
-      "title": "A Safety, Tolerability and Efficacy Study of Sernova's Cell Pouch™ for Clinical Islet Transplantation",
+      "company": "Laminar Pharmaceuticals",
+      "title": "Study of LAM561 Acid in Pediatric Patients With Malignant Glioma and Other Advanced Solid Tumors",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT03513939",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Qilu Pharmaceutical Co., Ltd.",
-      "title": "Combination of QLS31905 and Chemotherapy ± QL2107 in Patients With CLDN18.2-positive Advanced Biliary Tract Cancer",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07151872",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Children's Hospital of Philadelphia",
-      "title": "Allogeneic Stem Cell Transplant With Alpha/Beta T AND B Cell Depletion for Hematologic Malignancies",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT02323867",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Sherief Abd-Elsalam",
-      "title": "Effect of Some Drugs on Liver Fibrosis",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT03770936",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "ANRS, Emerging Infectious Diseases",
-      "title": "Efficacy, Acceptability and Safety of Event-driven HIV PrEP Using TAF/FTC in MSM in Thailand and France.",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05813964",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Bin Gu",
-      "title": "Study of Gecacitinib-corticosteroid as First-line Therapy for Grade II-IV Acute Graft Versus Host Disease",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07185633",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "ImmunityBio, Inc.",
-      "title": "A Study to Assess Anktiva in Patients With Long Covid-19.",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07108036",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 2, Fase 3",
-      "ticker": "",
-      "company": "Memorial Sloan Kettering Cancer Center",
-      "title": "Tissue Analysis After Tumor Ablation for Liver Metastases Leading to Immediate Retreatment",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04143516",
-      "days": 55
-    },
-    {
-      "date": "2026-10-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Triveni Bio",
-      "title": "A Study Evaluating TRIV-509 in Atopic Dermatitis",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07167758",
+      "url": "https://clinicaltrials.gov/study/NCT04299191",
       "days": 55
     },
     {
       "date": "2026-10-01",
       "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "Jonsson Comprehensive Cancer Center",
-      "title": "An Investigational Scan (Me-4FDG PET/CT) for the Detection of Sodium-Glucose Transport for Early Diagnosis of Lung Cancer",
+      "company": "Cocrystal Pharma, Inc.",
+      "title": "A Study to Evaluate the Efficacy, Safety and Pharmacokinetics of CDI-988 in Healthy Adults After Challenge With Snow Mountain Virus",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05558904",
+      "url": "https://clinicaltrials.gov/study/NCT07198139",
       "days": 55
     },
     {
       "date": "2026-10-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Shanghai Zhongshan Hospital",
-      "title": "Study of Adebrelimab With Chemotherapy, Endoscopy and Sequential Chemoradiotherapy In Inoperable Esophageal Cancer",
+      "company": "University of Michigan",
+      "title": "Prophylactic Intravenous Calcium Gluconate to Decrease Blood Loss at Time of Cesarean Delivery in Pregnant Patients at High Risk for Uterine",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06599775",
+      "url": "https://clinicaltrials.gov/study/NCT07217899",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Sichuan Baili Pharmaceutical Co., Ltd.",
+      "title": "A Study Comparing BL-M07D1 With T-DM1 in Patients With Unresectable Locally Advanced or Metastatic HER2-positive Breast Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06316531",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Centre Leon Berard",
+      "title": "A Study Evaluating the Activity of Anti-cancer Treatments Targeting Tumor Molecular Alterations/Characteristics in Advanced / Metastatic Tum",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04116541",
       "days": 55
     },
     {
@@ -2628,10 +2758,50 @@
       "date": "2026-10-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "University of Michigan",
-      "title": "Prophylactic Intravenous Calcium Gluconate to Decrease Blood Loss at Time of Cesarean Delivery in Pregnant Patients at High Risk for Uterine",
+      "company": "Chinese University of Hong Kong",
+      "title": "Novel Chinese Medicine Formula for Diabetes",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07217899",
+      "url": "https://clinicaltrials.gov/study/NCT06978023",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Kelifarma",
+      "title": "Phase 1B/2 Clinical Trial Assessing the Safety, Tolerability and Preliminary Efficacy of the Intravenous Administration of Allogeneic Placen",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06678399",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 2, Fase 3",
+      "ticker": "",
+      "company": "Fudan University",
+      "title": "Vitamin C Plus Cordyceps to Quality of Life in Patients With Terminal Stage Pancreatic Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06598033",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "San Giovanni Addolorata Hospital",
+      "title": "Clostridium Butyricum in Stenosing Crohn's Desease",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07263880",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Federal Research Institute of Pediatric Hematology, Oncology and Immunology",
+      "title": "Feasibility and Safety of Donor-derived NK-cell Infusions for Leukemia Relapse Prophylaxis After Hematopoietic Stem Cell Transplantation",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07256210",
       "days": 55
     },
     {
@@ -2646,12 +2816,52 @@
     },
     {
       "date": "2026-10-01",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "UNICANCER",
+      "title": "Study on the Efficacy of Treatment by Radiotherapy and Pembrolizumab in Newly Diagnosed Metastatic Head & Neck Cancers",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04747054",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Peking Union Medical College Hospital",
-      "title": "Phase II Study of Orelabrutinib in Combination With Romiplostim N01 in Patients With Primary Immune Thrombocytopenia (ITP) Who Have Received",
+      "company": "Sichuan University",
+      "title": "An Open-label, Single-arm Clinical Study of Stapokibart Injection in Combination with Tislelizumab Injection in Patients with Non-Small Cell",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07400250",
+      "url": "https://clinicaltrials.gov/study/NCT06883552",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "First Affiliated Hospital of Kunming Medical University",
+      "title": "Effect of Liposome Bupivacaine Serratus Plane Block on Postoperative Hyperalgesia and Chronic Post-surgical Pain in Patients Undergoing Radi",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07289178",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Aramis Biotechnologies Inc.",
+      "title": "Phase 1/2 Study of a Plant-Based Seasonal Recombinant Trivalent VLP Influenza Vaccine",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07291635",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Murdoch Childrens Research Institute",
+      "title": "Pilot Study of MC in Paediatric Palliative Care",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05615389",
       "days": 55
     },
     {
@@ -2665,14 +2875,74 @@
       "days": 55
     },
     {
-      "date": "2026-10-02",
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Brigham and Women's Hospital",
+      "title": "VITAL Rhythm Study",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT02178410",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "University of Arkansas",
+      "title": "Axillary Reverse Mapping",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT00572481",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
       "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "PEACHES BIOTECH",
-      "title": "Study on Safety and Efficacy of Two Doses of PRS CK STORM in the Modulation of the Cytokine Storm in Patients With Acute Respiratory Infecti",
+      "company": "Sernova Biotherapeutics Inc.",
+      "title": "A Safety, Tolerability and Efficacy Study of Sernova's Cell Pouch™ for Clinical Islet Transplantation",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06684379",
-      "days": 56
+      "url": "https://clinicaltrials.gov/study/NCT03513939",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "MedTrace Pharma A/S",
+      "title": "RAdiolabeled Perfusion to Identify Coronary Artery Disease Using WAter To Evaluate Responses of Myocardial FLOW (RAPID-WATER-FLOW)",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05134012",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Sichuan Baili Pharmaceutical Co., Ltd.",
+      "title": "A Study of BL-M07D1 Combination Therapy in Patients With Unresectable Locally Advanced or Metastatic HER2-positive Gastric or Gastroesophage",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06423885",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Xi Junjie",
+      "title": "Serplulimab Combined With Cryoablation for Early-Stage Non-Small Cell Lung Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07064876",
+      "days": 55
+    },
+    {
+      "date": "2026-10-01",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Dana-Farber Cancer Institute",
+      "title": "Osimertinib and Gefitinib in EGFR Inhibitor naïve Advanced EGFR Mutant Lung Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT03122717",
+      "days": 55
     },
     {
       "date": "2026-10-02",
@@ -2685,6 +2955,26 @@
       "days": 56
     },
     {
+      "date": "2026-10-02",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Hospices Civils de Lyon",
+      "title": "Phase 3, Multicenter, Randomized Study, Evaluating the Efficacy and Tolerability of Focused HIFU (High Intensity Focused Ultrasound) Therapy",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT03531099",
+      "days": 56
+    },
+    {
+      "date": "2026-10-03",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Institute of Hematology & Blood Diseases Hospital, China",
+      "title": "Efficacy of HAD Induction With Intensified Cytarabine in Newly-diagnosed CEBPA Double Mutated Acute Myeloid Leukemia",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04415008",
+      "days": 57
+    },
+    {
       "date": "2026-10-04",
       "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
@@ -2695,14 +2985,24 @@
       "days": 58
     },
     {
-      "date": "2026-10-05",
-      "type": "Ensayo Fase 1, Fase 2",
+      "date": "2026-10-04",
+      "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "ModernaTX, Inc.",
-      "title": "A Study of an Epstein-Barr Virus (EBV) Candidate Vaccine, mRNA-1189, in 10- to 30-Year-Old Healthy Adolescents and Adults",
+      "company": "Eddingpharm (Zhuhai) Co., Ltd.",
+      "title": "A Dose-exploration Study of EDP167 in HoFH",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05164094",
-      "days": 59
+      "url": "https://clinicaltrials.gov/study/NCT07489209",
+      "days": 58
+    },
+    {
+      "date": "2026-10-07",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "University Hospital, Lille",
+      "title": "Compare Lenalidomide and Subcutaneous Daratumumab vs Lenalidomide and Dexamethasone in Frail Subjects With Previously Untreated Multiple Mye",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT03993912",
+      "days": 61
     },
     {
       "date": "2026-10-10",
@@ -2718,31 +3018,21 @@
       "date": "2026-10-10",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Abramson Cancer Center at Penn Medicine",
-      "title": "Shortened Course Adjuvant Radiotherapy Following TORS",
+      "company": "Guangzhou Institute of Respiratory Disease",
+      "title": "Nano-crystalline Megestrol Acetate for Anorexia-Cachexia Syndrome in Advanced Lung Cancer",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05714657",
+      "url": "https://clinicaltrials.gov/study/NCT07092137",
       "days": 64
     },
     {
-      "date": "2026-10-11",
+      "date": "2026-10-12",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "CSPC ZhongQi Pharmaceutical Technology Co., Ltd.",
-      "title": "A Study Comparing the Efficacy and Safety of HB1801 With Taxotere® in Advanced Breast Cancer",
+      "company": "Jiangsu Carephar Pharmaceutical Co., Ltd.",
+      "title": "A Phase II Study of H021 Enteric-coated Tablets for Moderately to Severely Active Crohn's Disease",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07083505",
-      "days": 65
-    },
-    {
-      "date": "2026-10-11",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "M.D. Anderson Cancer Center",
-      "title": "Abiraterone Acetate, Prednisone, and Apalutamide in Treating Patients With Hormone-Naive Metastatic Prostate Cancer",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT03821792",
-      "days": 65
+      "url": "https://clinicaltrials.gov/study/NCT07677514",
+      "days": 66
     },
     {
       "date": "2026-10-13",
@@ -2755,33 +3045,13 @@
       "days": 67
     },
     {
-      "date": "2026-10-14",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Sanofi",
-      "title": "A Phase 3 Study to Assess the Efficacy, Safety, and Tolerability of Itepekimab (Anti-IL-33 mAb) in Participants With Inadequately-controlled",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06834347",
-      "days": 68
-    },
-    {
-      "date": "2026-10-14",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "GlaxoSmithKline",
-      "title": "A Study on the Immune Response and Safety of a Combined Vaccine Against Diphtheria, Tetanus and Acellular Pertussis (dTpa) in Healthy Japane",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07596173",
-      "days": 68
-    },
-    {
       "date": "2026-10-15",
-      "type": "Ensayo Fase 3",
+      "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "Fudan University",
-      "title": "Neoadjuvant SNF Precision Therapy Phase III",
+      "company": "AstraZeneca",
+      "title": "A Study to Characterize the Safety and Immunogenicity of AZD6489 in Participants 60 Years of Age and Older (ARIES)",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06913777",
+      "url": "https://clinicaltrials.gov/study/NCT07717840",
       "days": 69
     },
     {
@@ -2796,12 +3066,12 @@
     },
     {
       "date": "2026-10-15",
-      "type": "Ensayo Fase 2, Fase 3",
+      "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Ain Shams University",
-      "title": "the Effect of Ginkgo Biloba on Rheumatoid Arthritis Patients",
+      "company": "Eccogene",
+      "title": "MIST (Metabolic Intervention With Semaglutide and THR-β Therapy) Trial",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07709312",
+      "url": "https://clinicaltrials.gov/study/NCT07505303",
       "days": 69
     },
     {
@@ -2825,34 +3095,74 @@
       "days": 72
     },
     {
-      "date": "2026-10-19",
-      "type": "Ensayo Fase 3",
+      "date": "2026-10-18",
+      "type": "Ensayo Fase 2, Fase 3",
       "ticker": "",
-      "company": "Bristol-Myers Squibb",
-      "title": "A Study to Assess Effectiveness and Safety of Deucravacitinib Compared With Placebo in Participants With Active Systemic Lupus Erythematosus",
+      "company": "Han Xu, M.D., Ph.D., FAPCR, Sponsor-Investigator, IRB Chair",
+      "title": "Generic Drugs (Dapagliflozin and Saxagliptin) Treat Type 2 Diabetes Patients With Controlled Cancers",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05617677",
-      "days": 73
+      "url": "https://clinicaltrials.gov/study/NCT07033585",
+      "days": 72
     },
     {
       "date": "2026-10-20",
-      "type": "Ensayo Fase 1, Fase 2",
+      "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Daiichi Sankyo",
-      "title": "First-in-Human Study of DS-3939a in Participants With Advanced Solid Tumors",
+      "company": "Lorenzo delSorbo",
+      "title": "Interleukin-6 Guided Treatment With Dexamethasone or Tocilizumab in Patients Hospitalized With Acute Respiratory Symptoms - a Feasibility St",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05875168",
+      "url": "https://clinicaltrials.gov/study/NCT07334379",
       "days": 74
     },
     {
-      "date": "2026-10-24",
-      "type": "Ensayo Fase 3",
+      "date": "2026-10-20",
+      "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "The Children's Hospital of Zhejiang University School of Medicine",
-      "title": "Study of the Telitacicept in Pediatric Patients With Frequently Relapsing or Steroid Dependent Nephrotic Syndrome",
+      "company": "Union Hospital, Tongji Medical College, Huazhong University of Science and Technology",
+      "title": "Study to Evaluate the Safety and Efficacy of Daratumumab and Carfilzomib-based Induction/Consolidation/Maintenance Therapy in Transplant-eli",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06125405",
-      "days": 78
+      "url": "https://clinicaltrials.gov/study/NCT06140966",
+      "days": 74
+    },
+    {
+      "date": "2026-10-21",
+      "type": "Ensayo Fase 2, Fase 3",
+      "ticker": "",
+      "company": "Ain Shams University",
+      "title": "Effect of Melatonin Administration on Systemic Lupus Erythematosus Patients",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07721324",
+      "days": 75
+    },
+    {
+      "date": "2026-10-22",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "National Institute of Allergy and Infectious Diseases (NIAID)",
+      "title": "Study of Oral and Long-Acting Injectable Cabotegravir and Rilpivirine in Virologically Suppressed Children Living With HIV-1, Two to Less Th",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05660980",
+      "days": 76
+    },
+    {
+      "date": "2026-10-22",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Shanghai Henlius Biotech",
+      "title": "A Single-arm, Open-label, Phase II Study to Evaluate Efficacy, Safety and Pharmacokinetics of HLX10 + Chemotherapy in Patients With ES-SCLC",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06812260",
+      "days": 76
+    },
+    {
+      "date": "2026-10-22",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "UNICANCER",
+      "title": "Safety of Trifluridine/Tipiracil in Patients With Dihydropyrimidine Dehydrogenase Deficiency Diagnosed With Metastatic Colorectal or Gastroe",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06245356",
+      "days": 76
     },
     {
       "date": "2026-10-25",
@@ -2865,23 +3175,23 @@
       "days": 79
     },
     {
-      "date": "2026-10-28",
-      "type": "Ensayo Fase 2, Fase 3",
+      "date": "2026-10-26",
+      "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Hoffmann-La Roche",
-      "title": "A Study to Investigate the Safety and Efficacy of RO7204239 in Combination With Risdiplam (RO7034067) in Participants With Spinal Muscular A",
+      "company": "CSL Behring",
+      "title": "Recombinant Single-chain Factor VIII (rVIII-SingleChain) in Chinese Participants With Hemophilia A Previously Treated With FVIII Products",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05115110",
-      "days": 82
+      "url": "https://clinicaltrials.gov/study/NCT06738485",
+      "days": 80
     },
     {
       "date": "2026-10-29",
-      "type": "Ensayo Fase 3",
+      "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Merck Sharp & Dohme LLC",
-      "title": "A Study of Pembrolizumab (MK-3475) in Combination With Belzutifan (MK-6482) and Lenvatinib (MK-7902), or Pembrolizumab/Quavonlimab (MK-1308A",
+      "company": "City of Hope Medical Center",
+      "title": "Stereotactic Body Radiation Therapy and FES PET/CT Imaging for the Treatment of Oligoprogressive Estrogen Receptor Positive Metastatic Breas",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04736706",
+      "url": "https://clinicaltrials.gov/study/NCT06260033",
       "days": 83
     },
     {
@@ -3096,32 +3406,52 @@
     },
     {
       "date": "2026-10-30",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Cali Pharmaceuticals LLC",
+      "title": "Phase 3 Bunionectomy Study",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07490496",
+      "days": 84
+    },
+    {
+      "date": "2026-10-30",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Eastern Hepatobiliary Surgery Hospital",
+      "title": "Drug Sensitivity Testing-Based Tumor Organoids to Guide Adjuvant Therapy After Hepatectomy for Primary Liver Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07363356",
+      "days": 84
+    },
+    {
+      "date": "2026-10-30",
+      "type": "Ensayo Fase 2, Fase 3",
+      "ticker": "",
+      "company": "Chittagong Medical College",
+      "title": "Levosimendan in Acute Decompensated Heart Failure",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07262723",
+      "days": 84
+    },
+    {
+      "date": "2026-10-30",
       "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "Sidney Kimmel Comprehensive Cancer Center at Johns Hopkins",
-      "title": "A Study of Blinatumomab in Patients With Pre B-cell ALL and B-cell NHL as Post-allo-HSCT Remission Maintenance",
+      "company": "Shandong Suncadia Medicine Co., Ltd.",
+      "title": "A Trial of HRS-2189 in Combination With Fluvastatin±HRS-6209, or HRS-8080±HRS-6209, or HRS-6209+HRS-1358 in Breast Cancer Patients",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT03114865",
+      "url": "https://clinicaltrials.gov/study/NCT06679036",
       "days": 84
     },
     {
       "date": "2026-10-30",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "RenJi Hospital",
-      "title": "A Prospective，Single Arm, Multicenter Clinical Study of BTLA Monoclonal Antibody JS004 (B/T Lymphocyte Attenuator Factor Monoclonal Antibody",
+      "company": "University Health Network, Toronto",
+      "title": "Durvalumab and Oleclumab in Resectable PDAC",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06730932",
-      "days": 84
-    },
-    {
-      "date": "2026-10-30",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Ruijin Hospital",
-      "title": "BIOmarker Driven Trial of VEGFR2 Inhibitor in Advanced or Metastatic Sarcoma",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04072042",
+      "url": "https://clinicaltrials.gov/study/NCT06060405",
       "days": 84
     },
     {
@@ -3216,6 +3546,46 @@
     },
     {
       "date": "2026-10-31",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Shandong Suncadia Medicine Co., Ltd.",
+      "title": "Study of HRS-8080 or SHR-A2009 Combined With Anti-tumor Therapy in Patients With Unresectable or Metastatic Breast Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06222879",
+      "days": 85
+    },
+    {
+      "date": "2026-10-31",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Rhythm Pharmaceuticals, Inc.",
+      "title": "A Study of Setmelanotide in Patients With Prader-Willi Syndrome",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06772597",
+      "days": 85
+    },
+    {
+      "date": "2026-10-31",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Second Affiliated Hospital, Zhejiang University, School of Medicine",
+      "title": "Orelabrutinib Combined With Pola-R-CHP Regimen for the Treatment of Untreated Non-GCB Diffuse Large B-Cell Lymphoma",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07078500",
+      "days": 85
+    },
+    {
+      "date": "2026-10-31",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Mercy Bon Secours Saint Vincent Medical Center",
+      "title": "Comparing Haloperidol to Olanzapine in the Treatment of Suspected Cannabinoid Hyperemesis in the Emergency Department",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07246187",
+      "days": 85
+    },
+    {
+      "date": "2026-10-31",
       "type": "Ensayo Fase 3",
       "ticker": "",
       "company": "Sarepta Therapeutics, Inc.",
@@ -3226,142 +3596,32 @@
     },
     {
       "date": "2026-10-31",
-      "type": "Ensayo Fase 1, Fase 2",
+      "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "National Cancer Center, China",
-      "title": "Study of Iparomlimab and Tuvonralimab Plus Chemotherapy in Malignant Mesothelioma",
+      "company": "Annexon, Inc.",
+      "title": "A Study Investigating the Efficacy and Safety of Intravitreal (IVT) Injections of Vonaprument (Formerly ANX007) in Participants With Dry Age",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07131345",
+      "url": "https://clinicaltrials.gov/study/NCT06510816",
       "days": 85
     },
     {
       "date": "2026-10-31",
-      "type": "Ensayo Fase 1, Fase 2",
+      "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "M.D. Anderson Cancer Center",
-      "title": "Evaluation of a Novel CT-On-Rails or Trilogy Stereotactic Spine Radiotherapy System (SSRS)",
+      "company": "University of Utah",
+      "title": "Nonpharmacologic Pain Management in FQHC Primary Care Clinics",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT00508443",
+      "url": "https://clinicaltrials.gov/study/NCT04923334",
       "days": 85
     },
     {
       "date": "2026-10-31",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Changzhou Qianhong Bio-pharma Co., Ltd.",
-      "title": "Study to Assess the Efficacy and Safety of QHRD106 Injection in Acute Ischemic Stroke.",
+      "company": "fan li",
+      "title": "Neoadjuvant Short-Course Radiotherapy With or Without Chemotherapy and AK112 in Locally Advanced Rectal Cancer",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07396337",
-      "days": 85
-    },
-    {
-      "date": "2026-10-31",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "The First Affiliated Hospital of Xinxiang Medical College",
-      "title": "Nanocrystalline Megestrol for Managing Chemotherapy-Induced Nausea and Vomiting",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07124195",
-      "days": 85
-    },
-    {
-      "date": "2026-10-31",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Viatris Innovation GmbH",
-      "title": "A Research Study to Evaluate the Effects of a New Oral Medicine Called Cenerimod in Adults With Systemic Lupus Erythematosus",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05648500",
-      "days": 85
-    },
-    {
-      "date": "2026-10-31",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Affiliated Hospital of Nantong University",
-      "title": "Evaluation of Irinotecan Liposome (II) Combined With 5-FU, LV, and Bevacizumab for mCRC",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06643793",
-      "days": 85
-    },
-    {
-      "date": "2026-10-31",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "University of Minnesota",
-      "title": "Treatment of ARDS With Instilled T3",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04115514",
-      "days": 85
-    },
-    {
-      "date": "2026-10-31",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "The Cleveland Clinic",
-      "title": "Sugammadex Vs Neostigmine in Reversing Neuromuscular Blocks in Outpatient ERCP. A Randomized, Double-Blinded Trial",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06136585",
-      "days": 85
-    },
-    {
-      "date": "2026-10-31",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "AstraZeneca",
-      "title": "Capivasertib+Fulvestrant asTreatment for Locally Advanced(Inoperable) or Metastatic HR+/HER2- Breast Cancer in Chinese Patients",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06635447",
-      "days": 85
-    },
-    {
-      "date": "2026-10-31",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "dr. M.J.N.L. Benders",
-      "title": "Cerebrum and Cardiac Protection With Allopurinol in Neonates With Critical Congenital Heart Disease Requiring Cardiac Surgery With Cardiopul",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04217421",
-      "days": 85
-    },
-    {
-      "date": "2026-10-31",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "National Institute of Hygiene and Epidemiology, Vietnam",
-      "title": "Effector and Memory Immune Responses to HPV Vaccination in Vietnamese Women Post Virus Exposure",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06681636",
-      "days": 85
-    },
-    {
-      "date": "2026-10-31",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Tata Memorial Hospital",
-      "title": "Randomized Controlled Trial to Assess Blockade of Voltage Gated Sodium Channels During Surgery in Operable Breast Cancer",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT01916317",
-      "days": 85
-    },
-    {
-      "date": "2026-10-31",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Jiangsu HengRui Medicine Co., Ltd.",
-      "title": "Phase III Study ：SHR6390/Placebo Combined With Endocrine Therapy for the Adjuvant Treatment of Hormone Receptor Positive,Human Epidermal Rec",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04842617",
-      "days": 85
-    },
-    {
-      "date": "2026-10-31",
-      "type": "Ensayo Fase 2, Fase 3",
-      "ticker": "",
-      "company": "Kibo Nam",
-      "title": "SHAPE Neoadjuvant Chemotherapy Response",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04715958",
+      "url": "https://clinicaltrials.gov/study/NCT06718543",
       "days": 85
     },
     {
@@ -3378,100 +3638,160 @@
       "date": "2026-10-31",
       "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Second Affiliated Hospital of Guangzhou Medical University",
-      "title": "Lenvatinib Plus I-125 Seed Brachytherapy vs. Lenvatinib for TACE-refractory HCC",
+      "company": "Xijing Hospital",
+      "title": "Dexmedetomidine in Reducing Postoperative Delirium in Cardiac Surgery Patients",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05608213",
+      "url": "https://clinicaltrials.gov/study/NCT06619912",
       "days": 85
     },
     {
       "date": "2026-10-31",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "National Cancer Institute (NCI)",
-      "title": "Testing Atezolizumab Alone or Atezolizumab Plus Bevacizumab in People With Advanced Alveolar Soft Part Sarcoma",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT03141684",
-      "days": 85
-    },
-    {
-      "date": "2026-10-31",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Pharmazz, Inc.",
-      "title": "Multicentric, Randomized Study to Assess Safety and Efficacy of Centhaquine in Patients With ARDS",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05241067",
-      "days": 85
-    },
-    {
-      "date": "2026-10-31",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Ohio State University Comprehensive Cancer Center",
-      "title": "Acalabrutinib in Combination With Venetoclax or Obinutuzumab for the Treatment of Treatment-naive Chronic Lymphocytic Leukemia",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05336812",
-      "days": 85
-    },
-    {
-      "date": "2026-10-31",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Ruijin Hospital",
-      "title": "Molecular Subtype Combined with Early Minimal Residual Disease to Optimize the Treatment of Newly Diagnosed Acute Myeloid Leukemia",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06652685",
-      "days": 85
-    },
-    {
-      "date": "2026-10-31",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Qilu Hospital of Shandong University",
-      "title": "Phase II Trial of Iparomlimab/Tuvonralimab (QL1706) + XELOX in HER2-Negative, Low PD-L1 G/GEJ Adenocarcinoma",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06932068",
-      "days": 85
-    },
-    {
-      "date": "2026-10-31",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Beijing Tiantan Hospital",
-      "title": "The Efficacy of WVI in Patients With Localized Basal Ganglia Intracranial Germ Cell Tumors",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05124951",
-      "days": 85
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Sunnybrook Health Sciences Centre",
-      "title": "Fisetin in Mild Alzheimer's Disease",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07279714",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Ain Shams University",
-      "title": "The Effect of Dormicum-Ketamine Versus Dexmedetomidine on Emergence Delirium During Deep Sedation in Paediatric Burn Patients",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07519863",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
       "type": "Ensayo Fase 3",
       "ticker": "",
-      "company": "Assistance Publique - Hôpitaux de Paris",
-      "title": "Evaluation of the Efficacy and Safety of Metformin in the Myotonic Dystrophy Type 1 (Steinert's Disease)",
+      "company": "Takeda",
+      "title": "TAK-788 as First-Line Treatment Versus Platinum-Based Chemotherapy for Non-Small Cell Lung Cancer (NSCLC) With EGFR Exon 20 Insertion Mutati",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05532813",
+      "url": "https://clinicaltrials.gov/study/NCT04129502",
+      "days": 85
+    },
+    {
+      "date": "2026-10-31",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Shanghai Henlius Biotech",
+      "title": "A Phase II Clinical Study to Evaluate HLX43 in Patients With Recurrent/Metastatic ESCC Failed or Intolerance to Standard Therapy",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06769113",
+      "days": 85
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Memorial Sloan Kettering Cancer Center",
+      "title": "MEK162 in Combination With Imatinib Mesylate in Patients With Untreated Advanced Gastrointestinal Stromal Tumor (GIST)",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT01991379",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "NYU Langone Health",
+      "title": "E-Cigarettes for Harm Reduction in Smokers With Opioid Use Disorder",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05722561",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "The First Affiliated Hospital with Nanjing Medical University",
+      "title": "The Dosing Regimen of Pyrotinib in HER2-positive Advanced First-line Breast Cancer: a Phase II Clinical Study",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06254690",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "MedSIR",
+      "title": "T-DXd Therapy for HER2-low Breast Cancer Patients With Brain Metastases",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06048718",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "National Institute of Allergy and Infectious Diseases (NIAID)",
+      "title": "A Single-arm, Dose-escalation Trial of Long-acting Recombinant Human IL-7 (NT-I7, Efineptakin Alfa) for Idiopathic CD4 Lymphopenia",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05600920",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2, Fase 3",
+      "ticker": "",
+      "company": "LG Chem",
+      "title": "A Phase II/III Study to Evaluate the Immunogenicity, Safety and Lot-to-lot Consistency of LBVD, a Fully Liquid Hexavalent Diphtheria-tetanus",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06947499",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Anhui Provincial Hospital",
+      "title": "Romiplostim N01 for Platelet Recovery in Adult Hematologic Malignancies Patients Undergoing UCBT",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06693791",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "University of Michigan Rogel Cancer Center",
+      "title": "Post-prostatectomy Radiation Therapy--Moderate Versus Ultra-hypofractionated (Also Known as Stereotactic Body Radiation Therapy [SBRT])",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05038332",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Paul Szabolcs",
+      "title": "Sequential Cadaveric Lung and Bone Marrow Transplant for Immune Deficiency Diseases",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT01852370",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Cancer Institute and Hospital, Chinese Academy of Medical Sciences",
+      "title": "Immune Checkpoint Inhibitors + Chemotherapy Versus Chemotherapy in the Neoadjuvant Treatment of Locally Advanced Colorectal Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06154538",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "H. Lee Moffitt Cancer Center and Research Institute",
+      "title": "Study of the Combination Dostarlimab With Niraparib In Patients With Penile Carcinoma",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05526989",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "Jiangsu HengRui Medicine Co., Ltd.",
+      "title": "A Trial of SHR-A1811 Combined With Other Antitumor Therapies in Advanced Solid Tumors.",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06015048",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Second Affiliated Hospital, Zhejiang University, School of Medicine",
+      "title": "Auricular Point Stimulation Plus Dexamethasone for Nausea and Vomiting Caused by Docetaxel Plus Cyclophosphamide",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07537699",
       "days": 86
     },
     {
@@ -3482,36 +3802,6 @@
       "title": "Lvosidenib (AK112) Combined With CapeOX and Radiotherapy in Patients With Unresectable Metastatic MSS-type Colorectal Cancer",
       "source": "ClinicalTrials.gov",
       "url": "https://clinicaltrials.gov/study/NCT06593548",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Bristol-Myers Squibb",
-      "title": "A Study to Evaluate the Efficacy and Safety of KarXT for the Treatment of Manic Episodes in Bipolar-I Disorder",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06951698",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Pak Emirates Military Hospital",
-      "title": "Role of Intravenous Calcium to Decrease Blood Loss During Intrapartum Cesarean Section",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07550413",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Assistance Publique - Hôpitaux de Paris",
-      "title": "Use of Crohn's Disease Exclusion Diet on Top of Standard Therapy Versus Standard Therapy Alone in Unstable Pediatric Crohn's Disease Patient",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04777656",
       "days": 86
     },
     {
@@ -3528,260 +3818,50 @@
       "date": "2026-11-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "M.D. Anderson Cancer Center",
-      "title": "Phase 2 Trial of Neoadjuvant and Adjuvant Tiragolumab Plus Atezolizumab in Patients With Newly Diagnosed PD-L1 CPS Positive Resectable Stage",
+      "company": "Xentria, Inc.",
+      "title": "An Open-label Extension Study of XTMAB-16 in Patients With Pulmonary Sarcoidosis",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05681039",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Traws Pharma, Inc.",
-      "title": "Phase 2a Study of the Efficacy and Safety of TRX-100 in a Human Influenza A Challenge Model",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07503405",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "AbbVie",
-      "title": "Study to Evaluate Adverse Events, and Change in Disease Activity, When Intravenously (IV) Infused With Livmoniplimab in Combination With IV ",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05822752",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Kasr El Aini Hospital",
-      "title": "The Effect of Discontinuation of Renin Angiotensin System Inhibitors on the Perioperative Myocardial Injury in Adult Patients Undergoing Col",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06862115",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Immunic AG",
-      "title": "Study to Evaluate the Efficacy, Safety, and Tolerability of IMU-838 in Patients With Relapsing Multiple Sclerosis",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05134441",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Ferrer Internacional S.A.",
-      "title": "A Study to Assess the Efficacy, Safety, and Pharmacokinetics of FNP-223 to Slow Progression of Progressive Supranuclear Palsy (PSP)",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06355531",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Mark Stein",
-      "title": "REGN2810 Followed by Chemoimmunotherapy for Newly Metastatic Hormone-sensitive Prostate Cancer",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT03951831",
+      "url": "https://clinicaltrials.gov/study/NCT06169397",
       "days": 86
     },
     {
       "date": "2026-11-01",
       "type": "Ensayo Fase 1, Fase 2",
       "ticker": "",
-      "company": "Julien Bally",
-      "title": "Feasibility Study Assessing the Effect of Carbidopa/Levodopa Ratio on Orthostatic Hypotension in Multiple System Atrophy - Parkinsonian Type",
+      "company": "Peter MacCallum Cancer Centre, Australia",
+      "title": "Study of Lenalidomide, Venetoclax and Obinutuzumab in Patients With Treatment-Naïve Follicular Lymphoma",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06831500",
+      "url": "https://clinicaltrials.gov/study/NCT03980171",
       "days": 86
     },
     {
       "date": "2026-11-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Xijing Hospital",
-      "title": "Single-arm, Phase II Clinical Study Evaluating the Safety and Efficacy of Sintilimab Combined With IBI-310 and Chemotherapy as Neoadjuvant T",
+      "company": "Hellenic Institute for the Study of Sepsis",
+      "title": "Emapalumab Treatment For Anticipated Clinical Benefit In Sepsis Driven By The Interferon-Gamma Endotype (The EMBRACE Trial)",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07750951",
+      "url": "https://clinicaltrials.gov/study/NCT06694701",
       "days": 86
     },
     {
       "date": "2026-11-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Emory University",
-      "title": "Early Human Leukocyte Antigen (HLA) Matched Sibling Hematopoietic Stem Cell Transplantation",
+      "company": "Pacira Pharmaceuticals, Inc",
+      "title": "A Study to Assess Safety and Tolerability of PCRX-201 in Subjects With Painful Osteoarthritis of the Knee",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04018937",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Tianjin Medical University Cancer Institute and Hospital",
-      "title": "Study of Tislelizumab and Platinum-based Chemotherapy Combination With H1 Receptor Antagonist（Diphenhydramine）in Advanced and Metastatic Non",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06704620",
+      "url": "https://clinicaltrials.gov/study/NCT06884865",
       "days": 86
     },
     {
       "date": "2026-11-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Western Sydney Local Health District",
-      "title": "A Randomised Controlled Trial, Of N-Acetyl Cysteine (NAC), for Premanifest Huntingtin Gene Expansion Carriers",
+      "company": "Stemline Therapeutics, Inc.",
+      "title": "ELACESTRANT in Women and Men With CDK4/6 Inhibitor-Naive Estrogen Receptor Positive, HER-2 Negative Metastatic Breast Cancer Study",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05509153",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "Erasca, Inc.",
-      "title": "A Study of ERAS-007 as Monotherapy or in Combination With ERAS-601 in Patients With Advanced or Metastatic Solid Tumors",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04866134",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Fundacion Oncosur",
-      "title": "Pembrolizumab, Carboplatin and Cabazitaxel in Aggressive Metastatic Castration Resistant Prostate Cancer (PEAPOD_FOS)",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05563558",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Massachusetts General Hospital",
-      "title": "Hearing Outcomes Using Fractionated Proton Radiation Therapy for Vestibular Schwannoma",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT01199978",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Krankenhaus Nordwest",
-      "title": "HIPEC + FLOT vs. FLOT Alone in Patients With Gastric Cancer and GEJ (PREVENT)",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04447352",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "RenJi Hospital",
-      "title": "Target-specific immunoPET Imaging of Breast Cancer",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06715826",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 1, Fase 2",
-      "ticker": "",
-      "company": "UMC Utrecht",
-      "title": "Mesenchymal Stromal Cells as Treatment for Digital Ulcers in Systemic Sclerosis",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT03211793",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Wes Ely",
-      "title": "Randomized Double-Blind Placebo-Controlled Trial EValuating Baricitinib on PERSistent NEurologic and Cardiopulmonary Symptoms of Long COVID",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06631287",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Acesion Pharma",
-      "title": "Clinical Phase 2 Trial of AP31969 Versus Placebo for Rhythm Control of Atrial Fibrillation",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07267949",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Ottawa Hospital Research Institute",
-      "title": "Impact of Hormonal Therapy on Prostate Cancer Recurrence After Radical Prostatectomy",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05169112",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Memorial Sloan Kettering Cancer Center",
-      "title": "A Study of Xevinapant With Cisplatin and Radiation Therapy After Surgery in People With Head and Neck Cancer",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06145412",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Northwell Health",
-      "title": "Transcutaneous Vagus Nerve Stimulation in SLE",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06987565",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Johns Hopkins University",
-      "title": "STEP-IT-UP - Peanut Allergy Study for Infants",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT04761835",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 3",
-      "ticker": "",
-      "company": "Lynk Pharmaceuticals Co., Ltd",
-      "title": "A Study to Evaluate Efficacy and Safety of LNK01001 in Adults With Ankylosing Spondylitis",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07237568",
-      "days": 86
-    },
-    {
-      "date": "2026-11-01",
-      "type": "Ensayo Fase 2",
-      "ticker": "",
-      "company": "Eli Lilly and Company",
-      "title": "A Study of LY4515100 in Participants With Pain Following Third Molar Removal",
-      "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT07511816",
+      "url": "https://clinicaltrials.gov/study/NCT05596409",
       "days": 86
     },
     {
@@ -3798,30 +3878,160 @@
       "date": "2026-11-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "Rutgers, The State University of New Jersey",
-      "title": "Reducing Pain From Wisdom Molar Extractions",
+      "company": "Carey Anders, M.D.",
+      "title": "Secondary BRain Metastases Prevention After Isolated Intracranial Progression on Trastuzumab/Pertuzumab or T-DM1 in Patients With aDvanced H",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05335070",
+      "url": "https://clinicaltrials.gov/study/NCT05323955",
       "days": 86
     },
     {
       "date": "2026-11-01",
       "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "University Hospital, Bordeaux",
-      "title": "Contribution of PET/CT With Gallium 68 Citrate (68Ga-PET/CT) for the Diagnosis of Prosthetic Valve Infective Endocarditis",
+      "company": "Shandong Suncadia Medicine Co., Ltd.",
+      "title": "A Phase II Clinical Study on the Efficacy and Safety of HRS-1780 in Participants With Primary Aldosteronism",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT05446376",
+      "url": "https://clinicaltrials.gov/study/NCT07470983",
       "days": 86
     },
     {
       "date": "2026-11-01",
-      "type": "Ensayo Fase 2, Fase 3",
+      "type": "Ensayo Fase 2",
       "ticker": "",
-      "company": "University of Calgary",
-      "title": "VERIFY: Vedolizumab for the Prevention of Immune Checkpoint Inhibitor Related Diarrhea or Colitis in Patients With Cancer",
+      "company": "Memorial Sloan Kettering Cancer Center",
+      "title": "A Study of Amivantamab in People With Esophagogastric Cancer",
       "source": "ClinicalTrials.gov",
-      "url": "https://clinicaltrials.gov/study/NCT06337695",
+      "url": "https://clinicaltrials.gov/study/NCT05117931",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Ottawa Hospital Research Institute",
+      "title": "Impact of Hormonal Therapy on Prostate Cancer Recurrence After Radical Prostatectomy",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05169112",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "NewAmsterdam Pharma",
+      "title": "Cardiovascular Outcome Study to Evaluate the Effect of Obicetrapib in Patients With Cardiovascular Disease",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05202509",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Traws Pharma, Inc.",
+      "title": "Phase 2a Study of the Efficacy and Safety of TRX-100 in a Human Influenza A Challenge Model",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07503405",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Gustave Roussy, Cancer Campus, Grand Paris",
+      "title": "High-Risk Neuroblastoma Study 2 of SIOP-Europa-Neuroblastoma (SIOPEN)",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04221035",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Memorial Sloan Kettering Cancer Center",
+      "title": "Study of Plinabulin and Pegfilgrastim in People With Multiple Myeloma Undergoing an Autologous Hematopoietic Stem Cell Transplant (AHCT)",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05130827",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Mark Stein",
+      "title": "REGN2810 Followed by Chemoimmunotherapy for Newly Metastatic Hormone-sensitive Prostate Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT03951831",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Asan Medical Center",
+      "title": "Lenvatinib After Progression on Atezolizumab-bevacizumab in Hepatocellular Carcinoma",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06138769",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Sinovac Biotech Co., Ltd",
+      "title": "Phase Ⅲ Trial of Group ACYW135 Meningococcal Conjugate Vaccine in Children Aged 2-6 Years",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07505888",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "BRIM Biotechnology Inc.",
+      "title": "A Dose Regimen Study of BRM421 Ophthalmic Solution in Patients With Dry Eye Disease",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07078955",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Northside Hospital, Inc.",
+      "title": "Intrathecal Chemoprophylaxis to Prevent Neurotoxicity Associated With Blinatumomab Therapy for Acute Lymphoblastic Leukemia",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05519579",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Memorial Sloan Kettering Cancer Center",
+      "title": "A Study of Single Fraction Stereotactic Body Radiation Therapy (SBRT) Guided by Magnetic Resonance Imaging (MRI) in People With Liver Metast",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT06130280",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Istituti Clinici Scientifici Maugeri SpA",
+      "title": "Pembrolizumab in High-risk Thyroid Cancer",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05852223",
+      "days": 86
+    },
+    {
+      "date": "2026-11-01",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "M.D. Anderson Cancer Center",
+      "title": "Blinatumomab, Inotuzumab Ozogamicin, and Combination Chemotherapy as Frontline Therapy in Treating Patients With B Acute Lymphoblastic Leuke",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT02877303",
       "days": 86
     },
     {
@@ -3833,6 +4043,26 @@
       "source": "Finnhub",
       "url": "",
       "days": 86
+    },
+    {
+      "date": "2026-11-02",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "National Cancer Institute (NCI)",
+      "title": "Testing the Safety and Effectiveness of Radiation-based Treatment (Lutetium Lu 177 Dotatate) for Metastatic Prostate Cancer That Has Neuroen",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05691465",
+      "days": 87
+    },
+    {
+      "date": "2026-11-02",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Jonsson Comprehensive Cancer Center",
+      "title": "Gene and Vaccine Therapy in Treating Patients With Advanced Malignancies",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT01697527",
+      "days": 87
     },
     {
       "date": "2026-11-02",
@@ -8643,6 +8873,26 @@
       "source": "Finnhub",
       "url": "",
       "days": 87
+    },
+    {
+      "date": "2026-11-03",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Novartis Pharmaceuticals",
+      "title": "24 Weeks Double-blind Randomized Placebo-controlled Trial to Evaluate Efficacy, PK, Safety of LOU064 in Adolescents (12 - <18) With CSU and ",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT05677451",
+      "days": 88
+    },
+    {
+      "date": "2026-11-03",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "University of Southern California",
+      "title": "A Dose Finding Phase 1 of Sarilumab Plus Capecitabine in HER2/Neu-Negative Metastatic Breast Cancer and a Single-arm, Historically-controlle",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04333706",
+      "days": 88
     },
     {
       "date": "2026-11-03",
@@ -17353,6 +17603,46 @@
       "source": "Finnhub",
       "url": "",
       "days": 89
+    },
+    {
+      "date": "2026-11-05",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Incyte Corporation",
+      "title": "Rollover Study to Provide Continued Treatment for Participants With B-Cell Malignancies Previously Enrolled in Studies of Parsaclisib (INCB0",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04509700",
+      "days": 90
+    },
+    {
+      "date": "2026-11-05",
+      "type": "Ensayo Fase 2",
+      "ticker": "",
+      "company": "Gates Medical Research Institute",
+      "title": "Bactericidal Activity of TBD09 in Combination With Other Drugs in Pulmonary Tuberculosis",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT07525427",
+      "days": 90
+    },
+    {
+      "date": "2026-11-05",
+      "type": "Ensayo Fase 3",
+      "ticker": "",
+      "company": "Genzyme, a Sanofi Company",
+      "title": "Long-term Safety and Efficacy Study of Fitusiran in Patients With Hemophilia A or B, With or Without Inhibitory Antibodies to Factor VIII or",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT03754790",
+      "days": 90
+    },
+    {
+      "date": "2026-11-05",
+      "type": "Ensayo Fase 1, Fase 2",
+      "ticker": "",
+      "company": "H. Lee Moffitt Cancer Center and Research Institute",
+      "title": "Stereotactic Radiation & Abemaciclib in the Management of HR+/HER2- Breast Cancer Brain Metastases",
+      "source": "ClinicalTrials.gov",
+      "url": "https://clinicaltrials.gov/study/NCT04923542",
+      "days": 90
     },
     {
       "date": "2026-11-05",
