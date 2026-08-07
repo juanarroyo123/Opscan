@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-05T22:33:50+00:00",
+  "generated_at": "2026-08-07T01:03:36+00:00",
   "config": {
     "max_expirations": 3,
     "max_days_out": 70,
@@ -12,22 +12,22 @@
     {
       "ticker": "NVDA",
       "error": null,
-      "price": 219.22,
+      "price": 218.99,
       "name": "NVIDIA Corporation",
-      "market_cap": 5309727768576,
+      "market_cap": 5304156684288,
       "cash": 53171998720,
       "debt": 12814000128,
-      "inst_pct": 0.70483,
+      "inst_pct": 0.70495003,
       "short_pct": 0.0139,
       "target_mean": 302.82758,
       "target_low": 180.0,
       "target_high": 500.0,
       "recommendation_key": "strong_buy",
       "analyst_count": 58,
-      "upside_pct": 38.1,
-      "buy_target": 219.22,
+      "upside_pct": 38.3,
+      "buy_target": 218.99,
       "sell_target": 302.83,
-      "potential_gain_pct": 38.1,
+      "potential_gain_pct": 38.3,
       "is_signal": true,
       "analyst_breakdown": {
         "strongBuy": 10,
@@ -38,308 +38,759 @@
       },
       "news": [
         {
-          "title": "Nvidia stock rises after Musk says SpaceX will exclusively use company's chips",
-          "link": "https://finance.yahoo.com/technology/article/nvidia-stock-rises-after-musk-says-spacex-will-exclusively-use-companys-chips-211803293.html",
-          "publisher": "Yahoo Finance",
-          "pub_date": "2026-08-04T21:18:03Z"
+          "title": "Jamie Dimon makes huge call on AI and U.S. economy",
+          "link": "https://www.thestreet.com/economy/jamie-dimon-ai-us-economy-growth",
+          "publisher": "TheStreet",
+          "pub_date": "2026-08-07T00:37:00Z"
         },
         {
-          "title": "SpaceX stock declines post-earnings. Are investors worried about AI spending?",
-          "link": "https://finance.yahoo.com/video/spacex-stock-declines-post-earnings-133053667.html",
-          "publisher": "Yahoo Finance Video",
-          "pub_date": "2026-08-05T13:30:53Z"
+          "title": "2 Energy Stocks With More Hype Than Fundamentals Right Now",
+          "link": "https://www.fool.com/investing/2026/08/06/2-energy-stocks-with-more-hype-than-fundamentals-r/",
+          "publisher": "Motley Fool",
+          "pub_date": "2026-08-07T00:25:00Z"
         },
         {
-          "title": "Dow Jones Futures: Nvidia Lifts Dow, But Google, SpaceX Skid; Sandisk, Western Digital Lead Earnings Losers Late",
-          "link": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-nvidia-google-spacex-skid-sandisk-western-digital-earnings/?src=A00220&yptr=yahoo",
-          "publisher": "Investor's Business Daily",
-          "pub_date": "2026-08-05T22:24:43Z"
+          "title": "Card Network or Card Lender: Which Business Model Is the Better Long-Term Buy?",
+          "link": "https://www.fool.com/investing/2026/08/06/card-network-or-card-lender-which-business-model-i/",
+          "publisher": "Motley Fool",
+          "pub_date": "2026-08-07T00:20:00Z"
         },
         {
-          "title": "Natural Resource Partners L.P. Q2 2026 Earnings Call Summary",
-          "link": "https://app.moby.co/home/research/tools/earningsCalendar/earnings-natural-resource-partners-lp-q2-2026-earnings-call-summary?utm_source=yahoo_finance&utm_medium=rss",
-          "publisher": "Moby",
-          "pub_date": "2026-08-05T22:23:27Z"
+          "title": "Four of Google's Top AI Researchers Just Left to Start One Company. Alphabet Is Investing in It.",
+          "link": "https://www.fool.com/investing/2026/08/06/four-of-googles-top-ai-researchers-just-left-to-st/",
+          "publisher": "Motley Fool",
+          "pub_date": "2026-08-07T00:02:00Z"
         },
         {
-          "title": "Griffon Corporation Q3 2026 Earnings Call Summary",
-          "link": "https://app.moby.co/home/research/tools/earningsCalendar/earnings-griffon-corporation-q3-2026-earnings-call-summary?utm_source=yahoo_finance&utm_medium=rss",
-          "publisher": "Moby",
-          "pub_date": "2026-08-05T22:21:00Z"
+          "title": "Why Occidental Stock Is Up Today",
+          "link": "https://www.fool.com/investing/2026/08/06/why-occidental-stock-is-up-today/",
+          "publisher": "Motley Fool",
+          "pub_date": "2026-08-06T23:48:37Z"
         },
         {
-          "title": "Kennametal Inc. Q4 2026 Earnings Call Summary",
-          "link": "https://app.moby.co/home/research/tools/earningsCalendar/earnings-kennametal-inc-q4-2026-earnings-call-summary?utm_source=yahoo_finance&utm_medium=rss",
-          "publisher": "Moby",
-          "pub_date": "2026-08-05T22:20:47Z"
+          "title": "AMD Buys Toronto AI Chip Startup Taalas — Retail Says It’s A Move To ‘Compete More Directly With Nvidia’",
+          "link": "https://stocktwits.com/news-articles/markets/equity/amd-buys-toronto-ai-chip-startup-taalas-retail-says-its-a-move-to-compete-more-directly-with-nvidia/cZoBg5yRJJM",
+          "publisher": "Stocktwits",
+          "pub_date": "2026-08-06T23:25:52Z"
         }
       ],
       "institutional_holders": [
         {
           "holder": "Blackrock Inc.",
           "shares": 1925533174,
-          "value": 422115384754.0,
+          "value": 421672520351.0,
           "pct": 7.96,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Vanguard Capital Management LLC",
           "shares": 1538550382,
-          "value": 337281016620.0,
+          "value": 336927156605.0,
           "pct": 6.36,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "State Street Corporation",
           "shares": 993885601,
-          "value": 217879602664.0,
+          "value": 217651013222.0,
           "pct": 4.11,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "FMR, LLC",
           "shares": 993852968,
-          "value": 217872448858.0,
+          "value": 217643866921.0,
           "pct": 4.11,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Geode Capital Management, LLC",
           "shares": 601327167,
-          "value": 131822942283.0,
+          "value": 131684639604.0,
           "pct": 2.48,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Vanguard Portfolio Management LLC",
           "shares": 510126721,
-          "value": 111829980400.0,
+          "value": 111712653433.0,
           "pct": 2.11,
           "date_reported": "2026-03-31"
         }
       ],
       "expirations": [
-        "2026-08-05",
         "2026-08-07",
-        "2026-08-10"
+        "2026-08-10",
+        "2026-08-12"
       ],
-      "call_vol": 3258053,
-      "put_vol": 1282412,
-      "call_oi": 698448,
-      "put_oi": 442386,
-      "cp_vol_ratio": 2.541,
-      "cp_oi_ratio": 1.579,
-      "total_vol_oi": 3.98,
-      "atm_iv": 0.0552,
+      "call_vol": 1382968,
+      "put_vol": 622947,
+      "call_oi": 644442,
+      "put_oi": 388449,
+      "cp_vol_ratio": 2.22,
+      "cp_oi_ratio": 1.659,
+      "total_vol_oi": 1.942,
+      "atm_iv": 0.4183,
       "unusual": [
         {
           "kind": "CALL",
+          "strike": 225.0,
+          "expiration": "2026-08-07",
+          "volume": 318621,
+          "openInterest": 45083,
+          "vol_oi": 7.07,
+          "iv": 0.4258,
+          "lastPrice": 0.25
+        },
+        {
+          "kind": "CALL",
           "strike": 222.5,
-          "expiration": "2026-08-05",
-          "volume": 1060517,
-          "openInterest": 7837,
-          "vol_oi": 135.32,
-          "iv": 0.1367,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "CALL",
-          "strike": 220.0,
-          "expiration": "2026-08-05",
-          "volume": 586176,
-          "openInterest": 27949,
-          "vol_oi": 20.97,
-          "iv": 0.0479,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "CALL",
-          "strike": 225.0,
-          "expiration": "2026-08-05",
-          "volume": 447777,
-          "openInterest": 9698,
-          "vol_oi": 46.17,
-          "iv": 0.2188,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "PUT",
-          "strike": 220.0,
-          "expiration": "2026-08-05",
-          "volume": 392031,
-          "openInterest": 1033,
-          "vol_oi": 379.51,
-          "iv": 0.0625,
-          "lastPrice": 0.74
-        },
-        {
-          "kind": "PUT",
-          "strike": 217.5,
-          "expiration": "2026-08-05",
-          "volume": 227021,
-          "openInterest": 299,
-          "vol_oi": 759.27,
-          "iv": 0.0781,
-          "lastPrice": 0.02
+          "expiration": "2026-08-07",
+          "volume": 236306,
+          "openInterest": 29084,
+          "vol_oi": 8.12,
+          "iv": 0.4155,
+          "lastPrice": 0.62
         },
         {
           "kind": "CALL",
           "strike": 220.0,
           "expiration": "2026-08-07",
-          "volume": 159215,
-          "openInterest": 33476,
-          "vol_oi": 4.76,
-          "iv": 0.3618,
-          "lastPrice": 2.49
-        },
-        {
-          "kind": "CALL",
-          "strike": 225.0,
-          "expiration": "2026-08-07",
-          "volume": 153260,
-          "openInterest": 13271,
-          "vol_oi": 11.55,
-          "iv": 0.3626,
-          "lastPrice": 0.86
+          "volume": 222508,
+          "openInterest": 55069,
+          "vol_oi": 4.04,
+          "iv": 0.4128,
+          "lastPrice": 1.37
         },
         {
           "kind": "PUT",
           "strike": 215.0,
-          "expiration": "2026-08-05",
-          "volume": 136690,
-          "openInterest": 633,
-          "vol_oi": 215.94,
-          "iv": 0.1719,
-          "lastPrice": 0.01
+          "expiration": "2026-08-07",
+          "volume": 130933,
+          "openInterest": 9419,
+          "vol_oi": 13.9,
+          "iv": 0.4424,
+          "lastPrice": 0.6
+        },
+        {
+          "kind": "PUT",
+          "strike": 217.5,
+          "expiration": "2026-08-07",
+          "volume": 130818,
+          "openInterest": 6188,
+          "vol_oi": 21.14,
+          "iv": 0.4243,
+          "lastPrice": 1.29
+        },
+        {
+          "kind": "CALL",
+          "strike": 227.5,
+          "expiration": "2026-08-07",
+          "volume": 125979,
+          "openInterest": 17083,
+          "vol_oi": 7.37,
+          "iv": 0.4531,
+          "lastPrice": 0.11
+        },
+        {
+          "kind": "CALL",
+          "strike": 230.0,
+          "expiration": "2026-08-07",
+          "volume": 116432,
+          "openInterest": 29985,
+          "vol_oi": 3.88,
+          "iv": 0.4883,
+          "lastPrice": 0.05
+        },
+        {
+          "kind": "PUT",
+          "strike": 220.0,
+          "expiration": "2026-08-07",
+          "volume": 90165,
+          "openInterest": 6402,
+          "vol_oi": 14.08,
+          "iv": 0.4238,
+          "lastPrice": 2.43
         }
       ],
       "unusual_count": 12,
-      "iv_percentile": 13.3,
+      "iv_percentile": 100.0,
       "catalysts": [
         {
           "date": "2026-08-26",
           "type": "Earnings",
           "note": "Yahoo",
-          "days": 21
+          "days": 19
         }
       ],
-      "next_catalyst_days": 21,
+      "next_catalyst_days": 19,
       "next_catalyst": "Earnings 2026-08-26",
-      "score": 76.0,
+      "score": 77.3,
       "signal": "ALTA",
       "reasons": [
-        "Catalizador en 21d (+16)",
-        "Ratio C/P extremo (+25)",
+        "Catalizador en 19d (+17)",
+        "Ratio C/P marcado (+15)",
         "12 contratos inusuales (+25)",
-        "Vol/OI agregado alto (+10)"
+        "Vol/OI agregado alto (+10)",
+        "IV en percentil 90+ (+10)"
       ]
     },
     {
-      "ticker": "MELI",
+      "ticker": "MSFT",
       "error": null,
-      "price": 1922.57,
-      "name": "MercadoLibre, Inc.",
-      "market_cap": 97468882944,
-      "cash": 5664000000,
-      "debt": 12376000512,
-      "inst_pct": 0.82227,
-      "short_pct": 0.0191,
-      "target_mean": 2214.875,
-      "target_low": 1750.0,
-      "target_high": 2800.0,
-      "recommendation_key": "buy",
-      "analyst_count": 24,
-      "upside_pct": 15.2,
-      "buy_target": 1922.57,
-      "sell_target": 2214.88,
-      "potential_gain_pct": 15.2,
+      "price": 499.86,
+      "name": "Microsoft Corporation",
+      "market_cap": 3711733071872,
+      "cash": 76651003904,
+      "debt": 128812998656,
+      "inst_pct": 0.7541,
+      "short_pct": 0.0124,
+      "target_mean": 562.72644,
+      "target_low": 400.0,
+      "target_high": 870.0,
+      "recommendation_key": "strong_buy",
+      "analyst_count": 53,
+      "upside_pct": 12.6,
+      "buy_target": 499.86,
+      "sell_target": 562.73,
+      "potential_gain_pct": 12.6,
       "is_signal": true,
       "analyst_breakdown": {
-        "strongBuy": 5,
-        "buy": 15,
-        "hold": 4,
+        "strongBuy": 14,
+        "buy": 39,
+        "hold": 3,
         "sell": 0,
         "strongSell": 0
       },
       "news": [
         {
-          "title": "MercadoLibre (NASDAQ:MELI) Surprises With Strong Q2 CY2026, Increases Its Unique Active Buyers",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mercadolibre-nasdaq-meli-surprises-strong-215204524.html",
-          "publisher": "StockStory",
-          "pub_date": "2026-08-05T21:52:04Z"
+          "title": "Microsoft is starting to show its payoff on major AI plays",
+          "link": "https://finance.yahoo.com/video/microsoft-starting-show-payoff-major-193732756.html",
+          "publisher": "Yahoo Finance Video",
+          "pub_date": "2026-08-06T19:37:32Z"
         },
         {
-          "title": "MercadoLibre beats estimates but shares dip on margin concerns",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mercadolibre-beats-estimates-shares-dip-204517323.html",
-          "publisher": "Investing.com",
-          "pub_date": "2026-08-05T20:45:17Z"
-        },
-        {
-          "title": "Why MercadoLibre (MELI) Is Spending Big to Defend Its Latin American Moat",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-mercadolibre-meli-spending-big-153141519.html",
-          "publisher": "Insider Monkey",
-          "pub_date": "2026-08-03T15:31:41Z"
-        },
-        {
-          "title": "Here's How Much a $1000 Investment in MercadoLibre Made 10 Years Ago Would Be Worth Today",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/heres-much-1000-investment-mercadolibre-123003646.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-08-03T12:30:03Z"
-        },
-        {
-          "title": "Warren Buffett Passed on This Stock for Over 7 Years. Greg Abel May Not Wait Any Longer.",
-          "link": "https://www.fool.com/investing/2026/08/02/warren-buffett-passed-on-this-stock-for-over-7-yea/",
+          "title": "2 Energy Stocks With More Hype Than Fundamentals Right Now",
+          "link": "https://www.fool.com/investing/2026/08/06/2-energy-stocks-with-more-hype-than-fundamentals-r/",
           "publisher": "Motley Fool",
-          "pub_date": "2026-08-02T11:45:00Z"
+          "pub_date": "2026-08-07T00:25:00Z"
         },
         {
-          "title": "Does MercadoLibre’s Cash Generation And Fintech Momentum Reprice Its Long-Term Story For MELI?",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/does-mercadolibre-cash-generation-fintech-170932852.html",
-          "publisher": "Simply Wall St.",
-          "pub_date": "2026-07-31T17:09:32Z"
+          "title": "Alphabet Promised More AI Spending. Now It’s Asking the Bond Market For the Cash.",
+          "link": "https://www.barrons.com/articles/alphabet-stock-ai-spending-bond-market-af919d25?siteid=yhoof2&yptr=yahoo",
+          "publisher": "Barrons.com",
+          "pub_date": "2026-08-06T23:04:00Z"
+        },
+        {
+          "title": "The Unspoken Agreement You've Made Holding Meta Platforms Stock",
+          "link": "https://www.trefis.com/articles/610349/the-unspoken-agreement-youve-made-holding-meta-platforms-stock/2026-08-06",
+          "publisher": "Trefis",
+          "pub_date": "2026-08-06T21:48:42Z"
+        },
+        {
+          "title": "Stock Market Today: Dow Sinks 464 Points, But Chip Firm Surges; Microsoft Surpasses Buy Zone (Live Coverage)",
+          "link": "https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-ai-stocks-sandisk-western-digital/?src=A00220&yptr=yahoo",
+          "publisher": "Investor's Business Daily",
+          "pub_date": "2026-08-06T20:58:05Z"
+        },
+        {
+          "title": "Microsoft’s (MSFT) Record Rally Puts Alphabet (GOOGL) Rivalry Back In Focus",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/microsoft-msft-record-rally-puts-205622595.html",
+          "publisher": "Insider Monkey",
+          "pub_date": "2026-08-06T20:56:22Z"
         }
       ],
       "institutional_holders": [
         {
-          "holder": "BAILLIE GIFFORD & CO",
-          "shares": 3233259,
-          "value": 6216166581.0,
-          "pct": 6.38,
+          "holder": "Blackrock Inc.",
+          "shares": 593328571,
+          "value": 296581210808.0,
+          "pct": 7.99,
           "date_reported": "2026-03-31"
         },
         {
-          "holder": "Capital Research Global Investors",
-          "shares": 2717172,
-          "value": 5223953226.0,
-          "pct": 5.36,
+          "holder": "Vanguard Capital Management LLC",
+          "shares": 482558086,
+          "value": 241211477799.0,
+          "pct": 6.5,
           "date_reported": "2026-03-31"
         },
         {
-          "holder": "Capital World Investors",
-          "shares": 2194481,
-          "value": 4219043218.0,
-          "pct": 4.33,
+          "holder": "State Street Corporation",
+          "shares": 306708289,
+          "value": 153311200846.0,
+          "pct": 4.13,
           "date_reported": "2026-03-31"
         },
         {
-          "holder": "Capital International Investors",
-          "shares": 1737559,
-          "value": 3340578713.0,
-          "pct": 3.43,
+          "holder": "FMR, LLC",
+          "shares": 190211367,
+          "value": 95079051122.0,
+          "pct": 2.56,
           "date_reported": "2026-03-31"
         },
         {
-          "holder": "Morgan Stanley",
-          "shares": 1585256,
-          "value": 3047765542.0,
-          "pct": 3.13,
+          "holder": "Geode Capital Management, LLC",
+          "shares": 188501918,
+          "value": 94224565970.0,
+          "pct": 2.54,
           "date_reported": "2026-03-31"
         },
         {
-          "holder": "Invesco Ltd.",
-          "shares": 1464598,
-          "value": 2815792098.0,
-          "pct": 2.89,
+          "holder": "Vanguard Portfolio Management LLC",
+          "shares": 167490848,
+          "value": 83721972827.0,
+          "pct": 2.26,
+          "date_reported": "2026-03-31"
+        }
+      ],
+      "expirations": [
+        "2026-08-07",
+        "2026-08-10",
+        "2026-08-12"
+      ],
+      "call_vol": 195006,
+      "put_vol": 65554,
+      "call_oi": 116860,
+      "put_oi": 112375,
+      "cp_vol_ratio": 2.975,
+      "cp_oi_ratio": 1.04,
+      "total_vol_oi": 1.137,
+      "atm_iv": 0.3927,
+      "unusual": [
+        {
+          "kind": "CALL",
+          "strike": 500.0,
+          "expiration": "2026-08-07",
+          "volume": 52552,
+          "openInterest": 7980,
+          "vol_oi": 6.59,
+          "iv": 0.4089,
+          "lastPrice": 3.9
+        },
+        {
+          "kind": "CALL",
+          "strike": 510.0,
+          "expiration": "2026-08-07",
+          "volume": 37341,
+          "openInterest": 3868,
+          "vol_oi": 9.65,
+          "iv": 0.4102,
+          "lastPrice": 1.0
+        },
+        {
+          "kind": "CALL",
+          "strike": 495.0,
+          "expiration": "2026-08-07",
+          "volume": 22545,
+          "openInterest": 2639,
+          "vol_oi": 8.54,
+          "iv": 0.4446,
+          "lastPrice": 7.15
+        },
+        {
+          "kind": "CALL",
+          "strike": 505.0,
+          "expiration": "2026-08-07",
+          "volume": 21121,
+          "openInterest": 3594,
+          "vol_oi": 5.88,
+          "iv": 0.4023,
+          "lastPrice": 2.06
+        },
+        {
+          "kind": "PUT",
+          "strike": 490.0,
+          "expiration": "2026-08-07",
+          "volume": 12486,
+          "openInterest": 2580,
+          "vol_oi": 4.84,
+          "iv": 0.3992,
+          "lastPrice": 0.83
+        },
+        {
+          "kind": "PUT",
+          "strike": 480.0,
+          "expiration": "2026-08-07",
+          "volume": 12040,
+          "openInterest": 3313,
+          "vol_oi": 3.63,
+          "iv": 0.4502,
+          "lastPrice": 0.18
+        },
+        {
+          "kind": "CALL",
+          "strike": 515.0,
+          "expiration": "2026-08-07",
+          "volume": 9973,
+          "openInterest": 3509,
+          "vol_oi": 2.84,
+          "iv": 0.4248,
+          "lastPrice": 0.44
+        },
+        {
+          "kind": "PUT",
+          "strike": 485.0,
+          "expiration": "2026-08-07",
+          "volume": 9523,
+          "openInterest": 2656,
+          "vol_oi": 3.59,
+          "iv": 0.417,
+          "lastPrice": 0.39
+        }
+      ],
+      "unusual_count": 12,
+      "iv_percentile": 90.3,
+      "catalysts": [
+        {
+          "date": "2026-10-28",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 82
+        }
+      ],
+      "next_catalyst_days": 82,
+      "next_catalyst": "Earnings 2026-10-28",
+      "score": 70.0,
+      "signal": "ALTA",
+      "reasons": [
+        "Ratio C/P extremo (+25)",
+        "12 contratos inusuales (+25)",
+        "Vol/OI agregado alto (+10)",
+        "IV en percentil 90+ (+10)"
+      ]
+    },
+    {
+      "ticker": "META",
+      "error": null,
+      "price": 589.9,
+      "name": "Meta Platforms, Inc.",
+      "market_cap": 1502773903360,
+      "cash": 90259996672,
+      "debt": 112317997056,
+      "inst_pct": 0.78653,
+      "short_pct": 0.0172,
+      "target_mean": 756.94946,
+      "target_low": 580.0,
+      "target_high": 1000.0,
+      "recommendation_key": "strong_buy",
+      "analyst_count": 57,
+      "upside_pct": 28.3,
+      "buy_target": 589.9,
+      "sell_target": 756.95,
+      "potential_gain_pct": 28.3,
+      "is_signal": true,
+      "analyst_breakdown": {
+        "strongBuy": 8,
+        "buy": 47,
+        "hold": 7,
+        "sell": 0,
+        "strongSell": 0
+      },
+      "news": [
+        {
+          "title": "Microsoft is starting to show its payoff on major AI plays",
+          "link": "https://finance.yahoo.com/video/microsoft-starting-show-payoff-major-193732756.html",
+          "publisher": "Yahoo Finance Video",
+          "pub_date": "2026-08-06T19:37:32Z"
+        },
+        {
+          "title": "Alphabet's $25B debt sale underscores hyperscalers' AI arms race",
+          "link": "https://finance.yahoo.com/video/alphabets-25b-debt-sale-underscores-191800525.html",
+          "publisher": "Yahoo Finance Video",
+          "pub_date": "2026-08-06T19:18:00Z"
+        },
+        {
+          "title": "Meta Ordered to Pay $942 Million to Address Harm to Kids From Social Media",
+          "link": "https://www.wsj.com/tech/meta-ordered-to-pay-942-million-to-address-harm-to-kids-from-social-media-8ba5aab7?siteid=yhoof2&yptr=yahoo",
+          "publisher": "The Wall Street Journal",
+          "pub_date": "2026-08-07T00:01:00Z"
+        },
+        {
+          "title": "Alphabet Promised More AI Spending. Now It’s Asking the Bond Market For the Cash.",
+          "link": "https://www.barrons.com/articles/alphabet-stock-ai-spending-bond-market-af919d25?siteid=yhoof2&yptr=yahoo",
+          "publisher": "Barrons.com",
+          "pub_date": "2026-08-06T23:04:00Z"
+        },
+        {
+          "title": "The Unspoken Agreement You've Made Holding Meta Platforms Stock",
+          "link": "https://www.trefis.com/articles/610349/the-unspoken-agreement-youve-made-holding-meta-platforms-stock/2026-08-06",
+          "publisher": "Trefis",
+          "pub_date": "2026-08-06T21:48:42Z"
+        },
+        {
+          "title": "Meta's AI Safety Test Just Escaped the Lab",
+          "link": "https://finance.yahoo.com/technology/ai/articles/metas-ai-safety-test-just-212610643.html",
+          "publisher": "GuruFocus.com",
+          "pub_date": "2026-08-06T21:26:10Z"
+        }
+      ],
+      "institutional_holders": [
+        {
+          "holder": "Blackrock Inc.",
+          "shares": 168843283,
+          "value": 99600656763.0,
+          "pct": 7.66,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Vanguard Capital Management LLC",
+          "shares": 142138157,
+          "value": 83847302284.0,
+          "pct": 6.45,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "FMR, LLC",
+          "shares": 116614753,
+          "value": 68791045641.0,
+          "pct": 5.29,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "State Street Corporation",
+          "shares": 88523840,
+          "value": 52220215377.0,
+          "pct": 4.01,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Geode Capital Management, LLC",
+          "shares": 54165192,
+          "value": 31952048083.0,
+          "pct": 2.46,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "JPMORGAN CHASE & CO",
+          "shares": 50180811,
+          "value": 29601661634.0,
+          "pct": 2.28,
+          "date_reported": "2026-03-31"
+        }
+      ],
+      "expirations": [
+        "2026-08-07",
+        "2026-08-10",
+        "2026-08-12"
+      ],
+      "call_vol": 126166,
+      "put_vol": 37773,
+      "call_oi": 117501,
+      "put_oi": 59372,
+      "cp_vol_ratio": 3.34,
+      "cp_oi_ratio": 1.979,
+      "total_vol_oi": 0.927,
+      "atm_iv": 0.4384,
+      "unusual": [
+        {
+          "kind": "CALL",
+          "strike": 615.0,
+          "expiration": "2026-08-07",
+          "volume": 20280,
+          "openInterest": 1183,
+          "vol_oi": 17.14,
+          "iv": 0.478,
+          "lastPrice": 0.28
+        },
+        {
+          "kind": "CALL",
+          "strike": 600.0,
+          "expiration": "2026-08-07",
+          "volume": 19706,
+          "openInterest": 7360,
+          "vol_oi": 2.68,
+          "iv": 0.4414,
+          "lastPrice": 1.84
+        },
+        {
+          "kind": "CALL",
+          "strike": 610.0,
+          "expiration": "2026-08-07",
+          "volume": 10171,
+          "openInterest": 4909,
+          "vol_oi": 2.07,
+          "iv": 0.4663,
+          "lastPrice": 0.54
+        },
+        {
+          "kind": "CALL",
+          "strike": 590.0,
+          "expiration": "2026-08-07",
+          "volume": 7916,
+          "openInterest": 3252,
+          "vol_oi": 2.43,
+          "iv": 0.4424,
+          "lastPrice": 5.3
+        },
+        {
+          "kind": "CALL",
+          "strike": 607.5,
+          "expiration": "2026-08-07",
+          "volume": 5253,
+          "openInterest": 432,
+          "vol_oi": 12.16,
+          "iv": 0.4658,
+          "lastPrice": 0.72
+        },
+        {
+          "kind": "CALL",
+          "strike": 592.5,
+          "expiration": "2026-08-07",
+          "volume": 5006,
+          "openInterest": 657,
+          "vol_oi": 7.62,
+          "iv": 0.4375,
+          "lastPrice": 4.05
+        },
+        {
+          "kind": "PUT",
+          "strike": 580.0,
+          "expiration": "2026-08-07",
+          "volume": 4430,
+          "openInterest": 1841,
+          "vol_oi": 2.41,
+          "iv": 0.4343,
+          "lastPrice": 1.76
+        },
+        {
+          "kind": "PUT",
+          "strike": 590.0,
+          "expiration": "2026-08-07",
+          "volume": 4399,
+          "openInterest": 1097,
+          "vol_oi": 4.01,
+          "iv": 0.4343,
+          "lastPrice": 5.28
+        }
+      ],
+      "unusual_count": 12,
+      "iv_percentile": 93.5,
+      "catalysts": [
+        {
+          "date": "2026-10-28",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 82
+        }
+      ],
+      "next_catalyst_days": 82,
+      "next_catalyst": "Earnings 2026-10-28",
+      "score": 70.0,
+      "signal": "ALTA",
+      "reasons": [
+        "Ratio C/P extremo (+25)",
+        "12 contratos inusuales (+25)",
+        "Vol/OI agregado alto (+10)",
+        "IV en percentil 90+ (+10)"
+      ]
+    },
+    {
+      "ticker": "IOVA",
+      "error": null,
+      "price": 6.21,
+      "name": "Iovance Biotherapeutics, Inc.",
+      "market_cap": 2772780032,
+      "cash": 313443008,
+      "debt": 47776000,
+      "inst_pct": 0.67859,
+      "short_pct": 0.2395,
+      "target_mean": 8.22222,
+      "target_low": 4.0,
+      "target_high": 14.0,
+      "recommendation_key": "buy",
+      "analyst_count": 9,
+      "upside_pct": 32.4,
+      "buy_target": 6.21,
+      "sell_target": 8.22,
+      "potential_gain_pct": 32.4,
+      "is_signal": true,
+      "analyst_breakdown": {
+        "strongBuy": 2,
+        "buy": 5,
+        "hold": 2,
+        "sell": 0,
+        "strongSell": 0
+      },
+      "news": [
+        {
+          "title": "Iovance Biotherapeutics Inc (IOVA) (Q2 2026) Earnings Call Highlights: Record Revenue and ...",
+          "link": "https://finance.yahoo.com/healthcare/articles/iovance-biotherapeutics-inc-iova-q2-231515435.html",
+          "publisher": "GuruFocus.com",
+          "pub_date": "2026-08-06T23:15:15Z"
+        },
+        {
+          "title": "Iovance Biotherapeutics (IOVA) Pops 43% on Stellar Q2. Here’s What Comes Next",
+          "link": "https://finance.yahoo.com/healthcare/articles/iovance-biotherapeutics-iova-pops-43-202047364.html",
+          "publisher": "Insider Monkey",
+          "pub_date": "2026-08-06T20:20:47Z"
+        },
+        {
+          "title": "Iovance Biotherapeutics Q2 Earnings Call Highlights",
+          "link": "https://www.marketbeat.com/instant-alerts/iovance-biotherapeutics-q2-earnings-call-highlights-2026-08-06/?utm_source=yahoofinance&utm_medium=yahoofinance",
+          "publisher": "MarketBeat",
+          "pub_date": "2026-08-06T20:04:15Z"
+        },
+        {
+          "title": "IOVA Stock Heads For Best Day In Over 6 Years – Buyout Buzz Builds After Blowout Q2",
+          "link": "https://stocktwits.com/news-articles/markets/equity/iova-stock-heads-for-best-day-in-over-6-years-buyout-buzz-builds-after-blowout-q2/cZoBcmiRJJ4",
+          "publisher": "Stocktwits",
+          "pub_date": "2026-08-06T16:12:21Z"
+        },
+        {
+          "title": "Iovance Biotherapeutics Reports Record Q2 Revenue and Reviews 2026 Outlook on Strong Amtagvi Demand",
+          "link": "https://investorshub.advfn.com/market-news/article/33662/iovance-biotherapeutics-reports-record-q2-revenue-and-reviews-2026-outlook-on-strong-amtagvi-demand",
+          "publisher": "InvestorsHub",
+          "pub_date": "2026-08-06T14:54:49Z"
+        },
+        {
+          "title": "Iovance Biotherapeutics (IOVA) Reports Q2 Loss, Tops Revenue Estimates",
+          "link": "https://finance.yahoo.com/healthcare/articles/iovance-biotherapeutics-iova-reports-q2-135006498.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-08-06T13:50:06Z"
+        }
+      ],
+      "institutional_holders": [
+        {
+          "holder": "Blackrock Inc.",
+          "shares": 31080505,
+          "value": 193009937.0,
+          "pct": 6.96,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "MHR Fund Management, LLC",
+          "shares": 28967103,
+          "value": 179885710.0,
+          "pct": 6.49,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "State Street Corporation",
+          "shares": 17448108,
+          "value": 108352751.0,
+          "pct": 3.91,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Vanguard Capital Management LLC",
+          "shares": 16617737,
+          "value": 103196147.0,
+          "pct": 3.72,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Two Sigma Investments, LP",
+          "shares": 13687433,
+          "value": 84998959.0,
+          "pct": 3.07,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Vanguard Portfolio Management LLC",
+          "shares": 11700844,
+          "value": 72662241.0,
+          "pct": 2.62,
           "date_reported": "2026-03-31"
         }
       ],
@@ -348,767 +799,336 @@
         "2026-08-14",
         "2026-08-21"
       ],
-      "call_vol": 4231,
-      "put_vol": 3787,
-      "call_oi": 8136,
-      "put_oi": 7630,
-      "cp_vol_ratio": 1.117,
-      "cp_oi_ratio": 1.066,
-      "total_vol_oi": 0.509,
-      "atm_iv": 0.9779,
+      "call_vol": 12266,
+      "put_vol": 1878,
+      "call_oi": 35325,
+      "put_oi": 10859,
+      "cp_vol_ratio": 6.531,
+      "cp_oi_ratio": 3.253,
+      "total_vol_oi": 0.306,
+      "atm_iv": 2.0625,
       "unusual": [
         {
           "kind": "CALL",
-          "strike": 2200.0,
+          "strike": 6.5,
+          "expiration": "2026-08-21",
+          "volume": 1669,
+          "openInterest": 732,
+          "vol_oi": 2.28,
+          "iv": 0.9883,
+          "lastPrice": 0.39
+        },
+        {
+          "kind": "CALL",
+          "strike": 6.5,
           "expiration": "2026-08-07",
-          "volume": 479,
-          "openInterest": 46,
-          "vol_oi": 10.41,
-          "iv": 0.8896,
-          "lastPrice": 4.0
+          "volume": 887,
+          "openInterest": 204,
+          "vol_oi": 4.35,
+          "iv": 1.8281,
+          "lastPrice": 0.1
+        },
+        {
+          "kind": "CALL",
+          "strike": 6.5,
+          "expiration": "2026-08-14",
+          "volume": 636,
+          "openInterest": 2,
+          "vol_oi": 318.0,
+          "iv": 1.0781,
+          "lastPrice": 0.32
+        },
+        {
+          "kind": "CALL",
+          "strike": 7.0,
+          "expiration": "2026-08-14",
+          "volume": 626,
+          "openInterest": 25,
+          "vol_oi": 25.04,
+          "iv": 1.1172,
+          "lastPrice": 0.15
+        },
+        {
+          "kind": "CALL",
+          "strike": 6.0,
+          "expiration": "2026-08-21",
+          "volume": 565,
+          "openInterest": 190,
+          "vol_oi": 2.97,
+          "iv": 0.9883,
+          "lastPrice": 0.65
+        },
+        {
+          "kind": "CALL",
+          "strike": 6.0,
+          "expiration": "2026-08-14",
+          "volume": 503,
+          "openInterest": 131,
+          "vol_oi": 3.84,
+          "iv": 0.8594,
+          "lastPrice": 0.45
         },
         {
           "kind": "PUT",
-          "strike": 1700.0,
-          "expiration": "2026-08-07",
-          "volume": 327,
-          "openInterest": 144,
-          "vol_oi": 2.27,
-          "iv": 0.9235,
-          "lastPrice": 4.34
+          "strike": 5.5,
+          "expiration": "2026-08-14",
+          "volume": 470,
+          "openInterest": 100,
+          "vol_oi": 4.7,
+          "iv": 0.9961,
+          "lastPrice": 0.15
         }
       ],
-      "unusual_count": 2,
-      "iv_percentile": 100.0,
+      "unusual_count": 7,
+      "iv_percentile": 80.6,
       "catalysts": [
         {
-          "date": "2026-08-05",
+          "date": "2026-08-06",
           "type": "Earnings",
           "note": "Yahoo",
-          "days": 0
+          "days": -1
         }
       ],
-      "next_catalyst_days": 0,
-      "next_catalyst": "Earnings 2026-08-05",
-      "score": 62.0,
+      "next_catalyst_days": -1,
+      "next_catalyst": "Earnings 2026-08-06",
+      "score": 60.0,
       "signal": "ALTA",
       "reasons": [
-        "Catalizador en 0d (+30)",
-        "2 contrato(s) inusual(es) (+12)",
-        "Vol/OI agregado alto (+10)",
-        "IV en percentil 90+ (+10)"
+        "Ratio C/P extremo (+25)",
+        "7 contratos inusuales (+25)",
+        "Vol/OI agregado medio (+5)",
+        "IV en percentil 70+ (+5)"
       ]
     },
     {
       "ticker": "AAPL",
       "error": null,
-      "price": 311.0,
+      "price": 312.41,
       "name": "Apple Inc.",
-      "market_cap": 4538790051840,
+      "market_cap": 4559367831552,
       "cash": 62399000576,
       "debt": 84343996416,
-      "inst_pct": 0.65948,
+      "inst_pct": 0.65950996,
       "short_pct": 0.01,
-      "target_mean": 324.01367,
+      "target_mean": 320.889,
       "target_low": 215.0,
       "target_high": 400.0,
       "recommendation_key": "buy",
-      "analyst_count": 41,
-      "upside_pct": 4.2,
-      "buy_target": 311.0,
-      "sell_target": 324.01,
-      "potential_gain_pct": 4.2,
+      "analyst_count": 40,
+      "upside_pct": 2.7,
+      "buy_target": 312.41,
+      "sell_target": 320.89,
+      "potential_gain_pct": 2.7,
       "is_signal": false,
       "analyst_breakdown": {
         "strongBuy": 6,
-        "buy": 22,
-        "hold": 13,
+        "buy": 21,
+        "hold": 14,
         "sell": 2,
         "strongSell": 3
       },
       "news": [
         {
-          "title": "Price hikes on consumer electronics could be here to stay. Here's why.",
-          "link": "https://finance.yahoo.com/video/price-hikes-consumer-electronics-could-195601126.html",
-          "publisher": "Yahoo Finance Video",
-          "pub_date": "2026-08-05T19:56:01Z"
-        },
-        {
-          "title": "The Calm Surface of Alphabet Stock Hides a Turbulent Forecast",
-          "link": "https://www.trefis.com/articles/610171/the-calm-surface-of-alphabet-stock-hides-a-turbulent-forecast/2026-08-05",
-          "publisher": "Trefis",
-          "pub_date": "2026-08-05T20:33:16Z"
-        },
-        {
-          "title": "SpaceX’s $1T Goal and 3 More Shockers From Musk on the Earnings Call",
-          "link": "https://www.barrons.com/articles/spacex-stock-elon-musk-earnings-ai-89d68b40?siteid=yhoof2&yptr=yahoo",
+          "title": "MP Earnings Show Chinese Rare-Earth Monopoly Is Fading",
+          "link": "https://www.barrons.com/articles/mp-materials-earnings-stock-price-269904ba?siteid=yhoof2&yptr=yahoo",
           "publisher": "Barrons.com",
-          "pub_date": "2026-08-05T20:26:00Z"
+          "pub_date": "2026-08-06T21:18:00Z"
         },
         {
-          "title": "Spain's 'Warren Buffett' Bets Against the Crowd--and It's Paying Off",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/spains-warren-buffett-bets-against-192624264.html",
-          "publisher": "GuruFocus.com",
-          "pub_date": "2026-08-05T19:26:24Z"
-        },
-        {
-          "title": "Apple's Search for Cheaper Memory Just Hit a Wall",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/apples-search-cheaper-memory-just-183310958.html",
-          "publisher": "GuruFocus.com",
-          "pub_date": "2026-08-05T18:33:10Z"
-        },
-        {
-          "title": "Just How Wide Is the Range of Outcomes for Netflix Stock?",
-          "link": "https://www.trefis.com/articles/610174/just-how-wide-is-the-range-of-outcomes-for-netflix-stock/2026-08-05",
+          "title": "$2.9 Billion In Payouts, A Lagging Stock: The SNAP Trade-Off",
+          "link": "https://www.trefis.com/articles/610341/2-9-billion-in-payouts-a-lagging-stock-the-snap-trade-off/2026-08-06",
           "publisher": "Trefis",
-          "pub_date": "2026-08-05T18:08:58Z"
+          "pub_date": "2026-08-06T21:07:09Z"
+        },
+        {
+          "title": "Top Research Reports for Apple, Shell & Toyota Motor",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/top-research-reports-apple-shell-201400129.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-08-06T20:14:00Z"
+        },
+        {
+          "title": "Sector Update: Tech Stocks Mixed Late Afternoon",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/sector-tech-stocks-mixed-afternoon-195925324.html",
+          "publisher": "MT Newswires",
+          "pub_date": "2026-08-06T19:59:25Z"
+        },
+        {
+          "title": "Apple App Store revenue ticks up despite falling downloads",
+          "link": "https://www.proactiveinvestors.com/companies/news/1096688/apple-app-store-revenue-ticks-up-despite-falling-downloads-1096688.html",
+          "publisher": "Proactive",
+          "pub_date": "2026-08-06T19:43:00Z"
+        },
+        {
+          "title": "What Microsoft Stock's Thin Earnings Premium Is Actually Buying",
+          "link": "https://www.trefis.com/articles/610415/what-microsoft-stocks-thin-earnings-premium-is-actually-buying/2026-08-06",
+          "publisher": "Trefis",
+          "pub_date": "2026-08-06T18:36:36Z"
         }
       ],
       "institutional_holders": [
         {
           "holder": "Blackrock Inc.",
           "shares": 1144695425,
-          "value": 356000277175.0,
-          "pct": 7.79,
+          "value": 357614301916.0,
+          "pct": 7.84,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Vanguard Capital Management LLC",
           "shares": 953847648,
-          "value": 296646618528.0,
-          "pct": 6.49,
+          "value": 297991547204.0,
+          "pct": 6.54,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "State Street Corporation",
           "shares": 602341409,
-          "value": 187328178199.0,
-          "pct": 4.1,
+          "value": 188177481791.0,
+          "pct": 4.13,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Geode Capital Management, LLC",
           "shares": 368616954,
-          "value": 114639872694.0,
-          "pct": 2.51,
+          "value": 115159623949.0,
+          "pct": 2.53,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Vanguard Portfolio Management LLC",
           "shares": 331437055,
-          "value": 103076924105.0,
-          "pct": 2.26,
+          "value": 103544251566.0,
+          "pct": 2.27,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "FMR, LLC",
           "shares": 307442040,
-          "value": 95614474440.0,
-          "pct": 2.09,
+          "value": 96047968842.0,
+          "pct": 2.11,
           "date_reported": "2026-03-31"
         }
       ],
       "expirations": [
-        "2026-08-05",
         "2026-08-07",
-        "2026-08-10"
+        "2026-08-10",
+        "2026-08-12"
       ],
-      "call_vol": 946032,
-      "put_vol": 347948,
-      "call_oi": 308757,
-      "put_oi": 167960,
-      "cp_vol_ratio": 2.719,
-      "cp_oi_ratio": 1.838,
-      "total_vol_oi": 2.714,
-      "atm_iv": 0.0698,
+      "call_vol": 682414,
+      "put_vol": 278060,
+      "call_oi": 264622,
+      "put_oi": 140804,
+      "cp_vol_ratio": 2.454,
+      "cp_oi_ratio": 1.879,
+      "total_vol_oi": 2.369,
+      "atm_iv": 0.2843,
       "unusual": [
         {
           "kind": "CALL",
-          "strike": 310.0,
-          "expiration": "2026-08-05",
-          "volume": 267921,
-          "openInterest": 11626,
-          "vol_oi": 23.04,
-          "iv": 0.0908,
+          "strike": 320.0,
+          "expiration": "2026-08-07",
+          "volume": 129436,
+          "openInterest": 22811,
+          "vol_oi": 5.67,
+          "iv": 0.3198,
+          "lastPrice": 0.18
+        },
+        {
+          "kind": "CALL",
+          "strike": 315.0,
+          "expiration": "2026-08-07",
+          "volume": 122912,
+          "openInterest": 14883,
+          "vol_oi": 8.26,
+          "iv": 0.292,
           "lastPrice": 0.87
         },
         {
           "kind": "CALL",
-          "strike": 312.5,
-          "expiration": "2026-08-05",
-          "volume": 200032,
-          "openInterest": 9774,
-          "vol_oi": 20.47,
-          "iv": 0.0488,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "PUT",
-          "strike": 307.5,
-          "expiration": "2026-08-05",
-          "volume": 103662,
-          "openInterest": 5962,
-          "vol_oi": 17.39,
-          "iv": 0.1016,
-          "lastPrice": 0.03
+          "strike": 317.5,
+          "expiration": "2026-08-07",
+          "volume": 94131,
+          "openInterest": 8239,
+          "vol_oi": 11.43,
+          "iv": 0.3027,
+          "lastPrice": 0.4
         },
         {
           "kind": "CALL",
-          "strike": 315.0,
-          "expiration": "2026-08-05",
-          "volume": 94061,
-          "openInterest": 11008,
-          "vol_oi": 8.54,
-          "iv": 0.1133,
-          "lastPrice": 0.02
+          "strike": 312.5,
+          "expiration": "2026-08-07",
+          "volume": 73699,
+          "openInterest": 9957,
+          "vol_oi": 7.4,
+          "iv": 0.2935,
+          "lastPrice": 1.89
         },
         {
           "kind": "PUT",
-          "strike": 305.0,
-          "expiration": "2026-08-05",
-          "volume": 73888,
-          "openInterest": 5713,
-          "vol_oi": 12.93,
-          "iv": 0.1641,
-          "lastPrice": 0.01
+          "strike": 310.0,
+          "expiration": "2026-08-07",
+          "volume": 64840,
+          "openInterest": 8821,
+          "vol_oi": 7.35,
+          "iv": 0.2759,
+          "lastPrice": 0.8
         },
         {
           "kind": "CALL",
           "strike": 310.0,
           "expiration": "2026-08-07",
-          "volume": 63094,
-          "openInterest": 17051,
-          "vol_oi": 3.7,
-          "iv": 0.2693,
-          "lastPrice": 3.4
+          "volume": 39866,
+          "openInterest": 24091,
+          "vol_oi": 1.65,
+          "iv": 0.3193,
+          "lastPrice": 3.35
         },
         {
-          "kind": "CALL",
-          "strike": 307.5,
-          "expiration": "2026-08-05",
-          "volume": 53873,
-          "openInterest": 7944,
-          "vol_oi": 6.78,
-          "iv": 0.2183,
-          "lastPrice": 3.5
-        },
-        {
-          "kind": "CALL",
-          "strike": 315.0,
+          "kind": "PUT",
+          "strike": 312.5,
           "expiration": "2026-08-07",
-          "volume": 49627,
-          "openInterest": 10358,
-          "vol_oi": 4.79,
-          "iv": 0.2686,
-          "lastPrice": 1.43
+          "volume": 36977,
+          "openInterest": 3680,
+          "vol_oi": 10.05,
+          "iv": 0.2752,
+          "lastPrice": 1.77
+        },
+        {
+          "kind": "CALL",
+          "strike": 325.0,
+          "expiration": "2026-08-07",
+          "volume": 34748,
+          "openInterest": 10439,
+          "vol_oi": 3.33,
+          "iv": 0.3731,
+          "lastPrice": 0.04
         }
       ],
       "unusual_count": 12,
-      "iv_percentile": 33.3,
+      "iv_percentile": 90.3,
       "catalysts": [
         {
           "date": "2026-10-29",
           "type": "Earnings",
           "note": "Yahoo",
-          "days": 85
+          "days": 83
         }
       ],
-      "next_catalyst_days": 85,
+      "next_catalyst_days": 83,
       "next_catalyst": "Earnings 2026-10-29",
       "score": 60.0,
       "signal": "ALTA",
       "reasons": [
-        "Ratio C/P extremo (+25)",
-        "12 contratos inusuales (+25)",
-        "Vol/OI agregado alto (+10)"
-      ]
-    },
-    {
-      "ticker": "AUPH",
-      "error": null,
-      "price": 15.19,
-      "name": "Aurinia Pharmaceuticals Inc",
-      "market_cap": 1953459328,
-      "cash": 378524000,
-      "debt": 68640000,
-      "inst_pct": 0.60716,
-      "short_pct": 0.0837,
-      "target_mean": 17.0,
-      "target_low": 15.0,
-      "target_high": 21.0,
-      "recommendation_key": "none",
-      "analyst_count": 7,
-      "upside_pct": 11.9,
-      "buy_target": 15.19,
-      "sell_target": 17.0,
-      "potential_gain_pct": 11.9,
-      "is_signal": true,
-      "analyst_breakdown": {
-        "strongBuy": 0,
-        "buy": 4,
-        "hold": 3,
-        "sell": 0,
-        "strongSell": 0
-      },
-      "news": [
-        {
-          "title": "NewAmsterdam Pharma Company N.V. (NAMS) Reports Q2 Loss, Lags Revenue Estimates",
-          "link": "https://finance.yahoo.com/healthcare/articles/newamsterdam-pharma-company-n-v-135503118.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-08-05T13:55:03Z"
-        },
-        {
-          "title": "Karyopharm Therapeutics (KPTI) Soars 5.3%: Is Further Upside Left in the Stock?",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/karyopharm-therapeutics-kpti-soars-5-114000287.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-07-22T11:40:00Z"
-        },
-        {
-          "title": "Aurinia (AUPH) Upgraded to Strong Buy: Here's Why",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/aurinia-auph-upgraded-strong-buy-160003509.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-07-02T16:00:03Z"
-        },
-        {
-          "title": "Is Aurinia Pharmaceuticals Inc. (AUPH) A Good Stock To Buy Now?",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/aurinia-pharmaceuticals-inc-auph-good-200723839.html",
-          "publisher": "Insider Monkey",
-          "pub_date": "2026-06-29T20:07:23Z"
-        },
-        {
-          "title": "Zacks Industry Outlook Indivior, Aurinia, Ironwood, Altimmune and Marker",
-          "link": "https://finance.yahoo.com/healthcare/articles/zacks-industry-outlook-indivior-aurinia-085900669.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-06-26T08:59:00Z"
-        },
-        {
-          "title": "5 Small Drug Stocks to Invest in Amid a Biotech Comeback",
-          "link": "https://finance.yahoo.com/healthcare/articles/5-small-drug-stocks-invest-124000358.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-06-25T12:40:00Z"
-        }
-      ],
-      "institutional_holders": [
-        {
-          "holder": "Tang Capital Management, LLC",
-          "shares": 12229500,
-          "value": 185766099.0,
-          "pct": 9.51,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Blackrock Inc.",
-          "shares": 7845521,
-          "value": 119173460.0,
-          "pct": 6.1,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "NEA Management Company, LLC",
-          "shares": 3969834,
-          "value": 60301776.0,
-          "pct": 3.09,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Two Sigma Investments, LP",
-          "shares": 3428705,
-          "value": 52082027.0,
-          "pct": 2.67,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Arrowstreet Capital, Limited Partnership",
-          "shares": 3284368,
-          "value": 49889548.0,
-          "pct": 2.55,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "State Street Corporation",
-          "shares": 2527099,
-          "value": 38386632.0,
-          "pct": 1.97,
-          "date_reported": "2026-03-31"
-        }
-      ],
-      "expirations": [
-        "2026-08-21",
-        "2026-09-18"
-      ],
-      "call_vol": 117,
-      "put_vol": 44,
-      "call_oi": 2755,
-      "put_oi": 1170,
-      "cp_vol_ratio": 2.659,
-      "cp_oi_ratio": 2.355,
-      "total_vol_oi": 0.041,
-      "atm_iv": 0.6523,
-      "unusual": [],
-      "unusual_count": 0,
-      "iv_percentile": 76.7,
-      "catalysts": [
-        {
-          "date": "2026-08-06",
-          "type": "Earnings",
-          "note": "Yahoo",
-          "days": 1
-        }
-      ],
-      "next_catalyst_days": 1,
-      "next_catalyst": "Earnings 2026-08-06",
-      "score": 59.3,
-      "signal": "MEDIA",
-      "reasons": [
-        "Catalizador en 1d (+29)",
-        "Ratio C/P extremo (+25)",
-        "IV en percentil 70+ (+5)"
-      ]
-    },
-    {
-      "ticker": "ZVRA",
-      "error": null,
-      "price": 10.53,
-      "name": "Zevra Therapeutics, Inc.",
-      "market_cap": 622481792,
-      "cash": 200616000,
-      "debt": 1147000,
-      "inst_pct": 0.75276,
-      "short_pct": 0.13340001,
-      "target_mean": 25.0,
-      "target_low": 20.0,
-      "target_high": 35.0,
-      "recommendation_key": "strong_buy",
-      "analyst_count": 9,
-      "upside_pct": 137.4,
-      "buy_target": 10.53,
-      "sell_target": 25.0,
-      "potential_gain_pct": 137.4,
-      "is_signal": true,
-      "analyst_breakdown": {
-        "strongBuy": 2,
-        "buy": 7,
-        "hold": 0,
-        "sell": 0,
-        "strongSell": 0
-      },
-      "news": [
-        {
-          "title": "ZVRA Stock Sinks 23% On EU Setback — Analyst Says Risk Is ‘A Headwind, But Not Insurmountable’",
-          "link": "https://stocktwits.com/news-articles/markets/equity/zvra-stock-sinks-23-on-eu-setback-analyst-says-risk-is-a-headwind-but-not-insurmountable/cZZpPnzR7zJ",
-          "publisher": "Stocktwits",
-          "pub_date": "2026-07-24T18:43:57Z"
-        },
-        {
-          "title": "Zevra Therapeutics Receives EMA Negative Opinion on Arimoclomol Marketing Application",
-          "link": "https://investorshub.advfn.com/market-news/article/32627/zevra-therapeutics-receives-ema-negative-opinion-on-arimoclomol-marketing-application",
-          "publisher": "InvestorsHub",
-          "pub_date": "2026-07-24T14:38:30Z"
-        },
-        {
-          "title": "ZVRA Stock Plummets Pre-Market, Heads For Worst Day In Over 5 Years – What’s Driving The Sell-Off?",
-          "link": "https://stocktwits.com/news-articles/markets/equity/zvra-stock-plummets-heads-for-worst-day-in-over-5-years-ema-rejection/cZZYv3gR7yp",
-          "publisher": "Stocktwits",
-          "pub_date": "2026-07-24T12:48:01Z"
-        },
-        {
-          "title": "Is Zevra Therapeutics (ZVRA) Using MIPLYFFA Patent Extensions To Deepen Its Rare-Disease Moat?",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/zevra-therapeutics-zvra-using-miplyffa-211907237.html",
-          "publisher": "Simply Wall St.",
-          "pub_date": "2026-06-09T21:19:07Z"
-        },
-        {
-          "title": "ZVRA Stock Hits Its Highest Levels In Nearly 5 Years – What’s Driving This Sharp Rally Today?",
-          "link": "https://stocktwits.com/news-articles/markets/equity/why-is-zvra-stock-surging-today/cZ0U1vVR7RQ",
-          "publisher": "Stocktwits",
-          "pub_date": "2026-06-09T16:50:36Z"
-        },
-        {
-          "title": "ZVRA Stock ‘Way Undervalued’? Analyst Sees 117% Upside After Patent Extends Exclusivity Till 2041 For Sole Approved Drug",
-          "link": "https://stocktwits.com/news-articles/markets/equity/zvra-stock-surges-on-extended-miplyffa-patent-protection-to-2041/cZ0vg5cR7Gv",
-          "publisher": "Stocktwits",
-          "pub_date": "2026-06-08T18:19:30Z"
-        }
-      ],
-      "institutional_holders": [
-        {
-          "holder": "Woodline Partners LP",
-          "shares": 3450943,
-          "value": 36338428.0,
-          "pct": 79.98,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "FMR, LLC",
-          "shares": 3211877,
-          "value": 33821063.0,
-          "pct": 74.44,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Nantahala Capital Management, LLC",
-          "shares": 2521936,
-          "value": 26555985.0,
-          "pct": 58.45,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Vanguard Capital Management LLC",
-          "shares": 2469328,
-          "value": 26002023.0,
-          "pct": 57.23,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "State Street Corporation",
-          "shares": 1561569,
-          "value": 16443321.0,
-          "pct": 36.19,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Geode Capital Management, LLC",
-          "shares": 1371857,
-          "value": 14445653.0,
-          "pct": 31.79,
-          "date_reported": "2026-03-31"
-        }
-      ],
-      "expirations": [
-        "2026-08-21",
-        "2026-09-18"
-      ],
-      "call_vol": 956,
-      "put_vol": 747,
-      "call_oi": 1991,
-      "put_oi": 7218,
-      "cp_vol_ratio": 1.28,
-      "cp_oi_ratio": 0.276,
-      "total_vol_oi": 0.185,
-      "atm_iv": 0.7129,
-      "unusual": [
-        {
-          "kind": "CALL",
-          "strike": 11.0,
-          "expiration": "2026-08-21",
-          "volume": 435,
-          "openInterest": 315,
-          "vol_oi": 1.38,
-          "iv": 0.5977,
-          "lastPrice": 0.6
-        },
-        {
-          "kind": "PUT",
-          "strike": 13.0,
-          "expiration": "2026-08-21",
-          "volume": 432,
-          "openInterest": 46,
-          "vol_oi": 9.39,
-          "iv": 0.8906,
-          "lastPrice": 2.75
-        },
-        {
-          "kind": "CALL",
-          "strike": 10.0,
-          "expiration": "2026-08-21",
-          "volume": 292,
-          "openInterest": 197,
-          "vol_oi": 1.48,
-          "iv": 0.8555,
-          "lastPrice": 1.1
-        }
-      ],
-      "unusual_count": 3,
-      "iv_percentile": 26.7,
-      "catalysts": [
-        {
-          "date": "2026-08-05",
-          "type": "Earnings",
-          "note": "Yahoo",
-          "days": 0
-        }
-      ],
-      "next_catalyst_days": 0,
-      "next_catalyst": "Earnings 2026-08-05",
-      "score": 55.0,
-      "signal": "MEDIA",
-      "reasons": [
-        "Catalizador en 0d (+30)",
-        "3 contratos inusuales (+25)"
-      ]
-    },
-    {
-      "ticker": "SPY",
-      "error": null,
-      "price": 769.79,
-      "name": "State Street SPDR S&P 500 ETF T",
-      "market_cap": null,
-      "cash": null,
-      "debt": null,
-      "inst_pct": null,
-      "short_pct": null,
-      "target_mean": null,
-      "target_low": null,
-      "target_high": null,
-      "recommendation_key": null,
-      "analyst_count": null,
-      "buy_target": 769.79,
-      "sell_target": null,
-      "potential_gain_pct": null,
-      "is_signal": false,
-      "analyst_breakdown": null,
-      "news": [
-        {
-          "title": "Exchange-Traded Funds Higher, Equity Futures Mixed Pre-Bell Amid Corporate Earnings, Hormuz Reopening Hopes",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/exchange-traded-funds-higher-equity-131015495.html",
-          "publisher": "MT Newswires",
-          "pub_date": "2026-08-05T13:10:15Z"
-        },
-        {
-          "title": "What Happens When Stock Implied Volatility Outpaces the SPY",
-          "link": "https://finance.yahoo.com/markets/options/articles/happens-stock-implied-volatility-outpaces-124208065.html",
-          "publisher": "Schaeffer's Investment Research",
-          "pub_date": "2026-08-05T12:42:08Z"
-        },
-        {
-          "title": "The Dow Just Gained 1000 Points for the 27th Day Ever. 25 of These Days Happened Under Donald Trump.",
-          "link": "https://247wallst.com/investing/2026/08/04/the-dow-just-gained-1000-points-for-the-27th-day-ever-25-of-these-days-happened-under-donald-trump/",
-          "publisher": "24/7 Wall St.",
-          "pub_date": "2026-08-04T22:59:01Z"
-        },
-        {
-          "title": "US Stock Futures Flat After S&P500, Dow End At Record Highs On Strong Earnings, Easing Geopolitical Concerns — PLTR, AZN, CMG, MRNA In Focus",
-          "link": "https://stocktwits.com/news-articles/markets/equity/us-stock-futures-flat-after-s-and-p500-dow-end-at-record-highs/cZo5yAlRJ4k",
-          "publisher": "Stocktwits",
-          "pub_date": "2026-08-04T22:45:34Z"
-        },
-        {
-          "title": "Corning Dropped 25% Over a Month: A Major U.S. Bank Expects 66% Gains Over The Near Term",
-          "link": "https://247wallst.com/investing/2026/08/04/corning-dropped-25-over-a-month-a-major-u-s-bank-expects-66-gains-over-the-near-term/",
-          "publisher": "24/7 Wall St.",
-          "pub_date": "2026-08-04T15:14:16Z"
-        },
-        {
-          "title": "Here's Why You Should Buy Quality ETFs Now",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/heres-why-buy-quality-etfs-143700764.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-08-04T14:37:00Z"
-        }
-      ],
-      "institutional_holders": [],
-      "expirations": [
-        "2026-08-05",
-        "2026-08-06",
-        "2026-08-07"
-      ],
-      "call_vol": 5336302,
-      "put_vol": 2738666,
-      "call_oi": 734849,
-      "put_oi": 1216646,
-      "cp_vol_ratio": 1.949,
-      "cp_oi_ratio": 0.604,
-      "total_vol_oi": 4.138,
-      "atm_iv": 0.033,
-      "unusual": [
-        {
-          "kind": "PUT",
-          "strike": 770.0,
-          "expiration": "2026-08-05",
-          "volume": 686137,
-          "openInterest": 13178,
-          "vol_oi": 52.07,
-          "iv": 0.0,
-          "lastPrice": 0.04
-        },
-        {
-          "kind": "CALL",
-          "strike": 772.0,
-          "expiration": "2026-08-05",
-          "volume": 660882,
-          "openInterest": 13268,
-          "vol_oi": 49.81,
-          "iv": 0.0359,
-          "lastPrice": 0.03
-        },
-        {
-          "kind": "PUT",
-          "strike": 772.0,
-          "expiration": "2026-08-05",
-          "volume": 539986,
-          "openInterest": 11390,
-          "vol_oi": 47.41,
-          "iv": 0.0,
-          "lastPrice": 1.13
-        },
-        {
-          "kind": "CALL",
-          "strike": 773.0,
-          "expiration": "2026-08-05",
-          "volume": 454216,
-          "openInterest": 13908,
-          "vol_oi": 32.66,
-          "iv": 0.0381,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "CALL",
-          "strike": 775.0,
-          "expiration": "2026-08-05",
-          "volume": 416687,
-          "openInterest": 10181,
-          "vol_oi": 40.93,
-          "iv": 0.0567,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "CALL",
-          "strike": 776.0,
-          "expiration": "2026-08-05",
-          "volume": 380346,
-          "openInterest": 6203,
-          "vol_oi": 61.32,
-          "iv": 0.0664,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "CALL",
-          "strike": 777.0,
-          "expiration": "2026-08-05",
-          "volume": 362338,
-          "openInterest": 6953,
-          "vol_oi": 52.11,
-          "iv": 0.0762,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "CALL",
-          "strike": 774.0,
-          "expiration": "2026-08-05",
-          "volume": 359580,
-          "openInterest": 7573,
-          "vol_oi": 47.48,
-          "iv": 0.0479,
-          "lastPrice": 0.01
-        }
-      ],
-      "unusual_count": 12,
-      "iv_percentile": 70.0,
-      "catalysts": [],
-      "next_catalyst_days": null,
-      "next_catalyst": null,
-      "score": 55.0,
-      "signal": "MEDIA",
-      "reasons": [
         "Ratio C/P marcado (+15)",
         "12 contratos inusuales (+25)",
         "Vol/OI agregado alto (+10)",
-        "IV en percentil 70+ (+5)"
+        "IV en percentil 90+ (+10)"
       ]
     },
     {
       "ticker": "SPXS",
       "error": null,
-      "price": 24.24,
+      "price": 24.37,
       "name": "Direxion Daily S&P 500 Bear 3X ",
       "market_cap": null,
       "cash": null,
@@ -1120,7 +1140,7 @@
       "target_high": null,
       "recommendation_key": null,
       "analyst_count": null,
-      "buy_target": 24.24,
+      "buy_target": 24.37,
       "sell_target": null,
       "potential_gain_pct": null,
       "is_signal": false,
@@ -1151,75 +1171,15 @@
         "2026-08-14",
         "2026-08-21"
       ],
-      "call_vol": 15469,
-      "put_vol": 4645,
-      "call_oi": 49679,
-      "put_oi": 17503,
-      "cp_vol_ratio": 3.33,
-      "cp_oi_ratio": 2.838,
-      "total_vol_oi": 0.299,
-      "atm_iv": 0.4043,
+      "call_vol": 8517,
+      "put_vol": 3792,
+      "call_oi": 60975,
+      "put_oi": 15751,
+      "cp_vol_ratio": 2.246,
+      "cp_oi_ratio": 3.871,
+      "total_vol_oi": 0.16,
+      "atm_iv": 0.6875,
       "unusual": [
-        {
-          "kind": "CALL",
-          "strike": 24.5,
-          "expiration": "2026-08-07",
-          "volume": 4118,
-          "openInterest": 394,
-          "vol_oi": 10.45,
-          "iv": 0.3906,
-          "lastPrice": 0.19
-        },
-        {
-          "kind": "CALL",
-          "strike": 24.0,
-          "expiration": "2026-08-21",
-          "volume": 3036,
-          "openInterest": 1962,
-          "vol_oi": 1.55,
-          "iv": 0.3828,
-          "lastPrice": 0.8
-        },
-        {
-          "kind": "CALL",
-          "strike": 24.0,
-          "expiration": "2026-08-07",
-          "volume": 1888,
-          "openInterest": 1022,
-          "vol_oi": 1.85,
-          "iv": 0.4102,
-          "lastPrice": 0.45
-        },
-        {
-          "kind": "CALL",
-          "strike": 30.0,
-          "expiration": "2026-08-14",
-          "volume": 1501,
-          "openInterest": 42,
-          "vol_oi": 35.74,
-          "iv": 0.5938,
-          "lastPrice": 0.03
-        },
-        {
-          "kind": "CALL",
-          "strike": 29.0,
-          "expiration": "2026-08-07",
-          "volume": 938,
-          "openInterest": 397,
-          "vol_oi": 2.36,
-          "iv": 1.1563,
-          "lastPrice": 0.1
-        },
-        {
-          "kind": "PUT",
-          "strike": 23.5,
-          "expiration": "2026-08-07",
-          "volume": 830,
-          "openInterest": 260,
-          "vol_oi": 3.19,
-          "iv": 0.457,
-          "lastPrice": 0.13
-        },
         {
           "kind": "PUT",
           "strike": 32.0,
@@ -1227,7 +1187,7 @@
           "volume": 804,
           "openInterest": 0,
           "vol_oi": 804.0,
-          "iv": 2.6641,
+          "iv": 8.1641,
           "lastPrice": 6.33
         },
         {
@@ -1235,699 +1195,74 @@
           "strike": 33.0,
           "expiration": "2026-08-14",
           "volume": 799,
-          "openInterest": 592,
-          "vol_oi": 1.35,
-          "iv": 1.8809,
+          "openInterest": 0,
+          "vol_oi": 799.0,
+          "iv": 1.3711,
           "lastPrice": 5.84
+        },
+        {
+          "kind": "PUT",
+          "strike": 34.0,
+          "expiration": "2026-08-14",
+          "volume": 797,
+          "openInterest": 0,
+          "vol_oi": 797.0,
+          "iv": 1.4688,
+          "lastPrice": 6.79
+        },
+        {
+          "kind": "PUT",
+          "strike": 22.0,
+          "expiration": "2026-08-07",
+          "volume": 402,
+          "openInterest": 308,
+          "vol_oi": 1.31,
+          "iv": 1.3281,
+          "lastPrice": 0.02
+        },
+        {
+          "kind": "CALL",
+          "strike": 24.5,
+          "expiration": "2026-08-14",
+          "volume": 346,
+          "openInterest": 117,
+          "vol_oi": 2.96,
+          "iv": 0.3613,
+          "lastPrice": 0.46
         }
       ],
-      "unusual_count": 11,
-      "iv_percentile": 26.7,
+      "unusual_count": 5,
+      "iv_percentile": 100.0,
       "catalysts": [],
       "next_catalyst_days": null,
       "next_catalyst": null,
-      "score": 55.0,
-      "signal": "MEDIA",
-      "reasons": [
-        "Ratio C/P extremo (+25)",
-        "11 contratos inusuales (+25)",
-        "Vol/OI agregado medio (+5)"
-      ]
-    },
-    {
-      "ticker": "RCKT",
-      "error": null,
-      "price": 3.5,
-      "name": "Rocket Pharmaceuticals, Inc.",
-      "market_cap": 382177440,
-      "cash": 144379008,
-      "debt": 24764000,
-      "inst_pct": 0.90125,
-      "short_pct": 0.18620001,
-      "target_mean": 9.38636,
-      "target_low": 3.0,
-      "target_high": 16.0,
-      "recommendation_key": "buy",
-      "analyst_count": 11,
-      "upside_pct": 168.2,
-      "buy_target": 3.5,
-      "sell_target": 9.39,
-      "potential_gain_pct": 168.2,
-      "is_signal": true,
-      "analyst_breakdown": {
-        "strongBuy": 0,
-        "buy": 6,
-        "hold": 6,
-        "sell": 1,
-        "strongSell": 1
-      },
-      "news": [
-        {
-          "title": "Is Rocket Pharmaceuticals, Inc. (RCKT) Poised for Recovery After Key Gene Therapy Program Milestone?",
-          "link": "https://finance.yahoo.com/healthcare/articles/rocket-pharmaceuticals-inc-rckt-poised-124237659.html",
-          "publisher": "Insider Monkey",
-          "pub_date": "2026-06-25T12:42:37Z"
-        },
-        {
-          "title": "Rocket Pharmaceuticals Inc (RCKT) Got Cash. Where’s the Stock Going?",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/rocket-pharmaceuticals-inc-rckt-got-123535680.html",
-          "publisher": "Insider Monkey",
-          "pub_date": "2026-05-20T12:35:35Z"
-        },
-        {
-          "title": "Rocket Pharmaceuticals (RCKT) Reports Q1 2026 Net Loss of $47.6M",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/rocket-pharmaceuticals-rckt-reports-q1-045018587.html",
-          "publisher": "Insider Monkey",
-          "pub_date": "2026-05-18T04:50:18Z"
-        },
-        {
-          "title": "RCKT Stock Down on Q1 Earnings Miss, Kresladi Launch in Focus",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/rckt-stock-down-q1-earnings-155000556.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-05-11T15:50:00Z"
-        },
-        {
-          "title": "Rocket Pharmaceuticals' Cardiac Programs Updates to Offer 'Strong' Share Price Catalysts, Wedbush Says",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/rocket-pharmaceuticals-apos-cardiac-programs-161854069.html",
-          "publisher": "MT Newswires",
-          "pub_date": "2026-05-08T16:18:54Z"
-        },
-        {
-          "title": "3 Promising Penny Stocks With Market Caps Up To $600M",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/3-promising-penny-stocks-market-180545603.html",
-          "publisher": "Simply Wall St.",
-          "pub_date": "2026-05-06T18:05:45Z"
-        }
-      ],
-      "institutional_holders": [
-        {
-          "holder": "RTW Investments LP",
-          "shares": 17687772,
-          "value": 61907202.0,
-          "pct": 16.2,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Blackrock Inc.",
-          "shares": 7834795,
-          "value": 27421782.0,
-          "pct": 7.18,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Citigroup Inc.",
-          "shares": 5107708,
-          "value": 17876978.0,
-          "pct": 4.68,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Vanguard Portfolio Management LLC",
-          "shares": 4690215,
-          "value": 16415752.0,
-          "pct": 4.3,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "State Street Corporation",
-          "shares": 4485989,
-          "value": 15700961.0,
-          "pct": 4.11,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Vanguard Capital Management LLC",
-          "shares": 3775736,
-          "value": 13215076.0,
-          "pct": 3.46,
-          "date_reported": "2026-03-31"
-        }
-      ],
-      "expirations": [
-        "2026-08-21",
-        "2026-09-18"
-      ],
-      "call_vol": 464,
-      "put_vol": 20,
-      "call_oi": 2929,
-      "put_oi": 32,
-      "cp_vol_ratio": 23.2,
-      "cp_oi_ratio": 91.531,
-      "total_vol_oi": 0.163,
-      "atm_iv": 1.2109,
-      "unusual": [],
-      "unusual_count": 0,
-      "iv_percentile": 10.0,
-      "catalysts": [
-        {
-          "date": "2026-08-06",
-          "type": "Earnings",
-          "note": "Yahoo",
-          "days": 1
-        }
-      ],
-      "next_catalyst_days": 1,
-      "next_catalyst": "Earnings 2026-08-06",
-      "score": 54.3,
-      "signal": "MEDIA",
-      "reasons": [
-        "Catalizador en 1d (+29)",
-        "Ratio C/P extremo (+25)"
-      ]
-    },
-    {
-      "ticker": "IOVA",
-      "error": null,
-      "price": 4.34,
-      "name": "Iovance Biotherapeutics, Inc.",
-      "market_cap": 1937820544,
-      "cash": 313443008,
-      "debt": 47776000,
-      "inst_pct": 0.67908996,
-      "short_pct": 0.2395,
-      "target_mean": 8.22222,
-      "target_low": 4.0,
-      "target_high": 14.0,
-      "recommendation_key": "buy",
-      "analyst_count": 9,
-      "upside_pct": 89.5,
-      "buy_target": 4.34,
-      "sell_target": 8.22,
-      "potential_gain_pct": 89.5,
-      "is_signal": true,
-      "analyst_breakdown": {
-        "strongBuy": 2,
-        "buy": 5,
-        "hold": 2,
-        "sell": 0,
-        "strongSell": 0
-      },
-      "news": [
-        {
-          "title": "Arvinas, Inc. (ARVN) Beats Q2 Earnings and Revenue Estimates",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/arvinas-inc-arvn-beats-q2-125002258.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-08-04T12:50:02Z"
-        },
-        {
-          "title": "Iovance Biotherapeutics (IOVA) Stock May Be Cheap As Sales Ramp Remains Key",
-          "link": "https://finance.yahoo.com/healthcare/articles/iovance-biotherapeutics-iova-stock-may-050858896.html",
-          "publisher": "Simply Wall St.",
-          "pub_date": "2026-08-02T05:08:58Z"
-        },
-        {
-          "title": "Do Mixed Q2 Expectations Alter Iovance Biotherapeutics' (IOVA) TIL Leadership Narrative?",
-          "link": "https://finance.yahoo.com/healthcare/articles/mixed-q2-expectations-alter-iovance-161112383.html",
-          "publisher": "Simply Wall St.",
-          "pub_date": "2026-08-01T16:11:12Z"
-        },
-        {
-          "title": "Iovance Biotherapeutics (IOVA) Heads Into Earnings With Its T Cell Therapy Story And Valuation In Focus",
-          "link": "https://finance.yahoo.com/healthcare/articles/iovance-biotherapeutics-iova-heads-earnings-151218731.html",
-          "publisher": "Simply Wall St.",
-          "pub_date": "2026-08-01T15:12:18Z"
-        },
-        {
-          "title": "Neurocrine Biosciences Q2 Earnings Call Highlights",
-          "link": "https://www.marketbeat.com/instant-alerts/neurocrine-biosciences-q2-earnings-call-highlights-2026-07-30/?utm_source=yahoofinance&utm_medium=yahoofinance",
-          "publisher": "MarketBeat",
-          "pub_date": "2026-08-01T01:02:47Z"
-        },
-        {
-          "title": "Will Iovance Biotherapeutics (IOVA) Report Negative Q2 Earnings? What You Should Know",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/iovance-biotherapeutics-iova-report-negative-140032507.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-07-30T14:00:32Z"
-        }
-      ],
-      "institutional_holders": [
-        {
-          "holder": "Blackrock Inc.",
-          "shares": 31080505,
-          "value": 134889396.0,
-          "pct": 6.96,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "MHR Fund Management, LLC",
-          "shares": 28967103,
-          "value": 125717231.0,
-          "pct": 6.49,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "State Street Corporation",
-          "shares": 17448108,
-          "value": 75724791.0,
-          "pct": 3.91,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Vanguard Capital Management LLC",
-          "shares": 16617737,
-          "value": 72120981.0,
-          "pct": 3.72,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Two Sigma Investments, LP",
-          "shares": 13687433,
-          "value": 59403461.0,
-          "pct": 3.07,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Vanguard Portfolio Management LLC",
-          "shares": 11700844,
-          "value": 50781664.0,
-          "pct": 2.62,
-          "date_reported": "2026-03-31"
-        }
-      ],
-      "expirations": [
-        "2026-08-07",
-        "2026-08-14",
-        "2026-08-21"
-      ],
-      "call_vol": 2640,
-      "put_vol": 1186,
-      "call_oi": 35100,
-      "put_oi": 10563,
-      "cp_vol_ratio": 2.226,
-      "cp_oi_ratio": 3.323,
-      "total_vol_oi": 0.084,
-      "atm_iv": 5.2266,
-      "unusual": [],
-      "unusual_count": 0,
-      "iv_percentile": 100.0,
-      "catalysts": [
-        {
-          "date": "2026-08-06",
-          "type": "Earnings",
-          "note": "Yahoo",
-          "days": 1
-        }
-      ],
-      "next_catalyst_days": 1,
-      "next_catalyst": "Earnings 2026-08-06",
-      "score": 54.3,
-      "signal": "MEDIA",
-      "reasons": [
-        "Catalizador en 1d (+29)",
-        "Ratio C/P marcado (+15)",
-        "IV en percentil 90+ (+10)"
-      ]
-    },
-    {
-      "ticker": "META",
-      "error": null,
-      "price": 588.77,
-      "name": "Meta Platforms, Inc.",
-      "market_cap": 1499895300096,
-      "cash": 90259996672,
-      "debt": 112317997056,
-      "inst_pct": 0.7864,
-      "short_pct": 0.0172,
-      "target_mean": 759.40564,
-      "target_low": 580.0,
-      "target_high": 1000.0,
-      "recommendation_key": "strong_buy",
-      "analyst_count": 57,
-      "upside_pct": 29.0,
-      "buy_target": 588.77,
-      "sell_target": 759.41,
-      "potential_gain_pct": 29.0,
-      "is_signal": true,
-      "analyst_breakdown": {
-        "strongBuy": 8,
-        "buy": 47,
-        "hold": 7,
-        "sell": 0,
-        "strongSell": 0
-      },
-      "news": [
-        {
-          "title": "Meta debuts Muse Spark 1.2  and first coding agent, as it ramps up competition with OpenAI, Anthropic",
-          "link": "https://finance.yahoo.com/technology/article/meta-debuts-muse-spark-12-and-first-coding-agent-as-it-ramps-up-competition-with-openai-anthropic-213338398.html",
-          "publisher": "Yahoo Finance",
-          "pub_date": "2026-08-05T21:33:38Z"
-        },
-        {
-          "title": "AI CapEx fears: Is big tech overspending?",
-          "link": "https://finance.yahoo.com/video/ai-capex-fears-big-tech-100000522.html",
-          "publisher": "Yahoo Finance Video",
-          "pub_date": "2026-08-05T10:00:00Z"
-        },
-        {
-          "title": "AI Trailblazers Nvidia, Palantir, Alphabet, and Meta Are Shaking Wall Street to Its Core With This $3.4 Billion Warning",
-          "link": "https://www.fool.com/investing/2026/08/05/nvda-pltr-googl-meta-shake-wall-street-34-billion/",
-          "publisher": "Motley Fool",
-          "pub_date": "2026-08-05T22:26:00Z"
-        },
-        {
-          "title": "SNDK Stock Dips After-Hours As Sandisk's Q1 FY27 Outlook Misses Expectations Despite Memory-Driven Q4 Profit",
-          "link": "https://stocktwits.com/news-articles/markets/equity/sandisk-s-q1-fy-27-outlook-misses-expectations-despite-memory-driven-q4-profit/cZoIPQNRJej",
-          "publisher": "Stocktwits",
-          "pub_date": "2026-08-05T21:47:39Z"
-        },
-        {
-          "title": "Meta launches new AI coding tool powered by Muse Spark 1.2",
-          "link": "https://finance.yahoo.com/technology/ai/articles/meta-launches-ai-coding-tool-212944291.html",
-          "publisher": "Reuters",
-          "pub_date": "2026-08-05T21:29:44Z"
-        },
-        {
-          "title": "The Toughest Questions AMZN Faced On Its Latest Call",
-          "link": "https://www.trefis.com/articles/610202/the-toughest-questions-amzn-faced-on-its-latest-call-2/2026-08-05",
-          "publisher": "Trefis",
-          "pub_date": "2026-08-05T21:11:20Z"
-        }
-      ],
-      "institutional_holders": [
-        {
-          "holder": "Blackrock Inc.",
-          "shares": 168843283,
-          "value": 99409863029.0,
-          "pct": 7.66,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Vanguard Capital Management LLC",
-          "shares": 142138157,
-          "value": 83686685473.0,
-          "pct": 6.45,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "FMR, LLC",
-          "shares": 116614753,
-          "value": 68659270401.0,
-          "pct": 5.29,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "State Street Corporation",
-          "shares": 88523840,
-          "value": 52120183005.0,
-          "pct": 4.01,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Geode Capital Management, LLC",
-          "shares": 54165192,
-          "value": 31890841151.0,
-          "pct": 2.46,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "JPMORGAN CHASE & CO",
-          "shares": 50180811,
-          "value": 29544957072.0,
-          "pct": 2.28,
-          "date_reported": "2026-03-31"
-        }
-      ],
-      "expirations": [
-        "2026-08-05",
-        "2026-08-07",
-        "2026-08-10"
-      ],
-      "call_vol": 297880,
-      "put_vol": 131523,
-      "call_oi": 145705,
-      "put_oi": 81567,
-      "cp_vol_ratio": 2.265,
-      "cp_oi_ratio": 1.786,
-      "total_vol_oi": 1.889,
-      "atm_iv": 0.1141,
-      "unusual": [
-        {
-          "kind": "CALL",
-          "strike": 600.0,
-          "expiration": "2026-08-05",
-          "volume": 32372,
-          "openInterest": 4511,
-          "vol_oi": 7.18,
-          "iv": 0.1445,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "CALL",
-          "strike": 590.0,
-          "expiration": "2026-08-05",
-          "volume": 31947,
-          "openInterest": 2339,
-          "vol_oi": 13.66,
-          "iv": 0.105,
-          "lastPrice": 0.7
-        },
-        {
-          "kind": "CALL",
-          "strike": 595.0,
-          "expiration": "2026-08-05",
-          "volume": 21984,
-          "openInterest": 1379,
-          "vol_oi": 15.94,
-          "iv": 0.0879,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "CALL",
-          "strike": 585.0,
-          "expiration": "2026-08-05",
-          "volume": 20170,
-          "openInterest": 1222,
-          "vol_oi": 16.51,
-          "iv": 0.2161,
-          "lastPrice": 4.3
-        },
-        {
-          "kind": "PUT",
-          "strike": 580.0,
-          "expiration": "2026-08-05",
-          "volume": 18590,
-          "openInterest": 2044,
-          "vol_oi": 9.09,
-          "iv": 0.1191,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "CALL",
-          "strike": 587.5,
-          "expiration": "2026-08-05",
-          "volume": 18475,
-          "openInterest": 652,
-          "vol_oi": 28.34,
-          "iv": 0.1307,
-          "lastPrice": 2.22
-        },
-        {
-          "kind": "CALL",
-          "strike": 600.0,
-          "expiration": "2026-08-07",
-          "volume": 15018,
-          "openInterest": 4817,
-          "vol_oi": 3.12,
-          "iv": 0.412,
-          "lastPrice": 4.3
-        },
-        {
-          "kind": "PUT",
-          "strike": 585.0,
-          "expiration": "2026-08-05",
-          "volume": 13215,
-          "openInterest": 584,
-          "vol_oi": 22.63,
-          "iv": 0.1045,
-          "lastPrice": 0.15
-        }
-      ],
-      "unusual_count": 12,
-      "iv_percentile": 53.3,
-      "catalysts": [
-        {
-          "date": "2026-10-28",
-          "type": "Earnings",
-          "note": "Yahoo",
-          "days": 84
-        }
-      ],
-      "next_catalyst_days": 84,
-      "next_catalyst": "Earnings 2026-10-28",
       "score": 50.0,
       "signal": "MEDIA",
       "reasons": [
         "Ratio C/P marcado (+15)",
-        "12 contratos inusuales (+25)",
-        "Vol/OI agregado alto (+10)"
-      ]
-    },
-    {
-      "ticker": "CADL",
-      "error": null,
-      "price": 10.46,
-      "name": "Candel Therapeutics, Inc.",
-      "market_cap": 766406720,
-      "cash": 194834000,
-      "debt": 49271000,
-      "inst_pct": 0.6017,
-      "short_pct": 0.23040001,
-      "target_mean": 20.5,
-      "target_low": 9.0,
-      "target_high": 29.0,
-      "recommendation_key": "strong_buy",
-      "analyst_count": 8,
-      "upside_pct": 96.0,
-      "buy_target": 10.46,
-      "sell_target": 20.5,
-      "potential_gain_pct": 96.0,
-      "is_signal": true,
-      "analyst_breakdown": {
-        "strongBuy": 0,
-        "buy": 8,
-        "hold": 1,
-        "sell": 0,
-        "strongSell": 0
-      },
-      "news": [
-        {
-          "title": "CADL Stock Heads For Biggest Monthly Gains Since December 2024 – Retail Says ‘Our SLS Days Are Coming’",
-          "link": "https://stocktwits.com/news-articles/markets/equity/cadl-stock-heads-for-best-month-in-18-months-new-trial-initiation-lung-cancer/cZ1QNfaR709",
-          "publisher": "Stocktwits",
-          "pub_date": "2026-06-30T16:27:42Z"
-        },
-        {
-          "title": "Candel Therapeutics Designates Mark Sims as CCO",
-          "link": "https://finance.yahoo.com/healthcare/articles/candel-therapeutics-designates-mark-sims-195358874.html",
-          "publisher": "Exec Edge",
-          "pub_date": "2026-06-25T19:53:58Z"
-        },
-        {
-          "title": "CADL Stock Heads For Best Week In A Month – Here’s Why Retail Is Bullish",
-          "link": "https://stocktwits.com/news-articles/markets/equity/why-cadl-stock-is-rising-today-candel-therapeutics-phase-3-results/cZ0FiCBReCR",
-          "publisher": "Stocktwits",
-          "pub_date": "2026-06-05T10:23:40Z"
-        },
-        {
-          "title": "Candel Therapeutics Eyes Year-End BLA After Strong Prostate Cancer Data",
-          "link": "https://www.marketbeat.com/instant-alerts/candel-therapeutics-eyes-year-end-bla-after-strong-prostate-cancer-data-2026-05-20/?utm_source=yahoofinance&utm_medium=yahoofinance",
-          "publisher": "MarketBeat",
-          "pub_date": "2026-05-20T15:13:00Z"
-        },
-        {
-          "title": "Wall Street Analysts Believe Candel Therapeutics (CADL) Could Rally 148.48%: Here's is How to Trade",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/wall-street-analysts-believe-candel-135503572.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-05-19T13:55:03Z"
-        },
-        {
-          "title": "Candel Therapeutics teams up with EVERSANA to prep for prostate cancer drug launch",
-          "link": "https://www.proactiveinvestors.com/companies/news/1091417/candel-therapeutics-teams-up-with-eversana-to-prep-for-prostate-cancer-drug-launch-1091417.html",
-          "publisher": "Proactive",
-          "pub_date": "2026-04-29T12:36:00Z"
-        }
-      ],
-      "institutional_holders": [
-        {
-          "holder": "FMR, LLC",
-          "shares": 10987017,
-          "value": 114924198.0,
-          "pct": 15.0,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "RTW Investments LP",
-          "shares": 6422018,
-          "value": 67174308.0,
-          "pct": 8.76,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Acorn Capital Advisors, LLC                          ",
-          "shares": 3497948,
-          "value": 36588536.0,
-          "pct": 4.77,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Blackrock Inc.",
-          "shares": 3109042,
-          "value": 32520579.0,
-          "pct": 4.24,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Saturn V Capital Management LP",
-          "shares": 2896588,
-          "value": 30298310.0,
-          "pct": 3.95,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Portolan Capital Management, LLC",
-          "shares": 2894325,
-          "value": 30274639.0,
-          "pct": 3.95,
-          "date_reported": "2026-03-31"
-        }
-      ],
-      "expirations": [
-        "2026-08-21",
-        "2026-09-18"
-      ],
-      "call_vol": 233,
-      "put_vol": 48,
-      "call_oi": 1575,
-      "put_oi": 1305,
-      "cp_vol_ratio": 4.854,
-      "cp_oi_ratio": 1.207,
-      "total_vol_oi": 0.098,
-      "atm_iv": 1.1172,
-      "unusual": [],
-      "unusual_count": 0,
-      "iv_percentile": 43.3,
-      "catalysts": [
-        {
-          "date": "2026-08-13",
-          "type": "Earnings",
-          "note": "Yahoo",
-          "days": 8
-        },
-        {
-          "date": "2026-09-30",
-          "type": "Ensayo Fase3",
-          "note": "CAN-2409 topline (EJEMPLO",
-          "days": 56
-        }
-      ],
-      "next_catalyst_days": 8,
-      "next_catalyst": "Earnings 2026-08-13",
-      "score": 49.7,
-      "signal": "MEDIA",
-      "reasons": [
-        "Catalizador en 8d (+25)",
-        "Ratio C/P extremo (+25)"
+        "5 contratos inusuales (+25)",
+        "IV en percentil 90+ (+10)"
       ]
     },
     {
       "ticker": "ACHV",
       "error": null,
-      "price": 6.66,
+      "price": 6.55,
       "name": "Achieve Life Sciences, Inc.",
-      "market_cap": 683709312,
+      "market_cap": 672416832,
       "cash": 29269000,
       "debt": 14952000,
-      "inst_pct": 0.66668,
+      "inst_pct": 0.66697997,
       "short_pct": 0.1443,
       "target_mean": 14.09091,
       "target_low": 9.0,
       "target_high": 21.0,
       "recommendation_key": "strong_buy",
       "analyst_count": 11,
-      "upside_pct": 111.6,
-      "buy_target": 6.66,
+      "upside_pct": 115.1,
+      "buy_target": 6.55,
       "sell_target": 14.09,
-      "potential_gain_pct": 111.6,
+      "potential_gain_pct": 115.1,
       "is_signal": true,
       "analyst_breakdown": {
         "strongBuy": 2,
@@ -1978,42 +1313,42 @@
         {
           "holder": "Franklin Resources, Inc.",
           "shares": 4369193,
-          "value": 29098824.0,
+          "value": 28618214.0,
           "pct": 4.26,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Propel Bio Management, LLC",
           "shares": 3786425,
-          "value": 25217589.0,
+          "value": 24801084.0,
           "pct": 3.69,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Vanguard Capital Management LLC",
           "shares": 2204714,
-          "value": 14683394.0,
+          "value": 14440877.0,
           "pct": 2.15,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Simplify Asset Management, Inc.",
           "shares": 1432105,
-          "value": 9537819.0,
+          "value": 9380288.0,
           "pct": 1.4,
           "date_reported": "2026-06-30"
         },
         {
           "holder": "Millennium Management Llc",
           "shares": 1077338,
-          "value": 7175070.0,
+          "value": 7056564.0,
           "pct": 1.05,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Marshall Wace LLP",
           "shares": 1019281,
-          "value": 6788411.0,
+          "value": 6676290.0,
           "pct": 0.99,
           "date_reported": "2026-03-31"
         }
@@ -2022,38 +1357,430 @@
         "2026-08-21",
         "2026-09-18"
       ],
-      "call_vol": 98,
-      "put_vol": 45,
-      "call_oi": 4342,
+      "call_vol": 83,
+      "put_vol": 41,
+      "call_oi": 4327,
       "put_oi": 1506,
-      "cp_vol_ratio": 2.178,
-      "cp_oi_ratio": 2.883,
-      "total_vol_oi": 0.024,
-      "atm_iv": 0.7773,
+      "cp_vol_ratio": 2.024,
+      "cp_oi_ratio": 2.873,
+      "total_vol_oi": 0.021,
+      "atm_iv": 1.6797,
       "unusual": [],
       "unusual_count": 0,
-      "iv_percentile": 0.0,
+      "iv_percentile": 80.6,
       "catalysts": [
         {
-          "date": "2026-08-06",
+          "date": "2026-08-11",
           "type": "Earnings",
           "note": "Yahoo",
-          "days": 1
+          "days": 4
         }
       ],
-      "next_catalyst_days": 1,
-      "next_catalyst": "Earnings 2026-08-06",
-      "score": 44.3,
+      "next_catalyst_days": 4,
+      "next_catalyst": "Earnings 2026-08-11",
+      "score": 47.3,
       "signal": "MEDIA",
       "reasons": [
-        "Catalizador en 1d (+29)",
-        "Ratio C/P marcado (+15)"
+        "Catalizador en 4d (+27)",
+        "Ratio C/P marcado (+15)",
+        "IV en percentil 70+ (+5)"
+      ]
+    },
+    {
+      "ticker": "AMD",
+      "error": null,
+      "price": 489.28,
+      "name": "Advanced Micro Devices, Inc.",
+      "market_cap": 797820256256,
+      "cash": 13111000064,
+      "debt": 4276000000,
+      "inst_pct": 0.71789,
+      "short_pct": 0.024500001,
+      "target_mean": 579.1064,
+      "target_low": 320.0,
+      "target_high": 1250.0,
+      "recommendation_key": "strong_buy",
+      "analyst_count": 47,
+      "upside_pct": 18.4,
+      "buy_target": 489.28,
+      "sell_target": 579.11,
+      "potential_gain_pct": 18.4,
+      "is_signal": true,
+      "analyst_breakdown": {
+        "strongBuy": 5,
+        "buy": 36,
+        "hold": 10,
+        "sell": 0,
+        "strongSell": 0
+      },
+      "news": [
+        {
+          "title": "AMD Buys Toronto AI Chip Startup Taalas — Retail Says It’s A Move To ‘Compete More Directly With Nvidia’",
+          "link": "https://stocktwits.com/news-articles/markets/equity/amd-buys-toronto-ai-chip-startup-taalas-retail-says-its-a-move-to-compete-more-directly-with-nvidia/cZoBg5yRJJM",
+          "publisher": "Stocktwits",
+          "pub_date": "2026-08-06T23:25:52Z"
+        },
+        {
+          "title": "Nvidia dominates AI chips, but BofA sees AMD closing in",
+          "link": "https://www.thestreet.com/investing/stocks/nvidia-vs-amd-ai-chips-bofa-analysis",
+          "publisher": "TheStreet",
+          "pub_date": "2026-08-06T22:33:00Z"
+        },
+        {
+          "title": "AMD deepens AI inference bet with Taalas deal as chip race heats up",
+          "link": "https://finance.yahoo.com/technology/ai/articles/amd-deepens-ai-inference-bet-212723775.html",
+          "publisher": "Reuters",
+          "pub_date": "2026-08-06T21:27:23Z"
+        },
+        {
+          "title": "Nvidia (NVDA) Bets on Design Tools While AMD (AMD) Scales the Hardware Stack",
+          "link": "https://finance.yahoo.com/technology/ai/articles/nvidia-nvda-bets-design-tools-211728491.html",
+          "publisher": "Insider Monkey",
+          "pub_date": "2026-08-06T21:17:28Z"
+        },
+        {
+          "title": "Nvidia, Microsoft Partner Tests Breakout. Three Clues Bode Well.",
+          "link": "https://www.investors.com/research/ibd-stock-analysis/dell-stock-rises-ai-collaboration-with-nvidia-microsoft-amd/?src=A00220&yptr=yahoo",
+          "publisher": "Investor's Business Daily",
+          "pub_date": "2026-08-06T20:00:17Z"
+        },
+        {
+          "title": "Advanced Micro Devices vs. Sandisk: Comparing the Latest Quarterly Revenue Trends as AI Demand Spikes Sales",
+          "link": "https://www.fool.com/coverage/charts/2026/08/06/advanced-micro-devices-vs-sandisk-comparing-the-latest-quarterly-revenue-trends-as-ai-demand-spikes-sales/",
+          "publisher": "Motley Fool",
+          "pub_date": "2026-08-06T19:54:38Z"
+        }
+      ],
+      "institutional_holders": [
+        {
+          "holder": "Blackrock Inc.",
+          "shares": 145574284,
+          "value": 71226585497.0,
+          "pct": 8.93,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Vanguard Capital Management LLC",
+          "shares": 105940266,
+          "value": 51834453219.0,
+          "pct": 6.5,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "State Street Corporation",
+          "shares": 74771220,
+          "value": 36584062430.0,
+          "pct": 4.59,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Invesco Ltd.",
+          "shares": 50443198,
+          "value": 24680847855.0,
+          "pct": 3.09,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Geode Capital Management, LLC",
+          "shares": 39791086,
+          "value": 19468982509.0,
+          "pct": 2.44,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Vanguard Portfolio Management LLC",
+          "shares": 37603675,
+          "value": 18398726058.0,
+          "pct": 2.31,
+          "date_reported": "2026-03-31"
+        }
+      ],
+      "expirations": [
+        "2026-08-07",
+        "2026-08-10",
+        "2026-08-12"
+      ],
+      "call_vol": 158012,
+      "put_vol": 112867,
+      "call_oi": 157600,
+      "put_oi": 154123,
+      "cp_vol_ratio": 1.4,
+      "cp_oi_ratio": 1.023,
+      "total_vol_oi": 0.869,
+      "atm_iv": 0.7832,
+      "unusual": [
+        {
+          "kind": "CALL",
+          "strike": 500.0,
+          "expiration": "2026-08-07",
+          "volume": 16732,
+          "openInterest": 5937,
+          "vol_oi": 2.82,
+          "iv": 0.8044,
+          "lastPrice": 4.1
+        },
+        {
+          "kind": "CALL",
+          "strike": 495.0,
+          "expiration": "2026-08-07",
+          "volume": 11104,
+          "openInterest": 3869,
+          "vol_oi": 2.87,
+          "iv": 0.7949,
+          "lastPrice": 5.8
+        },
+        {
+          "kind": "CALL",
+          "strike": 510.0,
+          "expiration": "2026-08-07",
+          "volume": 8179,
+          "openInterest": 1988,
+          "vol_oi": 4.11,
+          "iv": 0.8096,
+          "lastPrice": 1.9
+        },
+        {
+          "kind": "PUT",
+          "strike": 490.0,
+          "expiration": "2026-08-07",
+          "volume": 7743,
+          "openInterest": 1220,
+          "vol_oi": 6.35,
+          "iv": 0.7688,
+          "lastPrice": 8.21
+        },
+        {
+          "kind": "PUT",
+          "strike": 475.0,
+          "expiration": "2026-08-07",
+          "volume": 7735,
+          "openInterest": 1051,
+          "vol_oi": 7.36,
+          "iv": 0.7759,
+          "lastPrice": 2.7
+        },
+        {
+          "kind": "CALL",
+          "strike": 520.0,
+          "expiration": "2026-08-07",
+          "volume": 7718,
+          "openInterest": 2987,
+          "vol_oi": 2.58,
+          "iv": 0.8223,
+          "lastPrice": 0.8
+        },
+        {
+          "kind": "CALL",
+          "strike": 490.0,
+          "expiration": "2026-08-07",
+          "volume": 6601,
+          "openInterest": 2530,
+          "vol_oi": 2.61,
+          "iv": 0.7976,
+          "lastPrice": 7.8
+        },
+        {
+          "kind": "PUT",
+          "strike": 450.0,
+          "expiration": "2026-08-07",
+          "volume": 5948,
+          "openInterest": 4644,
+          "vol_oi": 1.28,
+          "iv": 0.8691,
+          "lastPrice": 0.28
+        }
+      ],
+      "unusual_count": 12,
+      "iv_percentile": 96.8,
+      "catalysts": [
+        {
+          "date": "2026-11-03",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 88
+        }
+      ],
+      "next_catalyst_days": 88,
+      "next_catalyst": "Earnings 2026-11-03",
+      "score": 45.0,
+      "signal": "MEDIA",
+      "reasons": [
+        "12 contratos inusuales (+25)",
+        "Vol/OI agregado alto (+10)",
+        "IV en percentil 90+ (+10)"
+      ]
+    },
+    {
+      "ticker": "SPY",
+      "error": null,
+      "price": 768.56,
+      "name": "State Street SPDR S&P 500 ETF T",
+      "market_cap": null,
+      "cash": null,
+      "debt": null,
+      "inst_pct": null,
+      "short_pct": null,
+      "target_mean": null,
+      "target_low": null,
+      "target_high": null,
+      "recommendation_key": null,
+      "analyst_count": null,
+      "buy_target": 768.56,
+      "sell_target": null,
+      "potential_gain_pct": null,
+      "is_signal": false,
+      "analyst_breakdown": null,
+      "news": [
+        {
+          "title": "S&P 500, Dow, Nasdaq End Lower Amid Hormuz Uncertainty As Investors Await Jobs Data To Judge Fed Rate Course — SOUN, GOOGL, SPCX, NVDA In Fo",
+          "link": "https://stocktwits.com/news-articles/markets/equity/s-and-p-500-dow-nasdaq-end-lower-amid-hormuz-uncertainty/cZoB9g9RJJo",
+          "publisher": "Stocktwits",
+          "pub_date": "2026-08-06T21:04:39Z"
+        },
+        {
+          "title": "Can You Actually Spend SPYI’s 12% and Keep Your Principal? Three Years of NAV Data Answer It",
+          "link": "https://247wallst.com/investing/etf/2026/08/06/can-you-actually-spend-spyis-12-and-keep-your-principal-three-years-of-nav-data-answer-it/",
+          "publisher": "24/7 Wall St.",
+          "pub_date": "2026-08-06T18:55:53Z"
+        },
+        {
+          "title": "Guide to High Dividend-Paying ETFs",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/guide-high-dividend-paying-etfs-160000297.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-08-06T16:00:00Z"
+        },
+        {
+          "title": "Tesla Continues to Crater in 2026: Why One of Wall Street’s Most Controversial Pros Expects 100% Gains",
+          "link": "https://247wallst.com/investing/2026/08/06/tesla-continues-to-crater-in-2026-why-one-of-wall-streets-most-controversial-pros-expects-100-gains/",
+          "publisher": "24/7 Wall St.",
+          "pub_date": "2026-08-06T14:35:43Z"
+        },
+        {
+          "title": "Pre-Market Flat on Consistently Low Jobless Claims",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/pre-market-flat-consistently-low-142600404.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-08-06T14:26:00Z"
+        },
+        {
+          "title": "Exchange-Traded Funds, Equity Futures Mixed Pre-Bell Thursday Amid Corporate Earnings Deluge",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/exchange-traded-funds-equity-futures-132120169.html",
+          "publisher": "MT Newswires",
+          "pub_date": "2026-08-06T13:21:20Z"
+        }
+      ],
+      "institutional_holders": [],
+      "expirations": [
+        "2026-08-07",
+        "2026-08-10",
+        "2026-08-11"
+      ],
+      "call_vol": 1004376,
+      "put_vol": 1153560,
+      "call_oi": 473430,
+      "put_oi": 1124521,
+      "cp_vol_ratio": 0.871,
+      "cp_oi_ratio": 0.421,
+      "total_vol_oi": 1.35,
+      "atm_iv": 0.1394,
+      "unusual": [
+        {
+          "kind": "PUT",
+          "strike": 768.0,
+          "expiration": "2026-08-07",
+          "volume": 111872,
+          "openInterest": 4831,
+          "vol_oi": 23.16,
+          "iv": 0.1295,
+          "lastPrice": 1.81
+        },
+        {
+          "kind": "PUT",
+          "strike": 769.0,
+          "expiration": "2026-08-07",
+          "volume": 89816,
+          "openInterest": 3099,
+          "vol_oi": 28.98,
+          "iv": 0.1248,
+          "lastPrice": 2.22
+        },
+        {
+          "kind": "CALL",
+          "strike": 775.0,
+          "expiration": "2026-08-07",
+          "volume": 85598,
+          "openInterest": 19587,
+          "vol_oi": 4.37,
+          "iv": 0.1377,
+          "lastPrice": 0.33
+        },
+        {
+          "kind": "CALL",
+          "strike": 770.0,
+          "expiration": "2026-08-07",
+          "volume": 84299,
+          "openInterest": 10888,
+          "vol_oi": 7.74,
+          "iv": 0.1502,
+          "lastPrice": 1.75
+        },
+        {
+          "kind": "PUT",
+          "strike": 770.0,
+          "expiration": "2026-08-07",
+          "volume": 79144,
+          "openInterest": 10786,
+          "vol_oi": 7.34,
+          "iv": 0.1199,
+          "lastPrice": 2.72
+        },
+        {
+          "kind": "PUT",
+          "strike": 767.0,
+          "expiration": "2026-08-07",
+          "volume": 78568,
+          "openInterest": 10649,
+          "vol_oi": 7.38,
+          "iv": 0.1336,
+          "lastPrice": 1.44
+        },
+        {
+          "kind": "PUT",
+          "strike": 765.0,
+          "expiration": "2026-08-07",
+          "volume": 70937,
+          "openInterest": 13419,
+          "vol_oi": 5.29,
+          "iv": 0.1433,
+          "lastPrice": 0.93
+        },
+        {
+          "kind": "CALL",
+          "strike": 771.0,
+          "expiration": "2026-08-07",
+          "volume": 66228,
+          "openInterest": 5472,
+          "vol_oi": 12.1,
+          "iv": 0.147,
+          "lastPrice": 1.33
+        }
+      ],
+      "unusual_count": 12,
+      "iv_percentile": 100.0,
+      "catalysts": [],
+      "next_catalyst_days": null,
+      "next_catalyst": null,
+      "score": 45.0,
+      "signal": "MEDIA",
+      "reasons": [
+        "12 contratos inusuales (+25)",
+        "Vol/OI agregado alto (+10)",
+        "IV en percentil 90+ (+10)"
       ]
     },
     {
       "ticker": "QQQ",
       "error": null,
-      "price": 717.3,
+      "price": 714.65,
       "name": "Invesco QQQ Trust, Series 1",
       "market_cap": null,
       "cash": null,
@@ -2065,400 +1792,177 @@
       "target_high": null,
       "recommendation_key": null,
       "analyst_count": null,
-      "buy_target": 717.3,
+      "buy_target": 714.65,
       "sell_target": null,
       "potential_gain_pct": null,
       "is_signal": false,
       "analyst_breakdown": null,
       "news": [
         {
-          "title": "How ProShares Ultra QQQ Quietly Built $14.46 Billion in Assets Despite Warnings That Leveraged ETFs Destroy Long-Term Wealth",
-          "link": "https://247wallst.com/investing/etf/2026/08/05/how-proshares-ultra-qqq-quietly-built-14-46-billion-in-assets-despite-warnings-that-leveraged-etfs-destroy-long-term-wealth/",
-          "publisher": "24/7 Wall St.",
-          "pub_date": "2026-08-05T20:46:59Z"
-        },
-        {
-          "title": "The Cheapest ETFs for Building a Core Portfolio",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/cheapest-etfs-building-core-portfolio-203100733.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-08-05T20:31:00Z"
-        },
-        {
-          "title": "Fed's Schmid Delivers Blunt Warning on Interest Rates",
-          "link": "https://finance.yahoo.com/economy/policy/articles/feds-schmid-delivers-blunt-warning-192244449.html",
+          "title": "S&P 500 Gains as Iran-Oman Deal Eases Oil Fears",
+          "link": "https://finance.yahoo.com/energy/articles/p-500-gains-iran-oman-212717705.html",
           "publisher": "GuruFocus.com",
-          "pub_date": "2026-08-05T19:22:44Z"
+          "pub_date": "2026-08-06T21:27:17Z"
         },
         {
-          "title": "Alphabet Is Still Up 16% in 2026. What Will It Take to Get GOOGL Stock Above $400?",
-          "link": "https://247wallst.com/investing/2026/08/05/alphabet-is-still-up-16-in-2026-what-will-it-take-to-get-googl-stock-above-400/",
+          "title": "S&P 500, Dow, Nasdaq End Lower Amid Hormuz Uncertainty As Investors Await Jobs Data To Judge Fed Rate Course — SOUN, GOOGL, SPCX, NVDA In Fo",
+          "link": "https://stocktwits.com/news-articles/markets/equity/s-and-p-500-dow-nasdaq-end-lower-amid-hormuz-uncertainty/cZoB9g9RJJo",
+          "publisher": "Stocktwits",
+          "pub_date": "2026-08-06T21:04:39Z"
+        },
+        {
+          "title": "SCHG Quintupled Your Money in 10 Years, and the 4-Cent Fee Is Doing Heavy Lifting",
+          "link": "https://247wallst.com/investing/etf/2026/08/06/schg-quintupled-your-money-in-10-years-and-the-4-cent-fee-is-doing-heavy-lifting/",
           "publisher": "24/7 Wall St.",
-          "pub_date": "2026-08-05T18:30:05Z"
+          "pub_date": "2026-08-06T18:15:09Z"
         },
         {
-          "title": "Exchange-Traded Funds, US Equities Mixed After Midday",
-          "link": "https://finance.yahoo.com/markets/articles/exchange-traded-funds-us-equities-171710006.html",
-          "publisher": "MT Newswires",
-          "pub_date": "2026-08-05T17:17:10Z"
+          "title": "Kevin Warsh Opens Door to Surprise Fed Move",
+          "link": "https://finance.yahoo.com/economy/policy/articles/kevin-warsh-opens-door-surprise-173401450.html",
+          "publisher": "GuruFocus.com",
+          "pub_date": "2026-08-06T17:34:01Z"
         },
         {
-          "title": "Exchange-Traded Funds Higher, Equity Futures Mixed Pre-Bell Amid Corporate Earnings, Hormuz Reopening Hopes",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/exchange-traded-funds-higher-equity-131015495.html",
-          "publisher": "MT Newswires",
-          "pub_date": "2026-08-05T13:10:15Z"
+          "title": "U.S. Labor Market Just Flashed Surprising Signal",
+          "link": "https://finance.yahoo.com/economy/articles/u-labor-market-just-flashed-172607774.html",
+          "publisher": "GuruFocus.com",
+          "pub_date": "2026-08-06T17:26:07Z"
+        },
+        {
+          "title": "Joby Aviation Climbs 9% on Raised Guidance as Archer Aviation, EHang Sit Out the eVTOL Rally",
+          "link": "https://247wallst.com/investing/2026/08/06/joby-aviation-climbs-9-on-raised-guidance-as-archer-aviation-ehang-sit-out-the-evtol-rally/",
+          "publisher": "24/7 Wall St.",
+          "pub_date": "2026-08-06T17:15:58Z"
         }
       ],
       "institutional_holders": [],
       "expirations": [
-        "2026-08-05",
-        "2026-08-06",
-        "2026-08-07"
+        "2026-08-07",
+        "2026-08-10",
+        "2026-08-11"
       ],
-      "call_vol": 3129766,
-      "put_vol": 1961270,
-      "call_oi": 535205,
-      "put_oi": 793068,
-      "cp_vol_ratio": 1.596,
-      "cp_oi_ratio": 0.675,
-      "total_vol_oi": 3.833,
-      "atm_iv": 0.046,
+      "call_vol": 679743,
+      "put_vol": 714199,
+      "call_oi": 392774,
+      "put_oi": 647186,
+      "cp_vol_ratio": 0.952,
+      "cp_oi_ratio": 0.607,
+      "total_vol_oi": 1.34,
+      "atm_iv": 0.239,
       "unusual": [
         {
           "kind": "PUT",
+          "strike": 710.0,
+          "expiration": "2026-08-07",
+          "volume": 66629,
+          "openInterest": 6610,
+          "vol_oi": 10.08,
+          "iv": 0.2279,
+          "lastPrice": 1.55
+        },
+        {
+          "kind": "PUT",
+          "strike": 715.0,
+          "expiration": "2026-08-07",
+          "volume": 61221,
+          "openInterest": 7662,
+          "vol_oi": 7.99,
+          "iv": 0.1978,
+          "lastPrice": 3.12
+        },
+        {
+          "kind": "CALL",
           "strike": 720.0,
-          "expiration": "2026-08-05",
-          "volume": 413198,
-          "openInterest": 8693,
-          "vol_oi": 47.53,
-          "iv": 0.0806,
-          "lastPrice": 2.64
+          "expiration": "2026-08-07",
+          "volume": 57560,
+          "openInterest": 15364,
+          "vol_oi": 3.75,
+          "iv": 0.2515,
+          "lastPrice": 1.67
         },
         {
           "kind": "CALL",
-          "strike": 722.0,
-          "expiration": "2026-08-05",
-          "volume": 259091,
-          "openInterest": 3104,
-          "vol_oi": 83.47,
-          "iv": 0.0567,
-          "lastPrice": 0.01
+          "strike": 715.0,
+          "expiration": "2026-08-07",
+          "volume": 43820,
+          "openInterest": 8154,
+          "vol_oi": 5.37,
+          "iv": 0.2802,
+          "lastPrice": 3.96
         },
         {
           "kind": "CALL",
-          "strike": 721.0,
-          "expiration": "2026-08-05",
-          "volume": 227098,
-          "openInterest": 3072,
-          "vol_oi": 73.93,
-          "iv": 0.0508,
-          "lastPrice": 0.01
+          "strike": 717.0,
+          "expiration": "2026-08-07",
+          "volume": 38765,
+          "openInterest": 1066,
+          "vol_oi": 36.36,
+          "iv": 0.2666,
+          "lastPrice": 2.94
         },
         {
           "kind": "CALL",
-          "strike": 723.0,
-          "expiration": "2026-08-05",
-          "volume": 215568,
-          "openInterest": 2719,
-          "vol_oi": 79.28,
-          "iv": 0.0664,
-          "lastPrice": 0.03
+          "strike": 716.0,
+          "expiration": "2026-08-07",
+          "volume": 35880,
+          "openInterest": 1112,
+          "vol_oi": 32.27,
+          "iv": 0.2725,
+          "lastPrice": 3.42
+        },
+        {
+          "kind": "PUT",
+          "strike": 700.0,
+          "expiration": "2026-08-07",
+          "volume": 35612,
+          "openInterest": 31758,
+          "vol_oi": 1.12,
+          "iv": 0.2686,
+          "lastPrice": 0.31
         },
         {
           "kind": "CALL",
           "strike": 725.0,
-          "expiration": "2026-08-05",
-          "volume": 183818,
-          "openInterest": 6707,
-          "vol_oi": 27.41,
-          "iv": 0.0947,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "CALL",
-          "strike": 724.0,
-          "expiration": "2026-08-05",
-          "volume": 178633,
-          "openInterest": 3413,
-          "vol_oi": 52.34,
-          "iv": 0.0762,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "CALL",
-          "strike": 727.0,
-          "expiration": "2026-08-05",
-          "volume": 170962,
-          "openInterest": 2577,
-          "vol_oi": 66.34,
-          "iv": 0.1055,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "PUT",
-          "strike": 723.0,
-          "expiration": "2026-08-05",
-          "volume": 144193,
-          "openInterest": 2793,
-          "vol_oi": 51.63,
-          "iv": 0.3059,
-          "lastPrice": 5.44
+          "expiration": "2026-08-07",
+          "volume": 35341,
+          "openInterest": 15457,
+          "vol_oi": 2.29,
+          "iv": 0.2339,
+          "lastPrice": 0.51
         }
       ],
       "unusual_count": 12,
-      "iv_percentile": 73.3,
+      "iv_percentile": 96.8,
       "catalysts": [],
       "next_catalyst_days": null,
       "next_catalyst": null,
-      "score": 40.0,
+      "score": 45.0,
       "signal": "MEDIA",
       "reasons": [
         "12 contratos inusuales (+25)",
         "Vol/OI agregado alto (+10)",
-        "IV en percentil 70+ (+5)"
-      ]
-    },
-    {
-      "ticker": "MSFT",
-      "error": null,
-      "price": 487.46,
-      "name": "Microsoft Corporation",
-      "market_cap": 3619656564736,
-      "cash": 76651003904,
-      "debt": 128812998656,
-      "inst_pct": 0.75446,
-      "short_pct": 0.0124,
-      "target_mean": 562.72644,
-      "target_low": 400.0,
-      "target_high": 870.0,
-      "recommendation_key": "strong_buy",
-      "analyst_count": 53,
-      "upside_pct": 15.4,
-      "buy_target": 487.46,
-      "sell_target": 562.73,
-      "potential_gain_pct": 15.4,
-      "is_signal": true,
-      "analyst_breakdown": {
-        "strongBuy": 14,
-        "buy": 39,
-        "hold": 3,
-        "sell": 0,
-        "strongSell": 0
-      },
-      "news": [
-        {
-          "title": "Why this CIO sees the S&P 500 climbing above $8,000 by year-end",
-          "link": "https://finance.yahoo.com/video/why-cio-sees-p-500-203700974.html",
-          "publisher": "Yahoo Finance Video",
-          "pub_date": "2026-08-05T20:37:00Z"
-        },
-        {
-          "title": "The companies emerging as new leaders in this renewed AI rally",
-          "link": "https://finance.yahoo.com/video/companies-emerging-leaders-renewed-ai-191536658.html",
-          "publisher": "Yahoo Finance Video",
-          "pub_date": "2026-08-05T19:15:36Z"
-        },
-        {
-          "title": "AI CapEx fears: Is big tech overspending?",
-          "link": "https://finance.yahoo.com/video/ai-capex-fears-big-tech-100000522.html",
-          "publisher": "Yahoo Finance Video",
-          "pub_date": "2026-08-05T10:00:00Z"
-        },
-        {
-          "title": "SNDK Stock Dips After-Hours As Sandisk's Q1 FY27 Outlook Misses Expectations Despite Memory-Driven Q4 Profit",
-          "link": "https://stocktwits.com/news-articles/markets/equity/sandisk-s-q1-fy-27-outlook-misses-expectations-despite-memory-driven-q4-profit/cZoIPQNRJej",
-          "publisher": "Stocktwits",
-          "pub_date": "2026-08-05T21:47:39Z"
-        },
-        {
-          "title": "The Toughest Questions AMZN Faced On Its Latest Call",
-          "link": "https://www.trefis.com/articles/610202/the-toughest-questions-amzn-faced-on-its-latest-call-2/2026-08-05",
-          "publisher": "Trefis",
-          "pub_date": "2026-08-05T21:11:20Z"
-        },
-        {
-          "title": "Can CRM Stock Compound Its Way Higher?",
-          "link": "https://www.trefis.com/articles/610187/can-crm-stock-compound-its-way-higher/2026-08-05",
-          "publisher": "Trefis",
-          "pub_date": "2026-08-05T20:59:50Z"
-        }
-      ],
-      "institutional_holders": [
-        {
-          "holder": "Blackrock Inc.",
-          "shares": 593328571,
-          "value": 289223940149.0,
-          "pct": 7.99,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Vanguard Capital Management LLC",
-          "shares": 482558086,
-          "value": 235227760478.0,
-          "pct": 6.5,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "State Street Corporation",
-          "shares": 306708289,
-          "value": 149508019935.0,
-          "pct": 4.13,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "FMR, LLC",
-          "shares": 190211367,
-          "value": 92720431332.0,
-          "pct": 2.56,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Geode Capital Management, LLC",
-          "shares": 188501918,
-          "value": 91887143337.0,
-          "pct": 2.54,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Vanguard Portfolio Management LLC",
-          "shares": 167490848,
-          "value": 81645087334.0,
-          "pct": 2.26,
-          "date_reported": "2026-03-31"
-        }
-      ],
-      "expirations": [
-        "2026-08-05",
-        "2026-08-07",
-        "2026-08-10"
-      ],
-      "call_vol": 254199,
-      "put_vol": 151110,
-      "call_oi": 159430,
-      "put_oi": 145798,
-      "cp_vol_ratio": 1.682,
-      "cp_oi_ratio": 1.093,
-      "total_vol_oi": 1.328,
-      "atm_iv": 0.1046,
-      "unusual": [
-        {
-          "kind": "CALL",
-          "strike": 492.5,
-          "expiration": "2026-08-05",
-          "volume": 50213,
-          "openInterest": 1756,
-          "vol_oi": 28.6,
-          "iv": 0.0879,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "CALL",
-          "strike": 490.0,
-          "expiration": "2026-08-05",
-          "volume": 41189,
-          "openInterest": 1940,
-          "vol_oi": 21.23,
-          "iv": 0.0718,
-          "lastPrice": 0.08
-        },
-        {
-          "kind": "CALL",
-          "strike": 500.0,
-          "expiration": "2026-08-05",
-          "volume": 39061,
-          "openInterest": 9628,
-          "vol_oi": 4.06,
-          "iv": 0.1953,
-          "lastPrice": 0.02
-        },
-        {
-          "kind": "PUT",
-          "strike": 487.5,
-          "expiration": "2026-08-05",
-          "volume": 38894,
-          "openInterest": 1459,
-          "vol_oi": 26.66,
-          "iv": 0.0991,
-          "lastPrice": 0.92
-        },
-        {
-          "kind": "CALL",
-          "strike": 495.0,
-          "expiration": "2026-08-05",
-          "volume": 29363,
-          "openInterest": 3622,
-          "vol_oi": 8.11,
-          "iv": 0.125,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "PUT",
-          "strike": 490.0,
-          "expiration": "2026-08-05",
-          "volume": 28407,
-          "openInterest": 2358,
-          "vol_oi": 12.05,
-          "iv": 0.1592,
-          "lastPrice": 2.4
-        },
-        {
-          "kind": "PUT",
-          "strike": 482.5,
-          "expiration": "2026-08-05",
-          "volume": 13981,
-          "openInterest": 655,
-          "vol_oi": 21.35,
-          "iv": 0.1211,
-          "lastPrice": 0.06
-        },
-        {
-          "kind": "CALL",
-          "strike": 500.0,
-          "expiration": "2026-08-07",
-          "volume": 12201,
-          "openInterest": 6046,
-          "vol_oi": 2.02,
-          "iv": 0.3063,
-          "lastPrice": 1.34
-        }
-      ],
-      "unusual_count": 12,
-      "iv_percentile": 50.0,
-      "catalysts": [
-        {
-          "date": "2026-10-28",
-          "type": "Earnings",
-          "note": "Yahoo",
-          "days": 84
-        }
-      ],
-      "next_catalyst_days": 84,
-      "next_catalyst": "Earnings 2026-10-28",
-      "score": 35.0,
-      "signal": "MEDIA",
-      "reasons": [
-        "12 contratos inusuales (+25)",
-        "Vol/OI agregado alto (+10)"
+        "IV en percentil 90+ (+10)"
       ]
     },
     {
       "ticker": "TSLA",
       "error": null,
-      "price": 321.55,
+      "price": 319.53,
       "name": "Tesla, Inc.",
-      "market_cap": 1269976924160,
+      "market_cap": 1261998964736,
       "cash": 43524001792,
       "debt": 16080000000,
-      "inst_pct": 0.42588,
+      "inst_pct": 0.42613998,
       "short_pct": 0.02,
       "target_mean": 397.87274,
       "target_low": 125.0,
       "target_high": 600.0,
       "recommendation_key": "buy",
       "analyst_count": 40,
-      "upside_pct": 23.7,
-      "buy_target": 321.55,
+      "upside_pct": 24.5,
+      "buy_target": 319.53,
       "sell_target": 397.87,
-      "potential_gain_pct": 23.7,
+      "potential_gain_pct": 24.5,
       "is_signal": true,
       "analyst_breakdown": {
         "strongBuy": 6,
@@ -2469,442 +1973,618 @@
       },
       "news": [
         {
-          "title": "SpaceX stock hits new all-time low as AI capex jumps in Q2",
-          "link": "https://finance.yahoo.com/technology/article/spacex-stock-hits-new-all-time-low-as-ai-capex-jumps-in-q2-132323178.html",
-          "publisher": "Yahoo Finance",
-          "pub_date": "2026-08-03T13:23:23Z"
+          "title": "Why Rivian's R2 EV could be its new star vehicle",
+          "link": "https://finance.yahoo.com/video/why-rivians-r2-ev-could-213212115.html",
+          "publisher": "Yahoo Finance Video",
+          "pub_date": "2026-08-06T21:32:12Z"
         },
         {
-          "title": "Jim Cramer: SpaceX Could Reach $1 Trillion in Revenue by 2030, but “Short Term, Forget About It”",
-          "link": "https://247wallst.com/investing/2026/08/05/jim-cramer-spacex-could-reach-1-trillion-in-revenue-by-2030-but-short-term-forget-about-it/",
-          "publisher": "24/7 Wall St.",
-          "pub_date": "2026-08-05T22:09:58Z"
-        },
-        {
-          "title": "EVgo, Inc. Q2 2026 Earnings Call Summary",
-          "link": "https://app.moby.co/home/research/tools/earningsCalendar/earnings-evgo-inc-q2-2026-earnings-call-summary?utm_source=yahoo_finance&utm_medium=rss",
-          "publisher": "Moby",
-          "pub_date": "2026-08-05T21:55:32Z"
-        },
-        {
-          "title": "Rivian Could Be a Surprise Robotaxi Winner After Scoring a $1.25 Billion Partnership With Uber",
-          "link": "https://www.fool.com/investing/2026/08/05/rivian-could-be-a-surprise-robotaxi-winner-after-s/",
+          "title": "Prediction: Tesla's Share Price Dip Will Prove an Excellent Buying Opportunity",
+          "link": "https://www.fool.com/investing/2026/08/06/prediction-teslas-share-price-dip-will-prove-an-ex/",
           "publisher": "Motley Fool",
-          "pub_date": "2026-08-05T21:20:00Z"
+          "pub_date": "2026-08-06T22:20:00Z"
         },
         {
-          "title": "SpaceX’s $1T Goal and 3 More Shockers From Musk on the Earnings Call",
-          "link": "https://www.barrons.com/articles/spacex-stock-elon-musk-earnings-ai-89d68b40?siteid=yhoof2&yptr=yahoo",
-          "publisher": "Barrons.com",
-          "pub_date": "2026-08-05T20:26:00Z"
+          "title": "Huge News For Tesla Stock Fans",
+          "link": "https://finance.yahoo.com/technology/ai/articles/huge-news-tesla-stock-fans-210128900.html",
+          "publisher": "GuruFocus.com",
+          "pub_date": "2026-08-06T21:01:28Z"
         },
         {
-          "title": "Tesla and SpaceX Are Secretly Merging—Not on Paper, But in AI Power",
-          "link": "https://www.barrons.com/articles/tesla-stock-price-china-sales-spacex-ab8a54c0?siteid=yhoof2&yptr=yahoo",
+          "title": "The Debates That Matter For TSLA Stock",
+          "link": "https://www.trefis.com/articles/610361/the-debates-that-matter-for-tsla-stock/2026-08-06",
+          "publisher": "Trefis",
+          "pub_date": "2026-08-06T20:55:08Z"
+        },
+        {
+          "title": "Tesla Stock Drops as It Seeks to Tap Massive Self-Driving Market",
+          "link": "https://www.barrons.com/articles/tesla-stock-price-today-self-driving-0eba060b?siteid=yhoof2&yptr=yahoo",
           "publisher": "Barrons.com",
-          "pub_date": "2026-08-05T20:22:00Z"
+          "pub_date": "2026-08-06T20:30:00Z"
+        },
+        {
+          "title": "SpaceX And Tesla Announce Terafab Location, $16.8 Billion Investment",
+          "link": "https://www.investors.com/news/tesla-spacex-terafab-elon-musk-megapack-robotaxi-ai-artificial-intelligence/?src=A00220&yptr=yahoo",
+          "publisher": "Investor's Business Daily",
+          "pub_date": "2026-08-06T20:04:23Z"
         }
       ],
       "institutional_holders": [
         {
           "holder": "Blackrock Inc.",
           "shares": 208095009,
-          "value": 66912947603.0,
+          "value": 66492597971.0,
           "pct": 5.27,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Vanguard Capital Management LLC",
           "shares": 182850783,
-          "value": 58795667041.0,
+          "value": 58426310468.0,
           "pct": 4.63,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "State Street Corporation",
           "shares": 114695458,
-          "value": 36880323119.0,
+          "value": 36648639554.0,
           "pct": 2.9,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Geode Capital Management, LLC",
           "shares": 68003110,
-          "value": 21866399190.0,
+          "value": 21729033655.0,
           "pct": 1.72,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Invesco Ltd.",
           "shares": 54881149,
-          "value": 17647032791.0,
+          "value": 17536173472.0,
           "pct": 1.39,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Vanguard Portfolio Management LLC",
           "shares": 49252925,
-          "value": 15837277432.0,
+          "value": 15737787065.0,
           "pct": 1.25,
           "date_reported": "2026-03-31"
         }
       ],
       "expirations": [
-        "2026-08-05",
         "2026-08-07",
-        "2026-08-10"
+        "2026-08-10",
+        "2026-08-12"
       ],
-      "call_vol": 980512,
-      "put_vol": 765328,
-      "call_oi": 373997,
-      "put_oi": 272674,
-      "cp_vol_ratio": 1.281,
-      "cp_oi_ratio": 1.372,
-      "total_vol_oi": 2.7,
-      "atm_iv": 0.0698,
+      "call_vol": 545409,
+      "put_vol": 496882,
+      "call_oi": 306926,
+      "put_oi": 244283,
+      "cp_vol_ratio": 1.098,
+      "cp_oi_ratio": 1.256,
+      "total_vol_oi": 1.891,
+      "atm_iv": 0.4461,
       "unusual": [
         {
-          "kind": "PUT",
+          "kind": "CALL",
           "strike": 320.0,
-          "expiration": "2026-08-05",
-          "volume": 182770,
-          "openInterest": 6123,
-          "vol_oi": 29.85,
-          "iv": 0.0567,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "CALL",
-          "strike": 325.0,
-          "expiration": "2026-08-05",
-          "volume": 182553,
-          "openInterest": 6753,
-          "vol_oi": 27.03,
-          "iv": 0.0957,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "PUT",
-          "strike": 322.5,
-          "expiration": "2026-08-05",
-          "volume": 147134,
-          "openInterest": 4021,
-          "vol_oi": 36.59,
-          "iv": 0.0908,
-          "lastPrice": 1.06
-        },
-        {
-          "kind": "CALL",
-          "strike": 322.5,
-          "expiration": "2026-08-05",
-          "volume": 108852,
-          "openInterest": 5520,
-          "vol_oi": 19.72,
-          "iv": 0.0488,
-          "lastPrice": 0.04
-        },
-        {
-          "kind": "CALL",
-          "strike": 330.0,
-          "expiration": "2026-08-05",
-          "volume": 101775,
-          "openInterest": 7447,
-          "vol_oi": 13.67,
-          "iv": 0.207,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "CALL",
-          "strike": 327.5,
-          "expiration": "2026-08-05",
-          "volume": 89322,
-          "openInterest": 3936,
-          "vol_oi": 22.69,
-          "iv": 0.1524,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "PUT",
-          "strike": 325.0,
-          "expiration": "2026-08-05",
-          "volume": 61140,
-          "openInterest": 3450,
-          "vol_oi": 17.72,
-          "iv": 0.1943,
-          "lastPrice": 3.67
+          "expiration": "2026-08-07",
+          "volume": 80851,
+          "openInterest": 8413,
+          "vol_oi": 9.61,
+          "iv": 0.4565,
+          "lastPrice": 2.79
         },
         {
           "kind": "PUT",
           "strike": 317.5,
-          "expiration": "2026-08-05",
-          "volume": 54070,
-          "openInterest": 1955,
-          "vol_oi": 27.66,
-          "iv": 0.1113,
-          "lastPrice": 0.01
+          "expiration": "2026-08-07",
+          "volume": 73805,
+          "openInterest": 1316,
+          "vol_oi": 56.08,
+          "iv": 0.4365,
+          "lastPrice": 1.98
+        },
+        {
+          "kind": "PUT",
+          "strike": 320.0,
+          "expiration": "2026-08-07",
+          "volume": 72972,
+          "openInterest": 9624,
+          "vol_oi": 7.58,
+          "iv": 0.4356,
+          "lastPrice": 3.1
+        },
+        {
+          "kind": "CALL",
+          "strike": 325.0,
+          "expiration": "2026-08-07",
+          "volume": 67019,
+          "openInterest": 14682,
+          "vol_oi": 4.56,
+          "iv": 0.4717,
+          "lastPrice": 1.13
+        },
+        {
+          "kind": "PUT",
+          "strike": 315.0,
+          "expiration": "2026-08-07",
+          "volume": 64932,
+          "openInterest": 4440,
+          "vol_oi": 14.62,
+          "iv": 0.4395,
+          "lastPrice": 1.17
+        },
+        {
+          "kind": "CALL",
+          "strike": 322.5,
+          "expiration": "2026-08-07",
+          "volume": 53233,
+          "openInterest": 6615,
+          "vol_oi": 8.05,
+          "iv": 0.4609,
+          "lastPrice": 1.8
+        },
+        {
+          "kind": "CALL",
+          "strike": 330.0,
+          "expiration": "2026-08-07",
+          "volume": 47288,
+          "openInterest": 21871,
+          "vol_oi": 2.16,
+          "iv": 0.501,
+          "lastPrice": 0.45
+        },
+        {
+          "kind": "PUT",
+          "strike": 310.0,
+          "expiration": "2026-08-07",
+          "volume": 38326,
+          "openInterest": 5541,
+          "vol_oi": 6.92,
+          "iv": 0.4507,
+          "lastPrice": 0.34
         }
       ],
       "unusual_count": 12,
-      "iv_percentile": 40.0,
+      "iv_percentile": 87.1,
       "catalysts": [
         {
           "date": "2026-10-21",
           "type": "Earnings",
           "note": "Yahoo",
-          "days": 77
+          "days": 75
         }
       ],
-      "next_catalyst_days": 77,
+      "next_catalyst_days": 75,
       "next_catalyst": "Earnings 2026-10-21",
-      "score": 35.0,
+      "score": 40.0,
       "signal": "MEDIA",
       "reasons": [
         "12 contratos inusuales (+25)",
-        "Vol/OI agregado alto (+10)"
+        "Vol/OI agregado alto (+10)",
+        "IV en percentil 70+ (+5)"
       ]
     },
     {
-      "ticker": "AMD",
+      "ticker": "MELI",
       "error": null,
-      "price": 482.05,
-      "name": "Advanced Micro Devices, Inc.",
-      "market_cap": 786030985216,
-      "cash": 12346999808,
-      "debt": 3871000064,
-      "inst_pct": 0.71836,
-      "short_pct": 0.024500001,
-      "target_mean": 579.1064,
-      "target_low": 320.0,
-      "target_high": 1250.0,
-      "recommendation_key": "strong_buy",
-      "analyst_count": 47,
-      "upside_pct": 20.1,
-      "buy_target": 482.05,
-      "sell_target": 579.11,
-      "potential_gain_pct": 20.1,
+      "price": 1830.0,
+      "name": "MercadoLibre, Inc.",
+      "market_cap": 92775849984,
+      "cash": 5664000000,
+      "debt": 12376000512,
+      "inst_pct": 0.81914,
+      "short_pct": 0.0191,
+      "target_mean": 2214.875,
+      "target_low": 1750.0,
+      "target_high": 2800.0,
+      "recommendation_key": "buy",
+      "analyst_count": 24,
+      "upside_pct": 21.0,
+      "buy_target": 1830.0,
+      "sell_target": 2214.88,
+      "potential_gain_pct": 21.0,
       "is_signal": true,
       "analyst_breakdown": {
         "strongBuy": 5,
-        "buy": 36,
-        "hold": 10,
+        "buy": 15,
+        "hold": 4,
         "sell": 0,
         "strongSell": 0
       },
       "news": [
         {
-          "title": "The companies defying macro uncertainty and raising guidance: AlphaCheck",
-          "link": "https://finance.yahoo.com/markets/article/the-companies-defying-macro-uncertainty-and-raising-guidance-alphacheck-140605238.html",
-          "publisher": "Yahoo Finance",
-          "pub_date": "2026-08-05T14:06:05Z"
+          "title": "Michael Burry Re-Enters ORCL Puts And Shorts NBIS — Adds To Select Long Holdings",
+          "link": "https://stocktwits.com/news-articles/markets/equity/michael-burry-re-enters-orcl-puts-and-shorts-nbis/cZoBaVzRJJq",
+          "publisher": "Stocktwits",
+          "pub_date": "2026-08-06T21:52:55Z"
         },
         {
-          "title": "Dow Jones Futures: Nvidia Lifts Dow, But Google, SpaceX Skid; Sandisk, Western Digital Lead Earnings Losers Late",
-          "link": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-nvidia-google-spacex-skid-sandisk-western-digital-earnings/?src=A00220&yptr=yahoo",
-          "publisher": "Investor's Business Daily",
-          "pub_date": "2026-08-05T22:24:43Z"
+          "title": "MercadoLibre Stock Slides 7.3% as Record Sales Fail to Protect Profit",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mercadolibre-stock-slides-7-3-200507608.html",
+          "publisher": "GuruFocus.com",
+          "pub_date": "2026-08-06T20:05:07Z"
         },
         {
-          "title": "AI's bottomless pit problem: Investors are scrutinizing costs",
-          "link": "https://www.axios.com/2026/08/05/ai-spacex-amd-elon-musk#utm_source=yahoo_finance&utm_medium=partner&utm_campaign=subs-partner-yahoo-finance-AI",
-          "publisher": "Axios",
-          "pub_date": "2026-08-05T21:57:25Z"
+          "title": "Netflix and MercadoLibre Are Underperforming the S&P 500. Here's the 1 Stock I'd Buy in August.",
+          "link": "https://www.fool.com/investing/2026/08/06/netflix-and-mercadolibre-are-underperforming-the-s/",
+          "publisher": "Motley Fool",
+          "pub_date": "2026-08-06T17:37:00Z"
         },
         {
-          "title": "Tech, Media & Telecom Roundup: Market Talk",
-          "link": "https://www.wsj.com/business/tech-media-telecom-roundup-market-talk-60e57249?siteid=yhoof2&yptr=yahoo",
-          "publisher": "The Wall Street Journal",
-          "pub_date": "2026-08-05T21:08:00Z"
+          "title": "Why MercadoLibre Ecosystem Is Becoming Harder to Beat",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-mercadolibre-ecosystem-becoming-harder-152900728.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-08-06T15:29:00Z"
         },
         {
-          "title": "SpaceX, Alphabet, Nvidia, Micron, AMD, Uber, CVS, Lilly, and More Stocks That Explain Today’s Market",
-          "link": "https://www.barrons.com/articles/stock-movers-c5965517?siteid=yhoof2&yptr=yahoo",
-          "publisher": "Barrons.com",
-          "pub_date": "2026-08-05T21:04:00Z"
+          "title": "MercadoLibre (MELI) Crosses $10 Billion In Quarterly Revenue For The First Time",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mercadolibre-meli-crosses-10-billion-151325922.html",
+          "publisher": "Simply Wall St.",
+          "pub_date": "2026-08-06T15:13:25Z"
         },
         {
-          "title": "Stocks to Watch Recap: SpaceX, AMD, Disney",
-          "link": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-08-05-2026/card/stocks-to-watch-spacex-amd-disney-w3GBHAZkVcr5PMkm8tTD?siteid=yhoof2&yptr=yahoo",
-          "publisher": "The Wall Street Journal",
-          "pub_date": "2026-08-05T20:56:58Z"
+          "title": "MercadoLibre Q2 Earnings Call Focuses on Engagement Over Margin",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mercadolibre-q2-earnings-call-focuses-140000316.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-08-06T14:00:00Z"
         }
       ],
       "institutional_holders": [
         {
-          "holder": "Blackrock Inc.",
-          "shares": 145574284,
-          "value": 70174081825.0,
-          "pct": 8.93,
+          "holder": "BAILLIE GIFFORD & CO",
+          "shares": 3233259,
+          "value": 5916863970.0,
+          "pct": 6.38,
           "date_reported": "2026-03-31"
         },
         {
-          "holder": "Vanguard Capital Management LLC",
-          "shares": 105940266,
-          "value": 51068503932.0,
-          "pct": 6.5,
+          "holder": "Capital Research Global Investors",
+          "shares": 2717172,
+          "value": 4972424760.0,
+          "pct": 5.36,
           "date_reported": "2026-03-31"
         },
         {
-          "holder": "State Street Corporation",
-          "shares": 74771220,
-          "value": 36043465688.0,
-          "pct": 4.59,
+          "holder": "Capital World Investors",
+          "shares": 2194481,
+          "value": 4015900230.0,
+          "pct": 4.33,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Capital International Investors",
+          "shares": 1737559,
+          "value": 3179732970.0,
+          "pct": 3.43,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Morgan Stanley",
+          "shares": 1585256,
+          "value": 2901018480.0,
+          "pct": 3.13,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Invesco Ltd.",
-          "shares": 50443198,
-          "value": 24316142980.0,
-          "pct": 3.09,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Geode Capital Management, LLC",
-          "shares": 39791086,
-          "value": 19181292520.0,
-          "pct": 2.44,
-          "date_reported": "2026-03-31"
-        },
-        {
-          "holder": "Vanguard Portfolio Management LLC",
-          "shares": 37603675,
-          "value": 18126851074.0,
-          "pct": 2.31,
+          "shares": 1464598,
+          "value": 2680214340.0,
+          "pct": 2.89,
           "date_reported": "2026-03-31"
         }
       ],
       "expirations": [
-        "2026-08-05",
         "2026-08-07",
-        "2026-08-10"
+        "2026-08-14",
+        "2026-08-21"
       ],
-      "call_vol": 390323,
-      "put_vol": 298601,
-      "call_oi": 229932,
-      "put_oi": 191836,
-      "cp_vol_ratio": 1.307,
-      "cp_oi_ratio": 1.199,
-      "total_vol_oi": 1.633,
-      "atm_iv": 0.1688,
+      "call_vol": 4573,
+      "put_vol": 4365,
+      "call_oi": 9776,
+      "put_oi": 9119,
+      "cp_vol_ratio": 1.048,
+      "cp_oi_ratio": 1.072,
+      "total_vol_oi": 0.473,
+      "atm_iv": 0.5888,
       "unusual": [
         {
           "kind": "CALL",
-          "strike": 500.0,
-          "expiration": "2026-08-05",
-          "volume": 54564,
-          "openInterest": 2511,
-          "vol_oi": 21.73,
-          "iv": 0.2656,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "CALL",
-          "strike": 490.0,
-          "expiration": "2026-08-05",
-          "volume": 24885,
-          "openInterest": 425,
-          "vol_oi": 58.55,
-          "iv": 0.167,
-          "lastPrice": 0.03
-        },
-        {
-          "kind": "PUT",
-          "strike": 480.0,
-          "expiration": "2026-08-05",
-          "volume": 22076,
-          "openInterest": 2386,
-          "vol_oi": 9.25,
-          "iv": 0.1362,
-          "lastPrice": 0.47
-        },
-        {
-          "kind": "PUT",
-          "strike": 485.0,
-          "expiration": "2026-08-05",
-          "volume": 21395,
-          "openInterest": 989,
-          "vol_oi": 21.63,
-          "iv": 0.3757,
-          "lastPrice": 4.0
-        },
-        {
-          "kind": "CALL",
-          "strike": 495.0,
-          "expiration": "2026-08-05",
-          "volume": 17157,
-          "openInterest": 325,
-          "vol_oi": 52.79,
-          "iv": 0.2188,
-          "lastPrice": 0.01
-        },
-        {
-          "kind": "CALL",
-          "strike": 485.0,
-          "expiration": "2026-08-05",
-          "volume": 14953,
-          "openInterest": 1399,
-          "vol_oi": 10.69,
-          "iv": 0.1426,
-          "lastPrice": 0.47
-        },
-        {
-          "kind": "CALL",
-          "strike": 500.0,
+          "strike": 1900.0,
           "expiration": "2026-08-07",
-          "volume": 14223,
-          "openInterest": 3447,
-          "vol_oi": 4.13,
-          "iv": 0.7257,
-          "lastPrice": 5.8
-        },
-        {
-          "kind": "PUT",
-          "strike": 470.0,
-          "expiration": "2026-08-05",
-          "volume": 12748,
-          "openInterest": 2141,
-          "vol_oi": 5.95,
-          "iv": 0.2109,
-          "lastPrice": 0.01
+          "volume": 350,
+          "openInterest": 57,
+          "vol_oi": 6.14,
+          "iv": 0.583,
+          "lastPrice": 0.3
         }
       ],
-      "unusual_count": 12,
-      "iv_percentile": 26.7,
+      "unusual_count": 1,
+      "iv_percentile": 90.3,
       "catalysts": [
         {
-          "date": "2026-11-03",
+          "date": "2026-11-04",
           "type": "Earnings",
           "note": "Yahoo",
-          "days": 90
+          "days": 89
         }
       ],
-      "next_catalyst_days": 90,
-      "next_catalyst": "Earnings 2026-11-03",
-      "score": 35.0,
-      "signal": "MEDIA",
+      "next_catalyst_days": 89,
+      "next_catalyst": "Earnings 2026-11-04",
+      "score": 27.0,
+      "signal": "BAJA",
       "reasons": [
-        "12 contratos inusuales (+25)",
-        "Vol/OI agregado alto (+10)"
+        "1 contrato(s) inusual(es) (+12)",
+        "Vol/OI agregado medio (+5)",
+        "IV en percentil 90+ (+10)"
+      ]
+    },
+    {
+      "ticker": "SPXL",
+      "error": null,
+      "price": 291.2,
+      "name": "Direxion Daily S&P 500 Bull 3X ",
+      "market_cap": null,
+      "cash": null,
+      "debt": null,
+      "inst_pct": null,
+      "short_pct": null,
+      "target_mean": null,
+      "target_low": null,
+      "target_high": null,
+      "recommendation_key": null,
+      "analyst_count": null,
+      "buy_target": 291.2,
+      "sell_target": null,
+      "potential_gain_pct": null,
+      "is_signal": false,
+      "analyst_breakdown": null,
+      "news": [
+        {
+          "title": "Why This Leveraged S&P 500 ETF Can Lose Money Even When Stocks Rise",
+          "link": "https://247wallst.com/investing/etf/2026/07/26/why-this-leveraged-sp-500-etf-can-lose-money-even-when-stocks-rise/",
+          "publisher": "24/7 Wall St.",
+          "pub_date": "2026-07-26T22:55:23Z"
+        },
+        {
+          "title": "Leveraged ETFs in 2026: How They Work, the Best Funds, and the Risks You Can't Ignore",
+          "link": "http://www.etf.com/sections/news/leveraged-etfs-2026-how-they-work-best-funds-and-risks-you-cant-ignore?utm_source=yahoo-finance&utm_medium=rss&utm_campaign=yahoo-finance-rss",
+          "publisher": "etf.com",
+          "pub_date": "2026-07-15T21:42:58Z"
+        },
+        {
+          "title": "The $95-a-Year Fee Nobody Notices: Why SPXL Underperforms Its Own Math",
+          "link": "https://247wallst.com/investing/2026/07/01/the-95-a-year-fee-nobody-notices-why-spxl-underperforms-its-own-math/",
+          "publisher": "24/7 Wall St.",
+          "pub_date": "2026-07-01T20:36:26Z"
+        },
+        {
+          "title": "Ceasefire Hopes Lift Risk Appetite: Leveraged ETFs for Tactical Play",
+          "link": "https://finance.yahoo.com/markets/options/articles/ceasefire-hopes-lift-risk-appetite-142600303.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-06-12T14:26:00Z"
+        },
+        {
+          "title": "Guide to the S&P 500 ETF Investing",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/guide-p-500-etf-investing-160000203.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-06-09T16:00:00Z"
+        },
+        {
+          "title": "Leveraged ETFs for Investors Seeking Bold Tactical Opportunities",
+          "link": "https://finance.yahoo.com/markets/options/articles/leveraged-etfs-investors-seeking-bold-140200305.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-05-29T14:02:00Z"
+        }
+      ],
+      "institutional_holders": [],
+      "expirations": [
+        "2026-08-07",
+        "2026-08-14",
+        "2026-08-21"
+      ],
+      "call_vol": 1466,
+      "put_vol": 1143,
+      "call_oi": 4207,
+      "put_oi": 3777,
+      "cp_vol_ratio": 1.283,
+      "cp_oi_ratio": 1.114,
+      "total_vol_oi": 0.327,
+      "atm_iv": 0.5372,
+      "unusual": [
+        {
+          "kind": "CALL",
+          "strike": 295.0,
+          "expiration": "2026-08-07",
+          "volume": 552,
+          "openInterest": 124,
+          "vol_oi": 4.45,
+          "iv": 0.4478,
+          "lastPrice": 1.15
+        }
+      ],
+      "unusual_count": 1,
+      "iv_percentile": 93.5,
+      "catalysts": [],
+      "next_catalyst_days": null,
+      "next_catalyst": null,
+      "score": 27.0,
+      "signal": "BAJA",
+      "reasons": [
+        "1 contrato(s) inusual(es) (+12)",
+        "Vol/OI agregado medio (+5)",
+        "IV en percentil 90+ (+10)"
+      ]
+    },
+    {
+      "ticker": "CADL",
+      "error": null,
+      "price": 10.58,
+      "name": "Candel Therapeutics, Inc.",
+      "market_cap": 775199104,
+      "cash": 194834000,
+      "debt": 49271000,
+      "inst_pct": 0.60278,
+      "short_pct": 0.23040001,
+      "target_mean": 20.5,
+      "target_low": 9.0,
+      "target_high": 29.0,
+      "recommendation_key": "strong_buy",
+      "analyst_count": 8,
+      "upside_pct": 93.8,
+      "buy_target": 10.58,
+      "sell_target": 20.5,
+      "potential_gain_pct": 93.8,
+      "is_signal": true,
+      "analyst_breakdown": {
+        "strongBuy": 0,
+        "buy": 8,
+        "hold": 1,
+        "sell": 0,
+        "strongSell": 0
+      },
+      "news": [
+        {
+          "title": "CADL Stock Heads For Biggest Monthly Gains Since December 2024 – Retail Says ‘Our SLS Days Are Coming’",
+          "link": "https://stocktwits.com/news-articles/markets/equity/cadl-stock-heads-for-best-month-in-18-months-new-trial-initiation-lung-cancer/cZ1QNfaR709",
+          "publisher": "Stocktwits",
+          "pub_date": "2026-06-30T16:27:42Z"
+        },
+        {
+          "title": "Candel Therapeutics Designates Mark Sims as CCO",
+          "link": "https://finance.yahoo.com/healthcare/articles/candel-therapeutics-designates-mark-sims-195358874.html",
+          "publisher": "Exec Edge",
+          "pub_date": "2026-06-25T19:53:58Z"
+        },
+        {
+          "title": "CADL Stock Heads For Best Week In A Month – Here’s Why Retail Is Bullish",
+          "link": "https://stocktwits.com/news-articles/markets/equity/why-cadl-stock-is-rising-today-candel-therapeutics-phase-3-results/cZ0FiCBReCR",
+          "publisher": "Stocktwits",
+          "pub_date": "2026-06-05T10:23:40Z"
+        },
+        {
+          "title": "Candel Therapeutics Eyes Year-End BLA After Strong Prostate Cancer Data",
+          "link": "https://www.marketbeat.com/instant-alerts/candel-therapeutics-eyes-year-end-bla-after-strong-prostate-cancer-data-2026-05-20/?utm_source=yahoofinance&utm_medium=yahoofinance",
+          "publisher": "MarketBeat",
+          "pub_date": "2026-05-20T15:13:00Z"
+        },
+        {
+          "title": "Wall Street Analysts Believe Candel Therapeutics (CADL) Could Rally 148.48%: Here's is How to Trade",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/wall-street-analysts-believe-candel-135503572.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-05-19T13:55:03Z"
+        },
+        {
+          "title": "Candel Therapeutics teams up with EVERSANA to prep for prostate cancer drug launch",
+          "link": "https://www.proactiveinvestors.com/companies/news/1091417/candel-therapeutics-teams-up-with-eversana-to-prep-for-prostate-cancer-drug-launch-1091417.html",
+          "publisher": "Proactive",
+          "pub_date": "2026-04-29T12:36:00Z"
+        }
+      ],
+      "institutional_holders": [
+        {
+          "holder": "FMR, LLC",
+          "shares": 10987017,
+          "value": 116242639.0,
+          "pct": 15.0,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "RTW Investments LP",
+          "shares": 6422018,
+          "value": 67944949.0,
+          "pct": 8.76,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Acorn Capital Advisors, LLC                          ",
+          "shares": 3497948,
+          "value": 37008289.0,
+          "pct": 4.77,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Blackrock Inc.",
+          "shares": 3109042,
+          "value": 32893664.0,
+          "pct": 4.24,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Saturn V Capital Management LP",
+          "shares": 2896588,
+          "value": 30645900.0,
+          "pct": 3.95,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Portolan Capital Management, LLC",
+          "shares": 2894325,
+          "value": 30621958.0,
+          "pct": 3.95,
+          "date_reported": "2026-03-31"
+        }
+      ],
+      "expirations": [
+        "2026-08-21",
+        "2026-09-18",
+        "2026-10-16"
+      ],
+      "call_vol": 621,
+      "put_vol": 523,
+      "call_oi": 3753,
+      "put_oi": 2208,
+      "cp_vol_ratio": 1.187,
+      "cp_oi_ratio": 1.7,
+      "total_vol_oi": 0.192,
+      "atm_iv": 0.9092,
+      "unusual": [],
+      "unusual_count": 0,
+      "iv_percentile": 12.9,
+      "catalysts": [
+        {
+          "date": "2026-08-13",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 6
+        },
+        {
+          "date": "2026-09-30",
+          "type": "Ensayo Fase3",
+          "note": "CAN-2409 topline (EJEMPLO",
+          "days": 54
+        }
+      ],
+      "next_catalyst_days": 6,
+      "next_catalyst": "Earnings 2026-08-13",
+      "score": 26.0,
+      "signal": "BAJA",
+      "reasons": [
+        "Catalizador en 6d (+26)"
       ]
     },
     {
       "ticker": "DYN",
       "error": null,
-      "price": 26.17,
+      "price": 25.88,
       "name": "Dyne Therapeutics, Inc.",
-      "market_cap": 4887154176,
+      "market_cap": 4832997376,
       "cash": 898475008,
       "debt": 233350000,
-      "inst_pct": 1.02654,
+      "inst_pct": 1.0268,
       "short_pct": 0.172,
       "target_mean": 39.4,
       "target_low": 17.0,
       "target_high": 50.0,
       "recommendation_key": "strong_buy",
       "analyst_count": 15,
-      "upside_pct": 50.6,
-      "buy_target": 26.17,
+      "upside_pct": 52.2,
+      "buy_target": 25.88,
       "sell_target": 39.4,
-      "potential_gain_pct": 50.6,
+      "potential_gain_pct": 52.2,
       "is_signal": true,
       "analyst_breakdown": {
         "strongBuy": 3,
@@ -2955,61 +2635,62 @@
         {
           "holder": "T. Rowe Price Investment Management, Inc.",
           "shares": 30785801,
-          "value": 805664414.0,
+          "value": 796736504.0,
           "pct": 16.49,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Janus Henderson Group PLC",
           "shares": 13647376,
-          "value": 357151830.0,
+          "value": 353194079.0,
           "pct": 7.31,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Blackrock Inc.",
           "shares": 11699870,
-          "value": 306185598.0,
+          "value": 302792625.0,
           "pct": 6.27,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Atlas Venture Life Science Advisors, LLC                          ",
           "shares": 9130465,
-          "value": 238944269.0,
+          "value": 236296426.0,
           "pct": 4.89,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "FMR, LLC",
           "shares": 8908980,
-          "value": 233148007.0,
+          "value": 230564394.0,
           "pct": 4.77,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Orbis Allan Gray Ltd",
           "shares": 6762231,
-          "value": 176967585.0,
+          "value": 175006532.0,
           "pct": 3.62,
           "date_reported": "2026-03-31"
         }
       ],
       "expirations": [
         "2026-08-21",
-        "2026-09-18"
+        "2026-09-18",
+        "2026-10-16"
       ],
-      "call_vol": 239,
-      "put_vol": 24,
-      "call_oi": 532,
-      "put_oi": 2338,
-      "cp_vol_ratio": 9.958,
-      "cp_oi_ratio": 0.228,
-      "total_vol_oi": 0.092,
-      "atm_iv": 1.377,
+      "call_vol": 248,
+      "put_vol": 35,
+      "call_oi": 583,
+      "put_oi": 2364,
+      "cp_vol_ratio": 7.086,
+      "cp_oi_ratio": 0.247,
+      "total_vol_oi": 0.096,
+      "atm_iv": 1.5581,
       "unusual": [],
       "unusual_count": 0,
-      "iv_percentile": 53.3,
+      "iv_percentile": 64.5,
       "catalysts": [],
       "next_catalyst_days": null,
       "next_catalyst": null,
@@ -3020,24 +2701,165 @@
       ]
     },
     {
+      "ticker": "AUPH",
+      "error": null,
+      "price": 16.13,
+      "name": "Aurinia Pharmaceuticals Inc",
+      "market_cap": 2074344832,
+      "cash": 378524000,
+      "debt": 68640000,
+      "inst_pct": 0.608,
+      "short_pct": 0.0837,
+      "target_mean": 17.0,
+      "target_low": 15.0,
+      "target_high": 21.0,
+      "recommendation_key": "none",
+      "analyst_count": 7,
+      "upside_pct": 5.4,
+      "buy_target": 16.13,
+      "sell_target": 17.0,
+      "potential_gain_pct": 5.4,
+      "is_signal": true,
+      "analyst_breakdown": {
+        "strongBuy": 0,
+        "buy": 4,
+        "hold": 3,
+        "sell": 0,
+        "strongSell": 0
+      },
+      "news": [
+        {
+          "title": "Aurinia Pharmaceuticals (AUPH) Surpasses Q2 Earnings Estimates",
+          "link": "https://finance.yahoo.com/healthcare/articles/aurinia-pharmaceuticals-auph-surpasses-q2-135008853.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-08-06T13:50:08Z"
+        },
+        {
+          "title": "NewAmsterdam Pharma Company N.V. (NAMS) Reports Q2 Loss, Lags Revenue Estimates",
+          "link": "https://finance.yahoo.com/healthcare/articles/newamsterdam-pharma-company-n-v-135503118.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-08-05T13:55:03Z"
+        },
+        {
+          "title": "Karyopharm Therapeutics (KPTI) Soars 5.3%: Is Further Upside Left in the Stock?",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/karyopharm-therapeutics-kpti-soars-5-114000287.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-07-22T11:40:00Z"
+        },
+        {
+          "title": "Aurinia (AUPH) Upgraded to Strong Buy: Here's Why",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/aurinia-auph-upgraded-strong-buy-160003509.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-07-02T16:00:03Z"
+        },
+        {
+          "title": "Is Aurinia Pharmaceuticals Inc. (AUPH) A Good Stock To Buy Now?",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/aurinia-pharmaceuticals-inc-auph-good-200723839.html",
+          "publisher": "Insider Monkey",
+          "pub_date": "2026-06-29T20:07:23Z"
+        },
+        {
+          "title": "Zacks Industry Outlook Indivior, Aurinia, Ironwood, Altimmune and Marker",
+          "link": "https://finance.yahoo.com/healthcare/articles/zacks-industry-outlook-indivior-aurinia-085900669.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-06-26T08:59:00Z"
+        }
+      ],
+      "institutional_holders": [
+        {
+          "holder": "Tang Capital Management, LLC",
+          "shares": 12229500,
+          "value": 197261824.0,
+          "pct": 9.51,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Blackrock Inc.",
+          "shares": 7845521,
+          "value": 126548247.0,
+          "pct": 6.1,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "NEA Management Company, LLC",
+          "shares": 3969834,
+          "value": 64033419.0,
+          "pct": 3.09,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Two Sigma Investments, LP",
+          "shares": 3428705,
+          "value": 55305008.0,
+          "pct": 2.67,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Arrowstreet Capital, Limited Partnership",
+          "shares": 3284368,
+          "value": 52976853.0,
+          "pct": 2.55,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "State Street Corporation",
+          "shares": 2527099,
+          "value": 40762104.0,
+          "pct": 1.97,
+          "date_reported": "2026-03-31"
+        }
+      ],
+      "expirations": [
+        "2026-08-21",
+        "2026-09-18",
+        "2026-10-16"
+      ],
+      "call_vol": 906,
+      "put_vol": 101,
+      "call_oi": 12661,
+      "put_oi": 2736,
+      "cp_vol_ratio": 8.97,
+      "cp_oi_ratio": 4.628,
+      "total_vol_oi": 0.065,
+      "atm_iv": 0.6055,
+      "unusual": [],
+      "unusual_count": 0,
+      "iv_percentile": 58.1,
+      "catalysts": [
+        {
+          "date": "2026-08-06",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": -1
+        }
+      ],
+      "next_catalyst_days": -1,
+      "next_catalyst": "Earnings 2026-08-06",
+      "score": 25.0,
+      "signal": "BAJA",
+      "reasons": [
+        "Ratio C/P extremo (+25)"
+      ]
+    },
+    {
       "ticker": "CRNX",
       "error": null,
-      "price": 84.0,
+      "price": 83.92,
       "name": "Crinetics Pharmaceuticals, Inc.",
-      "market_cap": 8911997952,
+      "market_cap": 8903510016,
       "cash": 1205773056,
       "debt": 47191000,
-      "inst_pct": 1.2102,
+      "inst_pct": 1.21631,
       "short_pct": 0.0687,
       "target_mean": 85.5,
       "target_low": 85.0,
       "target_high": 90.0,
       "recommendation_key": "hold",
       "analyst_count": 10,
-      "upside_pct": 1.8,
-      "buy_target": 84.0,
+      "upside_pct": 1.9,
+      "buy_target": 83.92,
       "sell_target": 85.5,
-      "potential_gain_pct": 1.8,
+      "potential_gain_pct": 1.9,
       "is_signal": false,
       "analyst_breakdown": {
         "strongBuy": 0,
@@ -3088,42 +2910,42 @@
         {
           "holder": "FMR, LLC",
           "shares": 15759799,
-          "value": 1323823116.0,
+          "value": 1322562303.0,
           "pct": 14.95,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Blackrock Inc.",
           "shares": 8478815,
-          "value": 712220460.0,
+          "value": 711542139.0,
           "pct": 8.04,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Farallon Capital Management LLC",
           "shares": 8338098,
-          "value": 700400232.0,
+          "value": 699733168.0,
           "pct": 7.91,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Wellington Management Group, LLP",
           "shares": 8157204,
-          "value": 685205136.0,
+          "value": 684552544.0,
           "pct": 7.74,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Driehaus Capital Management, LLC",
           "shares": 6395922,
-          "value": 537257448.0,
+          "value": 536745762.0,
           "pct": 6.07,
           "date_reported": "2026-03-31"
         },
         {
           "holder": "Price (T.Rowe) Associates Inc",
           "shares": 5355496,
-          "value": 449861664.0,
+          "value": 449433214.0,
           "pct": 5.08,
           "date_reported": "2026-03-31"
         }
@@ -3132,27 +2954,20 @@
         "2026-08-21",
         "2026-09-18"
       ],
-      "call_vol": 197,
-      "put_vol": 476,
-      "call_oi": 2588,
-      "put_oi": 5994,
-      "cp_vol_ratio": 0.414,
+      "call_vol": 246,
+      "put_vol": 528,
+      "call_oi": 2593,
+      "put_oi": 6000,
+      "cp_vol_ratio": 0.466,
       "cp_oi_ratio": 0.432,
-      "total_vol_oi": 0.078,
-      "atm_iv": 0.1226,
+      "total_vol_oi": 0.09,
+      "atm_iv": 0.1282,
       "unusual": [],
       "unusual_count": 0,
-      "iv_percentile": 53.3,
-      "catalysts": [
-        {
-          "date": "2026-08-03",
-          "type": "Earnings",
-          "note": "Yahoo",
-          "days": -2
-        }
-      ],
-      "next_catalyst_days": -2,
-      "next_catalyst": "Earnings 2026-08-03",
+      "iv_percentile": 54.8,
+      "catalysts": [],
+      "next_catalyst_days": null,
+      "next_catalyst": null,
       "score": 15.0,
       "signal": "BAJA",
       "reasons": [
@@ -3160,9 +2975,290 @@
       ]
     },
     {
+      "ticker": "ZVRA",
+      "error": null,
+      "price": 11.88,
+      "name": "Zevra Therapeutics, Inc.",
+      "market_cap": 702287232,
+      "cash": 200616000,
+      "debt": 1147000,
+      "inst_pct": 0.75274,
+      "short_pct": 0.13340001,
+      "target_mean": 25.33333,
+      "target_low": 20.0,
+      "target_high": 35.0,
+      "recommendation_key": "strong_buy",
+      "analyst_count": 9,
+      "upside_pct": 113.2,
+      "buy_target": 11.88,
+      "sell_target": 25.33,
+      "potential_gain_pct": 113.2,
+      "is_signal": true,
+      "analyst_breakdown": {
+        "strongBuy": 2,
+        "buy": 7,
+        "hold": 0,
+        "sell": 0,
+        "strongSell": 0
+      },
+      "news": [
+        {
+          "title": "Zevra Therapeutics Q2 Earnings Call Highlights",
+          "link": "https://www.marketbeat.com/instant-alerts/zevra-therapeutics-q2-earnings-call-highlights-2026-08-06/?utm_source=yahoofinance&utm_medium=yahoofinance",
+          "publisher": "MarketBeat",
+          "pub_date": "2026-08-06T08:04:07Z"
+        },
+        {
+          "title": "Zevra Therapeutics Inc (ZVRA) (Q2 2026) Earnings Call Highlights: Revenue Surges 53% as ...",
+          "link": "https://finance.yahoo.com/healthcare/articles/zevra-therapeutics-inc-zvra-q2-050840379.html",
+          "publisher": "GuruFocus.com",
+          "pub_date": "2026-08-06T05:08:40Z"
+        },
+        {
+          "title": "Zevra Therapeutics (ZVRA) Q2 Earnings and Revenues Surpass Estimates",
+          "link": "https://finance.yahoo.com/healthcare/articles/zevra-therapeutics-zvra-q2-earnings-003509118.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-08-06T00:35:09Z"
+        },
+        {
+          "title": "ZVRA Stock Sinks 23% On EU Setback — Analyst Says Risk Is ‘A Headwind, But Not Insurmountable’",
+          "link": "https://stocktwits.com/news-articles/markets/equity/zvra-stock-sinks-23-on-eu-setback-analyst-says-risk-is-a-headwind-but-not-insurmountable/cZZpPnzR7zJ",
+          "publisher": "Stocktwits",
+          "pub_date": "2026-07-24T18:43:57Z"
+        },
+        {
+          "title": "Zevra Therapeutics Receives EMA Negative Opinion on Arimoclomol Marketing Application",
+          "link": "https://investorshub.advfn.com/market-news/article/32627/zevra-therapeutics-receives-ema-negative-opinion-on-arimoclomol-marketing-application",
+          "publisher": "InvestorsHub",
+          "pub_date": "2026-07-24T14:38:30Z"
+        },
+        {
+          "title": "ZVRA Stock Plummets Pre-Market, Heads For Worst Day In Over 5 Years – What’s Driving The Sell-Off?",
+          "link": "https://stocktwits.com/news-articles/markets/equity/zvra-stock-plummets-heads-for-worst-day-in-over-5-years-ema-rejection/cZZYv3gR7yp",
+          "publisher": "Stocktwits",
+          "pub_date": "2026-07-24T12:48:01Z"
+        }
+      ],
+      "institutional_holders": [
+        {
+          "holder": "Woodline Partners LP",
+          "shares": 3450943,
+          "value": 40997203.0,
+          "pct": 79.98,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "FMR, LLC",
+          "shares": 3211877,
+          "value": 38157099.0,
+          "pct": 74.44,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Nantahala Capital Management, LLC",
+          "shares": 2521936,
+          "value": 29960599.0,
+          "pct": 58.45,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Vanguard Capital Management LLC",
+          "shares": 2469328,
+          "value": 29335616.0,
+          "pct": 57.23,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "State Street Corporation",
+          "shares": 1561569,
+          "value": 18551439.0,
+          "pct": 36.19,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Geode Capital Management, LLC",
+          "shares": 1371857,
+          "value": 16297661.0,
+          "pct": 31.79,
+          "date_reported": "2026-03-31"
+        }
+      ],
+      "expirations": [
+        "2026-08-21",
+        "2026-09-18"
+      ],
+      "call_vol": 626,
+      "put_vol": 281,
+      "call_oi": 2355,
+      "put_oi": 7237,
+      "cp_vol_ratio": 2.228,
+      "cp_oi_ratio": 0.325,
+      "total_vol_oi": 0.095,
+      "atm_iv": 0.7764,
+      "unusual": [],
+      "unusual_count": 0,
+      "iv_percentile": 48.4,
+      "catalysts": [
+        {
+          "date": "2026-11-04",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": 89
+        }
+      ],
+      "next_catalyst_days": 89,
+      "next_catalyst": "Earnings 2026-11-04",
+      "score": 15.0,
+      "signal": "BAJA",
+      "reasons": [
+        "Ratio C/P marcado (+15)"
+      ]
+    },
+    {
+      "ticker": "RCKT",
+      "error": null,
+      "price": 3.54,
+      "name": "Rocket Pharmaceuticals, Inc.",
+      "market_cap": 386545184,
+      "cash": 144379008,
+      "debt": 24764000,
+      "inst_pct": 0.90049005,
+      "short_pct": 0.18620001,
+      "target_mean": 9.38636,
+      "target_low": 3.0,
+      "target_high": 16.0,
+      "recommendation_key": "buy",
+      "analyst_count": 11,
+      "upside_pct": 165.2,
+      "buy_target": 3.54,
+      "sell_target": 9.39,
+      "potential_gain_pct": 165.2,
+      "is_signal": true,
+      "analyst_breakdown": {
+        "strongBuy": 0,
+        "buy": 6,
+        "hold": 6,
+        "sell": 1,
+        "strongSell": 1
+      },
+      "news": [
+        {
+          "title": "Is Rocket Pharmaceuticals, Inc. (RCKT) Poised for Recovery After Key Gene Therapy Program Milestone?",
+          "link": "https://finance.yahoo.com/healthcare/articles/rocket-pharmaceuticals-inc-rckt-poised-124237659.html",
+          "publisher": "Insider Monkey",
+          "pub_date": "2026-06-25T12:42:37Z"
+        },
+        {
+          "title": "Rocket Pharmaceuticals Inc (RCKT) Got Cash. Where’s the Stock Going?",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/rocket-pharmaceuticals-inc-rckt-got-123535680.html",
+          "publisher": "Insider Monkey",
+          "pub_date": "2026-05-20T12:35:35Z"
+        },
+        {
+          "title": "Rocket Pharmaceuticals (RCKT) Reports Q1 2026 Net Loss of $47.6M",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/rocket-pharmaceuticals-rckt-reports-q1-045018587.html",
+          "publisher": "Insider Monkey",
+          "pub_date": "2026-05-18T04:50:18Z"
+        },
+        {
+          "title": "RCKT Stock Down on Q1 Earnings Miss, Kresladi Launch in Focus",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/rckt-stock-down-q1-earnings-155000556.html",
+          "publisher": "Zacks",
+          "pub_date": "2026-05-11T15:50:00Z"
+        },
+        {
+          "title": "Rocket Pharmaceuticals' Cardiac Programs Updates to Offer 'Strong' Share Price Catalysts, Wedbush Says",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/rocket-pharmaceuticals-apos-cardiac-programs-161854069.html",
+          "publisher": "MT Newswires",
+          "pub_date": "2026-05-08T16:18:54Z"
+        },
+        {
+          "title": "3 Promising Penny Stocks With Market Caps Up To $600M",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/3-promising-penny-stocks-market-180545603.html",
+          "publisher": "Simply Wall St.",
+          "pub_date": "2026-05-06T18:05:45Z"
+        }
+      ],
+      "institutional_holders": [
+        {
+          "holder": "RTW Investments LP",
+          "shares": 17687772,
+          "value": 62614712.0,
+          "pct": 16.2,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Blackrock Inc.",
+          "shares": 7834795,
+          "value": 27735174.0,
+          "pct": 7.18,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Citigroup Inc.",
+          "shares": 4865551,
+          "value": 17224050.0,
+          "pct": 4.46,
+          "date_reported": "2026-06-30"
+        },
+        {
+          "holder": "Vanguard Portfolio Management LLC",
+          "shares": 4690215,
+          "value": 16603360.0,
+          "pct": 4.3,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "State Street Corporation",
+          "shares": 4485989,
+          "value": 15880400.0,
+          "pct": 4.11,
+          "date_reported": "2026-03-31"
+        },
+        {
+          "holder": "Vanguard Capital Management LLC",
+          "shares": 3775736,
+          "value": 13366105.0,
+          "pct": 3.46,
+          "date_reported": "2026-03-31"
+        }
+      ],
+      "expirations": [
+        "2026-08-21",
+        "2026-09-18",
+        "2026-10-16"
+      ],
+      "call_vol": 86,
+      "put_vol": 60,
+      "call_oi": 10871,
+      "put_oi": 243,
+      "cp_vol_ratio": 1.433,
+      "cp_oi_ratio": 44.737,
+      "total_vol_oi": 0.013,
+      "atm_iv": 2.8477,
+      "unusual": [],
+      "unusual_count": 0,
+      "iv_percentile": 83.9,
+      "catalysts": [
+        {
+          "date": "2026-08-06",
+          "type": "Earnings",
+          "note": "Yahoo",
+          "days": -1
+        }
+      ],
+      "next_catalyst_days": -1,
+      "next_catalyst": "Earnings 2026-08-06",
+      "score": 5.0,
+      "signal": "BAJA",
+      "reasons": [
+        "IV en percentil 70+ (+5)"
+      ]
+    },
+    {
       "ticker": "VIXY",
       "error": null,
-      "price": 19.77,
+      "price": 19.53,
       "name": "VIX Short-Term Futures ETF",
       "market_cap": null,
       "cash": null,
@@ -3174,7 +3270,7 @@
       "target_high": null,
       "recommendation_key": null,
       "analyst_count": null,
-      "buy_target": 19.77,
+      "buy_target": 19.53,
       "sell_target": null,
       "potential_gain_pct": null,
       "is_signal": false,
@@ -3222,108 +3318,23 @@
         "2026-08-21",
         "2026-09-18"
       ],
-      "call_vol": 1450,
-      "put_vol": 693,
-      "call_oi": 10332,
-      "put_oi": 2727,
-      "cp_vol_ratio": 2.092,
-      "cp_oi_ratio": 3.789,
-      "total_vol_oi": 0.164,
-      "atm_iv": 0.5674,
+      "call_vol": 1014,
+      "put_vol": 788,
+      "call_oi": 11186,
+      "put_oi": 2983,
+      "cp_vol_ratio": 1.287,
+      "cp_oi_ratio": 3.75,
+      "total_vol_oi": 0.127,
+      "atm_iv": 0.6782,
       "unusual": [],
       "unusual_count": 0,
-      "iv_percentile": 33.3,
+      "iv_percentile": 83.9,
       "catalysts": [],
       "next_catalyst_days": null,
       "next_catalyst": null,
-      "score": 15.0,
+      "score": 5.0,
       "signal": "BAJA",
       "reasons": [
-        "Ratio C/P marcado (+15)"
-      ]
-    },
-    {
-      "ticker": "SPXL",
-      "error": null,
-      "price": 292.85,
-      "name": "Direxion Daily S&P 500 Bull 3X ",
-      "market_cap": null,
-      "cash": null,
-      "debt": null,
-      "inst_pct": null,
-      "short_pct": null,
-      "target_mean": null,
-      "target_low": null,
-      "target_high": null,
-      "recommendation_key": null,
-      "analyst_count": null,
-      "buy_target": 292.85,
-      "sell_target": null,
-      "potential_gain_pct": null,
-      "is_signal": false,
-      "analyst_breakdown": null,
-      "news": [
-        {
-          "title": "Why This Leveraged S&P 500 ETF Can Lose Money Even When Stocks Rise",
-          "link": "https://247wallst.com/investing/etf/2026/07/26/why-this-leveraged-sp-500-etf-can-lose-money-even-when-stocks-rise/",
-          "publisher": "24/7 Wall St.",
-          "pub_date": "2026-07-26T22:55:23Z"
-        },
-        {
-          "title": "Leveraged ETFs in 2026: How They Work, the Best Funds, and the Risks You Can't Ignore",
-          "link": "http://www.etf.com/sections/news/leveraged-etfs-2026-how-they-work-best-funds-and-risks-you-cant-ignore?utm_source=yahoo-finance&utm_medium=rss&utm_campaign=yahoo-finance-rss",
-          "publisher": "etf.com",
-          "pub_date": "2026-07-15T21:42:58Z"
-        },
-        {
-          "title": "The $95-a-Year Fee Nobody Notices: Why SPXL Underperforms Its Own Math",
-          "link": "https://247wallst.com/investing/2026/07/01/the-95-a-year-fee-nobody-notices-why-spxl-underperforms-its-own-math/",
-          "publisher": "24/7 Wall St.",
-          "pub_date": "2026-07-01T20:36:26Z"
-        },
-        {
-          "title": "Ceasefire Hopes Lift Risk Appetite: Leveraged ETFs for Tactical Play",
-          "link": "https://finance.yahoo.com/markets/options/articles/ceasefire-hopes-lift-risk-appetite-142600303.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-06-12T14:26:00Z"
-        },
-        {
-          "title": "Guide to the S&P 500 ETF Investing",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/guide-p-500-etf-investing-160000203.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-06-09T16:00:00Z"
-        },
-        {
-          "title": "Leveraged ETFs for Investors Seeking Bold Tactical Opportunities",
-          "link": "https://finance.yahoo.com/markets/options/articles/leveraged-etfs-investors-seeking-bold-140200305.html",
-          "publisher": "Zacks",
-          "pub_date": "2026-05-29T14:02:00Z"
-        }
-      ],
-      "institutional_holders": [],
-      "expirations": [
-        "2026-08-07",
-        "2026-08-14",
-        "2026-08-21"
-      ],
-      "call_vol": 1052,
-      "put_vol": 1290,
-      "call_oi": 4181,
-      "put_oi": 3610,
-      "cp_vol_ratio": 0.816,
-      "cp_oi_ratio": 1.158,
-      "total_vol_oi": 0.301,
-      "atm_iv": 0.4752,
-      "unusual": [],
-      "unusual_count": 0,
-      "iv_percentile": 70.0,
-      "catalysts": [],
-      "next_catalyst_days": null,
-      "next_catalyst": null,
-      "score": 10.0,
-      "signal": "BAJA",
-      "reasons": [
-        "Vol/OI agregado medio (+5)",
         "IV en percentil 70+ (+5)"
       ]
     }
