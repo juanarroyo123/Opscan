@@ -1,18 +1,17 @@
 {
-  "generated_at": "2026-09-29T01:07:11+00:00",
+  "generated_at": "2026-09-30T00:38:27+00:00",
   "mode": "watchlist",
   "horizon_days": 180,
-  "count": 102,
+  "count": 98,
   "by_ticker": {
-    "AAPL": 15,
-    "MSFT": 30,
+    "AAPL": 16,
+    "MSFT": 29,
     "TSLA": 10,
     "META": 18,
     "NVDA": 17,
     "AMD": 5,
     "CRNX": 1,
-    "SPY": 2,
-    "MELI": 4
+    "SPY": 2
   },
   "note": "Cubre Camara de Representantes y poder ejecutivo (OGE). El Senado no tiene fuente gratuita activa (efdsearch.senate.gov bloquea scraping).",
   "trades": [
@@ -28,7 +27,21 @@
       "transaction_date": "2026-09-22",
       "filing_date": "2026-09-22",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035499.pdf",
-      "days": 7
+      "days": 8
+    },
+    {
+      "chamber": "Camara",
+      "member": "Kevin Hern",
+      "office": "U.S. Representative · OK-01",
+      "ticker": "AAPL",
+      "company": "Apple Inc. - Common Stock",
+      "type_raw": "Sale (Partial)",
+      "direction": "Sale",
+      "amount": "$1,001 - $15,000",
+      "transaction_date": "2026-09-08",
+      "filing_date": "2026-09-25",
+      "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035491.pdf",
+      "days": 22
     },
     {
       "chamber": "Camara",
@@ -42,7 +55,7 @@
       "transaction_date": "2026-08-27",
       "filing_date": "2026-09-12",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035431.pdf",
-      "days": 33
+      "days": 34
     },
     {
       "chamber": "Camara",
@@ -56,7 +69,7 @@
       "transaction_date": "2026-08-26",
       "filing_date": "2026-09-05",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035392.pdf",
-      "days": 34
+      "days": 35
     },
     {
       "chamber": "Camara",
@@ -70,7 +83,7 @@
       "transaction_date": "2026-08-24",
       "filing_date": "2026-09-04",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116328.pdf",
-      "days": 36
+      "days": 37
     },
     {
       "chamber": "Camara",
@@ -84,7 +97,7 @@
       "transaction_date": "2026-08-21",
       "filing_date": "2026-09-01",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035326.pdf",
-      "days": 39
+      "days": 40
     },
     {
       "chamber": "Camara",
@@ -98,7 +111,7 @@
       "transaction_date": "2026-08-20",
       "filing_date": "2026-09-17",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035450.pdf",
-      "days": 40
+      "days": 41
     },
     {
       "chamber": "Camara",
@@ -112,7 +125,7 @@
       "transaction_date": "2026-08-20",
       "filing_date": "2026-09-10",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035390.pdf",
-      "days": 40
+      "days": 41
     },
     {
       "chamber": "Camara",
@@ -126,7 +139,7 @@
       "transaction_date": "2026-08-18",
       "filing_date": "2026-09-10",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035390.pdf",
-      "days": 42
+      "days": 43
     },
     {
       "chamber": "Camara",
@@ -140,7 +153,7 @@
       "transaction_date": "2026-08-18",
       "filing_date": "2026-09-10",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035390.pdf",
-      "days": 42
+      "days": 43
     },
     {
       "chamber": "Camara",
@@ -154,7 +167,7 @@
       "transaction_date": "2026-08-18",
       "filing_date": "2026-09-10",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035390.pdf",
-      "days": 42
+      "days": 43
     },
     {
       "chamber": "Camara",
@@ -168,7 +181,7 @@
       "transaction_date": "2026-08-18",
       "filing_date": "2026-09-10",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035390.pdf",
-      "days": 42
+      "days": 43
     },
     {
       "chamber": "Camara",
@@ -182,7 +195,7 @@
       "transaction_date": "2026-08-18",
       "filing_date": "2026-09-02",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035367.pdf",
-      "days": 42
+      "days": 43
     },
     {
       "chamber": "Camara",
@@ -196,7 +209,7 @@
       "transaction_date": "2026-08-18",
       "filing_date": "2026-09-02",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035367.pdf",
-      "days": 42
+      "days": 43
     },
     {
       "chamber": "Camara",
@@ -210,7 +223,7 @@
       "transaction_date": "2026-08-14",
       "filing_date": "2026-09-14",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035455.pdf",
-      "days": 46
+      "days": 47
     },
     {
       "chamber": "Camara",
@@ -224,7 +237,7 @@
       "transaction_date": "2026-08-14",
       "filing_date": "2026-09-14",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035455.pdf",
-      "days": 46
+      "days": 47
     },
     {
       "chamber": "Camara",
@@ -238,7 +251,7 @@
       "transaction_date": "2026-08-14",
       "filing_date": "2026-09-14",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035455.pdf",
-      "days": 46
+      "days": 47
     },
     {
       "chamber": "Camara",
@@ -252,7 +265,7 @@
       "transaction_date": "2026-08-14",
       "filing_date": "2026-09-14",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035455.pdf",
-      "days": 46
+      "days": 47
     },
     {
       "chamber": "Senado",
@@ -266,7 +279,7 @@
       "transaction_date": "2026-08-13",
       "filing_date": "2026-09-02",
       "link": "https://efdsearch.senate.gov/search/view/ptr/f8d003c0-ca1e-4c39-9d66-632d220180e1/",
-      "days": 47
+      "days": 48
     },
     {
       "chamber": "Senado",
@@ -280,7 +293,7 @@
       "transaction_date": "2026-08-13",
       "filing_date": "2026-09-02",
       "link": "https://efdsearch.senate.gov/search/view/ptr/f8d003c0-ca1e-4c39-9d66-632d220180e1/",
-      "days": 47
+      "days": 48
     },
     {
       "chamber": "Camara",
@@ -294,7 +307,7 @@
       "transaction_date": "2026-08-13",
       "filing_date": "2026-09-02",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035345.pdf",
-      "days": 47
+      "days": 48
     },
     {
       "chamber": "Camara",
@@ -308,7 +321,7 @@
       "transaction_date": "2026-08-13",
       "filing_date": "2026-08-18",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035275.pdf",
-      "days": 47
+      "days": 48
     },
     {
       "chamber": "Senado",
@@ -322,7 +335,7 @@
       "transaction_date": "2026-08-11",
       "filing_date": "2026-09-09",
       "link": "https://efdsearch.senate.gov/search/view/ptr/e5144197-e49c-4f74-bec4-19f1f3124668/",
-      "days": 49
+      "days": 50
     },
     {
       "chamber": "Camara",
@@ -336,7 +349,7 @@
       "transaction_date": "2026-08-11",
       "filing_date": "2026-08-20",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035289.pdf",
-      "days": 49
+      "days": 50
     },
     {
       "chamber": "Camara",
@@ -350,7 +363,7 @@
       "transaction_date": "2026-08-10",
       "filing_date": "2026-09-04",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116328.pdf",
-      "days": 50
+      "days": 51
     },
     {
       "chamber": "Camara",
@@ -364,7 +377,7 @@
       "transaction_date": "2026-08-10",
       "filing_date": "2026-09-04",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116328.pdf",
-      "days": 50
+      "days": 51
     },
     {
       "chamber": "Camara",
@@ -378,7 +391,7 @@
       "transaction_date": "2026-08-10",
       "filing_date": "2026-09-04",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116328.pdf",
-      "days": 50
+      "days": 51
     },
     {
       "chamber": "Camara",
@@ -392,7 +405,7 @@
       "transaction_date": "2026-08-03",
       "filing_date": "2026-09-04",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116328.pdf",
-      "days": 57
+      "days": 58
     },
     {
       "chamber": "Camara",
@@ -406,7 +419,7 @@
       "transaction_date": "2026-08-03",
       "filing_date": "2026-09-04",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116328.pdf",
-      "days": 57
+      "days": 58
     },
     {
       "chamber": "Camara",
@@ -420,7 +433,7 @@
       "transaction_date": "2026-08-03",
       "filing_date": "2026-09-04",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116328.pdf",
-      "days": 57
+      "days": 58
     },
     {
       "chamber": "Camara",
@@ -434,7 +447,7 @@
       "transaction_date": "2026-08-03",
       "filing_date": "2026-09-04",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116328.pdf",
-      "days": 57
+      "days": 58
     },
     {
       "chamber": "Ejecutivo",
@@ -448,7 +461,7 @@
       "transaction_date": "2026-07-31",
       "filing_date": "2026-09-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/E590116FC9631E9885258E7A002DE209/$FILE/Donald-J-Trump-09.8.2026-278T.pdf",
-      "days": 60
+      "days": 61
     },
     {
       "chamber": "Camara",
@@ -462,7 +475,7 @@
       "transaction_date": "2026-07-30",
       "filing_date": "2026-09-04",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035190.pdf",
-      "days": 61
+      "days": 62
     },
     {
       "chamber": "Camara",
@@ -476,7 +489,7 @@
       "transaction_date": "2026-07-30",
       "filing_date": "2026-08-14",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035204.pdf",
-      "days": 61
+      "days": 62
     },
     {
       "chamber": "Camara",
@@ -490,7 +503,7 @@
       "transaction_date": "2026-07-30",
       "filing_date": "2026-08-14",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035204.pdf",
-      "days": 61
+      "days": 62
     },
     {
       "chamber": "Camara",
@@ -504,7 +517,7 @@
       "transaction_date": "2026-07-24",
       "filing_date": "2026-08-07",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116267.pdf",
-      "days": 67
+      "days": 68
     },
     {
       "chamber": "Camara",
@@ -518,7 +531,7 @@
       "transaction_date": "2026-07-24",
       "filing_date": "2026-08-06",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf",
-      "days": 67
+      "days": 68
     },
     {
       "chamber": "Ejecutivo",
@@ -532,7 +545,7 @@
       "transaction_date": "2026-07-23",
       "filing_date": "2026-09-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/E590116FC9631E9885258E7A002DE209/$FILE/Donald-J-Trump-09.8.2026-278T.pdf",
-      "days": 68
+      "days": 69
     },
     {
       "chamber": "Ejecutivo",
@@ -546,7 +559,7 @@
       "transaction_date": "2026-07-23",
       "filing_date": "2026-09-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/E590116FC9631E9885258E7A002DE209/$FILE/Donald-J-Trump-09.8.2026-278T.pdf",
-      "days": 68
+      "days": 69
     },
     {
       "chamber": "Ejecutivo",
@@ -560,7 +573,7 @@
       "transaction_date": "2026-07-23",
       "filing_date": "2026-09-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/E590116FC9631E9885258E7A002DE209/$FILE/Donald-J-Trump-09.8.2026-278T.pdf",
-      "days": 68
+      "days": 69
     },
     {
       "chamber": "Ejecutivo",
@@ -574,7 +587,7 @@
       "transaction_date": "2026-07-23",
       "filing_date": "2026-09-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/E590116FC9631E9885258E7A002DE209/$FILE/Donald-J-Trump-09.8.2026-278T.pdf",
-      "days": 68
+      "days": 69
     },
     {
       "chamber": "Senado",
@@ -588,7 +601,7 @@
       "transaction_date": "2026-07-21",
       "filing_date": "2026-08-04",
       "link": "https://efdsearch.senate.gov/search/view/ptr/60c01547-0cf9-46c6-9ce6-f0102f5941f6/",
-      "days": 70
+      "days": 71
     },
     {
       "chamber": "Senado",
@@ -602,7 +615,7 @@
       "transaction_date": "2026-07-21",
       "filing_date": "2026-08-04",
       "link": "https://efdsearch.senate.gov/search/view/ptr/60c01547-0cf9-46c6-9ce6-f0102f5941f6/",
-      "days": 70
+      "days": 71
     },
     {
       "chamber": "Camara",
@@ -616,7 +629,7 @@
       "transaction_date": "2026-07-21",
       "filing_date": "2026-07-27",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034736.pdf",
-      "days": 70
+      "days": 71
     },
     {
       "chamber": "Ejecutivo",
@@ -630,7 +643,7 @@
       "transaction_date": "2026-07-20",
       "filing_date": "2026-09-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/E590116FC9631E9885258E7A002DE209/$FILE/Donald-J-Trump-09.8.2026-278T.pdf",
-      "days": 71
+      "days": 72
     },
     {
       "chamber": "Camara",
@@ -644,7 +657,7 @@
       "transaction_date": "2026-07-20",
       "filing_date": "2026-08-07",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116267.pdf",
-      "days": 71
+      "days": 72
     },
     {
       "chamber": "Camara",
@@ -658,7 +671,7 @@
       "transaction_date": "2026-07-20",
       "filing_date": "2026-08-07",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116267.pdf",
-      "days": 71
+      "days": 72
     },
     {
       "chamber": "Ejecutivo",
@@ -672,7 +685,7 @@
       "transaction_date": "2026-07-17",
       "filing_date": "2026-09-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/E590116FC9631E9885258E7A002DE209/$FILE/Donald-J-Trump-09.8.2026-278T.pdf",
-      "days": 74
+      "days": 75
     },
     {
       "chamber": "Ejecutivo",
@@ -686,7 +699,7 @@
       "transaction_date": "2026-07-17",
       "filing_date": "2026-09-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/E590116FC9631E9885258E7A002DE209/$FILE/Donald-J-Trump-09.8.2026-278T.pdf",
-      "days": 74
+      "days": 75
     },
     {
       "chamber": "Ejecutivo",
@@ -700,7 +713,7 @@
       "transaction_date": "2026-07-17",
       "filing_date": "2026-09-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/E590116FC9631E9885258E7A002DE209/$FILE/Donald-J-Trump-09.8.2026-278T.pdf",
-      "days": 74
+      "days": 75
     },
     {
       "chamber": "Ejecutivo",
@@ -714,7 +727,7 @@
       "transaction_date": "2026-07-17",
       "filing_date": "2026-09-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/E590116FC9631E9885258E7A002DE209/$FILE/Donald-J-Trump-09.8.2026-278T.pdf",
-      "days": 74
+      "days": 75
     },
     {
       "chamber": "Ejecutivo",
@@ -728,7 +741,7 @@
       "transaction_date": "2026-07-17",
       "filing_date": "2026-09-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/E590116FC9631E9885258E7A002DE209/$FILE/Donald-J-Trump-09.8.2026-278T.pdf",
-      "days": 74
+      "days": 75
     },
     {
       "chamber": "Ejecutivo",
@@ -742,7 +755,7 @@
       "transaction_date": "2026-07-17",
       "filing_date": "2026-09-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/E590116FC9631E9885258E7A002DE209/$FILE/Donald-J-Trump-09.8.2026-278T.pdf",
-      "days": 74
+      "days": 75
     },
     {
       "chamber": "Ejecutivo",
@@ -756,7 +769,7 @@
       "transaction_date": "2026-07-17",
       "filing_date": "2026-09-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/E590116FC9631E9885258E7A002DE209/$FILE/Donald-J-Trump-09.8.2026-278T.pdf",
-      "days": 74
+      "days": 75
     },
     {
       "chamber": "Camara",
@@ -770,7 +783,7 @@
       "transaction_date": "2026-07-17",
       "filing_date": "2026-09-04",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035190.pdf",
-      "days": 74
+      "days": 75
     },
     {
       "chamber": "Camara",
@@ -784,7 +797,7 @@
       "transaction_date": "2026-07-17",
       "filing_date": "2026-09-04",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035190.pdf",
-      "days": 74
+      "days": 75
     },
     {
       "chamber": "Camara",
@@ -798,7 +811,7 @@
       "transaction_date": "2026-07-17",
       "filing_date": "2026-09-04",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035190.pdf",
-      "days": 74
+      "days": 75
     },
     {
       "chamber": "Camara",
@@ -812,7 +825,7 @@
       "transaction_date": "2026-07-14",
       "filing_date": "2026-08-18",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035260.pdf",
-      "days": 77
+      "days": 78
     },
     {
       "chamber": "Camara",
@@ -826,7 +839,7 @@
       "transaction_date": "2026-07-07",
       "filing_date": "2026-08-07",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116267.pdf",
-      "days": 84
+      "days": 85
     },
     {
       "chamber": "Camara",
@@ -840,7 +853,7 @@
       "transaction_date": "2026-07-07",
       "filing_date": "2026-08-07",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116267.pdf",
-      "days": 84
+      "days": 85
     },
     {
       "chamber": "Senado",
@@ -854,7 +867,7 @@
       "transaction_date": "2026-06-30",
       "filing_date": "2026-07-08",
       "link": "https://efdsearch.senate.gov/search/view/ptr/5d9b1b8e-2ae1-442b-860c-e79b8a701dc6/",
-      "days": 91
+      "days": 92
     },
     {
       "chamber": "Camara",
@@ -868,7 +881,7 @@
       "transaction_date": "2026-06-26",
       "filing_date": "2026-07-16",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034894.pdf",
-      "days": 95
+      "days": 96
     },
     {
       "chamber": "Camara",
@@ -882,7 +895,7 @@
       "transaction_date": "2026-06-25",
       "filing_date": "2026-08-07",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf",
-      "days": 96
+      "days": 97
     },
     {
       "chamber": "Camara",
@@ -896,7 +909,7 @@
       "transaction_date": "2026-06-25",
       "filing_date": "2026-08-07",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf",
-      "days": 96
+      "days": 97
     },
     {
       "chamber": "Camara",
@@ -910,7 +923,7 @@
       "transaction_date": "2026-06-25",
       "filing_date": "2026-08-07",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf",
-      "days": 96
+      "days": 97
     },
     {
       "chamber": "Senado",
@@ -924,7 +937,7 @@
       "transaction_date": "2026-06-24",
       "filing_date": "2026-07-08",
       "link": "https://efdsearch.senate.gov/search/view/ptr/5d9b1b8e-2ae1-442b-860c-e79b8a701dc6/",
-      "days": 97
+      "days": 98
     },
     {
       "chamber": "Ejecutivo",
@@ -938,7 +951,7 @@
       "transaction_date": "2026-06-23",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 98
+      "days": 99
     },
     {
       "chamber": "Ejecutivo",
@@ -952,7 +965,7 @@
       "transaction_date": "2026-06-23",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 98
+      "days": 99
     },
     {
       "chamber": "Ejecutivo",
@@ -966,7 +979,7 @@
       "transaction_date": "2026-06-23",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 98
+      "days": 99
     },
     {
       "chamber": "Ejecutivo",
@@ -980,7 +993,7 @@
       "transaction_date": "2026-06-23",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 98
+      "days": 99
     },
     {
       "chamber": "Ejecutivo",
@@ -994,21 +1007,7 @@
       "transaction_date": "2026-06-18",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 103
-    },
-    {
-      "chamber": "Camara",
-      "member": "Michael T. McCaul",
-      "office": "U.S. Representative · TX-10",
-      "ticker": "MSFT",
-      "company": "MICROSOFT CORP",
-      "type_raw": "Sale (Full)",
-      "direction": "Sale",
-      "amount": "$15,001 - $50,000",
-      "transaction_date": "2026-06-18",
-      "filing_date": "2026-07-08",
-      "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116211.pdf",
-      "days": 103
+      "days": 104
     },
     {
       "chamber": "Camara",
@@ -1022,7 +1021,7 @@
       "transaction_date": "2026-06-17",
       "filing_date": "2026-07-26",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034963.pdf",
-      "days": 104
+      "days": 105
     },
     {
       "chamber": "Camara",
@@ -1036,7 +1035,7 @@
       "transaction_date": "2026-06-17",
       "filing_date": "2026-07-26",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034963.pdf",
-      "days": 104
+      "days": 105
     },
     {
       "chamber": "Ejecutivo",
@@ -1050,7 +1049,7 @@
       "transaction_date": "2026-06-16",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 105
+      "days": 106
     },
     {
       "chamber": "Ejecutivo",
@@ -1064,7 +1063,7 @@
       "transaction_date": "2026-06-16",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 105
+      "days": 106
     },
     {
       "chamber": "Ejecutivo",
@@ -1078,7 +1077,7 @@
       "transaction_date": "2026-06-16",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 105
+      "days": 106
     },
     {
       "chamber": "Ejecutivo",
@@ -1092,7 +1091,7 @@
       "transaction_date": "2026-06-16",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 105
+      "days": 106
     },
     {
       "chamber": "Ejecutivo",
@@ -1106,7 +1105,7 @@
       "transaction_date": "2026-06-16",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 105
+      "days": 106
     },
     {
       "chamber": "Ejecutivo",
@@ -1120,7 +1119,7 @@
       "transaction_date": "2026-06-16",
       "filing_date": "2026-08-08",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2DC3DD386173222E85258E4D002D8CD0/$FILE/Frank-J-Bisignano-07.07.2026-278T.pdf",
-      "days": 105
+      "days": 106
     },
     {
       "chamber": "Ejecutivo",
@@ -1134,7 +1133,7 @@
       "transaction_date": "2026-06-16",
       "filing_date": "2026-08-08",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2DC3DD386173222E85258E4D002D8CD0/$FILE/Frank-J-Bisignano-07.07.2026-278T.pdf",
-      "days": 105
+      "days": 106
     },
     {
       "chamber": "Ejecutivo",
@@ -1148,7 +1147,7 @@
       "transaction_date": "2026-06-15",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 106
+      "days": 107
     },
     {
       "chamber": "Ejecutivo",
@@ -1162,7 +1161,7 @@
       "transaction_date": "2026-06-15",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 106
+      "days": 107
     },
     {
       "chamber": "Ejecutivo",
@@ -1176,7 +1175,7 @@
       "transaction_date": "2026-06-15",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 106
+      "days": 107
     },
     {
       "chamber": "Ejecutivo",
@@ -1190,7 +1189,7 @@
       "transaction_date": "2026-06-15",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 106
+      "days": 107
     },
     {
       "chamber": "Ejecutivo",
@@ -1204,21 +1203,7 @@
       "transaction_date": "2026-06-15",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 106
-    },
-    {
-      "chamber": "Camara",
-      "member": "Michael T. McCaul",
-      "office": "U.S. Representative · TX-10",
-      "ticker": "MELI",
-      "company": "MERCADOLIBRE INC",
-      "type_raw": "Purchase",
-      "direction": "Purchase",
-      "amount": "$1,001 - $15,000",
-      "transaction_date": "2026-06-15",
-      "filing_date": "2026-07-08",
-      "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116211.pdf",
-      "days": 106
+      "days": 107
     },
     {
       "chamber": "Ejecutivo",
@@ -1232,7 +1217,7 @@
       "transaction_date": "2026-06-12",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 109
+      "days": 110
     },
     {
       "chamber": "Ejecutivo",
@@ -1246,7 +1231,7 @@
       "transaction_date": "2026-06-12",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 109
+      "days": 110
     },
     {
       "chamber": "Ejecutivo",
@@ -1260,7 +1245,7 @@
       "transaction_date": "2026-06-12",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 109
+      "days": 110
     },
     {
       "chamber": "Ejecutivo",
@@ -1274,7 +1259,7 @@
       "transaction_date": "2026-06-12",
       "filing_date": "2026-08-22",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/2BF91F890F718ACB85258E5B002DE16B/$FILE/Donald-J-Trump-08.12.2026-278T.pdf",
-      "days": 109
+      "days": 110
     },
     {
       "chamber": "Ejecutivo",
@@ -1288,7 +1273,7 @@
       "transaction_date": "2026-06-10",
       "filing_date": "2026-07-25",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/038F222E7B084F8C85258E3F002DB296/$FILE/Markwayne-Mullin-06.24.2026-278T.pdf",
-      "days": 111
+      "days": 112
     },
     {
       "chamber": "Ejecutivo",
@@ -1302,35 +1287,7 @@
       "transaction_date": "2026-06-10",
       "filing_date": "2026-07-25",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/038F222E7B084F8C85258E3F002DB296/$FILE/Markwayne-Mullin-06.24.2026-278T.pdf",
-      "days": 111
-    },
-    {
-      "chamber": "Camara",
-      "member": "Michael T. McCaul",
-      "office": "U.S. Representative · TX-10",
-      "ticker": "MELI",
-      "company": "MERCADOLIBRE INC",
-      "type_raw": "Purchase",
-      "direction": "Purchase",
-      "amount": "$15,001 - $50,000",
-      "transaction_date": "2026-06-09",
-      "filing_date": "2026-07-08",
-      "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116211.pdf",
       "days": 112
-    },
-    {
-      "chamber": "Camara",
-      "member": "Michael T. McCaul",
-      "office": "U.S. Representative · TX-10",
-      "ticker": "MELI",
-      "company": "MERCADOLIBRE INC",
-      "type_raw": "Purchase",
-      "direction": "Purchase",
-      "amount": "$1,001 - $15,000",
-      "transaction_date": "2026-06-03",
-      "filing_date": "2026-07-08",
-      "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116211.pdf",
-      "days": 118
     },
     {
       "chamber": "Camara",
@@ -1344,21 +1301,7 @@
       "transaction_date": "2026-06-02",
       "filing_date": "2026-07-15",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035003.pdf",
-      "days": 119
-    },
-    {
-      "chamber": "Camara",
-      "member": "Michael T. McCaul",
-      "office": "U.S. Representative · TX-10",
-      "ticker": "MELI",
-      "company": "MERCADOLIBRE INC",
-      "type_raw": "Purchase",
-      "direction": "Purchase",
-      "amount": "$15,001 - $50,000",
-      "transaction_date": "2026-06-02",
-      "filing_date": "2026-07-08",
-      "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/9116211.pdf",
-      "days": 119
+      "days": 120
     },
     {
       "chamber": "Camara",
@@ -1372,7 +1315,7 @@
       "transaction_date": "2026-06-01",
       "filing_date": "2026-07-16",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035024.pdf",
-      "days": 120
+      "days": 121
     },
     {
       "chamber": "Camara",
@@ -1386,7 +1329,7 @@
       "transaction_date": "2026-06-01",
       "filing_date": "2026-07-16",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035024.pdf",
-      "days": 120
+      "days": 121
     },
     {
       "chamber": "Ejecutivo",
@@ -1400,7 +1343,7 @@
       "transaction_date": "2026-05-18",
       "filing_date": "2026-07-25",
       "link": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/038F222E7B084F8C85258E3F002DB296/$FILE/Markwayne-Mullin-06.24.2026-278T.pdf",
-      "days": 134
+      "days": 135
     },
     {
       "chamber": "Camara",
@@ -1414,7 +1357,7 @@
       "transaction_date": "2026-05-06",
       "filing_date": "2026-08-07",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf",
-      "days": 146
+      "days": 147
     },
     {
       "chamber": "Camara",
@@ -1428,7 +1371,7 @@
       "transaction_date": "2026-05-05",
       "filing_date": "2026-07-16",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035024.pdf",
-      "days": 147
+      "days": 148
     },
     {
       "chamber": "Camara",
@@ -1442,7 +1385,7 @@
       "transaction_date": "2026-04-28",
       "filing_date": "2026-07-16",
       "link": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035024.pdf",
-      "days": 154
+      "days": 155
     }
   ]
 }
