@@ -33,6 +33,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Organizar carpetas (por si los archivos se subieron sueltos)
+        run: |
+          if [ ! -f opscan/pipeline.py ]; then
+            echo "Archivos sueltos en la raiz: los organizo en carpetas"
+            mkdir -p opscan docs config tests/fixtures
+            for f in alerts catalysts config congress enrich futures options pipeline scoring state universe util __main__; do
+              [ -f "$f.py" ] && mv "$f.py" opscan/
+            done
+            for f in __init__*.py; do
+              [ -f "$f" ] && grep -q "__version__" "$f" && cp "$f" opscan/__init__.py
+            done
+            [ -f opscan/__init__.py ] || echo '__version__ = "2.0.0"' > opscan/__init__.py
+            rm -f __init__*.py
+            touch tests/__init__.py
+            [ -f index.html ] && mv index.html docs/
+            for f in sp500.csv nasdaq100.csv catalysts_manual.csv; do [ -f "$f" ] && mv "$f" config/; done
+            [ -f config/catalysts_manual.csv ] || echo "ticker,date,type,note" > config/catalysts_manual.csv
+            for f in fakes.py test_e2e.py test_units.py; do [ -f "$f" ] && mv "$f" tests/; done
+            for f in kadoa_trades.json cboe_real_sample.json committee-membership-current.yaml committees-current.yaml legislators-current.yaml; do
+              [ -f "$f" ] && mv "$f" tests/fixtures/
+            done
+          fi
+          ls opscan docs config
+
       - name: Modo
         id: mode
         run: |
