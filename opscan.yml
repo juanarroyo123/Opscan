@@ -1,0 +1,129 @@
+name: OpScan
+
+on:
+  schedule:
+    # Horas en UTC. Wall Street abre 13:30 UTC (verano) / 14:30 UTC (invierno).
+    - cron: "35 12 * * 1-5"       # pre-apertura: confirma por OI el flujo de ayer + calendario/congreso/futuros
+    - cron: "5,35 13-20 * * 1-5"  # intradia cada 30 min: solo opciones (Cboe, 15 min de retraso)
+    - cron: "30 21 * * 1-5"       # cierre: todo
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Modo de ejecucion"
+        type: choice
+        options: [full, premarket, intraday, smoke]
+        default: full
+
+permissions:
+  contents: write      # guardar datos en la rama `data`
+  pages: write         # publicar la web
+  id-token: write
+  actions: write       # mantener vivo el workflow programado
+
+concurrency:
+  group: opscan
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    outputs:
+      mode: ${{ steps.mode.outputs.mode }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Modo
+        id: mode
+        run: |
+          M="${{ inputs.mode }}"
+          if [ -z "$M" ]; then
+            case "${{ github.event.schedule }}" in
+              "35 12 * * 1-5") M=premarket ;;
+              "30 21 * * 1-5") M=full ;;
+              *) M=intraday ;;
+            esac
+          fi
+          echo "mode=$M" >> "$GITHUB_OUTPUT"
+          echo "Modo: $M"
+
+      - name: Recuperar datos anteriores (rama data)
+        env:
+          REPO_URL: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+        run: |
+          if git ls-remote --exit-code --heads "$REPO_URL" data >/dev/null 2>&1; then
+            git clone --quiet --depth 1 --branch data "$REPO_URL" data
+          else
+            echo "Primera ejecucion: no hay rama data todavia"; mkdir -p data
+          fi
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Ejecutar OpScan
+        env:
+          OPSCAN_DATA_DIR: ${{ github.workspace }}/data
+          OPSCAN_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+          FINNHUB_TOKEN: ${{ secrets.FINNHUB_TOKEN }}
+          FMP_TOKEN: ${{ secrets.FMP_TOKEN }}
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m opscan --mode "${{ steps.mode.outputs.mode }}" --build-site _site
+
+      - name: Guardar datos (rama data, siempre 1 solo commit para no engordar el repo)
+        env:
+          REPO_URL: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+        run: |
+          cd data
+          rm -rf .git
+          git init -q -b data
+          git config user.name  "opscan-bot"
+          git config user.email "opscan-bot@users.noreply.github.com"
+          git add -A
+          git commit -q -m "datos $(date -u +%Y-%m-%dT%H:%MZ) (${{ steps.mode.outputs.mode }})"
+          git push -q -f "$REPO_URL" data
+
+      - name: Resumen
+        run: |
+          python - <<'EOF'
+          import json
+          s = json.load(open("data/status.json"))
+          l = json.load(open("data/latest.json"))
+          lines = [f"## OpScan {s['mode']} - sesion {s['session_date']}",
+                   f"Valores OK: {s['tickers_ok']} - fallidos: {s['tickers_failed']} - {s['elapsed_s']}s",
+                   f"Resumen: {l['summary']}", "", "| Fuente | Estado | Registros | Nota |", "|---|---|---|---|"]
+          for k, v in s["sources"].items():
+              lines.append(f"| {k} | {'OK' if v['ok'] else 'AVISO'} | {v.get('count')} | {(v.get('note') or '')[:120]} |")
+          top = [r for r in l["records"] if r.get("signal") in ("ALTA", "MEDIA")][:15]
+          if top:
+              lines += ["", "| Valor | Score | Direccion | Entrada |", "|---|---|---|---|"]
+              lines += [f"| {r['ticker']} | {r['score']} | {r['direction']} | {'SI' if r['checklist'].get('entrada') else ''} |" for r in top]
+          open(__import__('os').environ["GITHUB_STEP_SUMMARY"], "a").write("\n".join(lines) + "\n")
+          EOF
+
+      - name: Mantener vivo el workflow (GitHub lo desactiva tras 60 dias sin actividad)
+        if: steps.mode.outputs.mode == 'premarket' || github.event_name == 'workflow_dispatch'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/opscan.yml/enable"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: scan
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OpScan · Radar de opciones</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232a78d6'/><text x='16' y='22' font-size='17' font-family='Arial' font-weight='900' text-anchor='middle' fill='white'>O</text></svg>">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f3f4f6; --surface:#ffffff; --surface2:#f8f9fa; --line:#e4e6ea; --line2:#eef0f3;
+  --txt:#0b0b0b; --txt2:#52514e; --mut:#7a7975;
+  --pri:#2a78d6; --pri-soft:#e6f0fc; --pri-txt:#1c5cab;
+  --good:#0ca30c; --good-txt:#006300; --good-bg:#e5f5e5;
+  --bad:#d03b3b; --bad-txt:#b02a2a; --bad-bg:#fbe9e9;
+  --warn:#fab219; --warn-txt:#8a5a00; --warn-bg:#fdf3dc;
+  --neu-bg:#eef0f3; --neu-txt:#52514e;
+  --div-neg:#d03b3b; --div-mid:#c9c8c3; --div-pos:#2a78d6;
+  --series:#2a78d6;
+  --shadow:0 1px 2px rgba(16,24,40,.05),0 1px 6px rgba(16,24,40,.04);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#111110; --surface:#1a1a19; --surface2:#21211f; --line:#2f2f2c; --line2:#262624;
+    --txt:#ffffff; --txt2:#c3c2b7; --mut:#8f8e86;
+    --pri:#3987e5; --pri-soft:#1b2a3d; --pri-txt:#86b6ef;
+    --good:#0ca30c; --good-txt:#5fd35f; --good-bg:#16301a;
+    --bad:#d03b3b; --bad-txt:#f08a8a; --bad-bg:#3a1c1c;
+    --warn:#fab219; --warn-txt:#fac65a; --warn-bg:#3a2e12;
+    --neu-bg:#2a2a27; --neu-txt:#c3c2b7;
+    --div-neg:#e66767; --div-mid:#4a4a46; --div-pos:#3987e5;
+    --series:#3987e5;
+    --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#111110; --surface:#1a1a19; --surface2:#21211f; --line:#2f2f2c; --line2:#262624;
+  --txt:#ffffff; --txt2:#c3c2b7; --mut:#8f8e86;
+  --pri:#3987e5; --pri-soft:#1b2a3d; --pri-txt:#86b6ef;
+  --good:#0ca30c; --good-txt:#5fd35f; --good-bg:#16301a;
+  --bad:#d03b3b; --bad-txt:#f08a8a; --bad-bg:#3a1c1c;
+  --warn:#fab219; --warn-txt:#fac65a; --warn-bg:#3a2e12;
+  --neu-bg:#2a2a27; --neu-txt:#c3c2b7;
+  --div-neg:#e66767; --div-mid:#4a4a46; --div-pos:#3987e5;
+  --series:#3987e5;
+  --shadow:none;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);
+  color:var(--txt);font-size:14px;line-height:1.45;-webkit-text-size-adjust:100%}
+a{color:var(--pri-txt);text-decoration:none} a:hover{text-decoration:underline}
+button{font:inherit;color:inherit}
+.num{font-variant-numeric:tabular-nums}
+header{position:sticky;top:0;z-index:30;background:var(--surface);border-bottom:1px solid var(--line);
+  padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:1280px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:18px;letter-spacing:-.3px}
+.logo .mark{width:26px;height:26px;border-radius:7px;background:var(--pri);display:flex;align-items:center;
+  justify-content:center;color:#fff;font-size:14px;font-weight:900}
+.logo small{font-weight:600;color:var(--mut);font-size:11px}
+.right{display:flex;align-items:center;gap:10px}
+.updated{font-size:11px;color:var(--mut);text-align:right}
+.iconbtn{border:1px solid var(--line);background:var(--surface2);border-radius:8px;padding:5px 9px;cursor:pointer;font-size:13px}
+.tabs{display:flex;gap:20px;margin:8px auto 0;max-width:1280px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:9px 2px 11px;font-weight:700;font-size:14px;color:var(--mut);cursor:pointer;border-bottom:3px solid transparent;
+  white-space:nowrap;user-select:none;background:none;border-top:0;border-left:0;border-right:0}
+.tab.active{color:var(--txt);border-bottom-color:var(--pri)}
+.tab .cnt{font-size:11px;font-weight:700;color:var(--mut);margin-left:4px}
+.wrap{max-width:1280px;margin:0 auto;padding:14px 16px 60px}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;box-shadow:var(--shadow);min-width:0}
+.kpi .lbl{font-size:11px;color:var(--mut);font-weight:600}
+.kpi .val{font-size:21px;font-weight:800;margin-top:2px;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi .sub{font-size:11px;color:var(--txt2)}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:520px){.kpis{grid-template-columns:repeat(2,1fr)} .kpi .val{font-size:18px}}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;align-items:center}
+.search{flex:1 1 220px;min-width:0;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);
+  font-size:14px;color:var(--txt)}
+select,.chk{padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:13px;color:var(--txt)}
+.chk{display:inline-flex;align-items:center;gap:6px;cursor:pointer;user-select:none}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse}
+.big{min-width:860px}
+thead th{position:sticky;top:0;background:var(--surface2);color:var(--mut);font-size:11px;text-transform:uppercase;
+  letter-spacing:.4px;font-weight:700;text-align:right;padding:10px 10px;border-bottom:1px solid var(--line);white-space:nowrap;cursor:pointer}
+thead th.l,td.l{text-align:left}
+tbody td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--line2);white-space:nowrap;vertical-align:middle}
+tbody tr.click{cursor:pointer} tbody tr.click:hover{background:var(--surface2)}
+.tk{font-weight:800;font-size:14.5px}
+.nm{color:var(--mut);font-size:11px;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:999px;font-weight:800;font-size:12px;white-space:nowrap}
+.p-ALTA{background:var(--good-bg);color:var(--good-txt)} .p-MEDIA{background:var(--warn-bg);color:var(--warn-txt)}
+.p-BAJA{background:var(--neu-bg);color:var(--neu-txt)} .p-ERR{background:var(--bad-bg);color:var(--bad-txt)}
+.dir{font-weight:800;font-size:12px;white-space:nowrap}
+.d-ALCISTA{color:var(--good-txt)} .d-BAJISTA{color:var(--bad-txt)} .d-MIXTO,.d-NEUTRAL,.d--{color:var(--mut)}
+.up{color:var(--good-txt);font-weight:700} .down{color:var(--bad-txt);font-weight:700}
+.muted{color:var(--mut)} .small{font-size:11px}
+.ck{display:inline-flex;gap:3px;vertical-align:middle}
+.ck i{width:18px;height:18px;border-radius:5px;font-style:normal;font-size:10px;font-weight:800;display:inline-flex;
+  align-items:center;justify-content:center;background:var(--neu-bg);color:var(--mut)}
+.ck i.on{background:var(--good-bg);color:var(--good-txt)}
+.entry{display:inline-block;margin-left:6px;font-size:10px;font-weight:900;padding:2px 6px;border-radius:5px;background:var(--good);color:#fff}
+.pre{display:inline-block;margin-left:6px;font-size:10px;font-weight:800;padding:2px 6px;border-radius:5px;background:var(--warn-bg);color:var(--warn-txt)}
+.biasbar{display:inline-block;width:60px;height:6px;border-radius:3px;background:var(--neu-bg);position:relative;vertical-align:middle;margin-left:6px}
+.biasbar b{position:absolute;top:0;height:6px;border-radius:3px}
+.tag{display:inline-block;font-size:10px;font-weight:800;padding:2px 6px;border-radius:6px;background:var(--pri-soft);color:var(--pri-txt);margin-left:4px}
+.tag.g{background:var(--good-bg);color:var(--good-txt)} .tag.r{background:var(--bad-bg);color:var(--bad-txt)}
+.tag.y{background:var(--warn-bg);color:var(--warn-txt)} .tag.n{background:var(--neu-bg);color:var(--neu-txt)}
+.empty{color:var(--mut);text-align:center;padding:36px 12px}
+.foot{color:var(--mut);font-size:11px;text-align:center;margin-top:18px;line-height:1.6}
+.section-t{font-weight:800;font-size:15px;margin:18px 0 8px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 13px;box-shadow:var(--shadow)}
+.card .h{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.segs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.seg{font-size:12px;font-weight:700;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--txt2);cursor:pointer}
+.seg.active{background:var(--pri);color:#fff;border-color:var(--pri)}
+.cal{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.cal .day{min-width:48px;text-align:center;border-right:1px solid var(--line);padding-right:10px}
+.cal .day .n{font-size:21px;font-weight:800;line-height:1}
+.cal .day .mo{font-size:10px;color:var(--mut);font-weight:700;letter-spacing:.5px}
+.cal .meta{flex:1;min-width:0}
+.cal .meta .t{font-weight:700}
+.cal .meta .s{color:var(--txt2);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.soon{color:var(--warn-txt)}
+.tklink{font-weight:800;cursor:pointer;color:var(--pri-txt)}
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40;display:none}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(760px,100%);background:var(--bg);z-index:50;overflow-y:auto;
+  transform:translateX(100%);transition:transform .18s ease;border-left:1px solid var(--line)}
+.drawer.open{transform:none} .scrim.open{display:block}
+.dh{position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--line);padding:12px 16px;display:flex;
+  justify-content:space-between;align-items:flex-start;gap:10px;z-index:2}
+.db{padding:14px 16px 40px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media(max-width:560px){.grid4{grid-template-columns:repeat(2,1fr)}}
+.m{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:7px 9px;min-width:0}
+.m .k{font-size:10.5px;color:var(--mut)} .m .v{font-weight:800;font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;color:var(--txt2);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.idea{background:var(--pri-soft);border-radius:12px;padding:11px 13px;margin-top:10px}
+.idea b{color:var(--pri-txt)}
+table.sm th,table.sm td{font-size:12px;padding:6px 8px}
+.gauge .track{display:flex;height:10px;border-radius:5px;overflow:hidden;gap:2px;background:var(--surface)}
+.gauge .lbls{display:flex;justify-content:space-between;font-size:11px;color:var(--mut);margin-top:4px}
+.spark{width:100%;height:120px;display:block}
+.tooltip{position:fixed;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:8px;
+  padding:6px 9px;font-size:12px;box-shadow:0 4px 16px rgba(0,0,0,.15);z-index:80;display:none}
+.ok{color:var(--good-txt);font-weight:800} .ko{color:var(--bad-txt);font-weight:800}
+.help{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:13px;color:var(--txt2);margin-bottom:12px}
+.help b{color:var(--txt)}
+@media(max-width:640px){.logo small{display:none} .updated{font-size:10px}}
+.more{display:block;margin:10px auto 0;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 16px;cursor:pointer;font-weight:700}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="logo"><span class="mark">O</span>OpScan <small>flujo de opciones · catalizadores · congreso · futuros</small></div>
+    <div class="right">
+      <div class="updated" id="updated">cargando…</div>
+      <button class="iconbtn" id="themeBtn" title="Cambiar tema claro/oscuro">Tema</button>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-tab="radar">Radar</button>
+    <button class="tab" data-tab="flow">Flujo</button>
+    <button class="tab" data-tab="fut">Futuros</button>
+    <button class="tab" data-tab="pol">Congreso</button>
+    <button class="tab" data-tab="cal">Calendario</button>
+    <button class="tab" data-tab="status">Estado</button>
+  </nav>
+</header>
+
+<main class="wrap">
+  <!-- RADAR -->
+  <section id="v-radar">
+    <div class="kpis" id="kpis"></div>
+    <div class="toolbar">
+      <input class="search" id="q" placeholder="Buscar ticker, empresa o sector…">
+      <select id="fSig"><option value="">Todas las señales</option><option value="ALTA">ALTA</option><option value="MEDIA">MEDIA o más</option></select>
+      <select id="fDir"><option value="">Cualquier dirección</option><option value="ALCISTA">Alcista</option><option value="BAJISTA">Bajista</option></select>
+      <select id="fGrp"><option value="">Todo el universo</option><option value="watchlist">Mi watchlist</option><option value="catalizador">Biotech con catalizador</option><option value="sp500">S&amp;P 500</option><option value="ndx">Nasdaq 100</option><option value="etf">ETFs</option><option value="indice">Índices</option></select>
+      <label class="chk"><input type="checkbox" id="fEntry"> Solo entradas</label>
+      <select id="sort">
+        <option value="score">Orden: Score</option><option value="unusual_premium">Prima inusual</option>
+        <option value="rel_vol">Volumen relativo</option><option value="iv_rank">IV rank</option>
+        <option value="cat">Catalizador más próximo</option><option value="change_pct">Variación %</option>
+      </select>
+    </div>
+    <div class="panel"><div class="tscroll">
+      <table class="big"><thead><tr>
+        <th class="l">Activo</th><th>Precio</th><th>Score</th><th class="l">Dirección</th>
+        <th class="l" title="C = congreso a favor, F = futuros a favor, O = flujo confirmado por OI">Checklist</th>
+        <th>Flujo inusual</th><th>Vol. rel.</th><th>IV30 · rank</th><th class="l">Próximo catalizador</th>
+      </tr></thead><tbody id="tbody"></tbody></table>
+    </div></div>
+    <div class="foot" id="radarFoot"></div>
+  </section>
+
+  <!-- FLUJO -->
+  <section id="v-flow" hidden>
+    <div class="help"><b>Cómo leerlo.</b> Contratos con volumen ≥ OI previo y prima relevante (todas las fechas de vencimiento).
+      El <b>lado</b> se estima comparando el último precio con el bid/ask: <b>ASK</b> = compra agresiva, <b>BID</b> = venta.
+      Al día siguiente se comprueba si el OI subió: si sube, eran <b>posiciones nuevas</b> (abajo, "Confirmadas por OI").</div>
+    <div class="toolbar">
+      <input class="search" id="fq" placeholder="Buscar ticker…">
+      <select id="fKind"><option value="">Calls y puts</option><option value="CALL">Calls</option><option value="PUT">Puts</option></select>
+      <select id="fDte"><option value="">Cualquier vencimiento</option><option value="0-7">0–7 días</option><option value="8-30">8–30 días</option><option value="31-90">31–90 días</option><option value="91-9999">Más de 90 días</option></select>
+      <select id="fPrem"><option value="0">Cualquier prima</option><option value="100000">≥ $100K</option><option value="250000">≥ $250K</option><option value="1000000">≥ $1M</option></select>
+      <select id="fSide"><option value="">Cualquier lado</option><option value="ASK">ASK (compra)</option><option value="BID">BID (venta)</option></select>
+      <label class="chk"><input type="checkbox" id="fOtm"> Solo OTM</label>
+      <label class="chk"><input type="checkbox" id="fHedge" checked> Ocultar coberturas</label>
+    </div>
+    <div class="panel"><div class="tscroll">
+      <table class="big"><thead><tr>
+        <th class="l">Activo</th><th class="l">Contrato</th><th>Vencimiento</th><th>Prima</th><th>Volumen</th><th>OI</th>
+        <th>Vol/OI</th><th class="l">Lado</th><th class="l">Lectura</th><th>IV</th><th>Delta</th><th>Score</th>
+      </tr></thead><tbody id="flowBody"></tbody></table>
+    </div></div>
+    <div class="section-t">Confirmadas por OI (apertura de posiciones)</div>
+    <div class="panel"><div class="tscroll">
+      <table class="big"><thead><tr>
+        <th class="l">Activo</th><th class="l">Contrato</th><th>Vencimiento</th><th>Prima</th><th>Volumen</th>
+        <th>OI antes → después</th><th class="l">Lectura</th><th>Marcada</th>
+      </tr></thead><tbody id="confBody"></tbody></table>
+    </div></div>
+  </section>
+
+  <!-- FUTUROS -->
+  <section id="v-fut" hidden>
+    <div class="kpis" id="fkpis"></div>
+    <div class="help"><b>Patrones de entrada y salida.</b> Precio y OI suben → entran largos ·
+      precio sube y OI baja → cierre de cortos (rebote débil) · precio baja y OI sube → entran cortos ·
+      precio y OI bajan → salen largos (capitulación). <b>COT idx</b> = posición neta actual en un rango de 0 a 100 frente a los últimos 3 años
+      (≥90 especuladores muy largos = riesgo de giro; commercials ≥80 = dinero "listo" comprando).</div>
+    <div class="panel"><div class="tscroll">
+      <table class="big"><thead><tr>
+        <th class="l">Mercado</th><th>Precio</th><th>1d</th><th>5d</th><th class="l">Patrón diario</th>
+        <th class="l">Semana COT</th><th>COT idx espec.</th><th>COT idx commercials</th><th>Neto espec. (Δ sem.)</th><th class="l">Sesgo</th>
+      </tr></thead><tbody id="futBody"></tbody></table>
+    </div></div>
+    <div class="foot">COT de la CFTC (datos del martes, publicados el viernes) · precios y volumen del contrato continuo en Yahoo.</div>
+  </section>
+
+  <!-- CONGRESO -->
+  <section id="v-pol" hidden>
+    <div class="kpis" id="pkpis"></div>
+    <div class="section-t">Valores con varias compras o con comité relevante</div>
+    <div class="cards" id="clusters"></div>
+    <div class="section-t">Todas las operaciones</div>
+    <div class="toolbar">
+      <input class="search" id="pq" placeholder="Buscar ticker, empresa o congresista…">
+      <select id="pCh"><option value="">Todas las cámaras</option><option>Camara</option><option>Senado</option><option>Ejecutivo</option></select>
+      <select id="pDir"><option value="">Compras y ventas</option><option>Compra</option><option>Venta</option></select>
+      <select id="pDays"><option value="30">Últimos 30 días</option><option value="90" selected>Últimos 90 días</option><option value="365">Último año</option></select>
+    </div>
+    <div class="panel"><div class="tscroll">
+      <table class="big"><thead><tr>
+        <th class="l">Activo</th><th class="l">Quién</th><th class="l">Cámara</th><th class="l">Operación</th><th>Importe</th>
+        <th>Fecha operación</th><th>Declarado</th><th class="l">Comités</th>
+      </tr></thead><tbody id="pbody"></tbody></table>
+    </div></div>
+    <div class="foot" id="polFoot"></div>
+  </section>
+
+  <!-- CALENDARIO -->
+  <section id="v-cal" hidden>
+    <div class="toolbar">
+      <input class="search" id="cq" placeholder="Buscar ticker o empresa…">
+      <label class="chk"><input type="checkbox" id="cUni"> Solo valores escaneados</label>
+    </div>
+    <div class="segs" id="segs"></div>
+    <div id="callist"></div>
+    <div class="foot">Fuentes: <a href="https://www.pdufa.bio" target="_blank" rel="noopener">pdufa.bio</a> (PDUFA, lecturas y AdCom) ·
+      ClinicalTrials.gov · SEC EDGAR · Finnhub · Reserva Federal · manual. Verifica siempre las fechas en la fuente original.</div>
+  </section>
+
+  <!-- ESTADO -->
+  <section id="v-status" hidden>
+    <div class="kpis" id="skpis"></div>
+    <div class="section-t">Fuentes de datos</div>
+    <div class="panel"><div class="tscroll"><table><thead><tr>
+      <th class="l">Fuente</th><th class="l">Estado</th><th>Registros</th><th class="l">Nota</th><th>Última vez</th>
+    </tr></thead><tbody id="srcBody"></tbody></table></div></div>
+    <div class="section-t">Últimas ejecuciones</div>
+    <div class="panel"><div class="tscroll"><table><thead><tr>
+      <th class="l">Fecha</th><th class="l">Modo</th><th>Valores OK</th><th>Fallidos</th><th>Duración</th>
+    </tr></thead><tbody id="runBody"></tbody></table></div></div>
+    <div class="section-t">Valores sin datos (muestra)</div>
+    <div id="failList" class="small muted"></div>
+  </section>
+
+  <div class="foot">Solo fines educativos. No es asesoramiento financiero. Datos públicos con retraso; las opciones pueden perder el 100% de la prima.</div>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Detalle"></aside>
+<div class="tooltip" id="tip"></div>
+
+<script>
+"use strict";
+const S={latest:null,flow:null,fut:null,pol:null,cal:null,status:null,calFilter:"",tab:"radar",polN:150};
+const $=s=>document.querySelector(s);
+const MES=["","ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safeUrl=u=>/^https?:\/\//i.test(u||"")?esc(u):"";
+function money(n){if(n==null||isNaN(n))return"—";const a=Math.abs(n),s=n<0?"-":"";
+  if(a>=1e9)return s+"$"+(a/1e9).toFixed(1)+"B";if(a>=1e6)return s+"$"+(a/1e6).toFixed(2)+"M";
+  if(a>=1e3)return s+"$"+(a/1e3).toFixed(0)+"K";return s+"$"+a.toFixed(0);}
+function fmtN(n){if(n==null||isNaN(n))return"—";const a=Math.abs(n);
+  if(a>=1e9)return(n/1e9).toFixed(1)+"B";if(a>=1e6)return(n/1e6).toFixed(1)+"M";if(a>=1e4)return(n/1e3).toFixed(0)+"K";
+  return Math.round(n).toLocaleString("es-ES");}
+const px=n=>n==null?"—":"$"+(n<10?Number(n).toFixed(2):n<1000?Number(n).toFixed(2).replace(/\.00$/,""):Math.round(n).toLocaleString("es-ES"));
+const pct=(n,d=1)=>n==null?"—":(n>0?"+":"")+Number(n).toFixed(d)+"%";
+const pctCls=n=>n==null?"":(n>=0?"up":"down");
+const ivp=v=>v==null?"—":(v*100).toFixed(0)+"%";
+function dirHTML(d){const ic={ALCISTA:"▲",BAJISTA:"▼"}[d]||"•";return `<span class="dir d-${esc(d||"-")}">${ic} ${esc(d||"—")}</span>`;}
+function sigPill(r){return `<span class="pill p-${esc(r.signal||"BAJA")}">${r.signal==="ERR"?"ERR":(r.score??0)}</span>`;}
+function ckHTML(c){if(!c||c.puntos==null)return '<span class="muted">—</span>';
+  return `<span class="ck" title="Congreso / Futuros / Flujo confirmado por OI · ${c.puntos} pts"><i class="${c.congreso?'on':''}">C</i><i class="${c.futuros?'on':''}">F</i><i class="${c.flujo_confirmado?'on':''}">O</i></span>`+
+    (c.entrada?'<span class="entry">ENTRADA</span>':c.pre_alerta?'<span class="pre">PRE</span>':"");}
+function biasBar(b){if(b==null)return"";const w=Math.min(50,Math.abs(b)*50);
+  const col=b>=0?"var(--good)":"var(--bad)";const left=b>=0?50:50-w;
+  return `<span class="biasbar" title="Sesgo del flujo ${b}"><b style="left:${left}%;width:${w}%;background:${col}"></b></span>`;}
+async function getJSON(p){try{const r=await fetch(p+"?ts="+Date.now());if(!r.ok)return null;return await r.json();}catch(e){return null;}}
+
+// ---------- tema
+(function(){let t=null;try{t=localStorage.getItem("opscan-theme");}catch(e){}
+  if(t)document.documentElement.setAttribute("data-theme",t);
+  $("#themeBtn").onclick=()=>{const cur=document.documentElement.getAttribute("data-theme")||
+      (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+    const n=cur==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",n);
+    try{localStorage.setItem("opscan-theme",n);}catch(e){}};})();
+
+// ---------- pestañas
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
+function switchTab(t){S.tab=t;document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===t));
+  ["radar","flow","fut","pol","cal","status"].forEach(x=>$("#v-"+x).hidden=x!==t);
+  ({radar:renderRadar,flow:renderFlow,fut:renderFut,pol:renderPol,cal:renderCal,status:renderStatus})[t]();
+  try{history.replaceState(null,"","#"+t);}catch(e){}}
+
+// ---------- RADAR
+function renderKPIs(){const L=S.latest;if(!L){$("#kpis").innerHTML="";return;}const s=L.summary||{};const reg=L.regime;
+  $("#kpis").innerHTML=`
+  <div class="kpi"><div class="lbl">Valores con datos</div><div class="val num">${s.con_datos??"—"}</div><div class="sub">${s.inusuales??0} contratos inusuales</div></div>
+  <div class="kpi"><div class="lbl">Entradas (checklist)</div><div class="val num" style="color:var(--good-txt)">${s.entradas??0}</div><div class="sub">${s.pre_alertas??0} pre-alertas</div></div>
+  <div class="kpi"><div class="lbl">Señal ALTA</div><div class="val num">${s.alta??0}</div><div class="sub">${s.media??0} MEDIA</div></div>
+  <div class="kpi"><div class="lbl">Ideas alcistas / bajistas</div><div class="val num"><span class="up">${s.alcistas??0}</span> / <span class="down">${s.bajistas??0}</span></div><div class="sub">score MEDIA o más</div></div>
+  <div class="kpi"><div class="lbl">Régimen (futuros)</div><div class="val">${reg?dirHTML(reg.label):"—"}</div><div class="sub">sesgo ${reg?reg.bias:"—"}</div></div>
+  <div class="kpi"><div class="lbl">Sesión</div><div class="val num" style="font-size:17px">${esc(L.session_date||"—")}</div><div class="sub">modo ${esc(L.mode||"")}</div></div>`;}
+function nextCatDays(r){return r.next_catalyst?r.next_catalyst.days:9999;}
+function renderRadar(){const L=S.latest;renderKPIs();
+  if(!L){$("#tbody").innerHTML=`<tr><td colspan="9" class="empty">Aún no hay datos. Lanza el workflow "OpScan" en la pestaña Actions de GitHub.</td></tr>`;return;}
+  const q=$("#q").value.toLowerCase().trim(),sig=$("#fSig").value,dir=$("#fDir").value,grp=$("#fGrp").value,onlyE=$("#fEntry").checked,sort=$("#sort").value;
+  let r=(L.records||[]).filter(x=>{
+    if(q&&!((x.ticker||"").toLowerCase().includes(q)||(x.name||"").toLowerCase().includes(q)||(x.sector||"").toLowerCase().includes(q)))return false;
+    if(sig==="ALTA"&&x.signal!=="ALTA")return false; if(sig==="MEDIA"&&!["ALTA","MEDIA"].includes(x.signal))return false;
+    if(dir&&x.direction!==dir)return false; if(grp&&!(x.groups||[]).includes(grp))return false;
+    if(onlyE&&!(x.checklist&&x.checklist.entrada))return false; return true;});
+  const key={score:x=>x.score||0,unusual_premium:x=>x.unusual_premium||0,rel_vol:x=>x.rel_vol||0,iv_rank:x=>x.iv_rank??-1,
+    cat:x=>-nextCatDays(x),change_pct:x=>Math.abs(x.change_pct||0)}[sort];
+  r.sort((a,b)=>key(b)-key(a));
+  const shown=r.slice(0,400);
+  $("#tbody").innerHTML=shown.map(x=>{
+    const nc=x.next_catalyst;
+    const cat=nc?`<span class="${nc.days<=10?'soon':''}"><b>${esc(nc.type)}</b> · ${nc.days}d</span><div class="nm">${esc(nc.date)}</div>`:'<span class="muted">—</span>';
+    return `<tr class="click" data-tk="${esc(x.ticker)}">
+      <td class="l"><div class="tk">${esc(x.ticker)}</div><div class="nm">${esc(x.name||"")}${x.sector?" · "+esc(x.sector):""}</div></td>
+      <td class="num">${px(x.price)}<div class="small ${pctCls(x.change_pct)}">${pct(x.change_pct,2)}</div></td>
+      <td>${sigPill(x)}</td><td class="l">${dirHTML(x.direction)}</td><td class="l">${ckHTML(x.checklist)}</td>
+      <td class="num">${x.unusual_count?`${money(x.unusual_premium)} <span class="muted small">(${x.unusual_count})</span>${biasBar(x.flow_bias)}`:'<span class="muted">—</span>'}</td>
+      <td class="num">${x.rel_vol!=null?x.rel_vol+"x":"—"}</td>
+      <td class="num">${ivp(x.iv30)}<span class="muted small"> · ${x.iv_rank!=null?Math.round(x.iv_rank):"—"}</span></td>
+      <td class="l">${cat}</td></tr>`;}).join("")||`<tr><td colspan="9" class="empty">Sin resultados con estos filtros.</td></tr>`;
+  $("#radarFoot").textContent=`${r.length} valores (mostrando ${shown.length}). Pulsa una fila para ver el detalle. IV rank necesita ~20 sesiones de histórico.`;}
+["#q","#fSig","#fDir","#fGrp","#fEntry","#sort"].forEach(id=>$(id).addEventListener("input",renderRadar));
+$("#tbody").addEventListener("click",e=>{const tr=e.target.closest("tr[data-tk]");if(tr)openDetail(tr.dataset.tk);});
+
+// ---------- FLUJO
+function readLabel(u){return `${dirHTML(u.direction)}${u.whale?' <span class="tag y">BALLENA</span>':""}${u.hedge_like?' <span class="tag n">cobertura?</span>':""}`;}
+function contractTxt(u){return `${u.kind==="CALL"?'<span class="up">CALL</span>':'<span class="down">PUT</span>'} ${u.strike}`;}
+function renderFlow(){const F=S.flow;
+  if(!F){$("#flowBody").innerHTML=`<tr><td colspan="12" class="empty">Sin datos de flujo todavía.</td></tr>`;$("#confBody").innerHTML="";return;}
+  const q=$("#fq").value.toLowerCase().trim(),k=$("#fKind").value,dte=$("#fDte").value,prem=+$("#fPrem").value,side=$("#fSide").value,
+    otm=$("#fOtm").checked,hideH=$("#fHedge").checked;
+  const [d0,d1]=dte?dte.split("-").map(Number):[0,99999];
+  const rows=(F.rows||[]).filter(u=>(!q||u.ticker.toLowerCase().includes(q))&&(!k||u.kind===k)&&u.dte>=d0&&u.dte<=d1&&
+    u.premium>=prem&&(!side||u.side===side)&&(!otm||u.otm)&&(!hideH||!u.hedge_like)).slice(0,500);
+  $("#flowBody").innerHTML=rows.map(u=>`<tr class="click" data-tk="${esc(u.ticker)}">
+    <td class="l"><span class="tk">${esc(u.ticker)}</span><div class="nm">${esc(u.sector||"")}</div></td>
+    <td class="l">${contractTxt(u)} <span class="muted small">${u.moneyness_pct!=null?pct(u.moneyness_pct):""}</span></td>
+    <td class="num">${esc(u.expiration)}<div class="nm">${u.dte}d</div></td><td class="num"><b>${money(u.premium)}</b></td>
+    <td class="num">${fmtN(u.volume)}</td><td class="num">${fmtN(u.oi)}</td><td class="num">${u.vol_oi}x</td>
+    <td class="l"><span class="tag ${u.side==="ASK"?"g":u.side==="BID"?"r":"n"}">${esc(u.side)}</span></td>
+    <td class="l">${readLabel(u)}</td><td class="num">${ivp(u.iv)}</td><td class="num">${u.delta??"—"}</td><td class="num">${u.score}</td></tr>`).join("")
+    ||`<tr><td colspan="12" class="empty">Sin contratos con estos filtros.</td></tr>`;
+  const c=(F.confirmed||[]).filter(u=>!q||String(u.ticker).toLowerCase().includes(q)).slice(0,200);
+  $("#confBody").innerHTML=c.map(u=>`<tr class="click" data-tk="${esc(u.ticker)}">
+    <td class="l"><span class="tk">${esc(u.ticker)}</span></td><td class="l">${contractTxt(u)}</td>
+    <td class="num">${esc(u.expiration)}</td><td class="num"><b>${money(u.premium)}</b></td><td class="num">${fmtN(u.volume)}</td>
+    <td class="num">${fmtN(u.oi_before)} → <b>${fmtN(u.oi_after)}</b></td><td class="l">${dirHTML(u.direction)}</td>
+    <td class="num">${esc(u.date)}</td></tr>`).join("")||`<tr><td colspan="8" class="empty">Todavía no hay confirmaciones (necesita al menos dos sesiones de datos).</td></tr>`;}
+["#fq","#fKind","#fDte","#fPrem","#fSide","#fOtm","#fHedge"].forEach(id=>$(id).addEventListener("input",renderFlow));
+["#flowBody","#confBody"].forEach(id=>$(id).addEventListener("click",e=>{const tr=e.target.closest("tr[data-tk]");if(tr)openDetail(tr.dataset.tk);}));
+
+// ---------- FUTUROS
+function renderFut(){const F=S.fut;
+  if(!F||!F.markets){$("#futBody").innerHTML=`<tr><td colspan="10" class="empty">Sin datos de futuros todavía.</td></tr>`;$("#fkpis").innerHTML="";return;}
+  const reg=F.regime;const ms=F.markets;const by=Object.fromEntries(ms.map(m=>[m.key,m]));
+  const k=(key)=>by[key]?`${dirHTML(by[key].label)}`:"—";
+  $("#fkpis").innerHTML=`
+    <div class="kpi"><div class="lbl">Régimen renta variable</div><div class="val">${reg?dirHTML(reg.label):"—"}</div><div class="sub">sesgo ${reg?reg.bias:"—"}</div></div>
+    <div class="kpi"><div class="lbl">S&amp;P 500</div><div class="val">${k("ES")}</div></div>
+    <div class="kpi"><div class="lbl">Nasdaq</div><div class="val">${k("NQ")}</div></div>
+    <div class="kpi"><div class="lbl">Crudo</div><div class="val">${k("CL")}</div></div>
+    <div class="kpi"><div class="lbl">Oro</div><div class="val">${k("GC")}</div></div>
+    <div class="kpi"><div class="lbl">Bono 10 años</div><div class="val">${k("ZN")}</div></div>`;
+  $("#futBody").innerHTML=ms.map((m,i)=>{const c=m.cot||{},p=m.price||{};
+    return `<tr class="click" data-i="${i}">
+    <td class="l"><b>${esc(m.name)}</b><div class="nm">${esc(m.key)} · ${esc(m.group||"")}</div></td>
+    <td class="num">${p.last??"—"}</td><td class="num ${pctCls(p.chg_1d)}">${pct(p.chg_1d,2)}</td><td class="num ${pctCls(p.chg_5d)}">${pct(p.chg_5d,2)}</td>
+    <td class="l small">${esc(p.daily_pattern||"—")}${p.vol_rel!=null?` <span class="muted">(${p.vol_rel}x)</span>`:""}</td>
+    <td class="l">${m.quadrant?`<span class="tag ${m.quadrant.name.startsWith("Entrada de largos")?"g":m.quadrant.name.startsWith("Entrada de cortos")?"r":"n"}" title="${esc(m.quadrant.desc)}">${esc(m.quadrant.name)}</span>`:"—"}</td>
+    <td class="num">${c.cot_index_spec??"—"}</td><td class="num">${c.cot_index_comm??"—"}</td>
+    <td class="num">${c.spec_net!=null?fmtN(c.spec_net):"—"} <span class="small ${pctCls(c.spec_net_change)}">${c.spec_net_change!=null?(c.spec_net_change>0?"+":"")+fmtN(c.spec_net_change):""}</span></td>
+    <td class="l">${dirHTML(m.label)} <span class="muted small">${m.bias}</span></td></tr>`;}).join("");}
+$("#futBody").addEventListener("click",e=>{const tr=e.target.closest("tr[data-i]");if(tr)openFut(+tr.dataset.i);});
+
+// ---------- CONGRESO
+function renderPol(){const P=S.pol;
+  if(!P){$("#pbody").innerHTML=`<tr><td colspan="8" class="empty">Sin datos del Congreso todavía.</td></tr>`;$("#pkpis").innerHTML="";$("#clusters").innerHTML="";return;}
+  const days=+$("#pDays").value,q=$("#pq").value.toLowerCase().trim(),ch=$("#pCh").value,dr=$("#pDir").value;
+  const T=(P.trades||[]).filter(t=>t.days<=days&&(!ch||t.chamber===ch)&&(!dr||t.direction===dr)&&
+    (!q||t.ticker.toLowerCase().includes(q)||(t.company||"").toLowerCase().includes(q)||(t.member||"").toLowerCase().includes(q)));
+  const buys=T.filter(t=>t.direction==="Compra").length,sells=T.filter(t=>t.direction==="Venta").length;
+  $("#pkpis").innerHTML=`
+    <div class="kpi"><div class="lbl">Operaciones</div><div class="val num">${T.length}</div><div class="sub">últimos ${days} días</div></div>
+    <div class="kpi"><div class="lbl">Compras / ventas</div><div class="val num"><span class="up">${buys}</span> / <span class="down">${sells}</span></div></div>
+    <div class="kpi"><div class="lbl">Valores distintos</div><div class="val num">${new Set(T.map(t=>t.ticker)).size}</div></div>
+    <div class="kpi"><div class="lbl">Personas distintas</div><div class="val num">${new Set(T.map(t=>t.member)).size}</div></div>
+    <div class="kpi"><div class="lbl">Última declaración</div><div class="val num" style="font-size:17px">${esc(P.latest_filing||"—")}</div></div>
+    <div class="kpi"><div class="lbl">Retraso legal</div><div class="val num">≤45d</div><div class="sub">úsalo como sesgo</div></div>`;
+  $("#clusters").innerHTML=(P.clusters||[]).slice(0,24).map(c=>`<div class="card click" data-tk="${esc(c.ticker)}" style="cursor:pointer">
+    <div class="h"><span class="tk">${esc(c.ticker)}</span><span>${c.cluster?'<span class="tag g">CLUSTER</span>':""}${(c.committee_buyers||[]).length?'<span class="tag">COMITÉ</span>':""}</span></div>
+    <div class="small" style="margin-top:4px"><span class="up">${c.buys} compras</span> · <span class="down">${c.sells} ventas</span> · ~${money(c.buy_usd)} comprado</div>
+    <div class="nm" style="max-width:none;white-space:normal">${esc((c.recent_buyers&&c.recent_buyers.length?c.recent_buyers:c.committee_buyers||[]).join(", "))}</div></div>`).join("")
+    ||'<div class="muted">Sin clusters en la ventana.</div>';
+  $("#pbody").innerHTML=T.slice(0,S.polN).map(t=>`<tr class="click" data-tk="${esc(t.ticker)}">
+    <td class="l"><span class="tk">${esc(t.ticker)}</span>${t.is_option?' <span class="tag y">OPCIÓN</span>':""}<div class="nm">${esc(t.company)}</div></td>
+    <td class="l">${esc(t.member)}<div class="nm">${esc([t.party,t.state].filter(Boolean).join("-"))}${t.owner?" · "+esc(t.owner):""}</div></td>
+    <td class="l"><span class="tag n">${esc(t.chamber)}</span></td>
+    <td class="l"><span class="${t.direction==="Compra"?"up":t.direction==="Venta"?"down":"muted"}">${esc(t.direction)}</span></td>
+    <td class="num">${esc(t.amount)}</td><td class="num">${esc(t.transaction_date)}<div class="nm">hace ${t.days}d</div></td>
+    <td class="num">${esc(t.filing_date||"—")}${t.late?' <span class="tag r">tarde</span>':""}</td>
+    <td class="l small" style="white-space:normal;min-width:180px">${esc((t.committees||[]).slice(0,3).join(" · "))||'<span class="muted">—</span>'}
+      ${safeUrl(t.link)?` <a href="${safeUrl(t.link)}" target="_blank" rel="noopener">doc ↗</a>`:""}</td></tr>`).join("")
+    ||`<tr><td colspan="8" class="empty">Sin operaciones con estos filtros.</td></tr>`;
+  $("#polFoot").innerHTML=(T.length>S.polN?`<button class="more" id="polMore">Ver más (${T.length-S.polN} restantes)</button>`:"")+esc(P.note||"");
+  const mb=$("#polMore");if(mb)mb.onclick=()=>{S.polN+=300;renderPol();};}
+["#pq","#pCh","#pDir","#pDays"].forEach(id=>$(id).addEventListener("input",()=>{S.polN=150;renderPol();}));
+["#pbody","#clusters"].forEach(id=>$(id).addEventListener("click",e=>{const el=e.target.closest("[data-tk]");if(el&&!e.target.closest("a"))openDetail(el.dataset.tk);}));
+
+// ---------- CALENDARIO
+function renderCal(){const C=S.cal;
+  if(!C||!C.events){$("#callist").innerHTML=`<div class="empty">Aún no hay calendario.</div>`;$("#segs").innerHTML="";return;}
+  const uni=new Set((S.latest&&S.latest.records||[]).map(r=>r.ticker));
+  const q=$("#cq").value.toLowerCase().trim(),onlyU=$("#cUni").checked;
+  const types=Object.keys(C.by_type||{}).sort();
+  $("#segs").innerHTML=[["","Todos",C.count]].concat(types.map(t=>[t,t,C.by_type[t]])).map(([t,l,n])=>
+    `<button class="seg ${S.calFilter===t?"active":""}" data-t="${esc(t)}">${esc(l)} · ${n}</button>`).join("");
+  const items=C.events.filter(c=>(!S.calFilter||c.type===S.calFilter)&&(!onlyU||uni.has(c.ticker))&&
+    (!q||(c.ticker||"").toLowerCase().includes(q)||(c.company||"").toLowerCase().includes(q))).slice(0,600);
+  $("#callist").innerHTML=items.map(c=>{const p=(c.date||"").split("-");const who=c.ticker||c.company||"";
+    const tkHtml=c.ticker&&uni.has(c.ticker)?`<span class="tklink" data-tk="${esc(c.ticker)}">${esc(c.ticker)}</span>`:`<b>${esc(who)}</b>`;
+    const x=c.extra||{};const extra=[x.cash_runway_months!=null?`caja ${Number(x.cash_runway_months).toFixed(0)} meses`:"",
+      x.cohort_move_median_pct!=null?`mov. histórico mediano ${x.cohort_move_median_pct}% (p25 ${x.cohort_move_p25_pct}%, p75 ${x.cohort_move_p75_pct}%)`:"",
+      x.date_precision&&x.date_precision!=="day"?`fecha aprox. (${x.date_precision})`:""].filter(Boolean).join(" · ");
+    return `<div class="cal"><div class="day"><div class="n ${c.days<=10?"soon":""}">${esc(p[2]||"?")}</div><div class="mo">${MES[+p[1]]||""}</div></div>
+      <div class="meta"><div class="t">${tkHtml}${c.ticker&&c.company&&c.company!==c.ticker?` <span class="muted small">${esc(c.company)}</span>`:""}<span class="tag">${esc(c.type)}</span>
+      ${safeUrl(c.url)?` <a href="${safeUrl(c.url)}" target="_blank" rel="noopener">↗</a>`:""}</div>
+      <div class="s">${esc(c.title)} · ${c.days>=0?"en "+c.days+"d":"hace "+(-c.days)+"d"} · ${esc(c.source)}</div>${extra?`<div class="s">${esc(extra)}</div>`:""}</div></div>`;}).join("")
+    ||`<div class="empty">Sin eventos para este filtro.</div>`;}
+$("#segs").addEventListener("click",e=>{const b=e.target.closest("[data-t]");if(b){S.calFilter=b.dataset.t;renderCal();}});
+["#cq","#cUni"].forEach(id=>$(id).addEventListener("input",renderCal));
+$("#callist").addEventListener("click",e=>{const el=e.target.closest("[data-tk]");if(el)openDetail(el.dataset.tk);});
+
+// ---------- ESTADO
+function renderStatus(){const st=S.status;
+  if(!st){$("#srcBody").innerHTML=`<tr><td colspan="5" class="empty">Sin estado todavía.</td></tr>`;return;}
+  const src=Object.entries(st.sources||{});const ko=src.filter(([,v])=>!v.ok).length;
+  $("#skpis").innerHTML=`
+    <div class="kpi"><div class="lbl">Última ejecución</div><div class="val num" style="font-size:15px">${new Date(st.generated_at).toLocaleString("es-ES")}</div><div class="sub">modo ${esc(st.mode)}</div></div>
+    <div class="kpi"><div class="lbl">Duración</div><div class="val num">${st.elapsed_s}s</div></div>
+    <div class="kpi"><div class="lbl">Valores OK</div><div class="val num">${st.tickers_ok}</div></div>
+    <div class="kpi"><div class="lbl">Valores fallidos</div><div class="val num">${st.tickers_failed}</div></div>
+    <div class="kpi"><div class="lbl">Fuentes con aviso</div><div class="val num" style="color:${ko?"var(--warn-txt)":"var(--good-txt)"}">${ko}</div><div class="sub">de ${src.length}</div></div>
+    <div class="kpi"><div class="lbl">Sesión</div><div class="val num" style="font-size:17px">${esc(st.session_date)}</div></div>`;
+  $("#srcBody").innerHTML=src.map(([k,v])=>`<tr><td class="l"><b>${esc(k)}</b></td>
+    <td class="l">${v.ok?'<span class="ok">✓ OK</span>':'<span class="ko">✕ Aviso</span>'}</td><td class="num">${v.count??"—"}</td>
+    <td class="l small" style="white-space:normal">${esc(v.note||"")}</td><td class="num small">${v.at?new Date(v.at).toLocaleString("es-ES"):""}</td></tr>`).join("");
+  $("#runBody").innerHTML=(st.runs||[]).slice().reverse().map(r=>`<tr><td class="l">${new Date(r.at).toLocaleString("es-ES")}</td>
+    <td class="l">${esc(r.mode)}</td><td class="num">${r.ok}</td><td class="num">${r.failed}</td><td class="num">${r.secs}s</td></tr>`).join("");
+  const f=Object.entries(st.failed_sample||{});
+  $("#failList").innerHTML=f.length?f.map(([k,v])=>`<div><b>${esc(k)}</b>: ${esc(v)}</div>`).join(""):"Ninguno.";}
+
+// ---------- DETALLE
+const tip=$("#tip");
+function showTip(e,html){tip.innerHTML=html;tip.style.display="block";
+  const x=Math.min(e.clientX+12,innerWidth-tip.offsetWidth-8),y=Math.max(8,e.clientY-tip.offsetHeight-10);tip.style.left=x+"px";tip.style.top=y+"px";}
+function hideTip(){tip.style.display="none";}
+function sparkline(points,label,fmt){ // points [{x,y}] — una serie, línea 2px, con cursor y tooltip
+  if(!points||points.length<2)return "";const W=640,H=120,P=6;const ys=points.map(p=>p.y);
+  let lo=Math.min(...ys),hi=Math.max(...ys);if(lo===hi){lo-=1;hi+=1;}
+  const X=i=>P+i*(W-2*P)/(points.length-1),Y=v=>H-P-(v-lo)*(H-2*P)/(hi-lo);
+  const d=points.map((p,i)=>(i?"L":"M")+X(i).toFixed(1)+","+Y(p.y).toFixed(1)).join("");
+  const zero=lo<0&&hi>0?`<line x1="${P}" x2="${W-P}" y1="${Y(0)}" y2="${Y(0)}" stroke="var(--line)" stroke-dasharray="3 3"/>`:"";
+  const id="sp"+Math.random().toString(36).slice(2,8);
+  setTimeout(()=>{const svg=document.getElementById(id);if(!svg)return;const cur=svg.querySelector(".cur"),dot=svg.querySelector(".dot");
+    svg.addEventListener("mousemove",e=>{const r=svg.getBoundingClientRect();const fx=(e.clientX-r.left)/r.width*W;
+      let i=Math.round((fx-P)/(W-2*P)*(points.length-1));i=Math.max(0,Math.min(points.length-1,i));
+      cur.setAttribute("x1",X(i));cur.setAttribute("x2",X(i));cur.style.display="";dot.setAttribute("cx",X(i));dot.setAttribute("cy",Y(points[i].y));dot.style.display="";
+      showTip(e,`<b>${esc(points[i].x)}</b><br>${esc(label)}: ${fmt(points[i].y)}`);});
+    svg.addEventListener("mouseleave",()=>{cur.style.display="none";dot.style.display="none";hideTip();});},0);
+  return `<svg id="${id}" class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="${esc(label)}">${zero}
+    <path d="${d}" fill="none" stroke="var(--series)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+    <line class="cur" y1="0" y2="${H}" stroke="var(--mut)" stroke-width="1" vector-effect="non-scaling-stroke" style="display:none"/>
+    <circle class="dot" r="4" fill="var(--series)" stroke="var(--surface)" stroke-width="2" style="display:none"/></svg>`;}
+function gauge(b){if(!b)return"";const keys=[["strongSell","Venta fuerte","var(--div-neg)",1],["sell","Venta","var(--div-neg)",.55],
+    ["hold","Mantener","var(--div-mid)",1],["buy","Compra","var(--div-pos)",.55],["strongBuy","Compra fuerte","var(--div-pos)",1]];
+  const tot=keys.reduce((s,k)=>s+(b[k[0]]||0),0);if(!tot)return"";
+  return `<div class="gauge"><div class="track">${keys.filter(k=>b[k[0]]).map(k=>`<div title="${k[1]}: ${b[k[0]]}" style="flex:${b[k[0]]};background:${k[2]};opacity:${k[3]}"></div>`).join("")}</div>
+    <div class="lbls"><span>Venta (${(b.strongSell||0)+(b.sell||0)})</span><span>Mantener (${b.hold||0})</span><span>Compra (${(b.buy||0)+(b.strongBuy||0)})</span></div></div>`;}
+const M=(k,v,t)=>`<div class="m"${t?` title="${esc(t)}"`:""}><div class="k">${k}</div><div class="v num">${v}</div></div>`;
+function openDrawer(html){$("#drawer").innerHTML=html;$("#drawer").classList.add("open");$("#scrim").classList.add("open");$("#drawer").scrollTop=0;}
+function closeDrawer(){$("#drawer").classList.remove("open");$("#scrim").classList.remove("open");hideTip();}
+$("#scrim").onclick=closeDrawer;document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer();});
+$("#drawer").addEventListener("click",e=>{if(e.target.closest("[data-close]"))closeDrawer();});
+function openDetail(tk){const r=(S.latest&&S.latest.records||[]).find(x=>x.ticker===tk);
+  if(!r){const t=(S.pol&&S.pol.trades||[]).filter(x=>x.ticker===tk);
+    openDrawer(`<div class="dh"><div><div class="tk" style="font-size:20px">${esc(tk)}</div><div class="muted small">No está en el universo escaneado (añádelo a la watchlist en config.yml)</div></div><button class="iconbtn" data-close>✕</button></div>
+      <div class="db">${t.length?`<div class="section-t">Operaciones del Congreso</div>`+t.slice(0,20).map(x=>`<div class="small">${esc(x.transaction_date)} · ${esc(x.member)} · <b>${esc(x.direction)}</b> ${esc(x.amount)}</div>`).join(""):""}</div>`);return;}
+  const ck=r.checklist||{},f=r.fund||{};
+  const reasons=(r.reasons||[]).map(t=>`<span class="chip">${esc(t)}</span>`).join("")||'<span class="muted">Sin señales destacadas.</span>';
+  const idea=r.idea?`<div class="idea"><div><b>Idea de estructura (educativa):</b> ${esc(r.idea.structure)}${r.idea.expiration?` · vencimiento ${esc(r.idea.expiration)} (${r.idea.dte}d)`:""}</div>
+    <div class="small">${esc(r.idea.strikes)} · ${esc(r.idea.why_structure)}</div><div class="small">${esc(r.idea.management)}</div><div class="small muted">${esc(r.idea.note)}</div></div>`:"";
+  const comp=r.components?Object.entries(r.components).map(([k,v])=>M(k.replace("_"," "),v)).join(""):"";
+  const em=(r.expected_moves||[]).map(x=>`<tr><td class="l">${esc(x.expiration)}</td><td class="num">${x.dte}d</td><td class="num">±$${x.em_usd}</td><td class="num">±${x.em_pct}%</td></tr>`).join("");
+  const un=(r.unusual||[]).map(u=>`<tr><td class="l">${contractTxt(u)}</td><td class="num">${esc(u.expiration)}</td><td class="num">${money(u.premium)}</td>
+    <td class="num">${fmtN(u.volume)}/${fmtN(u.oi)}</td><td class="l"><span class="tag ${u.side==="ASK"?"g":u.side==="BID"?"r":"n"}">${esc(u.side)}</span></td><td class="l">${readLabel(u)}</td></tr>`).join("");
+  const cf=(r.confirmed||[]).map(u=>`<tr><td class="l">${contractTxt(u)}</td><td class="num">${esc(u.expiration)}</td><td class="num">${money(u.premium)}</td>
+    <td class="num">${fmtN(u.oi_before)} → ${fmtN(u.oi_after)}</td><td class="l">${dirHTML(u.direction)}</td><td class="num">${esc(u.date)}</td></tr>`).join("");
+  const cats=(r.catalysts||[]).map(c=>`<div class="small" style="padding:3px 0"><b>${esc(c.date)}</b> (${c.days}d) <span class="tag">${esc(c.type)}</span> ${esc(c.title||"")} <span class="muted">· ${esc(c.source||"")}</span></div>`).join("")||'<span class="muted small">Sin catalizadores conocidos en el horizonte.</span>';
+  const cg=r.congress;const cgH=cg?`<div class="grid4">${M("Compras",cg.buys)}${M("Ventas",cg.sells)}${M("Compradores",cg.n_buyers)}${M("Comprado aprox.",money(cg.buy_usd))}</div>
+    <div class="small" style="margin-top:6px">${cg.cluster?'<span class="tag g">CLUSTER</span> ':""}${cg.committee_relevant?'<span class="tag">COMITÉ RELEVANTE</span> ':""}${esc((cg.buyers||[]).join(", "))}${cg.sellers&&cg.sellers.length?` · <span class="down">vendieron:</span> ${esc(cg.sellers.join(", "))}`:""}</div>`
+    :'<span class="muted small">Sin operaciones de congresistas en la ventana.</span>';
+  const fc=r.futures_ctx||{};
+  const ins=r.insiders;const insH=ins?`<div class="small">Últimos 90 días: <span class="up">${ins.buys} compras (${money(ins.buy_usd)})</span> · <span class="down">${ins.sells} ventas (${money(ins.sell_usd)})</span></div>`+
+    (ins.recent||[]).map(x=>`<div class="small muted">${esc(x.date)} · ${esc(x.insider||"")} (${esc(x.position||"")}) · ${esc(x.text||"")}</div>`).join(""):'<span class="muted small">Sin datos.</span>';
+  const news=(r.news||[]).map(n=>`<div class="small" style="padding:4px 0;border-bottom:1px solid var(--line2)">${safeUrl(n.link)?`<a href="${safeUrl(n.link)}" target="_blank" rel="noopener">${esc(n.title)}</a>`:esc(n.title)}<div class="muted">${esc(n.publisher)} ${esc(n.date||"")}</div></div>`).join("");
+  const term=(r.iv_term||[]).filter(t=>t.iv!=null).map(t=>({x:`${t.expiration} (${t.dte}d)`,y:t.iv}));
+  openDrawer(`<div class="dh"><div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="tk" style="font-size:21px">${esc(r.ticker)}</span>${sigPill(r)} ${dirHTML(r.direction)} ${ckHTML(ck)}</div>
+      <div class="muted small">${esc(r.name||"")} · ${esc(r.sector||"")} · ${px(r.price)} <span class="${pctCls(r.change_pct)}">${pct(r.change_pct,2)}</span> · ${esc(r.source||"")} ${esc(r.session_date||"")}</div></div>
+      <button class="iconbtn" data-close aria-label="Cerrar">✕</button></div>
+    <div class="db">
+      ${r.error?`<div class="ko">⚠ ${esc(r.error)}</div>`:""}
+      <div class="chips">${reasons}</div>${idea}
+      <div class="section-t">Checklist de la estrategia</div>
+      <div class="grid4">${M("Congreso a favor (+1)",ck.congreso?"Sí":"No")}${M("Futuros a favor (+1)",ck.futuros?"Sí":"No")}${M("Flujo confirmado OI (+2)",ck.flujo_confirmado?"Sí":"No")}${M("Puntos",(ck.puntos??0)+(ck.entrada?" · ENTRADA":""))}</div>
+      <div class="section-t">Desglose del score (${r.score})</div><div class="grid4">${comp}</div>
+      <div class="section-t">Opciones (${r.n_expirations||0} vencimientos, ${fmtN(r.n_contracts)} contratos)</div>
+      <div class="grid4">
+        ${M("Volumen opciones",fmtN(r.opt_vol))}${M("Vol. relativo 20d",r.rel_vol!=null?r.rel_vol+"x":"—")}${M("Ratio C/P volumen",r.cp_vol_ratio??"—")}${M("Ratio C/P OI",r.cp_oi_ratio??"—")}
+        ${M("Prima calls",money(r.call_premium))}${M("Prima puts",money(r.put_premium))}${M("Prima alcista inusual",money(r.bull_premium))}${M("Prima bajista inusual",money(r.bear_premium))}
+        ${M("IV30",ivp(r.iv30))}${M("IV rank / pct",(r.iv_rank!=null?Math.round(r.iv_rank):"—")+" / "+(r.iv_pct!=null?Math.round(r.iv_pct):"—"),"Necesita ~20 sesiones de histórico")}${M("IV corto / IV30",r.front_premium??"—",">1,25 = evento descontado")}${M("GEX (1%)",money(r.gex_usd_1pct),"Exposición gamma de los creadores de mercado por 1% de movimiento")}
+        ${M("Max pain",r.max_pain!=null?"$"+r.max_pain:"—",r.max_pain_exp||"")}${M("Muro de calls",r.call_wall!=null?"$"+r.call_wall:"—","Strike con más OI de calls (≤60d)")}${M("Muro de puts",r.put_wall!=null?"$"+r.put_wall:"—","Strike con más OI de puts (≤60d)")}${M("Alertas OI",`${(r.oi_flags||{}).confirmed||0}✓ / ${(r.oi_flags||{}).not_confirmed||0}✕ / ${(r.oi_flags||{}).pending||0}…`,"confirmadas / no confirmadas / pendientes")}
+      </div>
+      ${term.length>1?`<div class="section-t">Estructura temporal de la IV (ATM por vencimiento)</div><div class="panel" style="padding:8px">${sparkline(term,"IV ATM",v=>(v*100).toFixed(1)+"%")}</div>`:""}
+      ${em?`<div class="section-t">Movimiento esperado (straddle ATM)</div><div class="panel"><table class="sm"><thead><tr><th class="l">Vencimiento</th><th>Días</th><th>±$</th><th>±%</th></tr></thead><tbody>${em}</tbody></table></div>`:""}
+      ${un?`<div class="section-t">Contratos inusuales hoy</div><div class="panel tscroll"><table class="sm"><thead><tr><th class="l">Contrato</th><th>Vto</th><th>Prima</th><th>Vol/OI</th><th class="l">Lado</th><th class="l">Lectura</th></tr></thead><tbody>${un}</tbody></table></div>`:""}
+      ${cf?`<div class="section-t">Confirmadas por subida de OI</div><div class="panel tscroll"><table class="sm"><thead><tr><th class="l">Contrato</th><th>Vto</th><th>Prima</th><th>OI</th><th class="l">Lectura</th><th>Marcada</th></tr></thead><tbody>${cf}</tbody></table></div>`:""}
+      <div class="section-t">Catalizadores</div>${cats}
+      <div class="section-t">Congreso (${(S.pol&&S.pol.window_days)||90} días)</div>${cgH}
+      <div class="section-t">Contexto de futuros</div><div class="small">${fc.bias!=null?`Sesgo ${fc.bias} · `:""}${esc((fc.why||[]).join(" · "))||'<span class="muted">—</span>'}</div>
+      ${f&&Object.keys(f).length?`<div class="section-t">Fundamentales y analistas</div><div class="grid4">${M("Capitalización",money(f.market_cap))}${M("Short % float",f.short_pct_float!=null?(f.short_pct_float*100).toFixed(1)+"%":"—")}
+        ${M("Precio objetivo",f.target_mean!=null?"$"+f.target_mean:"—")}${M("Potencial",pct(r.upside_pct))}</div>${gauge(f.analyst_breakdown)}`:""}
+      <div class="section-t">Insiders corporativos (Formulario 4)</div>${insH}
+      ${news?`<div class="section-t">Noticias</div>${news}`:""}
+    </div>`);}
+function openFut(i){const m=S.fut.markets[i];const c=m.cot||{},p=m.price||{};
+  const hist=(c.history||[]).map(h=>({x:h.d,y:h.spec}));
+  openDrawer(`<div class="dh"><div><div style="display:flex;gap:8px;align-items:center"><span class="tk" style="font-size:20px">${esc(m.name)}</span>${dirHTML(m.label)}</div>
+    <div class="muted small">${esc(m.key)} · CFTC ${esc(m.code)} · Yahoo ${esc(m.yf)} · informe ${esc(c.report_date||"—")}</div></div><button class="iconbtn" data-close>✕</button></div>
+    <div class="db"><div class="chips">${(m.reasons||[]).map(t=>`<span class="chip">${esc(t)}</span>`).join("")}</div>
+    ${m.quadrant?`<div class="idea"><b>${esc(m.quadrant.name)}</b> — ${esc(m.quadrant.desc)}</div>`:""}
+    <div class="section-t">Posicionamiento (COT)</div><div class="grid4">
+      ${M("Open interest",fmtN(c.open_interest))}${M("Δ OI semana",c.oi_change!=null?fmtN(c.oi_change):"—")}${M("Neto especuladores",fmtN(c.spec_net))}${M("Δ neto espec.",c.spec_net_change!=null?fmtN(c.spec_net_change):"—")}
+      ${M("Neto commercials",fmtN(c.comm_net))}${M("COT idx espec. 3a",c.cot_index_spec??"—")}${M("COT idx commercials",c.cot_index_comm??"—")}${M("COT idx espec. 1a",c.cot_index_spec_1y??"—")}
+      ${c.lev_money_net!=null?M("Hedge funds (lev. money)",fmtN(c.lev_money_net))+M("Idx hedge funds",c.lev_money_index??"—")+M("Gestoras (asset mgr)",fmtN(c.asset_mgr_net))+M("Idx gestoras",c.asset_mgr_index??"—"):""}
+    </div>
+    ${hist.length>1?`<div class="section-t">Neto especuladores · 52 semanas</div><div class="panel" style="padding:8px">${sparkline(hist,"Neto especuladores",v=>fmtN(v))}</div>`:""}
+    <div class="section-t">Precio y volumen</div><div class="grid4">${M("Último",p.last??"—")}${M("1 día",pct(p.chg_1d,2))}${M("5 días",pct(p.chg_5d,2))}${M("20 días",pct(p.chg_20d,2))}
+      ${M("Volumen relativo",p.vol_rel!=null?p.vol_rel+"x":"—")}${M("Sobre media 50d",p.above_sma50==null?"—":p.above_sma50?"Sí":"No")}${M("Sobre media 200d",p.above_sma200==null?"—":p.above_sma200?"Sí":"No")}${M("Semana COT",pct(p.cot_week_chg,2))}</div>
+    </div>`);}
+
+// ---------- carga
+async function load(){
+  const [L,F,FU,P,C,ST]=await Promise.all(["latest","flow","futures","political","catalysts","status"].map(n=>getJSON("data/"+n+".json")));
+  Object.assign(S,{latest:L,flow:F,fut:FU,pol:P,cal:C,status:ST});
+  $("#updated").innerHTML=L?`Actualizado ${new Date(L.generated_at).toLocaleString("es-ES",{dateStyle:"short",timeStyle:"short"})}<br><span class="muted">sesión ${esc(L.session_date)}</span>`:"sin datos aún";
+  const h=(location.hash||"").slice(1);switchTab(["radar","flow","fut","pol","cal","status"].includes(h)?h:S.tab);}
+load();setInterval(load,5*60*1000);
+</script>
+</body>
+</html>
