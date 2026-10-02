@@ -79,6 +79,16 @@ jobs:
             echo "Primera ejecucion: no hay rama data todavia"; mkdir -p data
           fi
 
+      - name: Recuperar ordenes de la cartera (rama orders)
+        env:
+          REPO_URL: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+        run: |
+          if git ls-remote --exit-code --heads "$REPO_URL" orders >/dev/null 2>&1; then
+            git clone --quiet --depth 1 --branch orders "$REPO_URL" orders
+          else
+            mkdir -p orders
+          fi
+
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
@@ -90,6 +100,7 @@ jobs:
       - name: Ejecutar OpScan
         env:
           OPSCAN_DATA_DIR: ${{ github.workspace }}/data
+          OPSCAN_ORDERS_DIR: ${{ github.workspace }}/orders
           OPSCAN_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
           FINNHUB_TOKEN: ${{ secrets.FINNHUB_TOKEN }}
           FMP_TOKEN: ${{ secrets.FMP_TOKEN }}
