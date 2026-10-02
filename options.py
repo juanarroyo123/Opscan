@@ -453,3 +453,97 @@ def analyze_chain(und, contracts, ocfg):
 
 def oi_lookup(contracts):
     return {c["symbol"]: c["oi"] for c in contracts if c.get("symbol")}
+
+
+# ------------------------------------------------------------------ utilidades v2.2
+GEX_TICKERS = {"SPX", "SPY", "QQQ", "NDX", "IWM"}
+
+
+def option_grid(contracts, spot, min_dte=10, max_dte=200, max_exps=8, width=0.45):
+    """Rejilla compacta (vencimiento -> contratos cerca del dinero) para construir ideas con
+    strikes y precios REALES. Solo en memoria; no se publica entera."""
+    if not spot:
+        return {}
+    by = {}
+    for c in contracts:
+        if not (min_dte <= c["dte"] <= max_dte):
+            continue
+        if abs(c["strike"] / spot - 1) > width:
+            continue
+        mid = mid_price(c)
+        if mid <= 0 or c["ask"] <= 0:
+            continue
+        by.setdefault(c["expiration"], []).append({
+            "symbol": c["symbol"], "kind": c["kind"], "strike": c["strike"], "dte": c["dte"],
+            "expiration": c["expiration"], "mid": round(mid, 2), "bid": c["bid"], "ask": c["ask"],
+            "oi": c["oi"], "delta": rnd(c.get("delta"), 3), "iv": rnd(c["iv"], 4)})
+    exps = sorted(by.keys())[:max_exps]
+    return {e: sorted(by[e], key=lambda x: (x["kind"], x["strike"])) for e in exps}
+
+
+def price_map(contracts, symbols):
+    out = {}
+    if not symbols:
+        return out
+    for c in contracts:
+        if c["symbol"] in symbols:
+            out[c["symbol"]] = {"mid": round(mid_price(c), 3), "bid": c["bid"], "ask": c["ask"],
+                                "last": c["last"], "oi": c["oi"]}
+    return out
+
+
+def gex_profile(contracts, spot, pct_range=0.06, step=0.005, max_dte=60):
+    """Exposicion gamma de los creadores de mercado a distintos precios del indice.
+    Supuesto estandar: los dealers estan largos de calls y cortos de puts de los clientes
+    (GEX = gamma_call*OI - gamma_put*OI). GEX > 0 => frenan movimientos; GEX < 0 => los amplifican.
+    Devuelve gex actual, nivel de 'flip' (cambio de signo) y muros."""
+    if not spot:
+        return None
+    cs = [c for c in contracts if 0 <= c["dte"] <= max_dte and c["oi"] > 0 and 0.01 < c["iv"] < 5]
+    if not cs:
+        return None
+    levels = []
+    n = int(round(pct_range / step))
+    for i in range(-n, n + 1):
+        s = spot * (1 + i * step)
+        tot = 0.0
+        for c in cs:
+            _, g = bs_greeks(c["kind"], s, c["strike"], max(c["dte"], 0.5) / 365.0, c["iv"])
+            if g:
+                v = g * c["oi"] * 100 * s * s * 0.01
+                tot += v if c["kind"] == "C" else -v
+        levels.append((round(s, 2), tot))
+    now = min(levels, key=lambda x: abs(x[0] - spot))[1]
+    flip = None
+    for (s1, g1), (s2, g2) in zip(levels, levels[1:]):
+        if g1 == 0 or (g1 < 0) != (g2 < 0):
+            x = s1 + (s2 - s1) * (abs(g1) / (abs(g1) + abs(g2))) if (g1 or g2) else s1
+            if flip is None or abs(x - spot) < abs(flip - spot):
+                flip = round(x, 2)
+    call_oi, put_oi = {}, {}
+    for c in cs:
+        d = call_oi if c["kind"] == "C" else put_oi
+        d[c["strike"]] = d.get(c["strike"], 0) + c["oi"]
+    return {
+        "spot": rnd(spot, 2), "gex_now": round(now), "regime": "positiva" if now >= 0 else "negativa",
+        "flip": flip, "call_wall": max(call_oi, key=call_oi.get) if call_oi else None,
+        "put_wall": max(put_oi, key=put_oi.get) if put_oi else None,
+        "profile": [{"s": s, "g": round(g)} for s, g in levels],
+    }
+
+
+def recompute_flow(m, unusual):
+    """Recalcula prima alcista/bajista/efectiva tras re-etiquetar contratos (p.ej. dividendos)."""
+    bull = bear = eff = 0.0
+    for u in unusual:
+        _, w = DIR_WEIGHTS[(u["kind"][0], u["side"])]
+        wt = u.get("weight", 1.0)
+        eff += u["premium"] * wt
+        if u["direction"] == "ALCISTA":
+            bull += u["premium"] * w * wt
+        elif u["direction"] == "BAJISTA":
+            bear += u["premium"] * w * wt
+    m["bull_premium"], m["bear_premium"], m["effective_premium"] = round(bull), round(bear), round(eff)
+    tot = bull + bear
+    m["flow_bias"] = round((bull - bear) / tot, 3) if tot > 0 else 0.0
+    return m

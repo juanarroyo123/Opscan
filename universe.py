@@ -2,12 +2,15 @@
 import csv
 import io
 import os
+import re
 
 from .config import CONFIG_DIR
 from .util import get, log
 
 SP500_URL = "https://raw.githubusercontent.com/datasets/s-and-p-500-companies/main/data/constituents.csv"
 NDX_WIKI = "https://en.wikipedia.org/wiki/Nasdaq-100"
+IWB_URL = ("https://www.ishares.com/us/products/239707/ishares-russell-1000-etf/1467271812596.ajax"
+           "?fileType=csv&fileName=IWB_holdings&dataType=fund")
 
 INDEX_SECTOR = "Indice"
 ETF_SECTOR = "ETF"
@@ -75,7 +78,42 @@ def load_nasdaq100(status=None):
         return data
 
 
-def build_universe(cfg, status=None, catalyst_tickers=None, offline=False):
+def parse_ishares_csv(text, known=None):
+    """CSV de posiciones de iShares (con lineas de cabecera antes de 'Ticker,...')."""
+    known = known or set()
+    lines = (text or "").splitlines()
+    start = next((i for i, l in enumerate(lines) if l.startswith("Ticker,") or l.startswith('"Ticker"')), None)
+    if start is None:
+        return {}
+    out = {}
+    for r in csv.DictReader(io.StringIO("\n".join(lines[start:]))):
+        tk = (r.get("Ticker") or "").strip().upper()
+        if not tk or tk == "-" or (r.get("Asset Class") or "Equity").strip() != "Equity":
+            continue
+        if not re.match(r"^[A-Z][A-Z0-9.]{0,6}$", tk):
+            continue
+        # iShares quita el punto de las clases (BRKB -> BRK.B)
+        if tk not in known and len(tk) >= 3 and (tk[:-1] + "." + tk[-1]) in known:
+            tk = tk[:-1] + "." + tk[-1]
+        out[tk] = {"name": (r.get("Name") or "").title(), "sector": (r.get("Sector") or "").strip()}
+    return out
+
+
+def load_russell1000(status=None, known=None):
+    try:
+        data = parse_ishares_csv(get(IWB_URL, timeout=60).text, known)
+        if len(data) < 800:
+            raise ValueError(f"solo {len(data)} valores")
+        if status:
+            status.ok("Universo Russell 1000 (iShares IWB)", len(data))
+        return data
+    except Exception as e:
+        if status:
+            status.fail("Universo Russell 1000 (iShares IWB)", e)
+        return {}
+
+
+def build_universe(cfg, status=None, catalyst_tickers=None, offline=False, low_activity=None):
     """Devuelve dict ticker -> {name, sector, industry, groups:[...]} ordenado por prioridad."""
     u = cfg["universe"]
     meta = {}
@@ -111,6 +149,18 @@ def build_universe(cfg, status=None, catalyst_tickers=None, offline=False):
         add(t, "sp500", name=r.get("name"), sector=r.get("sector"), industry=r.get("industry"))
     for t, r in ndx.items():
         add(t, "ndx", sector=r.get("sector"))
+    skipped = 0
+    if u.get("russell1000") and not offline:
+        low = low_activity or set()
+        for t, r in load_russell1000(status, set(sp) | set(ndx)).items():
+            if t in meta:
+                continue
+            if t in low:
+                skipped += 1   # casi sin volumen de opciones: no merece la pena escanearlo
+                continue
+            add(t, "r1000", name=r.get("name"), sector=r.get("sector"))
+        if skipped:
+            log(f"Universo: {skipped} valores del Russell 1000 omitidos por poca actividad en opciones")
     # sector de valores del watchlist/catalizador si estan en S&P
     for t, m in meta.items():
         if not m["sector"] and t in sp:

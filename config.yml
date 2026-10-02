@@ -15,7 +15,11 @@ universe:
   exclude: []
   # Anadir automaticamente las biotech con fecha PDUFA / lectura en el horizonte
   add_catalyst_tickers: true
-  max_tickers: 900
+  max_tickers: 1300
+  # Russell 1000 (las 1.000 mayores de EEUU, incluye medianas del NYSE). Se omiten solas las que
+  # casi no negocian opciones (media < min_avg_opt_vol contratos/dia en las ultimas 20 sesiones).
+  russell1000: true
+  min_avg_opt_vol: 300
 
 # ---------- Escaner de opciones ----------
 options:

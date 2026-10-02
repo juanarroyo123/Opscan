@@ -156,6 +156,15 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
 .help{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:13px;color:var(--txt2);margin-bottom:12px}
 .help b{color:var(--txt)}
 @media(max-width:640px){.logo small{display:none} .updated{font-size:10px}}
+.heat{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.tile{border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:var(--surface)}
+.tile .h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.tile .nm2{font-weight:800}
+.tile .bar2{height:8px;border-radius:4px;background:var(--neu-bg);margin:8px 0 6px;position:relative;overflow:hidden}
+.tile .bar2 b{position:absolute;top:0;height:8px}
+.btn{display:inline-block;border:0;border-radius:9px;padding:8px 14px;font-weight:800;cursor:pointer;background:var(--pri);color:#fff;font-size:13px}
+.btn.sec{background:var(--surface2);color:var(--txt);border:1px solid var(--line)}
+.btn:hover{text-decoration:none;filter:brightness(1.05)}
 .more{display:block;margin:10px auto 0;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 16px;cursor:pointer;font-weight:700}
 </style>
 </head>
@@ -170,7 +179,9 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
   </div>
   <nav class="tabs" id="tabs">
     <button class="tab active" data-tab="radar">Radar</button>
+    <button class="tab" data-tab="trk">Seguimiento</button>
     <button class="tab" data-tab="flow">Flujo</button>
+    <button class="tab" data-tab="sec">Sectores</button>
     <button class="tab" data-tab="fut">Futuros</button>
     <button class="tab" data-tab="pol">Congreso</button>
     <button class="tab" data-tab="cal">Calendario</button>
@@ -236,6 +247,7 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
   <!-- FUTUROS -->
   <section id="v-fut" hidden>
     <div class="kpis" id="fkpis"></div>
+    <div id="gexBox"></div>
     <div class="help"><b>Patrones de entrada y salida.</b> Precio y OI suben → entran largos ·
       precio sube y OI baja → cierre de cortos (rebote débil) · precio baja y OI sube → entran cortos ·
       precio y OI bajan → salen largos (capitulación). <b>COT idx</b> = posición neta actual en un rango de 0 a 100 frente a los últimos 3 años
@@ -280,6 +292,39 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
     <div id="callist"></div>
     <div class="foot">Fuentes: <a href="https://www.pdufa.bio" target="_blank" rel="noopener">pdufa.bio</a> (PDUFA, lecturas y AdCom) ·
       ClinicalTrials.gov · SEC EDGAR · Finnhub · Reserva Federal · manual. Verifica siempre las fechas en la fuente original.</div>
+  </section>
+
+  <!-- SEGUIMIENTO -->
+  <section id="v-trk" hidden>
+    <div class="kpis" id="tkpis"></div>
+    <div class="help"><b>¿Funciona la estrategia?</b> Cada señal (MEDIA, ALTA, pre-alerta o ENTRADA) se guarda con su precio y
+      se mide cuánto se movió la <b>acción</b> a favor de la dirección indicada a 5, 10 y 20 sesiones. Con 3–4 semanas de datos
+      sabrás qué tipo de señal acierta. Abajo, la <b>cartera simulada</b>: cada ENTRADA abre sola una operación de prueba (1 contrato,
+      objetivo +100 %, stop −50 %), y tú puedes simular las que quieras con el botón del detalle.</div>
+    <div class="section-t">Acierto por tipo de señal</div>
+    <div class="panel"><div class="tscroll"><table><thead><tr>
+      <th class="l">Grupo</th><th>Señales</th><th>5 sesiones</th><th>10 sesiones</th><th>20 sesiones</th>
+    </tr></thead><tbody id="trkStats"></tbody></table></div></div>
+    <div class="section-t">Cartera simulada · abiertas</div>
+    <div class="panel"><div class="tscroll"><table class="big"><thead><tr>
+      <th class="l">Id</th><th class="l">Valor</th><th class="l">Operación</th><th>Coste</th><th>Valor hoy</th><th>P&amp;L</th><th>Abierta</th><th>Vence</th><th class="l"></th>
+    </tr></thead><tbody id="paperOpen"></tbody></table></div></div>
+    <div class="section-t">Cartera simulada · cerradas</div>
+    <div class="panel"><div class="tscroll"><table class="big"><thead><tr>
+      <th class="l">Id</th><th class="l">Valor</th><th class="l">Operación</th><th>Coste</th><th>Salida</th><th>P&amp;L</th><th>Abierta → cerrada</th><th class="l">Motivo</th>
+    </tr></thead><tbody id="paperClosed"></tbody></table></div></div>
+    <div class="section-t">Últimas señales registradas</div>
+    <div class="panel"><div class="tscroll"><table class="big"><thead><tr>
+      <th>Fecha</th><th class="l">Valor</th><th class="l">Dirección</th><th>Score</th><th class="l">Tipo</th><th>Precio</th><th>5d</th><th>10d</th><th>20d</th><th>Hasta hoy</th>
+    </tr></thead><tbody id="trkSignals"></tbody></table></div></div>
+    <div class="foot" id="trkFoot"></div>
+  </section>
+
+  <!-- SECTORES -->
+  <section id="v-sec" hidden>
+    <div class="help"><b>Hacia dónde va el dinero en opciones.</b> Prima direccional de hoy por sector (calls compradas y puts
+      vendidas = alcista; puts compradas y calls vendidas = bajista), sin coberturas ni spreads. Pulsa un valor para ver su detalle.</div>
+    <div class="heat" id="heat"></div>
   </section>
 
   <!-- ESTADO -->
@@ -342,8 +387,8 @@ async function getJSON(p){try{const r=await fetch(p+"?ts="+Date.now());if(!r.ok)
 // ---------- pestañas
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
 function switchTab(t){S.tab=t;document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===t));
-  ["radar","flow","fut","pol","cal","status"].forEach(x=>$("#v-"+x).hidden=x!==t);
-  ({radar:renderRadar,flow:renderFlow,fut:renderFut,pol:renderPol,cal:renderCal,status:renderStatus})[t]();
+  ["radar","trk","flow","sec","fut","pol","cal","status"].forEach(x=>$("#v-"+x).hidden=x!==t);
+  ({radar:renderRadar,trk:renderTrk,flow:renderFlow,sec:renderSec,fut:renderFut,pol:renderPol,cal:renderCal,status:renderStatus})[t]();
   try{history.replaceState(null,"","#"+t);}catch(e){}}
 
 // ---------- RADAR
@@ -353,7 +398,7 @@ function renderKPIs(){const L=S.latest;if(!L){$("#kpis").innerHTML="";return;}co
   <div class="kpi"><div class="lbl">Entradas (checklist)</div><div class="val num" style="color:var(--good-txt)">${s.entradas??0}</div><div class="sub">${s.pre_alertas??0} pre-alertas</div></div>
   <div class="kpi"><div class="lbl">Señal ALTA</div><div class="val num">${s.alta??0}</div><div class="sub">${s.media??0} MEDIA</div></div>
   <div class="kpi"><div class="lbl">Ideas alcistas / bajistas</div><div class="val num"><span class="up">${s.alcistas??0}</span> / <span class="down">${s.bajistas??0}</span></div><div class="sub">score MEDIA o más</div></div>
-  <div class="kpi"><div class="lbl">Régimen (futuros)</div><div class="val">${reg?dirHTML(reg.label):"—"}</div><div class="sub">sesgo ${reg?reg.bias:"—"}</div></div>
+  <div class="kpi"><div class="lbl">Régimen (futuros)</div><div class="val">${reg?dirHTML(reg.label):"—"}</div><div class="sub">sesgo ${reg?reg.bias:"—"}${(L.market_gex||{}).SPX?` · gamma SPX ${esc(L.market_gex.SPX.regime)}`:""}</div></div>
   <div class="kpi"><div class="lbl">Sesión</div><div class="val num" style="font-size:17px">${esc(L.session_date||"—")}</div><div class="sub">modo ${esc(L.mode||"")}</div></div>`;}
 function nextCatDays(r){return r.next_catalyst?r.next_catalyst.days:9999;}
 function renderRadar(){const L=S.latest;renderKPIs();
@@ -374,7 +419,7 @@ function renderRadar(){const L=S.latest;renderKPIs();
     return `<tr class="click" data-tk="${esc(x.ticker)}">
       <td class="l"><div class="tk">${esc(x.ticker)}</div><div class="nm">${esc(x.name||"")}${x.sector?" · "+esc(x.sector):""}</div></td>
       <td class="num">${px(x.price)}<div class="small ${pctCls(x.change_pct)}">${pct(x.change_pct,2)}</div></td>
-      <td>${sigPill(x)}</td><td class="l">${dirHTML(x.direction)}</td><td class="l">${ckHTML(x.checklist)}</td>
+      <td>${sigPill(x)}</td><td class="l">${dirHTML(x.direction)}${x.squeeze?` <span class="tag y" title="${esc((x.squeeze.reasons||[]).join(", "))}">cortos ${esc(x.squeeze.level)}</span>`:""}</td><td class="l">${ckHTML(x.checklist)}</td>
       <td class="num">${x.unusual_count?`${money(x.unusual_premium)} <span class="muted small">(${x.unusual_count})</span>${biasBar(x.flow_bias)}`:'<span class="muted">—</span>'}</td>
       <td class="num">${x.rel_vol!=null?x.rel_vol+"x":"—"}</td>
       <td class="num">${ivp(x.iv30)}<span class="muted small"> · ${x.iv_rank!=null?Math.round(x.iv_rank):"—"}</span></td>
@@ -410,10 +455,86 @@ function renderFlow(){const F=S.flow;
 ["#fq","#fKind","#fDte","#fPrem","#fSide","#fOtm","#fHedge"].forEach(id=>$(id).addEventListener("input",renderFlow));
 ["#flowBody","#confBody"].forEach(id=>$(id).addEventListener("click",e=>{const tr=e.target.closest("tr[data-tk]");if(tr)openDetail(tr.dataset.tk);}));
 
+// ---------- GitHub Issues (cartera simulada)
+function repoName(){const L=S.latest||{};if(L.repo)return L.repo;
+  const host=location.hostname.split(".")[0],seg=location.pathname.split("/").filter(Boolean)[0];return host&&seg?host+"/"+seg:"";}
+function issueUrl(title,body){const r=repoName();if(!r)return "";
+  return `https://github.com/${r}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;}
+function simUrl(r){const i=r.idea||{};if(!i.legs)return "";
+  const payload={ticker:r.ticker,direction:r.direction,structure:i.structure,price:r.price,
+    legs:i.legs.map(l=>({action:l.action,symbol:l.symbol,kind:l.kind,strike:l.strike,expiration:l.expiration,mid:l.mid})),
+    notes:(r.reasons||[]).slice(0,3).join("; ")};
+  const body="Operación SIMULADA creada desde la web de OpScan. Pulsa \"Submit new issue\" y el bot la anotará en la cartera (no se mueve dinero real).\n\n```json\n"+JSON.stringify(payload,null,1)+"\n```";
+  return issueUrl("PAPER ABRIR "+r.ticker,body);}
+function closeUrl(t){return issueUrl("PAPER CERRAR "+t.id,"Cerrar la operación simulada "+t.id+" ("+t.ticker+") al precio de la última actualización.\n\n```json\n{\"id\":\""+t.id+"\"}\n```");}
+function legsTxt(legs){return (legs||[]).map(l=>`${l.qty>0||l.action==="COMPRAR"?"+":"−"}${(l.kind||"")[0]==="C"?"C":"P"} ${l.strike} ${String(l.expiration||"").slice(5)}`).join(" / ");}
+const pnlH=(v,p)=>`<span class="${v>=0?"up":"down"}">${v>=0?"+":""}${money(v)}${p!=null?` (${p>=0?"+":""}${p}%)`:""}</span>`;
+
+// ---------- SEGUIMIENTO
+function cellH(st,h){const n=st["n"+h],hit=st["hit"+h],avg=st["avg"+h];if(!n)return '<span class="muted">—</span>';
+  return `<b class="${hit>=50?"up":"down"}">${hit}%</b> <span class="muted small">· ${avg>=0?"+":""}${avg}% · n=${n}</span>`;}
+function renderTrk(){const T=S.trk,P=S.paper;
+  const all=(T&&T.stats||[]).find(x=>x.group==="Todas")||{},ent=(T&&T.stats||[]).find(x=>x.group==="ENTRADA")||{};
+  const ps=(P&&P.summary)||{},po=ps.open||{},pc=ps.closed||{};
+  $("#tkpis").innerHTML=`
+    <div class="kpi"><div class="lbl">Señales registradas</div><div class="val num">${T?T.total:0}</div><div class="sub">desde el inicio</div></div>
+    <div class="kpi"><div class="lbl">Acierto a 5 sesiones</div><div class="val num">${all.hit5!=null?all.hit5+"%":"—"}</div><div class="sub">n=${all.n5||0} · todas</div></div>
+    <div class="kpi"><div class="lbl">Acierto ENTRADAS (5s)</div><div class="val num">${ent.hit5!=null?ent.hit5+"%":"—"}</div><div class="sub">n=${ent.n5||0}</div></div>
+    <div class="kpi"><div class="lbl">Cartera abierta</div><div class="val num">${po.n||0}</div><div class="sub">${po.n?pnlH(po.pnl,po.ret_pct):"sin posiciones"}</div></div>
+    <div class="kpi"><div class="lbl">Cerradas</div><div class="val num">${pc.n||0}</div><div class="sub">${pc.n?pnlH(pc.pnl,pc.ret_pct):"—"}</div></div>
+    <div class="kpi"><div class="lbl">% operaciones ganadoras</div><div class="val num">${pc.win_rate!=null?pc.win_rate+"%":"—"}</div><div class="sub">cartera simulada</div></div>`;
+  $("#trkStats").innerHTML=(T&&T.stats||[]).filter(x=>x.n).map(x=>`<tr><td class="l"><b>${esc(x.group)}</b></td><td class="num">${x.n}</td>
+    <td class="num">${cellH(x,5)}</td><td class="num">${cellH(x,10)}</td><td class="num">${cellH(x,20)}</td></tr>`).join("")
+    ||`<tr><td colspan="5" class="empty">Aún no hay señales registradas. Se guardan en cada cierre.</td></tr>`;
+  const tr=(P&&P.trades)||[];
+  const op=tr.filter(t=>t.status==="OPEN"),cl=tr.filter(t=>t.status!=="OPEN").reverse();
+  $("#paperOpen").innerHTML=op.map(t=>`<tr class="click" data-tk="${esc(t.ticker)}"><td class="l">${esc(t.id)} <span class="tag ${t.source==="AUTO"?"":"y"}">${esc(t.source)}</span></td>
+    <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${esc(legsTxt(t.legs))}</td>
+    <td class="num">${money(t.entry_cost)}</td><td class="num">${money(t.value)}</td><td class="num">${pnlH(t.pnl,t.pnl_pct)}</td>
+    <td class="num">${esc(t.opened)}</td><td class="num">${esc(t.expiration||"")}</td>
+    <td class="l">${closeUrl(t)?`<a class="btn sec" href="${esc(closeUrl(t))}" target="_blank" rel="noopener">Cerrar</a>`:""}</td></tr>`).join("")
+    ||`<tr><td colspan="9" class="empty">Sin operaciones abiertas. Abre una desde el detalle de un valor (botón “Simular”) o espera a la próxima ENTRADA.</td></tr>`;
+  $("#paperClosed").innerHTML=cl.slice(0,100).map(t=>`<tr class="click" data-tk="${esc(t.ticker)}"><td class="l">${esc(t.id)} <span class="tag ${t.source==="AUTO"?"":"y"}">${esc(t.source)}</span></td>
+    <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${esc(legsTxt(t.legs))}</td>
+    <td class="num">${money(t.entry_cost)}</td><td class="num">${money(t.exit_value)}</td><td class="num">${pnlH(t.pnl,t.pnl_pct)}</td>
+    <td class="num">${esc(t.opened)} → ${esc(t.closed||"")}</td><td class="l small">${esc(t.close_reason||"")}</td></tr>`).join("")
+    ||`<tr><td colspan="8" class="empty">Todavía no hay operaciones cerradas.</td></tr>`;
+  const rv=v=>v==null?'<span class="muted">—</span>':`<span class="${v>=0?"up":"down"}">${v>=0?"+":""}${v}%</span>`;
+  $("#trkSignals").innerHTML=((T&&T.signals)||[]).slice(0,200).map(x=>`<tr class="click" data-tk="${esc(x.ticker)}">
+    <td class="num">${esc(x.date)}</td><td class="l"><span class="tk">${esc(x.ticker)}</span></td><td class="l">${dirHTML(x.direction)}</td>
+    <td class="num">${x.score??"—"}</td><td class="l small">${x.entrada?'<span class="entry">ENTRADA</span>':x.flujo_confirmado?'<span class="tag g">OI ✓</span>':x.pre_alerta?'<span class="pre">PRE</span>':esc(x.signal||"")} ${esc(x.catalyst||"")}</td>
+    <td class="num">${x.price!=null?"$"+x.price:"—"}</td><td class="num">${rv(x.r5)}</td><td class="num">${rv(x.r10)}</td><td class="num">${rv(x.r20)}</td>
+    <td class="num">${rv(x.last_ret)} <span class="muted small">${x.sessions_since||0}s</span></td></tr>`).join("")
+    ||`<tr><td colspan="10" class="empty">Sin señales todavía.</td></tr>`;
+  $("#trkFoot").textContent=(T&&T.note)||"";}
+["#paperOpen","#paperClosed","#trkSignals"].forEach(id=>$(id).addEventListener("click",e=>{if(e.target.closest("a"))return;const tr=e.target.closest("tr[data-tk]");if(tr)openDetail(tr.dataset.tk);}));
+
+// ---------- SECTORES
+function renderSec(){const L=S.latest;const secs=(L&&L.sectors)||[];
+  if(!secs.length){$("#heat").innerHTML='<div class="empty">Sin datos de sectores todavía.</div>';return;}
+  const mx=Math.max(...secs.map(x=>Math.abs(x.net)),1);
+  $("#heat").innerHTML=secs.map(x=>{const w=Math.min(50,Math.abs(x.net)/mx*50);const pos=x.net>=0;
+    const tint=pos?"var(--good)":"var(--bad)";const alpha=Math.round(6+Math.abs(x.bias)*22);
+    const tk=a=>a.map(t=>`<span class="tklink" data-tk="${esc(t)}">${esc(t)}</span>`).join(" · ");
+    return `<div class="tile" style="background:color-mix(in srgb, ${tint} ${alpha}%, var(--surface))">
+      <div class="h"><span class="nm2">${esc(x.sector)}</span><span class="${pos?"up":"down"}">${pos?"▲":"▼"} ${money(Math.abs(x.net))}</span></div>
+      <div class="bar2"><b style="left:${pos?50:50-w}%;width:${w}%;background:${tint}"></b></div>
+      <div class="small muted">${x.n} valores · sesgo ${Math.round(x.bias*100)}% · precio medio ${pct(x.avg_chg,2)}</div>
+      ${x.top_bull.length?`<div class="small" style="margin-top:4px"><span class="up">▲</span> ${tk(x.top_bull)}</div>`:""}
+      ${x.top_bear.length?`<div class="small"><span class="down">▼</span> ${tk(x.top_bear)}</div>`:""}</div>`;}).join("");}
+$("#heat").addEventListener("click",e=>{const el=e.target.closest("[data-tk]");if(el)openDetail(el.dataset.tk);});
+
 // ---------- FUTUROS
 function renderFut(){const F=S.fut;
   if(!F||!F.markets){$("#futBody").innerHTML=`<tr><td colspan="10" class="empty">Sin datos de futuros todavía.</td></tr>`;$("#fkpis").innerHTML="";return;}
   const reg=F.regime;const ms=F.markets;const by=Object.fromEntries(ms.map(m=>[m.key,m]));
+  const G=(S.latest&&S.latest.market_gex)||{};const gk=["SPX","SPY","QQQ"].filter(k=>G[k]);
+  $("#gexBox").innerHTML=gk.length?`<div class="section-t" style="margin-top:0">Termómetro de gamma (creadores de mercado)</div>
+    <div class="help" style="margin-bottom:8px"><b>Gamma positiva</b>: los creadores de mercado compran en las caídas y venden en las subidas → mercado más tranquilo.
+      <b>Gamma negativa</b>: hacen lo contrario → los movimientos se amplifican. El <b>flip</b> es el nivel donde cambia.</div>
+    <div class="cards">${gk.map(k=>{const g=G[k];return `<div class="card"><div class="h"><b>${k}</b><span class="tag ${g.regime==="positiva"?"g":"r"}">gamma ${esc(g.regime)}</span></div>
+      <div class="small" style="margin-top:4px">Precio ${g.spot} · flip <b>${g.flip??"—"}</b> · muro calls ${g.call_wall??"—"} · muro puts ${g.put_wall??"—"}</div>
+      ${sparkline((g.profile||[]).map(p=>({x:"precio "+p.s,y:p.g})),"GEX",v=>money(v))}</div>`;}).join("")}</div>`:"";
   const k=(key)=>by[key]?`${dirHTML(by[key].label)}`:"—";
   $("#fkpis").innerHTML=`
     <div class="kpi"><div class="lbl">Régimen renta variable</div><div class="val">${reg?dirHTML(reg.label):"—"}</div><div class="sub">sesgo ${reg?reg.bias:"—"}</div></div>
@@ -548,8 +669,23 @@ function openDetail(tk){const r=(S.latest&&S.latest.records||[]).find(x=>x.ticke
       <div class="db">${t.length?`<div class="section-t">Operaciones del Congreso</div>`+t.slice(0,20).map(x=>`<div class="small">${esc(x.transaction_date)} · ${esc(x.member)} · <b>${esc(x.direction)}</b> ${esc(x.amount)}</div>`).join(""):""}</div>`);return;}
   const ck=r.checklist||{},f=r.fund||{};
   const reasons=(r.reasons||[]).map(t=>`<span class="chip">${esc(t)}</span>`).join("")||'<span class="muted">Sin señales destacadas.</span>';
-  const idea=r.idea?`<div class="idea"><div><b>Idea de estructura (educativa):</b> ${esc(r.idea.structure)}${r.idea.expiration?` · vencimiento ${esc(r.idea.expiration)} (${r.idea.dte}d)`:""}</div>
-    <div class="small">${esc(r.idea.strikes)} · ${esc(r.idea.why_structure)}</div><div class="small">${esc(r.idea.management)}</div><div class="small muted">${esc(r.idea.note)}</div></div>`:"";
+  const I=r.idea;const su=I?simUrl(r):"";
+  const legRows=I&&I.legs?`<table class="sm" style="margin-top:8px"><thead><tr><th class="l">Acción</th><th class="l">Contrato</th><th>Vence</th><th>Precio medio</th><th>Bid/Ask</th><th>Delta</th></tr></thead><tbody>
+    ${I.legs.map(l=>`<tr><td class="l"><b class="${l.action==="COMPRAR"?"up":"down"}">${esc(l.action)}</b></td><td class="l">${l.kind==="C"?"CALL":"PUT"} ${l.strike}</td>
+      <td class="num">${esc(l.expiration)}</td><td class="num">$${l.mid}</td><td class="num">${l.bid}/${l.ask}</td><td class="num">${l.delta??"—"}</td></tr>`).join("")}</tbody></table>
+    <div class="grid4" style="margin-top:8px">${M("Coste (1 contrato)",money(I.cost))}${M("Pérdida máxima",money(I.max_loss))}${M("Ganancia máxima",I.max_gain!=null?money(I.max_gain):"sin límite")}${M("Punto muerto",`$${I.breakeven} (${pct(I.breakeven_move_pct)})`)}</div>`:"";
+  const idea=I?`<div class="idea"><div><b>Idea de estructura (educativa):</b> ${esc(I.structure)}${I.expiration?` · vencimiento ${esc(I.expiration)} (${I.dte}d)`:""}</div>
+    <div class="small">${esc(I.strikes)} · ${esc(I.why_structure)}</div>${legRows}<div class="small" style="margin-top:6px">${esc(I.management)}</div>
+    <div class="small muted">${esc(I.note)}</div>${su?`<div style="margin-top:8px"><a class="btn" href="${esc(su)}" target="_blank" rel="noopener">Simular en mi cartera</a>
+    <span class="small muted"> abre un aviso en GitHub; pulsa “Submit” y queda anotada (sin dinero real)</span></div>`:""}</div>`:"";
+  const ER=r.earnings;const earnH=ER?`<div class="section-t">Resultados: ¿opciones caras o baratas?</div>
+    <div class="grid4">${M("Resultados",esc(ER.date))}${M("Descuentan (hasta "+esc(String(ER.expiration).slice(5))+")","±"+ER.implied_pct+"%")}${M("Media histórica","±"+ER.hist_avg_pct+"%")}${M("Veredicto",`<span class="${ER.label==="baratas"?"up":ER.label==="caras"?"down":""}">${esc(ER.label||"—")}</span> (${ER.ratio}x)`)}</div>
+    <div class="small muted" style="margin-top:4px">Últimas reacciones: ${(ER.moves||[]).map(x=>`${esc(x.date.slice(2))} <b class="${x.move_pct>=0?"up":"down"}">${x.move_pct>=0?"+":""}${x.move_pct}%</b>`).join(" · ")}</div>
+    <div class="small muted">${esc(ER.note||"")}</div>`:"";
+  const SH=r.short||{};const shH=(SH.pct_float!=null||SH.vol_ratio_5d!=null)?`<div class="section-t">Ventas en corto</div>
+    <div class="grid4">${M("% del flotante en corto",SH.pct_float!=null?(SH.pct_float*100).toFixed(1)+"%":"—")}${M("Días para cubrir",SH.days_to_cover??"—")}${M("Volumen en corto (5d)",SH.vol_ratio_5d!=null?(SH.vol_ratio_5d*100).toFixed(0)+"%":"—")}${M("Riesgo de apretón",r.squeeze?`<b class="up">${esc(r.squeeze.level)}</b>`:"bajo")}</div>
+    ${r.squeeze?`<div class="small" style="margin-top:4px">${esc(r.squeeze.reasons.join(" · "))}</div>`:""}`:"";
+  const dvH=r.dividend?`<div class="small muted" style="margin-top:6px">Próximo ex-dividendo: ${esc(r.dividend.ex_div_date)}${r.dividend.yield!=null?` · rentabilidad ${(r.dividend.yield>1?r.dividend.yield:r.dividend.yield*100).toFixed(2)}%`:""}</div>`:"";
   const comp=r.components?Object.entries(r.components).map(([k,v])=>M(k.replace("_"," "),v)).join(""):"";
   const em=(r.expected_moves||[]).map(x=>`<tr><td class="l">${esc(x.expiration)}</td><td class="num">${x.dte}d</td><td class="num">±$${x.em_usd}</td><td class="num">±${x.em_pct}%</td></tr>`).join("");
   const un=(r.unusual||[]).map(u=>`<tr><td class="l">${contractTxt(u)}</td><td class="num">${esc(u.expiration)}</td><td class="num">${money(u.premium)}</td>
@@ -569,7 +705,7 @@ function openDetail(tk){const r=(S.latest&&S.latest.records||[]).find(x=>x.ticke
       <div class="muted small">${esc(r.name||"")} · ${esc(r.sector||"")} · ${px(r.price)} <span class="${pctCls(r.change_pct)}">${pct(r.change_pct,2)}</span> · ${esc(r.source||"")} ${esc(r.session_date||"")}</div></div>
       <button class="iconbtn" data-close aria-label="Cerrar">✕</button></div>
     <div class="db">
-      ${r.error?`<div class="ko">⚠ ${esc(r.error)}</div>`:""}
+      ${r.error?`<div class="ko">⚠ ${esc(r.error)}</div>`:""}${r.compact?`<div class="small muted" style="margin-bottom:8px">Valor sin actividad destacada hoy: se muestra la información básica.</div>`:""}
       <div class="chips">${reasons}</div>${idea}
       <div class="section-t">Checklist de la estrategia</div>
       <div class="grid4">${M("Congreso a favor (+1)",ck.congreso?"Sí":"No")}${M("Futuros a favor (+1)",ck.futuros?"Sí":"No")}${M("Flujo confirmado OI (+2)",ck.flujo_confirmado?"Sí":"No")}${M("Puntos",(ck.puntos??0)+(ck.entrada?" · ENTRADA":""))}</div>
@@ -585,7 +721,9 @@ function openDetail(tk){const r=(S.latest&&S.latest.records||[]).find(x=>x.ticke
       ${em?`<div class="section-t">Movimiento esperado (straddle ATM)</div><div class="panel"><table class="sm"><thead><tr><th class="l">Vencimiento</th><th>Días</th><th>±$</th><th>±%</th></tr></thead><tbody>${em}</tbody></table></div>`:""}
       ${un?`<div class="section-t">Contratos inusuales hoy</div><div class="panel tscroll"><table class="sm"><thead><tr><th class="l">Contrato</th><th>Vto</th><th>Prima</th><th>Vol/OI</th><th class="l">Lado</th><th class="l">Lectura</th></tr></thead><tbody>${un}</tbody></table></div>`:""}
       ${cf?`<div class="section-t">Confirmadas por subida de OI</div><div class="panel tscroll"><table class="sm"><thead><tr><th class="l">Contrato</th><th>Vto</th><th>Prima</th><th>OI</th><th class="l">Lectura</th><th>Marcada</th></tr></thead><tbody>${cf}</tbody></table></div>`:""}
-      <div class="section-t">Catalizadores</div>${cats}
+      ${earnH}
+      <div class="section-t">Catalizadores</div>${cats}${dvH}
+      ${shH}
       <div class="section-t">Congreso (${(S.pol&&S.pol.window_days)||90} días)</div>${cgH}
       <div class="section-t">Contexto de futuros</div><div class="small">${fc.bias!=null?`Sesgo ${fc.bias} · `:""}${esc((fc.why||[]).join(" · "))||'<span class="muted">—</span>'}</div>
       ${f&&Object.keys(f).length?`<div class="section-t">Fundamentales y analistas</div><div class="grid4">${M("Capitalización",money(f.market_cap))}${M("Short % float",f.short_pct_float!=null?(f.short_pct_float*100).toFixed(1)+"%":"—")}
@@ -611,10 +749,10 @@ function openFut(i){const m=S.fut.markets[i];const c=m.cot||{},p=m.price||{};
 
 // ---------- carga
 async function load(){
-  const [L,F,FU,P,C,ST]=await Promise.all(["latest","flow","futures","political","catalysts","status"].map(n=>getJSON("data/"+n+".json")));
-  Object.assign(S,{latest:L,flow:F,fut:FU,pol:P,cal:C,status:ST});
+  const [L,F,FU,P,C,ST,TR,PA]=await Promise.all(["latest","flow","futures","political","catalysts","status","tracking","paper"].map(n=>getJSON("data/"+n+".json")));
+  Object.assign(S,{latest:L,flow:F,fut:FU,pol:P,cal:C,status:ST,trk:TR,paper:PA});
   $("#updated").innerHTML=L?`Actualizado ${new Date(L.generated_at).toLocaleString("es-ES",{dateStyle:"short",timeStyle:"short"})}<br><span class="muted">sesión ${esc(L.session_date)}</span>`:"sin datos aún";
-  const h=(location.hash||"").slice(1);switchTab(["radar","flow","fut","pol","cal","status"].includes(h)?h:S.tab);}
+  const h=(location.hash||"").slice(1);switchTab(["radar","trk","flow","sec","fut","pol","cal","status"].includes(h)?h:S.tab);}
 load();setInterval(load,5*60*1000);
 </script>
 </body>

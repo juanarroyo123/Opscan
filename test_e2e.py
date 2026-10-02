@@ -175,6 +175,17 @@ def test_two_sessions_confirmation(env, monkeypatch):
     assert recs["RCKT"]["checklist"]["congreso"] and recs["RCKT"]["checklist"]["entrada"]   # 1 + 2 = 3 puntos
     assert recs["RCKT"]["components"]["flujo"] > 0          # el flujo de ayer sigue contando
     assert recs["RCKT"]["idea"]["dte"] >= 27                # vence despues del PDUFA
+    idea = recs["RCKT"]["idea"]
+    assert idea["legs"] and idea["legs"][0]["action"] == "COMPRAR" and idea["cost"] > 0
+    assert idea["structure"].startswith("Call debit spread") and len(idea["legs"]) == 2
+    paper_out = json.load(open(data / "paper.json"))
+    auto = [t for t in paper_out["trades"] if t["source"] == "AUTO" and t["ticker"] == "RCKT"]
+    assert auto and auto[0]["status"] == "OPEN"            # la ENTRADA abre operacion simulada
+    latest_full = json.load(open(data / "latest.json"))
+    assert "SPX" in latest_full["market_gex"] and latest_full["market_gex"]["SPX"]["regime"] in ("positiva", "negativa")
+    assert latest_full["sectors"] and all("bias" in x for x in latest_full["sectors"])
+    trk = json.load(open(data / "tracking.json"))
+    assert trk["total"] >= 1 and any(st["group"] == "ENTRADA" for st in trk["stats"])
     assert recs["XOM"]["oi_flags"]["confirmed"] == 1 and recs["XOM"]["direction"] == "BAJISTA"
     assert recs["NVDA"]["components"]["oi_confirmado"] > 0
     flow = json.load(open(data / "flow.json"))

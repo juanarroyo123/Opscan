@@ -11,7 +11,8 @@ import shutil
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from . import alerts, catalysts, congress, enrich, futures, options, scoring, state, universe
+from . import (alerts, catalysts, congress, enrich, futures, options, paper, scoring, shorts, state,
+               tracking, universe)
 from .config import DOCS_DIR, data_dir, load_config
 from .util import Status, iso_now, log, parse_date, read_json, rnd, today_et, write_json
 
@@ -27,30 +28,47 @@ def _out(name):
     return os.path.join(data_dir(), name)
 
 
-def scan_one(tk, ocfg, pending_syms):
+def _finish(tk, und, contracts, ocfg, pending_syms, watch_syms, keep_grid):
+    m, unusual = options.analyze_chain(und, contracts, ocfg)
+    oi_map = {c["symbol"]: c["oi"] for c in contracts if c["symbol"] in pending_syms}
+    m["stock_volume"] = und.get("stock_volume")
+    m["iv30_change"] = und.get("iv30_change")
+    out = {"ticker": tk, "metrics": m, "unusual": unusual, "oi_map": oi_map,
+           "prices": options.price_map(contracts, watch_syms)}
+    if keep_grid or unusual:
+        out["grid"] = options.option_grid(contracts, und.get("price"), max_exps=6, width=0.35)
+    if tk in options.GEX_TICKERS:
+        try:
+            out["gex"] = options.gex_profile(contracts, und.get("price"))
+        except Exception as e:
+            log(f"gex {tk}: {e}")
+    return out
+
+
+def scan_one(tk, ocfg, pending_syms, watch_syms=(), keep_grid=False):
     """Descarga y analiza un valor. Devuelve dict (sin la cadena completa para ahorrar memoria)."""
     t0 = time.time()
     und, contracts = options.parse_cboe(options.fetch_cboe(tk), tk)
     if not contracts:
         raise RuntimeError("Cboe sin contratos")
-    m, unusual = options.analyze_chain(und, contracts, ocfg)
-    oi_map = {c["symbol"]: c["oi"] for c in contracts if c["symbol"] in pending_syms}
-    m["stock_volume"] = und.get("stock_volume")
-    m["iv30_change"] = und.get("iv30_change")
-    return {"ticker": tk, "metrics": m, "unusual": unusual, "oi_map": oi_map, "secs": round(time.time() - t0, 2)}
+    out = _finish(tk, und, contracts, ocfg, pending_syms, set(watch_syms), keep_grid)
+    out["secs"] = round(time.time() - t0, 2)
+    return out
 
 
-def scan_one_yf(tk, ocfg, pending_syms):
+def scan_one_yf(tk, ocfg, pending_syms, watch_syms=(), keep_grid=False):
     und, contracts = options.fetch_yfinance(tk, ocfg["max_dte"])
     if not contracts:
         raise RuntimeError("Yahoo sin contratos")
-    m, unusual = options.analyze_chain(und, contracts, ocfg)
-    oi_map = {c["symbol"]: c["oi"] for c in contracts if c["symbol"] in pending_syms}
-    return {"ticker": tk, "metrics": m, "unusual": unusual, "oi_map": oi_map, "secs": 0}
+    out = _finish(tk, und, contracts, ocfg, pending_syms, set(watch_syms), keep_grid)
+    out["secs"] = 0
+    return out
 
 
-def scan_options(tickers, cfg, flags, status, allow_fallback=True):
+def scan_options(tickers, cfg, flags, status, allow_fallback=True, watch=None, keep_grid=()):
     ocfg = cfg["options"]
+    watch = watch or {}
+    keep_grid = set(keep_grid)
     pending = {}
     if len(flags):
         p = flags[flags["status"] == "PENDIENTE"]
@@ -59,7 +77,8 @@ def scan_options(tickers, cfg, flags, status, allow_fallback=True):
     results, failed = {}, {}
     t0 = time.time()
     with ThreadPoolExecutor(max_workers=int(ocfg["workers"])) as ex:
-        futs = {ex.submit(scan_one, tk, ocfg, pending.get(tk, set())): tk for tk in tickers}
+        futs = {ex.submit(scan_one, tk, ocfg, pending.get(tk, set()), watch.get(tk, set()), tk in keep_grid): tk
+                for tk in tickers}
         for i, f in enumerate(as_completed(futs), 1):
             tk = futs[f]
             try:
@@ -74,7 +93,7 @@ def scan_options(tickers, cfg, flags, status, allow_fallback=True):
     ok_fb = 0
     for tk in fb:
         try:
-            results[tk] = scan_one_yf(tk, ocfg, pending.get(tk, set()))
+            results[tk] = scan_one_yf(tk, ocfg, pending.get(tk, set()), watch.get(tk, set()), tk in keep_grid)
             failed.pop(tk, None)
             ok_fb += 1
         except Exception as e:
@@ -95,13 +114,59 @@ def _sector(meta, enr):
     return s
 
 
-def build_record(tk, res, meta, base, fs, cats, cong, fctx, enr, cfg):
+def tag_dividends(m, unusual, enr, session):
+    """Calls muy dentro del dinero compradas justo antes del ex-dividendo = captura de dividendo
+    (operacion de arbitraje), no una apuesta. Se marcan y casi no cuentan."""
+    exd = (enr or {}).get("ex_div_date")
+    if not exd or exd < session:
+        return m, unusual, None
+    hits = []
+    out = []
+    for u in unusual:
+        u = dict(u)
+        if (u["kind"] == "CALL" and (u.get("delta") or 0) >= 0.7 and u["expiration"] >= exd
+                and (parse_date(exd) - parse_date(session)).days <= 45):
+            u["dividend"] = True
+            u["weight"] = min(u.get("weight", 1.0), 0.1)
+            hits.append(u["symbol"])
+        out.append(u)
+    if hits:
+        m = options.recompute_flow(dict(m), out)
+        return m, out, {"ex_div_date": exd, "contracts": len(hits)}
+    return m, unusual, None
+
+
+def build_record(tk, res, meta, base, fs, cats, cong, fctx, enr, cfg, session=None, short_vol=None):
     m = dict(res["metrics"])
-    m["_unusual"] = res["unusual"]
+    unusual = res["unusual"]
+    m, unusual, div = tag_dividends(m, unusual, enr, session or m.get("session_date") or "")
+    m["_unusual"] = unusual
+    m["_grid"] = res.get("grid") or {}
     sector = _sector(meta, enr)
     fut_bias, fut_why = fctx.get(sector) or fctx.get("_default") or (None, [])
     s = scoring.score_ticker(m, base, fs, cats, cong, fut_bias, fut_why, enr, cfg)
     e = enr or {}
+    if div:
+        s["reasons"].append(f"{div['contracts']} call(s) muy dentro del dinero antes del ex-dividendo "
+                            f"({div['ex_div_date']}): captura de dividendo, no cuenta")
+    # apreton de cortos
+    sv = (short_vol or {}).get(tk) or {}
+    sq = shorts.squeeze_risk(e.get("short_pct_float"), sv.get("ratio_5d"), s["direction"],
+                             m.get("change_pct"), base.get("rel_vol"), m.get("cp_vol_ratio"))
+    if sq and sq["level"] == "ALTO" and s["direction"] == "ALCISTA":
+        s["score"] = round(min(100, s["score"] + 3), 1)
+        s["components"]["cortos"] = 3
+        s["reasons"].append("Riesgo de apreton de cortos ALTO (+3)")
+        sc = cfg["scoring"]
+        s["signal"] = "ALTA" if s["score"] >= sc["alta"] else ("MEDIA" if s["score"] >= sc["media"] else "BAJA")
+    # resultados: movimiento esperado vs historico
+    earn = None
+    nxt = next((c for c in (cats or []) if c.get("type") == "Resultados" and (c.get("days") or -1) >= 0), None)
+    if nxt and e.get("earn_hist"):
+        earn = enrich.earnings_vs_expected(e["earn_hist"], m.get("expected_moves"), nxt["date"])
+        if earn:
+            earn["date"] = nxt["date"]
+            earn["moves"] = e["earn_hist"].get("moves", [])[:8]
     rec = {
         "ticker": tk, "name": e.get("name") or (meta or {}).get("name") or tk, "sector": sector,
         "groups": (meta or {}).get("groups", []),
@@ -129,9 +194,46 @@ def build_record(tk, res, meta, base, fs, cats, cong, fctx, enr, cfg):
         "upside_pct": enrich.upside(m.get("price"), e.get("target_mean")) if e else None,
         "insiders": e.get("insiders") if e else None,
         "news": e.get("news") if e else None,
+        "short": {"vol_ratio_5d": sv.get("ratio_5d"), "vol_ratio_last": sv.get("ratio_last"),
+                  "pct_float": e.get("short_pct_float"), "days_to_cover": e.get("short_ratio")},
+        "squeeze": sq, "earnings": earn, "dividend": ({"ex_div_date": e.get("ex_div_date"),
+                                                       "yield": e.get("dividend_yield")} if e.get("ex_div_date") else None),
         **s,
     }
+    rec["unusual"] = unusual[:10]
+    # registros sin interes: version compacta para que la web cargue rapido
+    if (rec.get("score") or 0) < 20 and not unusual and "watchlist" not in rec["groups"]:
+        for k in ("iv_term", "expected_moves", "news", "insiders", "confirmed", "catalysts"):
+            rec.pop(k, None)
+        rec["compact"] = True
     return rec
+
+
+def sector_map(records):
+    out = {}
+    for r in records:
+        if r.get("signal") == "ERR" or not r.get("sector") or r.get("sector") in ("ETF", "Indice"):
+            continue
+        s = out.setdefault(r["sector"], {"sector": r["sector"], "n": 0, "bull": 0.0, "bear": 0.0,
+                                         "chg": [], "tickers": []})
+        s["n"] += 1
+        s["bull"] += r.get("bull_premium") or 0
+        s["bear"] += r.get("bear_premium") or 0
+        if r.get("change_pct") is not None:
+            s["chg"].append(r["change_pct"])
+        net = (r.get("bull_premium") or 0) - (r.get("bear_premium") or 0)
+        if net:
+            s["tickers"].append((net, r["ticker"]))
+    res = []
+    for s in out.values():
+        tot = s["bull"] + s["bear"]
+        s["tickers"].sort()
+        res.append({"sector": s["sector"], "n": s["n"], "bull": round(s["bull"]), "bear": round(s["bear"]),
+                    "net": round(s["bull"] - s["bear"]), "bias": round((s["bull"] - s["bear"]) / tot, 3) if tot else 0,
+                    "avg_chg": round(sum(s["chg"]) / len(s["chg"]), 2) if s["chg"] else None,
+                    "top_bull": [t for _, t in s["tickers"][::-1][:4] if _ > 0],
+                    "top_bear": [t for _, t in s["tickers"][:4] if _ < 0]})
+    return sorted(res, key=lambda x: -x["net"])
 
 
 def run(mode="full", tickers_override=None, offline_universe=False):
@@ -152,6 +254,15 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     cat_tickers = {e["ticker"] for e in cal.get("events", [])
                    if e["ticker"] and any(k in e["type"] for k in ("PDUFA", "AdCom", "Lectura", "Manual"))}
 
+    daily = state.load_daily()
+    low_act = set()
+    if len(daily):
+        import pandas as pd
+        g = daily.sort_values("date").groupby("ticker")
+        cnt = g.size()
+        avg = g["opt_vol"].apply(lambda s: pd.to_numeric(s, errors="coerce").tail(20).mean())
+        low_act = {t for t in avg.index if cnt.get(t, 0) >= 10 and (avg[t] or 0) < cfg["universe"]["min_avg_opt_vol"]}
+
     # 2) universo
     if tickers_override:
         uni = {t.upper(): {"name": t.upper(), "sector": "", "groups": ["manual"]} for t in tickers_override}
@@ -160,7 +271,7 @@ def run(mode="full", tickers_override=None, offline_universe=False):
         pick = (cfg["universe"]["watchlist"][:4] + ["SPY", "SPX", "AAPL", "NVDA"])
         uni = {t: base_u.get(t, {"name": t, "sector": "", "groups": ["smoke"]}) for t in pick}
     else:
-        uni = universe.build_universe(cfg, status, cat_tickers, offline=offline_universe)
+        uni = universe.build_universe(cfg, status, cat_tickers, offline=offline_universe, low_activity=low_act)
     sectors = {t: m.get("sector", "") for t, m in uni.items()}
 
     # 3) futuros
@@ -186,10 +297,15 @@ def run(mode="full", tickers_override=None, offline_universe=False):
         pol = read_json(_out("political.json"), None)
     cong_by = (pol or {}).get("by_ticker", {})
 
-    # 5) opciones
+    # 5) opciones (+ precios de la cartera simulada)
     flags = state.load_flags()
-    daily = state.load_daily()
-    results, failed = scan_options(list(uni.keys()), cfg, flags, status, allow_fallback=full or bool(tickers_override))
+    book = paper.load()
+    watch = paper.watch_symbols(book)
+    for tk in watch:
+        if tk not in uni:
+            uni[tk] = {"name": tk, "sector": "", "groups": ["cartera"]}
+    results, failed = scan_options(list(uni.keys()), cfg, flags, status, allow_fallback=full or bool(tickers_override),
+                                   watch=watch, keep_grid=cfg["universe"]["watchlist"])
     sessions = [r["metrics"]["session_date"] for r in results.values() if r["metrics"].get("session_date")]
     session = max(set(sessions), key=sessions.count) if sessions else today_et().isoformat()
     for tk, res in results.items():
@@ -198,6 +314,19 @@ def run(mode="full", tickers_override=None, offline_universe=False):
         flags = state.add_flags(flags, res["unusual"], sd)
     flags = state.prune_flags(flags)
     daily = state.upsert_daily(daily, [r["metrics"] for r in results.values()])
+    book = paper.mark(book, {tk: r.get("prices", {}) for tk, r in results.items()},
+                      {tk: r["metrics"].get("price") for tk, r in results.items()}, session)
+
+    # ventas en corto (FINRA): diario en modos completos, cache en intradia
+    short_vol = state.load_cache("shorts.json", {})
+    if full:
+        try:
+            sv = shorts.fetch_short_volume()
+            short_vol = {t: v for t, v in sv.items() if t in uni}
+            state.save_cache("shorts.json", short_vol)
+            status.ok("FINRA (volumen en corto)", len(short_vol))
+        except Exception as e:
+            status.fail("FINRA (volumen en corto)", e)
 
     # 6) puntuacion preliminar -> enriquecer top N -> puntuacion final
     ecache = state.load_cache("enrich.json", {})
@@ -210,15 +339,24 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     prelim = []
     for tk, res in results.items():
         r = build_record(tk, res, uni.get(tk), bases[tk], fsums[tk], cal_by_tk.get(tk),
-                         cong_by.get(tk), fctx, ecache.get(tk), cfg)
+                         cong_by.get(tk), fctx, ecache.get(tk), cfg, session, short_vol)
         prelim.append((r["score"], tk))
     if full:
         prelim.sort(reverse=True)
         want = [tk for _, tk in prelim[: int(cfg["enrich"]["top_n"])]]
         want += [t for t in cfg["universe"]["watchlist"] if t in results and t not in want]
+        # + valores con calls muy dentro del dinero (posible captura de dividendo)
+        want += [tk for tk, res in results.items() if tk not in want and any(
+            u["kind"] == "CALL" and (u.get("delta") or 0) >= 0.7 for u in res["unusual"])][:40]
         want = [t for t in want if t not in options.INDEXES
                 and not ({"etf", "indice"} & set((uni.get(t) or {}).get("groups", [])))]
         ecache = enrich.enrich(want, ecache, n_news=int(cfg["enrich"]["news"]), status=status)
+        # historico de reacciones a resultados para los que presentan en <= 30 dias
+        soon = [tk for tk in want if any(c.get("type") == "Resultados" and 0 <= (c.get("days") or -1) <= 30
+                                         for c in cal_by_tk.get(tk, []))
+                or (lambda d: d is not None and 0 <= (d - today_et()).days <= 30)(
+                    parse_date((ecache.get(tk) or {}).get("earnings_date")))]
+        ecache = enrich.enrich_earnings(soon, ecache, status=status)
         state.save_cache("enrich.json", ecache)
         # resultados desde Yahoo para valores sin fecha en el calendario
         for tk in want:
@@ -236,7 +374,7 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     records = []
     for tk, res in results.items():
         records.append(build_record(tk, res, uni.get(tk), bases[tk], fsums[tk], cal_by_tk.get(tk),
-                                    cong_by.get(tk), fctx, ecache.get(tk), cfg))
+                                    cong_by.get(tk), fctx, ecache.get(tk), cfg, session, short_vol))
     for tk, err in failed.items():
         records.append({"ticker": tk, "name": (uni.get(tk) or {}).get("name") or tk,
                         "sector": sectors.get(tk, ""), "score": 0, "signal": "ERR", "direction": "-",
@@ -258,9 +396,31 @@ def run(mode="full", tickers_override=None, offline_universe=False):
                                      ("date", "checked_date", "ticker", "symbol", "kind", "strike", "expiration",
                                       "volume", "oi_before", "oi_after", "premium", "direction", "side")})
 
-    # 8) alertas
+    # 8) cartera simulada (AUTO abre cada ENTRADA), registro de aciertos, GEX y sectores
+    ok_recs = [r for r in records if r.get("signal") != "ERR"]
+    n_auto = paper.auto_open(book, ok_recs, session)
+    paper.save(book)
+    paper_out = paper.export(book)
+    status.ok("Cartera simulada", len(book["trades"]), f"{n_auto} nuevas AUTO" if n_auto else "")
+    signals = tracking.load_signals()
+    if mode in ("full", "premarket", "smoke"):
+        signals = tracking.record_signals(signals, ok_recs, session)
+        tracking.save_signals(signals)
+    track = tracking.build(signals, daily)
+    market_gex = {tk: res["gex"] for tk, res in results.items() if res.get("gex")}
+    sectors_out = sector_map(ok_recs)
+
+    # 9) alertas
     sent = state.load_cache("alerts.json", {})
-    sent = alerts.process([r for r in records if r.get("signal") != "ERR"], cfg, sent, session, status)
+    sent = alerts.process(ok_recs, cfg, sent, session, status)
+    if mode == "full":
+        conf_today = [c for c in confirmed_recent if c.get("checked_date") == session]
+        sent = alerts.daily_summary(ok_recs, {
+            "entradas": sum(1 for r in ok_recs if r.get("checklist", {}).get("entrada")),
+            "alta": sum(1 for r in ok_recs if r["signal"] == "ALTA"),
+            "media": sum(1 for r in ok_recs if r["signal"] == "MEDIA"),
+            "pre_alertas": sum(1 for r in ok_recs if r.get("checklist", {}).get("pre_alerta"))},
+            session, sent, paper_out["summary"], conf_today, market_gex.get("SPX") or market_gex.get("SPY"))
     state.save_cache("alerts.json", sent)
 
     # 9) escribir
@@ -275,7 +435,11 @@ def run(mode="full", tickers_override=None, offline_universe=False):
         "bajistas": sum(1 for r in ok if r["direction"] == "BAJISTA" and r["signal"] != "BAJA"),
     }
     gen = iso_now()
+    write_json(_out("tracking.json"), track)
+    write_json(_out("paper.json"), paper_out)
     write_json(_out("latest.json"), {"generated_at": gen, "mode": mode, "session_date": session,
+                                     "repo": os.environ.get("GITHUB_REPOSITORY", ""),
+                                     "market_gex": market_gex, "sectors": sectors_out,
                                      "summary": summary, "regime": (fut or {}).get("regime"),
                                      "config": {"scoring": cfg["scoring"], "options": cfg["options"]},
                                      "records": records})
@@ -304,7 +468,8 @@ def build_site(out_dir):
     shutil.copytree(DOCS_DIR, out_dir)
     dd = os.path.join(out_dir, "data")
     os.makedirs(dd, exist_ok=True)
-    for f in ("latest.json", "flow.json", "catalysts.json", "political.json", "futures.json", "status.json"):
+    for f in ("latest.json", "flow.json", "catalysts.json", "political.json", "futures.json", "status.json",
+              "tracking.json", "paper.json"):
         src = _out(f)
         if os.path.exists(src):
             shutil.copy(src, os.path.join(dd, f))

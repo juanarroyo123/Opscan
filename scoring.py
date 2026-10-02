@@ -48,20 +48,65 @@ def pick_expiration(m, min_dte):
     return None, None
 
 
+def build_legs(direction, grid, exp, price, em, spread):
+    """Elige contratos REALES de la rejilla: compra ~ATM y, si es spread, vende ~precio +/- mov. esperado."""
+    if not grid or exp not in grid or not price:
+        return None
+    kind = "C" if direction == "ALCISTA" else "P"
+    cs = [c for c in grid[exp] if c["kind"] == kind]
+    if not cs:
+        return None
+    buy = min(cs, key=lambda c: abs(c["strike"] - price))
+    legs = [{"action": "COMPRAR", **buy}]
+    sell = None
+    if spread and em:
+        target = price + em if kind == "C" else price - em
+        cands = [c for c in cs if (c["strike"] > buy["strike"] if kind == "C" else c["strike"] < buy["strike"])]
+        if cands:
+            sell = min(cands, key=lambda c: abs(c["strike"] - target))
+            legs.append({"action": "VENDER", **sell})
+    debit = buy["mid"] - (sell["mid"] if sell else 0)
+    if debit <= 0:
+        return None
+    out = {"legs": [{k: l.get(k) for k in ("action", "symbol", "kind", "strike", "expiration", "dte", "mid",
+                                           "bid", "ask", "delta", "iv")} for l in legs],
+           "cost": round(debit * 100, 2), "max_loss": round(debit * 100, 2)}
+    if sell:
+        width = abs(sell["strike"] - buy["strike"])
+        out["max_gain"] = round((width - debit) * 100, 2)
+        out["reward_risk"] = round((width - debit) / debit, 2) if debit else None
+    else:
+        out["max_gain"] = None   # ilimitada (call) / hasta strike (put)
+    out["breakeven"] = round(buy["strike"] + debit, 2) if kind == "C" else round(buy["strike"] - debit, 2)
+    out["breakeven_move_pct"] = round((out["breakeven"] / price - 1) * 100, 1)
+    return out
+
+
 def trade_idea(direction, m, b, next_cat):
     if direction not in ("ALCISTA", "BAJISTA"):
         return None
     price = m.get("price")
     iv_rank = b.get("iv_rank")
-    expensive = (iv_rank is not None and iv_rank >= 60) or (m.get("front_premium") or 0) >= 1.25
+    expensive = (iv_rank is not None and iv_rank >= 60) or (m.get("front_premium") or 0) >= 1.25 \
+        or (m.get("iv30") or 0) >= 0.6
     min_dte = 30
     if next_cat and next_cat.get("days") is not None and next_cat["days"] >= 0:
         min_dte = max(21, next_cat["days"] + 7)
-    exp, dte = pick_expiration(m, min_dte)
+    grid = m.get("_grid") or {}
+    exp, dte = None, None
+    for e in sorted(grid.keys()):
+        d = grid[e][0]["dte"] if grid[e] else 0
+        if d >= min_dte:
+            exp, dte = e, d
+            break
+    if not exp:
+        exp, dte = pick_expiration(m, min_dte)
     em = None
     for x in m.get("expected_moves") or []:
         if exp and x["expiration"] == exp:
             em = x["em_usd"]
+    if em is None and price and m.get("iv30") and dte:
+        em = round(price * m["iv30"] * math.sqrt(dte / 365), 2)
     leg = "call" if direction == "ALCISTA" else "put"
     if price and em:
         k1 = round(price)
@@ -69,14 +114,20 @@ def trade_idea(direction, m, b, next_cat):
         strikes = f"comprar {leg} ~{k1}, vender {leg} ~{k2}" if expensive else f"{leg} ~{k1} (ATM) o spread {k1}/{k2}"
     else:
         strikes = f"{leg} ATM"
-    return {
-        "structure": (f"{leg.capitalize()} debit spread" if expensive else f"{leg.capitalize()} larga o debit spread"),
+    idea = {
+        "structure": (f"{leg.capitalize()} debit spread" if expensive else f"{leg.capitalize()} larga"),
         "why_structure": "IV cara: el spread abarata la prima y reduce el efecto del IV crush" if expensive
                          else "IV razonable: la opcion simple aprovecha mejor el movimiento",
         "expiration": exp, "dte": dte, "strikes": strikes,
         "management": "Stop -50% de la prima; objetivo +50/100%; salir si el OI de los contratos marcados empieza a caer",
         "note": "Ejemplo educativo, no es una recomendacion.",
     }
+    legs = build_legs(direction, grid, exp, price, em, spread=expensive)
+    if legs:
+        idea.update(legs)
+        k = [l["strike"] for l in legs["legs"]]
+        idea["strikes"] = " / ".join(f"{l['action'].lower()} {leg} {l['strike']:g} a ${l['mid']}" for l in legs["legs"])
+    return idea
 
 
 def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg):

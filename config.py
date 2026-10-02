@@ -23,7 +23,8 @@ DEFAULTS = {
     "universe": {
         "sp500": True, "nasdaq100": True, "etfs": ["SPY", "QQQ", "IWM"],
         "indices": ["SPX", "NDX", "VIX"], "watchlist": [], "exclude": [],
-        "add_catalyst_tickers": True, "max_tickers": 900,
+        "add_catalyst_tickers": True, "max_tickers": 1300,
+        "russell1000": True, "min_avg_opt_vol": 300,
     },
     "options": {
         "workers": 12, "max_dte": 800, "min_volume": 100, "min_vol_oi": 1.0,

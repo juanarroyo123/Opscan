@@ -37,6 +37,93 @@ def _insiders(t):
     return {"buys": buys, "sells": sells, "buy_usd": round(buy_v), "sell_usd": round(sell_v), "recent": rows}
 
 
+def _epoch_date(v):
+    try:
+        if v is None:
+            return None
+        if isinstance(v, (int, float)):
+            return dt.datetime.fromtimestamp(float(v), dt.timezone.utc).date().isoformat()
+        d = parse_date(v)
+        return d.isoformat() if d else None
+    except Exception:
+        return None
+
+
+def earnings_reactions(dates_df, hist_close, max_items=8):
+    """Movimiento real de la accion en cada resultado pasado.
+    dates_df: index = timestamps de resultados (con hora); hist_close: Serie de cierres diarios.
+    Antes de apertura (hora < 12 ET): cierre previo -> cierre del dia.
+    Tras el cierre (hora >= 12 ET): cierre del dia -> cierre del dia siguiente."""
+    import pandas as pd
+    if dates_df is None or hist_close is None or not len(hist_close):
+        return []
+    closes = hist_close.dropna()
+    idx = [d.date() if hasattr(d, "date") else d for d in closes.index]
+    out = []
+    now = dt.date.today()
+    for ts in dates_df.index:
+        try:
+            t = pd.Timestamp(ts)
+            if t.tzinfo is not None:
+                t = t.tz_convert("America/New_York")
+            d = t.date()
+        except Exception:
+            continue
+        if d >= now:
+            continue
+        amc = t.hour >= 12
+        try:
+            pos = next(i for i, x in enumerate(idx) if x >= d)
+        except StopIteration:
+            continue
+        if amc:
+            if idx[pos] != d or pos + 1 >= len(idx):
+                continue
+            a, b = closes.iloc[pos], closes.iloc[pos + 1]
+        else:
+            if pos == 0:
+                continue
+            a, b = closes.iloc[pos - 1], closes.iloc[pos]
+        if a and b:
+            out.append({"date": d.isoformat(), "when": "tras cierre" if amc else "antes de apertura",
+                        "move_pct": round((float(b) / float(a) - 1) * 100, 2)})
+        if len(out) >= max_items:
+            break
+    return out
+
+
+def fetch_earnings_history(ticker):
+    import yfinance as yf
+    from .options import yf_symbol
+    t = yf.Ticker(yf_symbol(ticker))
+    ed = t.get_earnings_dates(limit=16)
+    h = t.history(period="4y", interval="1d", auto_adjust=False)
+    moves = earnings_reactions(ed, h["Close"] if h is not None and len(h) else None)
+    absm = sorted(abs(m["move_pct"]) for m in moves)
+    return {"fetched_at": now_utc().isoformat(timespec="seconds"), "moves": moves,
+            "avg_abs": round(sum(absm) / len(absm), 2) if absm else None,
+            "median_abs": absm[len(absm) // 2] if absm else None,
+            "max_abs": absm[-1] if absm else None}
+
+
+def earnings_vs_expected(hist, expected_moves, earnings_date):
+    """Compara el movimiento que descuentan las opciones para el vencimiento justo despues
+    de los resultados con el movimiento medio historico."""
+    if not hist or not hist.get("avg_abs") or not earnings_date:
+        return None
+    em = next((x for x in sorted(expected_moves or [], key=lambda x: x["dte"])
+               if x["expiration"] >= earnings_date), None)
+    if not em:
+        return None
+    ratio = round(em["em_pct"] / hist["avg_abs"], 2) if hist["avg_abs"] else None
+    label = None
+    if ratio is not None:
+        label = "caras" if ratio >= 1.25 else ("baratas" if ratio <= 0.8 else "en linea")
+    return {"expiration": em["expiration"], "implied_pct": em["em_pct"], "hist_avg_pct": hist["avg_abs"],
+            "hist_median_pct": hist["median_abs"], "ratio": ratio, "label": label,
+            "note": "Movimiento esperado incluye todo hasta el vencimiento, no solo el dia de resultados."}
+
+
 def fetch_one(ticker, n_news=5):
     import yfinance as yf
     from .options import yf_symbol
@@ -55,6 +142,9 @@ def fetch_one(ticker, n_news=5):
         "target_high": info.get("targetHighPrice"), "recommendation": info.get("recommendationKey"),
         "analysts": info.get("numberOfAnalystOpinions"), "beta": info.get("beta"),
         "cash": info.get("totalCash"), "debt": info.get("totalDebt"),
+        "short_ratio": info.get("shortRatio"),            # dias para cubrir
+        "dividend_rate": info.get("dividendRate"), "dividend_yield": info.get("dividendYield"),
+        "ex_div_date": _epoch_date(info.get("exDividendDate")),
     })
     try:
         rt = t.recommendations
@@ -127,3 +217,30 @@ def upside(price, target):
     if price and target:
         return rnd((target / price - 1) * 100, 1)
     return None
+
+
+def enrich_earnings(tickers, cache, max_age_days=20, pause=0.6, status=None, limit=60):
+    """Historico de reacciones a resultados (cambia poco: cache ~20 dias)."""
+    done = errors = 0
+    now = now_utc()
+    for tk in tickers[:limit]:
+        c = cache.setdefault(tk, {})
+        eh = c.get("earn_hist")
+        if eh and eh.get("fetched_at"):
+            try:
+                if (now - dt.datetime.fromisoformat(eh["fetched_at"])).days < max_age_days:
+                    continue
+            except Exception:
+                pass
+        try:
+            c["earn_hist"] = fetch_earnings_history(tk)
+            done += 1
+        except Exception as e:
+            errors += 1
+            log(f"earnings {tk}: {e}")
+            if "Too Many Requests" in str(e) or "Rate" in str(e):
+                break
+        time.sleep(pause)
+    if status:
+        status.ok("Yahoo (historico de resultados)", done, f"{errors} errores" if errors else "")
+    return cache

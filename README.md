@@ -25,7 +25,7 @@ Funciona solo con **GitHub Actions** (gratis) y se publica en **GitHub Pages**. 
 | Hora (UTC, L-V) | Modo | Qué hace |
 |---|---|---|
 | 12:35 | `premarket` | Lo hace todo. Compara el OI nuevo, que la OCC publica de madrugada, con el flujo marcado ayer y lo marca como **confirmado** o **no confirmado**. |
-| Cada hora, de 14:05 a 20:05 | `intraday` | Solo cadenas de opciones de unos 650 valores (Cboe, con 15 min de retraso). |
+| Cada hora, de 14:05 a 20:05 | `intraday` | Solo cadenas de opciones de unos 1.000 valores (Cboe, con 15 min de retraso). |
 | 21:30 | `full` | Cierre completo: calendario, congreso, futuros, opciones, Yahoo y alertas. |
 
 ## Fuentes de datos (todas gratis)
@@ -74,6 +74,26 @@ A partir de ahí se ejecuta solo cada día laborable. La pestaña **Estado** de 
 - **Lado agresor (ASK/BID):** es una **estimación**. Compara el último precio con el bid/ask del momento de la descarga. No son sweeps reales: para eso hace falta una fuente de pago (por ejemplo, la API de Unusual Whales o Polygon).
 - **Retraso del Congreso:** la STOCK Act permite declarar hasta 45 días después. Úsalo como sesgo, no como momento de entrada.
 
+## Novedades v2.2
+
+- **Seguimiento (registro de aciertos):** cada señal se guarda y se mide a 5, 10 y 20 sesiones si la acción fue en la dirección indicada. La tabla "Acierto por tipo de señal" dice con números qué funciona (ENTRADA, flujo confirmado, catalizador FDA…).
+- **Cartera simulada:** cada ENTRADA abre sola una operación de prueba (1 contrato, objetivo +100 %, stop −50 %, cierre al vencer). Desde el detalle de cualquier valor, el botón **Simular en mi cartera** abre un Issue en GitHub; al pulsar *Submit* el workflow `paper.yml` lo anota. Para cerrarla, botón **Cerrar** en la pestaña Seguimiento. Solo se aceptan Issues del dueño del repo.
+- **Ideas con contratos reales:** la idea de estructura elige strikes y precios reales de la cadena (compra/venta, coste, pérdida y ganancia máximas, punto muerto).
+- **Resultados: opciones caras o baratas:** compara el movimiento que descuentan las opciones con la reacción media de los últimos 8 resultados.
+- **Ventas en corto y apretón de cortos:** volumen diario en corto de FINRA para todos los valores + % del flotante en corto (Yahoo). Marca "cortos ALTO/MEDIO" cuando coincide con flujo alcista.
+- **Dividendos:** las calls muy dentro del dinero compradas antes del ex-dividendo se marcan como captura de dividendo y no cuentan.
+- **Termómetro de gamma (SPX, SPY, QQQ):** gamma positiva = mercado tranquilo; negativa = movimientos amplificados; nivel de *flip*.
+- **Russell 1000:** amplía el universo a ~1.000 empresas (incluye medianas del NYSE). Las que casi no negocian opciones se omiten solas tras unas sesiones.
+- **Sectores:** mapa de hacia dónde va la prima direccional por sector.
+- **Telegram:** aviso de cada ENTRADA y resumen diario al cierre.
+
+### Activar Telegram (5 minutos)
+
+1. En Telegram, abre **@BotFather**, escribe `/newbot`, elige un nombre y copia el **token** que te da.
+2. Abre tu bot nuevo y escríbele cualquier cosa (por ejemplo "hola").
+3. En el navegador abre `https://api.telegram.org/bot<TOKEN>/getUpdates` (con tu token) y copia el número que aparece en `"chat":{"id": ...}`.
+4. En GitHub: *Settings → Secrets and variables → Actions* → crea `TELEGRAM_BOT_TOKEN` (el token) y `TELEGRAM_CHAT_ID` (el número).
+
 ## Configuración
 
 Todo está en `config.yml` y se puede editar desde GitHub:
@@ -106,10 +126,13 @@ opscan/
   catalysts.py  pdufa.bio, Finnhub, ClinicalTrials, SEC, FOMC, OPEX, manual
   enrich.py     Yahoo: fundamentales, analistas, noticias, insiders
   scoring.py    puntuación, dirección, checklist e idea de estructura
-  alerts.py     Telegram
+  alerts.py     Telegram (ENTRADAS + resumen diario)
+  tracking.py   registro de aciertos de las señales
+  paper.py      cartera simulada (AUTO + manual vía Issues)
+  shorts.py     volumen en corto FINRA y riesgo de apretón
   pipeline.py   orquestación y generación de la web
 docs/index.html   la web (pestañas Radar, Flujo, Futuros, Congreso, Calendario y Estado)
-tests/            30 tests sin red (datos simulados y muestras reales de congreso y comités)
+tests/            52 tests sin red (datos simulados y muestras reales de congreso y comités)
 ```
 
 ## Créditos e inspiración
