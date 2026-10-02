@@ -21,6 +21,43 @@ from .util import iso_now, log, parse_date, read_json, today_et, write_json
 
 TARGET_PCT = 100.0
 STOP_PCT = -50.0
+CAPITAL = 10000.0        # capital inicial de la cartera simulada (config: paper.capital)
+MAX_PCT = 5.0            # % maximo del valor de la cartera por operacion (config: paper.max_pct_trade)
+
+
+def configure(cfg):
+    global CAPITAL, MAX_PCT
+    pc = (cfg or {}).get("paper") or {}
+    CAPITAL = float(pc.get("capital", CAPITAL))
+    MAX_PCT = float(pc.get("max_pct_trade", MAX_PCT))
+
+
+def _n(t):
+    return int(t.get("contracts") or 1)
+
+
+def account(book):
+    """Saldo: capital - coste de lo abierto + resultado de lo cerrado. Valor total = saldo + valor de lo abierto."""
+    cap = float(book.get("capital") or CAPITAL)
+    tr = book["trades"]
+    invested = sum(t["entry_cost"] for t in tr if t["status"] == "OPEN")
+    open_value = sum(t.get("value", t["entry_cost"]) for t in tr if t["status"] == "OPEN")
+    realized = sum(t.get("pnl", 0) for t in tr if t["status"] != "OPEN")
+    cash = cap - invested + realized
+    equity = cash + open_value
+    return {"capital": round(cap, 2), "cash": round(cash, 2), "invested": round(invested, 2),
+            "open_value": round(open_value, 2), "equity": round(equity, 2),
+            "realized": round(realized, 2), "return_pct": round((equity / cap - 1) * 100, 2) if cap else None,
+            "max_per_trade": round(equity * MAX_PCT / 100, 2), "max_pct": MAX_PCT}
+
+
+def snapshot(book, session):
+    """Guarda el valor de la cartera por sesion (curva de capital)."""
+    a = account(book)
+    curve = [x for x in book.get("equity_curve", []) if x["date"] != session]
+    curve.append({"date": session, "equity": a["equity"], "cash": a["cash"]})
+    book["equity_curve"] = sorted(curve, key=lambda x: x["date"])[-400:]
+    return book
 
 
 def _path():
@@ -43,7 +80,7 @@ def _intrinsic(kind, strike, spot):
 
 
 def open_trade(book, ticker, direction, legs, session, source="AUTO", structure="", price=None,
-               notes="", issue=None):
+               notes="", issue=None, contracts=None):
     """legs: [{symbol, kind, strike, expiration, action COMPRAR/VENDER, mid}]"""
     if not legs:
         return None
@@ -57,17 +94,35 @@ def open_trade(book, ticker, direction, legs, session, source="AUTO", structure=
         clean.append({"symbol": l["symbol"], "kind": str(l.get("kind", "C"))[0].upper(),
                       "strike": float(l["strike"]), "expiration": l["expiration"], "qty": qty,
                       "entry": round(mid, 3), "last": round(mid, 3)})
-    cost = round(sum(l["qty"] * l["entry"] for l in clean) * 100, 2)
-    if cost <= 0:
+    unit = round(sum(l["qty"] * l["entry"] for l in clean) * 100, 2)   # coste de 1 contrato
+    if unit <= 0:
         return None
+    book.setdefault("capital", CAPITAL)
+    acc = account(book)
+    if contracts:
+        n = max(1, int(contracts))
+    else:
+        n = int(acc["max_per_trade"] // unit)
+        if n < 1:
+            if source == "AUTO":
+                book["_last_reject"] = f"1 contrato (${unit}) supera el maximo por operacion (${acc['max_per_trade']})"
+                return None
+            n = 1                         # manual: al menos 1 contrato si hay saldo
+    if unit * n > acc["cash"]:
+        n = int(acc["cash"] // unit)
+        if n < 1:
+            book["_last_reject"] = f"saldo insuficiente (${acc['cash']}) para 1 contrato de ${unit}"
+            return None
+    cost = round(unit * n, 2)
     book["seq"] = int(book.get("seq", 0)) + 1
     t = {"id": f"P{book['seq']:04d}", "source": source, "opened": session, "ticker": ticker.upper(),
          "direction": direction, "structure": structure, "legs": clean, "entry_cost": cost,
+         "contracts": n, "unit_cost": unit,
          "underlying_entry": price, "status": "OPEN", "value": cost, "pnl": 0.0, "pnl_pct": 0.0,
          "last_update": session, "notes": notes[:300], "issue": issue,
          "expiration": min(l["expiration"] for l in clean)}
     book["trades"].append(t)
-    log(f"paper: abierta {t['id']} {ticker} {direction} coste ${cost}")
+    log(f"paper: abierta {t['id']} {ticker} {direction} {n} contrato(s) coste ${cost}")
     return t
 
 
@@ -105,7 +160,7 @@ def mark(book, prices, spots, session):
                 l["last"] = round(_intrinsic(l["kind"], l["strike"], spot), 3)
             elif l["symbol"] in pm and pm[l["symbol"]].get("mid", 0) > 0:
                 l["last"] = pm[l["symbol"]]["mid"]
-        t["value"] = round(sum(l["qty"] * l["last"] for l in t["legs"]) * 100, 2)
+        t["value"] = round(sum(l["qty"] * l["last"] for l in t["legs"]) * 100 * _n(t), 2)
         t["pnl"] = round(t["value"] - t["entry_cost"], 2)
         t["pnl_pct"] = round(t["pnl"] / t["entry_cost"] * 100, 1) if t["entry_cost"] else 0.0
         t["underlying_last"] = spot
@@ -129,6 +184,10 @@ def auto_open(book, records, session):
                           idea.get("structure", ""), r.get("price"),
                           notes="; ".join((r.get("reasons") or [])[:3])):
                 n += 1
+            else:
+                why = book.pop("_last_reject", None)
+                if why:
+                    log(f"paper: {r['ticker']} no abierta ({why})")
     return n
 
 
@@ -150,6 +209,7 @@ def summary(book):
         "open": agg(opened), "closed": agg(closed),
         "auto_closed": agg([t for t in closed if t["source"] == "AUTO"]),
         "manual_closed": agg([t for t in closed if t["source"] == "MANUAL"]),
+        "account": account(book),
     }
 
 
@@ -157,7 +217,9 @@ def export(book):
     tr = sorted(book["trades"], key=lambda t: (t["status"] != "OPEN", t.get("closed") or "", t["opened"]),
                 reverse=False)
     return {"generated_at": iso_now(), "summary": summary(book), "trades": tr[-300:],
-            "rules": {"target_pct": TARGET_PCT, "stop_pct": STOP_PCT}}
+            "rules": {"target_pct": TARGET_PCT, "stop_pct": STOP_PCT, "capital": float(book.get("capital") or CAPITAL),
+                      "max_pct_trade": MAX_PCT},
+            "equity_curve": book.get("equity_curve", [])[-250:]}
 
 
 # ------------------------------------------------------------------ peticiones desde GitHub Issues
@@ -182,8 +244,13 @@ def parse_request(title, body):
 def apply_request(book, req, session, issue=None):
     if req.get("op") == "open":
         t = open_trade(book, req.get("ticker", ""), req.get("direction", ""), req.get("legs") or [], session,
-                       "MANUAL", req.get("structure", ""), req.get("price"), req.get("notes", ""), issue)
-        return (True, f"Abierta {t['id']} ({t['ticker']}) coste ${t['entry_cost']}") if t else (False, "Datos de la operacion no validos")
+                       "MANUAL", req.get("structure", ""), req.get("price"), req.get("notes", ""), issue,
+                       contracts=req.get("contracts"))
+        if t:
+            a = account(book)
+            return True, (f"Abierta {t['id']} ({t['ticker']}): {t['contracts']} contrato(s) x ${t['unit_cost']} = "
+                          f"${t['entry_cost']}. Saldo disponible: ${a['cash']}")
+        return False, book.pop("_last_reject", None) or "Datos de la operacion no validos"
     if req.get("op") == "close":
         for t in book["trades"]:
             if t["id"] == req.get("id") and t["status"] == "OPEN":
@@ -201,6 +268,11 @@ def main(argv=None):
     p.add_argument("--result-file", default="paper_result.txt")
     a = p.parse_args(argv)
     body = open(a.body_file, encoding="utf-8").read()
+    from .config import load_config
+    try:
+        configure(load_config())
+    except Exception:
+        pass
     book = load()
     session = today_et().isoformat()
     ok, msg = apply_request(book, parse_request(a.title, body), session, a.issue)

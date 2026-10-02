@@ -299,12 +299,15 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
     <div class="kpis" id="tkpis"></div>
     <div class="help"><b>¿Funciona la estrategia?</b> Cada señal (MEDIA, ALTA, pre-alerta o ENTRADA) se guarda con su precio y
       se mide cuánto se movió la <b>acción</b> a favor de la dirección indicada a 5, 10 y 20 sesiones. Con 3–4 semanas de datos
-      sabrás qué tipo de señal acierta. Abajo, la <b>cartera simulada</b>: cada ENTRADA abre sola una operación de prueba (1 contrato,
-      objetivo +100 %, stop −50 %), y tú puedes simular las que quieras con el botón del detalle.</div>
+      sabrás qué tipo de señal acierta. Abajo, la <b>cartera simulada</b>: empieza con un capital ficticio y cada operación usa como
+      máximo un % de su valor (por defecto 5 % de $10.000 = $500, se cambia en config.yml → paper). Cada ENTRADA abre sola una operación
+      (objetivo +100 %, stop −50 %), y tú puedes simular las que quieras con el botón del detalle.</div>
     <div class="section-t">Acierto por tipo de señal</div>
     <div class="panel"><div class="tscroll"><table><thead><tr>
       <th class="l">Grupo</th><th>Señales</th><th>5 sesiones</th><th>10 sesiones</th><th>20 sesiones</th>
     </tr></thead><tbody id="trkStats"></tbody></table></div></div>
+    <div class="section-t">Cartera simulada · cuenta</div>
+    <div class="kpis" id="paperAcct"></div>
     <div class="section-t">Cartera simulada · abiertas</div>
     <div class="panel"><div class="tscroll"><table class="big"><thead><tr>
       <th class="l">Id</th><th class="l">Valor</th><th class="l">Operación</th><th>Coste</th><th>Valor hoy</th><th>P&amp;L</th><th>Abierta</th><th>Vence</th><th class="l"></th>
@@ -356,6 +359,7 @@ const $=s=>document.querySelector(s);
 const MES=["","ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const safeUrl=u=>/^https?:\/\//i.test(u||"")?esc(u):"";
+const moneyF=n=>n==null||isNaN(n)?"—":(n<0?"-":"")+"$"+String(Math.round(Math.abs(n))).replace(/\B(?=(\d{3})+(?!\d))/g,".");
 function money(n){if(n==null||isNaN(n))return"—";const a=Math.abs(n),s=n<0?"-":"";
   if(a>=1e9)return s+"$"+(a/1e9).toFixed(1)+"B";if(a>=1e6)return s+"$"+(a/1e6).toFixed(2)+"M";
   if(a>=1e3)return s+"$"+(a/1e3).toFixed(0)+"K";return s+"$"+a.toFixed(0);}
@@ -486,16 +490,25 @@ function renderTrk(){const T=S.trk,P=S.paper;
   $("#trkStats").innerHTML=(T&&T.stats||[]).filter(x=>x.n).map(x=>`<tr><td class="l"><b>${esc(x.group)}</b></td><td class="num">${x.n}</td>
     <td class="num">${cellH(x,5)}</td><td class="num">${cellH(x,10)}</td><td class="num">${cellH(x,20)}</td></tr>`).join("")
     ||`<tr><td colspan="5" class="empty">Aún no hay señales registradas. Se guardan en cada cierre.</td></tr>`;
+  const A=ps.account||{};const curve=(P&&P.equity_curve)||[];
+  const spark=curve.length>1?(()=>{const v=curve.map(x=>x.equity),mn=Math.min(...v),mx=Math.max(...v),w=120,h=28;
+    const pts=v.map((y,i)=>`${(i/(v.length-1)*w).toFixed(1)},${(mx>mn?h-(y-mn)/(mx-mn)*h:h/2).toFixed(1)}`).join(" ");
+    return `<svg width="${w}" height="${h}" style="display:block;margin-top:4px"><polyline fill="none" stroke="currentColor" stroke-width="1.5" points="${pts}"/></svg>`;})():"";
+  $("#paperAcct").innerHTML=A.capital?`
+    <div class="kpi"><div class="lbl">Valor de la cartera</div><div class="val num">${moneyF(A.equity)}</div><div class="sub">${pnlH(A.equity-A.capital,A.return_pct)} desde ${moneyF(A.capital)}</div>${spark}</div>
+    <div class="kpi"><div class="lbl">Saldo disponible</div><div class="val num">${moneyF(A.cash)}</div><div class="sub">sin invertir</div></div>
+    <div class="kpi"><div class="lbl">Invertido ahora</div><div class="val num">${moneyF(A.invested)}</div><div class="sub">vale hoy ${moneyF(A.open_value)}</div></div>
+    <div class="kpi"><div class="lbl">Máximo por operación</div><div class="val num">${moneyF(A.max_per_trade)}</div><div class="sub">${A.max_pct}% del valor de la cartera</div></div>`:"";
   const tr=(P&&P.trades)||[];
   const op=tr.filter(t=>t.status==="OPEN"),cl=tr.filter(t=>t.status!=="OPEN").reverse();
   $("#paperOpen").innerHTML=op.map(t=>`<tr class="click" data-tk="${esc(t.ticker)}"><td class="l">${esc(t.id)} <span class="tag ${t.source==="AUTO"?"":"y"}">${esc(t.source)}</span></td>
-    <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${esc(legsTxt(t.legs))}</td>
+    <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${esc(legsTxt(t.legs))}${(t.contracts||1)>1?` <b>×${t.contracts}</b>`:""}</td>
     <td class="num">${money(t.entry_cost)}</td><td class="num">${money(t.value)}</td><td class="num">${pnlH(t.pnl,t.pnl_pct)}</td>
     <td class="num">${esc(t.opened)}</td><td class="num">${esc(t.expiration||"")}</td>
     <td class="l">${closeUrl(t)?`<a class="btn sec" href="${esc(closeUrl(t))}" target="_blank" rel="noopener">Cerrar</a>`:""}</td></tr>`).join("")
     ||`<tr><td colspan="9" class="empty">Sin operaciones abiertas. Abre una desde el detalle de un valor (botón “Simular”) o espera a la próxima ENTRADA.</td></tr>`;
   $("#paperClosed").innerHTML=cl.slice(0,100).map(t=>`<tr class="click" data-tk="${esc(t.ticker)}"><td class="l">${esc(t.id)} <span class="tag ${t.source==="AUTO"?"":"y"}">${esc(t.source)}</span></td>
-    <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${esc(legsTxt(t.legs))}</td>
+    <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${esc(legsTxt(t.legs))}${(t.contracts||1)>1?` <b>×${t.contracts}</b>`:""}</td>
     <td class="num">${money(t.entry_cost)}</td><td class="num">${money(t.exit_value)}</td><td class="num">${pnlH(t.pnl,t.pnl_pct)}</td>
     <td class="num">${esc(t.opened)} → ${esc(t.closed||"")}</td><td class="l small">${esc(t.close_reason||"")}</td></tr>`).join("")
     ||`<tr><td colspan="8" class="empty">Todavía no hay operaciones cerradas.</td></tr>`;

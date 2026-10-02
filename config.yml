@@ -49,6 +49,11 @@ scoring:
   media: 30                   # score >= media -> MEDIA
   idea_style: simple          # simple = solo comprar call/put | spread = spreads si la IV es cara | auto
 
+# ---------- Cartera simulada ----------
+paper:
+  capital: 10000              # dinero inicial (USD, simulado)
+  max_pct_trade: 5            # % maximo del valor de la cartera por operacion (5% de 10.000 = 500)
+
 # ---------- Enriquecimiento (Yahoo) para los mejores candidatos ----------
 enrich:
   top_n: 75

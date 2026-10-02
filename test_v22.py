@@ -204,3 +204,29 @@ def test_oi_cero_no_desconfirma_y_sesion_previa():
     out = state.confirm_flags(flags, "X", {"S1": 200}, "2026-10-02")
     assert out.iloc[0]["status"] == "CONFIRMADA"
     assert last_session_et(dt.datetime(2026, 10, 2, 7, 0, tzinfo=ET)).isoformat() == "2026-10-01"
+
+
+def test_cartera_con_capital():
+    from opscan import paper
+    paper.configure({"paper": {"capital": 10000, "max_pct_trade": 5}})
+    book = {"trades": [], "seq": 0}
+    leg = lambda mid, k=20: [{"symbol": f"X{k}", "kind": "C", "strike": k, "expiration": "2026-11-20",
+                              "action": "COMPRAR", "mid": mid}]
+    t = paper.open_trade(book, "X", "ALCISTA", leg(1.8), "2026-10-02", "AUTO")
+    assert t["contracts"] == 2 and t["entry_cost"] == 360.0          # 500 // 180 = 2
+    a = paper.account(book)
+    assert a["cash"] == 9640.0 and a["equity"] == 10000.0
+    # AUTO: 1 contrato de $900 supera el maximo de $500 -> no abre
+    assert paper.open_trade(book, "Y", "ALCISTA", leg(9.0), "2026-10-02", "AUTO") is None
+    # MANUAL: abre 1 contrato aunque supere el maximo, si hay saldo
+    ok, msg = paper.apply_request(book, {"op": "open", "ticker": "Y", "direction": "ALCISTA", "legs": leg(9.0)},
+                                  "2026-10-02")
+    assert ok and "1 contrato" in msg
+    # se valora por numero de contratos
+    paper.mark(book, {"X": {"X20": {"mid": 3.6}}}, {"X": 21}, "2026-10-05")
+    assert book["trades"][0]["value"] == 720.0 and book["trades"][0]["pnl_pct"] == 100.0
+    assert book["trades"][0]["status"] == "CLOSED"                    # objetivo +100% (AUTO)
+    paper.snapshot(book, "2026-10-05")
+    assert book["equity_curve"][-1]["equity"] == paper.account(book)["equity"]
+    ex = paper.export(book)
+    assert ex["summary"]["account"]["capital"] == 10000.0 and ex["equity_curve"]

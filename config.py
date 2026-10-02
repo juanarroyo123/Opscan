@@ -38,6 +38,7 @@ DEFAULTS = {
         "idea_style": "simple",
     },
     "enrich": {"top_n": 75, "news": 5},
+    "paper": {"capital": 10000, "max_pct_trade": 5},
     "calendar": {
         "horizon_days": 90, "trial_phases": ["PHASE2", "PHASE3"],
         "sec_terms": ["merger agreement", "tender offer", "acquisition agreement"],

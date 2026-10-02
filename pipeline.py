@@ -324,6 +324,7 @@ def run(mode="full", tickers_override=None, offline_universe=False):
 
     # 5) opciones (+ precios de la cartera simulada)
     flags = state.load_flags()
+    paper.configure(cfg)
     book = paper.load()
     watch = paper.watch_symbols(book)
     for tk in watch:
@@ -437,6 +438,7 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     # 8) cartera simulada (AUTO abre cada ENTRADA), registro de aciertos, GEX y sectores
     ok_recs = [r for r in records if r.get("signal") != "ERR"]
     n_auto = paper.auto_open(book, ok_recs, session)
+    paper.snapshot(book, session)
     paper.save(book)
     paper_out = paper.export(book)
     status.ok("Cartera simulada", len(book["trades"]), f"{n_auto} nuevas AUTO" if n_auto else "")
