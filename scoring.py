@@ -56,21 +56,34 @@ def build_legs(direction, grid, exp, price, em, spread):
     cs = [c for c in grid[exp] if c["kind"] == kind]
     if not cs:
         return None
-    buy = min(cs, key=lambda c: abs(c["strike"] - price))
+
+    def spr(c):
+        return (c["ask"] - c["bid"]) / c["mid"] if c.get("mid") and c["ask"] > 0 and c["bid"] > 0 else 9.9
+
+    # preferir contratos liquidos (diferencia compra/venta <= 15% del precio) cerca del dinero
+    liquid = [c for c in cs if spr(c) <= 0.15 and abs(c["strike"] / price - 1) <= 0.08]
+    buy = min(liquid or cs, key=lambda c: abs(c["strike"] - price))
     legs = [{"action": "COMPRAR", **buy}]
     sell = None
     if spread and em:
         target = price + em if kind == "C" else price - em
         cands = [c for c in cs if (c["strike"] > buy["strike"] if kind == "C" else c["strike"] < buy["strike"])]
         if cands:
-            sell = min(cands, key=lambda c: abs(c["strike"] - target))
+            liq = [c for c in cands if spr(c) <= 0.25]
+            sell = min(liq or cands, key=lambda c: abs(c["strike"] - target))
             legs.append({"action": "VENDER", **sell})
     debit = buy["mid"] - (sell["mid"] if sell else 0)
     if debit <= 0:
         return None
-    out = {"legs": [{k: l.get(k) for k in ("action", "symbol", "kind", "strike", "expiration", "dte", "mid",
-                                           "bid", "ask", "delta", "iv")} for l in legs],
+    out = {"legs": [{**{k: l.get(k) for k in ("action", "symbol", "kind", "strike", "expiration", "dte", "mid",
+                                              "bid", "ask", "delta", "iv")},
+                     "spread_pct": round(spr(l) * 100, 1) if spr(l) < 9 else None} for l in legs],
            "cost": round(debit * 100, 2), "max_loss": round(debit * 100, 2)}
+    worst = max(spr(l) for l in legs)
+    out["liquidity"] = "buena" if worst <= 0.08 else ("aceptable" if worst <= 0.15 else "mala")
+    if out["liquidity"] == "mala":
+        out["liquidity_note"] = (f"Diferencia compra/venta de hasta {worst*100:.0f}%: entrarias perdiendo. "
+                                 "Usa ordenes limitadas al precio medio o evita la operacion.")
     if sell:
         width = abs(sell["strike"] - buy["strike"])
         out["max_gain"] = round((width - debit) * 100, 2)
@@ -130,7 +143,7 @@ def trade_idea(direction, m, b, next_cat):
     return idea
 
 
-def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg):
+def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg, tech=None):
     sc = cfg["scoring"]
     reasons = []
     comp = {}
@@ -182,6 +195,58 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg):
     d = (m.get("flow_bias") or 0) * 1.0 + prev_bias * 0.6 + conf_bias * 1.2 + cong_bias * 0.5 + ins_bias * 0.2
     direction = "ALCISTA" if d > 0.15 else ("BAJISTA" if d < -0.15 else "MIXTO")
     dsign = 1 if direction == "ALCISTA" else (-1 if direction == "BAJISTA" else 0)
+
+    # 1b) flujo reactivo: si la accion YA se movio mucho hoy en esa direccion, las opciones
+    #     probablemente persiguen la noticia (llegan tarde) -> vale menos que el flujo anticipado
+    chg = m.get("change_pct")
+    if dsign and chg is not None and _sign(chg) == dsign and comp["flujo"] > 0:
+        if abs(chg) >= 6:
+            comp["flujo"] = round(comp["flujo"] * 0.6, 1)
+            reasons.append(f"Flujo reactivo: la accion ya se movio {chg:+.1f}% hoy (flujo x0,6)")
+        elif abs(chg) >= 3.5:
+            comp["flujo"] = round(comp["flujo"] * 0.85, 1)
+            reasons.append(f"Flujo en parte reactivo: accion {chg:+.1f}% hoy (flujo x0,85)")
+    elif dsign and chg is not None and _sign(chg, 1.0) == -dsign and comp["flujo"] > 0:
+        reasons.append(f"Flujo anticipado/contrario: se apuesta en contra del movimiento de hoy ({chg:+.1f}%)")
+
+    # 1c) acumulacion: flujo en la misma direccion varias sesiones seguidas
+    acc = 0
+    if dsign:
+        ns = fs.get("sessions_bull", 0) if dsign > 0 else fs.get("sessions_bear", 0)
+        if ns >= 3:
+            acc = 7
+        elif ns == 2:
+            acc = 4
+        if acc:
+            reasons.append(f"Acumulacion: flujo {direction.lower()} en {ns} sesiones distintas (+{acc})")
+    comp["acumulacion"] = acc
+
+    # 1d) confirmacion de la accion: tendencia y volumen
+    ap = 0
+    t = tech or {}
+    if dsign and t:
+        if t.get("above20") is not None and t.get("above50") is not None:
+            if (dsign > 0 and t["above20"] and t["above50"]) or (dsign < 0 and not t["above20"] and not t["above50"]):
+                ap += 3
+                reasons.append("Tendencia a favor (precio " + ("sobre" if dsign > 0 else "bajo") + " sus medias de 20 y 50 dias) (+3)")
+            elif (dsign > 0 and not t["above50"]) or (dsign < 0 and t["above50"]):
+                reasons.append("Contra tendencia (la media de 50 dias va en contra)")
+        rsv = t.get("rel_stock_vol")
+        if rsv is not None and rsv >= 2 and chg is not None and _sign(chg) == dsign:
+            ap += 3
+            reasons.append(f"La accion confirma: volumen {rsv}x su media con precio {chg:+.1f}% (+3)")
+    comp["accion"] = ap
+
+    # 1e) volatilidad implicita subiendo = alguien paga por la prisa
+    ivp = 0
+    ivc = m.get("iv30_change")
+    if dsign and ivc is not None and abs(m.get("flow_bias") or 0) >= 0.3:
+        if ivc >= 0.02:
+            ivp = 3
+            reasons.append(f"IV30 sube {ivc*100:+.1f} pts con flujo direccional: compradores con prisa (+3)")
+        elif ivc <= -0.03:
+            reasons.append(f"IV30 baja {ivc*100:+.1f} pts: el flujo no presiona la volatilidad")
+    comp["iv_subiendo"] = ivp
 
     # 4) catalizador
     horizon = sc["catalyst_horizon_days"]

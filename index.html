@@ -670,9 +670,10 @@ function openDetail(tk){const r=(S.latest&&S.latest.records||[]).find(x=>x.ticke
   const ck=r.checklist||{},f=r.fund||{};
   const reasons=(r.reasons||[]).map(t=>`<span class="chip">${esc(t)}</span>`).join("")||'<span class="muted">Sin señales destacadas.</span>';
   const I=r.idea;const su=I?simUrl(r):"";
-  const legRows=I&&I.legs?`<table class="sm" style="margin-top:8px"><thead><tr><th class="l">Acción</th><th class="l">Contrato</th><th>Vence</th><th>Precio medio</th><th>Bid/Ask</th><th>Delta</th></tr></thead><tbody>
+  const legRows=I&&I.legs?`<table class="sm" style="margin-top:8px"><thead><tr><th class="l">Acción</th><th class="l">Contrato</th><th>Vence</th><th>Precio medio</th><th>Bid/Ask</th><th>Dif. %</th><th>Delta</th></tr></thead><tbody>
     ${I.legs.map(l=>`<tr><td class="l"><b class="${l.action==="COMPRAR"?"up":"down"}">${esc(l.action)}</b></td><td class="l">${l.kind==="C"?"CALL":"PUT"} ${l.strike}</td>
-      <td class="num">${esc(l.expiration)}</td><td class="num">$${l.mid}</td><td class="num">${l.bid}/${l.ask}</td><td class="num">${l.delta??"—"}</td></tr>`).join("")}</tbody></table>
+      <td class="num">${esc(l.expiration)}</td><td class="num">$${l.mid}</td><td class="num">${l.bid}/${l.ask}</td><td class="num ${l.spread_pct>15?"down":""}">${l.spread_pct!=null?l.spread_pct+"%":"—"}</td><td class="num">${l.delta??"—"}</td></tr>`).join("")}</tbody></table>
+    ${I.liquidity?`<div class="small" style="margin-top:4px">Liquidez: <span style="font-weight:800" class="${I.liquidity==="mala"?"down":I.liquidity==="buena"?"up":""}">${esc(I.liquidity)}</span>${I.liquidity_note?" · "+esc(I.liquidity_note):""}</div>`:""}
     <div class="grid4" style="margin-top:8px">${M("Coste (1 contrato)",money(I.cost))}${M("Pérdida máxima",money(I.max_loss))}${M("Ganancia máxima",I.max_gain!=null?money(I.max_gain):"sin límite")}${M("Punto muerto",`$${I.breakeven} (${pct(I.breakeven_move_pct)})`)}</div>`:"";
   const idea=I?`<div class="idea"><div><b>Idea de estructura (educativa):</b> ${esc(I.structure)}${I.expiration?` · vencimiento ${esc(I.expiration)} (${I.dte}d)`:""}</div>
     <div class="small">${esc(I.strikes)} · ${esc(I.why_structure)}</div>${legRows}<div class="small" style="margin-top:6px">${esc(I.management)}</div>
@@ -685,6 +686,9 @@ function openDetail(tk){const r=(S.latest&&S.latest.records||[]).find(x=>x.ticke
   const SH=r.short||{};const shH=(SH.pct_float!=null||SH.vol_ratio_5d!=null)?`<div class="section-t">Ventas en corto</div>
     <div class="grid4">${M("% del flotante en corto",SH.pct_float!=null?(SH.pct_float*100).toFixed(1)+"%":"—")}${M("Días para cubrir",SH.days_to_cover??"—")}${M("Volumen en corto (5d)",SH.vol_ratio_5d!=null?(SH.vol_ratio_5d*100).toFixed(0)+"%":"—")}${M("Riesgo de apretón",r.squeeze?`<b class="up">${esc(r.squeeze.level)}</b>`:"bajo")}</div>
     ${r.squeeze?`<div class="small" style="margin-top:4px">${esc(r.squeeze.reasons.join(" · "))}</div>`:""}`:"";
+  const TC=r.tech;const tcH=TC?`<div class="section-t">La acción (contexto técnico)</div>
+    <div class="grid4">${M("Tendencia",`${TC.above20?'<span class="up">sobre</span>':'<span class="down">bajo</span>'} MA20 · ${TC.above50==null?"—":TC.above50?'<span class="up">sobre</span>':'<span class="down">bajo</span>'} MA50`)}
+      ${M("Volumen acción vs media",TC.rel_stock_vol!=null?TC.rel_stock_vol+"x":"—")}${M("5 días / 20 días",`${pct(TC.chg_5d)} / ${pct(TC.chg_20d)}`)}${M("Desde máximo 52s",pct(TC.dist_52w_high))}</div>`:"";
   const dvH=r.dividend?`<div class="small muted" style="margin-top:6px">Próximo ex-dividendo: ${esc(r.dividend.ex_div_date)}${r.dividend.yield!=null?` · rentabilidad ${(r.dividend.yield>1?r.dividend.yield:r.dividend.yield*100).toFixed(2)}%`:""}</div>`:"";
   const comp=r.components?Object.entries(r.components).map(([k,v])=>M(k.replace("_"," "),v)).join(""):"";
   const em=(r.expected_moves||[]).map(x=>`<tr><td class="l">${esc(x.expiration)}</td><td class="num">${x.dte}d</td><td class="num">±$${x.em_usd}</td><td class="num">±${x.em_pct}%</td></tr>`).join("");
@@ -721,6 +725,7 @@ function openDetail(tk){const r=(S.latest&&S.latest.records||[]).find(x=>x.ticke
       ${em?`<div class="section-t">Movimiento esperado (straddle ATM)</div><div class="panel"><table class="sm"><thead><tr><th class="l">Vencimiento</th><th>Días</th><th>±$</th><th>±%</th></tr></thead><tbody>${em}</tbody></table></div>`:""}
       ${un?`<div class="section-t">Contratos inusuales hoy</div><div class="panel tscroll"><table class="sm"><thead><tr><th class="l">Contrato</th><th>Vto</th><th>Prima</th><th>Vol/OI</th><th class="l">Lado</th><th class="l">Lectura</th></tr></thead><tbody>${un}</tbody></table></div>`:""}
       ${cf?`<div class="section-t">Confirmadas por subida de OI</div><div class="panel tscroll"><table class="sm"><thead><tr><th class="l">Contrato</th><th>Vto</th><th>Prima</th><th>OI</th><th class="l">Lectura</th><th>Marcada</th></tr></thead><tbody>${cf}</tbody></table></div>`:""}
+      ${tcH}
       ${earnH}
       <div class="section-t">Catalizadores</div>${cats}${dvH}
       ${shH}

@@ -123,3 +123,68 @@ def test_build_legs_from_grid():
     out = scoring.build_legs("ALCISTA", grid, "2026-11-20", 100.5, 9.0, spread=True)
     assert [l["strike"] for l in out["legs"]] == [100.0, 110.0]
     assert out["cost"] == 350.0 and out["max_gain"] == 650.0 and out["breakeven"] == 103.5
+
+
+def test_parse_ssga():
+    rows = [["Fund Name:", "SPDR S&P MIDCAP 400"], ["Ticker Symbol:", "MDY"], [None, None],
+            ["Name", "Ticker", "Identifier", "Weight", "Sector"],
+            ["CIENA CORP", "CIEN", "171779309", 0.8, "Information Technology"],
+            ["US DOLLAR", "CASH_USD", None, 0.1, "-"]]
+    d = universe.parse_ssga_holdings(pd.DataFrame(rows))
+    assert set(d) == {"CIEN"} and d["CIEN"]["sector"] == "Information Technology"
+
+
+def test_earnings_event_move():
+    hist = {"avg_abs": 5.0, "median_abs": 5.0}
+    em = [{"expiration": "2026-10-16", "dte": 10, "em_pct": 4.0},     # antes de resultados: 1.6 var/dia
+          {"expiration": "2026-10-23", "dte": 17, "em_pct": 7.0}]     # despues
+    r = enrich.earnings_vs_expected(hist, em, "2026-10-20")
+    assert r["event_only"] and 4.0 < r["implied_pct"] < 5.0          # sqrt(49 - 1.6*16) ~ 4.83
+    assert r["label"] == "en linea"
+
+
+def _fs(**kw):
+    d = {"confirmed": 0, "confirmed_bull_premium": 0, "confirmed_bear_premium": 0, "not_confirmed": 0,
+         "pending": 0, "confirmed_list": [], "prev_bull_premium": 0, "prev_bear_premium": 0,
+         "sessions_bull": 0, "sessions_bear": 0}
+    d.update(kw)
+    return d
+
+
+def _m(**kw):
+    d = {"unusual_count": 2, "unusual_premium": 2_000_000, "effective_premium": 2_000_000,
+         "bull_premium": 2_000_000, "bear_premium": 0, "flow_bias": 1.0, "whales": 1,
+         "call_premium": 3_000_000, "put_premium": 500_000, "_unusual": [], "change_pct": 0.5, "iv30_change": 0.0}
+    d.update(kw)
+    return d
+
+
+def test_accumulation_trend_iv_bonus(cfg):
+    base = scoring.score_ticker(_m(), {}, _fs(), [], None, None, [], None, cfg)
+    tech = {"above20": True, "above50": True, "rel_stock_vol": 2.5}
+    boosted = scoring.score_ticker(_m(change_pct=1.5, iv30_change=0.03), {}, _fs(sessions_bull=3), [], None, None, [],
+                                   None, cfg, tech)
+    c = boosted["components"]
+    assert c["acumulacion"] == 7 and c["accion"] == 6 and c["iv_subiendo"] == 3
+    assert boosted["score"] == pytest.approx(base["score"] + 16, abs=0.5)
+
+
+def test_reactive_flow_penalized(cfg):
+    calm = scoring.score_ticker(_m(change_pct=0.5), {}, _fs(), [], None, None, [], None, cfg)
+    chased = scoring.score_ticker(_m(change_pct=9.0), {}, _fs(), [], None, None, [], None, cfg)
+    assert chased["components"]["flujo"] == pytest.approx(calm["components"]["flujo"] * 0.6, abs=0.2)
+    assert any("reactivo" in r for r in chased["reasons"])
+
+
+def test_liquidity_prefers_tight_spread():
+    grid = {"2026-11-20": [
+        {"symbol": "C100", "kind": "C", "strike": 100.0, "dte": 50, "expiration": "2026-11-20", "mid": 5.0, "bid": 4.0, "ask": 6.0},
+        {"symbol": "C102", "kind": "C", "strike": 102.0, "dte": 50, "expiration": "2026-11-20", "mid": 4.0, "bid": 3.9, "ask": 4.1}]}
+    out = scoring.build_legs("ALCISTA", grid, "2026-11-20", 100.2, None, spread=False)
+    assert out["legs"][0]["strike"] == 102.0 and out["liquidity"] == "buena"
+
+
+def test_technicals_features():
+    from opscan import technicals
+    f = technicals.features_from_series([100 + i for i in range(60)], [1000] * 60, today_volume=2500)
+    assert f["above20"] and f["above50"] and f["rel_stock_vol"] == 2.5 and f["dist_52w_high"] == 0.0

@@ -24,7 +24,7 @@ DEFAULTS = {
         "sp500": True, "nasdaq100": True, "etfs": ["SPY", "QQQ", "IWM"],
         "indices": ["SPX", "NDX", "VIX"], "watchlist": [], "exclude": [],
         "add_catalyst_tickers": True, "max_tickers": 1300,
-        "russell1000": True, "min_avg_opt_vol": 300,
+        "midcap400": True, "russell1000": False, "min_avg_opt_vol": 300,
     },
     "options": {
         "workers": 12, "max_dte": 800, "min_volume": 100, "min_vol_oi": 1.0,
@@ -34,7 +34,7 @@ DEFAULTS = {
     },
     "scoring": {
         "catalyst_horizon_days": 45, "congress_window_days": 90,
-        "congress_cluster_days": 30, "entry_min_points": 3, "alta": 60, "media": 35,
+        "congress_cluster_days": 30, "entry_min_points": 3, "alta": 55, "media": 30,
     },
     "enrich": {"top_n": 75, "news": 5},
     "calendar": {

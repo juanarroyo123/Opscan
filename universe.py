@@ -47,7 +47,7 @@ def load_sp500(status=None):
         data = {r["ticker"].upper(): {"name": r.get("name", ""), "sector": r.get("sector", ""),
                                       "industry": r.get("industry", "")} for r in rows}
         if status:
-            status.ok("Universo S&P 500", len(data), f"lista local (online fallo: {e})")
+            status.ok("Universo S&P 500", len(data), "lista local (fuente online no disponible, no afecta)")
         return data
 
 
@@ -74,7 +74,7 @@ def load_nasdaq100(status=None):
         rows = _read_csv(os.path.join(CONFIG_DIR, "nasdaq100.csv"))
         data = {r["ticker"].upper(): {"sector": r.get("sector", "")} for r in rows}
         if status:
-            status.ok("Universo Nasdaq 100", len(data), f"lista local (online fallo: {e})")
+            status.ok("Universo Nasdaq 100", len(data), "lista local (Wikipedia no disponible, no afecta)")
         return data
 
 
@@ -97,6 +97,47 @@ def parse_ishares_csv(text, known=None):
             tk = tk[:-1] + "." + tk[-1]
         out[tk] = {"name": (r.get("Name") or "").title(), "sector": (r.get("Sector") or "").strip()}
     return out
+
+
+SSGA_URL = "https://www.ssga.com/us/en/intermediary/library-content/products/fund-data/etfs/us/holdings-daily-us-en-{fund}.xlsx"
+
+
+def parse_ssga_holdings(df_raw):
+    """Excel de posiciones de SPDR (cabecera en una fila con 'Ticker')."""
+    hdr = None
+    for i in range(min(len(df_raw), 30)):
+        row = [str(x).strip() for x in df_raw.iloc[i].tolist()]
+        if "Ticker" in row:
+            hdr = i
+            break
+    if hdr is None:
+        return {}
+    cols = [str(x).strip() for x in df_raw.iloc[hdr].tolist()]
+    out = {}
+    for _, r in df_raw.iloc[hdr + 1:].iterrows():
+        rec = dict(zip(cols, r.tolist()))
+        tk = str(rec.get("Ticker") or "").strip().upper()
+        if not tk or tk in ("NAN", "-", "CASH_USD") or not re.match(r"^[A-Z][A-Z0-9.]{0,6}$", tk):
+            continue
+        out[tk] = {"name": str(rec.get("Name") or "").title(), "sector": str(rec.get("Sector") or "").strip()}
+    return out
+
+
+def load_ssga(fund, label, status=None, min_rows=300):
+    try:
+        import pandas as pd
+        r = get(SSGA_URL.format(fund=fund.lower()), timeout=60)
+        df = pd.read_excel(io.BytesIO(r.content), header=None)
+        data = parse_ssga_holdings(df)
+        if len(data) < min_rows:
+            raise ValueError(f"solo {len(data)} valores (respuesta: {r.headers.get('content-type')})")
+        if status:
+            status.ok(label, len(data))
+        return data
+    except Exception as e:
+        if status:
+            status.fail(label, e)
+        return {}
 
 
 def load_russell1000(status=None, known=None):
@@ -150,15 +191,20 @@ def build_universe(cfg, status=None, catalyst_tickers=None, offline=False, low_a
     for t, r in ndx.items():
         add(t, "ndx", sector=r.get("sector"))
     skipped = 0
+    extra = {}
+    if u.get("midcap400") and not offline:
+        extra.update(load_ssga("MDY", "Universo S&P 400 MidCap (SPDR MDY)", status))
     if u.get("russell1000") and not offline:
+        extra.update(load_russell1000(status, set(sp) | set(ndx)))
+    if extra:
         low = low_activity or set()
-        for t, r in load_russell1000(status, set(sp) | set(ndx)).items():
+        for t, r in extra.items():
             if t in meta:
                 continue
             if t in low:
                 skipped += 1   # casi sin volumen de opciones: no merece la pena escanearlo
                 continue
-            add(t, "r1000", name=r.get("name"), sector=r.get("sector"))
+            add(t, "ampliado", name=r.get("name"), sector=r.get("sector"))
         if skipped:
             log(f"Universo: {skipped} valores del Russell 1000 omitidos por poca actividad en opciones")
     # sector de valores del watchlist/catalizador si estan en S&P

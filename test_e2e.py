@@ -136,6 +136,9 @@ def env(tmp_path, monkeypatch):
     monkeypatch.setattr(futures, "fetch_prices", fake_prices)
     monkeypatch.setattr(enrich, "fetch_one", fake_enrich)
     monkeypatch.setattr(enrich.time, "sleep", lambda s: None)
+    from opscan import technicals
+    monkeypatch.setattr(technicals, "fetch_yahoo", lambda tks, chunk=150: {
+        t: {"close": [100 + i * 0.2 for i in range(120)], "volume": [1e6] * 120} for t in tks})
     return tmp_path
 
 

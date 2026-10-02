@@ -153,12 +153,13 @@ def confirm_flags(flags, ticker, oi_map, session, ratio=0.5):
 def flag_summary(flags, ticker, session, window_sessions=5):
     out = {"confirmed": 0, "confirmed_bull_premium": 0, "confirmed_bear_premium": 0,
            "not_confirmed": 0, "pending": 0, "confirmed_list": [],
-           "prev_bull_premium": 0, "prev_bear_premium": 0}
+           "prev_bull_premium": 0, "prev_bear_premium": 0, "sessions_bull": 0, "sessions_bear": 0}
     if not len(flags):
         return out
     d0 = parse_date(session)
     since = (d0 - dt.timedelta(days=int(window_sessions * 7 / 5) + 2)).isoformat() if d0 else "0000"
     f = flags[(flags["ticker"] == ticker) & (flags["date"] >= since)]
+    days_by_dir = {}
     for _, r in f.iterrows():
         st = r["status"]
         if r["direction"] not in ("ALCISTA", "BAJISTA"):
@@ -170,6 +171,7 @@ def flag_summary(flags, ticker, session, window_sessions=5):
             wt = 1.0
         if wt < 0.5:
             continue    # coberturas, spreads o semanales: no cuentan como confirmacion direccional
+        days_by_dir.setdefault(r["direction"], set()).add(r["date"])
         if r["date"] < session and st in ("PENDIENTE", "CONFIRMADA"):
             k = "prev_bull_premium" if r["direction"] == "ALCISTA" else "prev_bear_premium"
             out[k] += float(r["premium"] or 0) * wt
@@ -192,6 +194,8 @@ def flag_summary(flags, ticker, session, window_sessions=5):
             out["pending"] += 1
     out["confirmed_bull_premium"] = round(out["confirmed_bull_premium"])
     out["confirmed_bear_premium"] = round(out["confirmed_bear_premium"])
+    out["sessions_bull"] = len(days_by_dir.get("ALCISTA", ()))
+    out["sessions_bear"] = len(days_by_dir.get("BAJISTA", ()))
     out["prev_bull_premium"] = round(out["prev_bull_premium"])
     out["prev_bear_premium"] = round(out["prev_bear_premium"])
     out["confirmed_list"] = sorted(out["confirmed_list"], key=lambda x: -x["premium"])[:8]

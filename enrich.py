@@ -111,17 +111,31 @@ def earnings_vs_expected(hist, expected_moves, earnings_date):
     de los resultados con el movimiento medio historico."""
     if not hist or not hist.get("avg_abs") or not earnings_date:
         return None
-    em = next((x for x in sorted(expected_moves or [], key=lambda x: x["dte"])
-               if x["expiration"] >= earnings_date), None)
+    ems = sorted(expected_moves or [], key=lambda x: x["dte"])
+    em = next((x for x in ems if x["expiration"] >= earnings_date), None)
     if not em:
         return None
-    ratio = round(em["em_pct"] / hist["avg_abs"], 2) if hist["avg_abs"] else None
+    before = [x for x in ems if x["expiration"] < earnings_date and x["dte"] > 0]
+    # Movimiento del EVENTO: a la varianza total hasta el vencimiento se le resta la varianza
+    # "normal" de esos dias (estimada con el vencimiento anterior a los resultados).
+    event = None
+    if before:
+        b = before[-1]
+        base_var_day = (b["em_pct"] ** 2) / b["dte"]
+        ev2 = em["em_pct"] ** 2 - base_var_day * max(em["dte"] - 1, 0)
+        if ev2 > 0:
+            event = round(ev2 ** 0.5, 2)
+    implied = event if event is not None else em["em_pct"]
+    ratio = round(implied / hist["avg_abs"], 2) if hist["avg_abs"] else None
     label = None
     if ratio is not None:
         label = "caras" if ratio >= 1.25 else ("baratas" if ratio <= 0.8 else "en linea")
-    return {"expiration": em["expiration"], "implied_pct": em["em_pct"], "hist_avg_pct": hist["avg_abs"],
+    return {"expiration": em["expiration"], "implied_pct": implied, "total_to_exp_pct": em["em_pct"],
+            "event_only": event is not None, "hist_avg_pct": hist["avg_abs"],
             "hist_median_pct": hist["median_abs"], "ratio": ratio, "label": label,
-            "note": "Movimiento esperado incluye todo hasta el vencimiento, no solo el dia de resultados."}
+            "note": ("Movimiento del dia de resultados extraido de la estructura de vencimientos."
+                     if event is not None else
+                     "Sin vencimiento previo: el movimiento incluye todo hasta el vencimiento (sobreestima).")}
 
 
 def fetch_one(ticker, n_news=5):

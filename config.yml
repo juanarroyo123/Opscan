@@ -16,9 +16,11 @@ universe:
   # Anadir automaticamente las biotech con fecha PDUFA / lectura en el horizonte
   add_catalyst_tickers: true
   max_tickers: 1300
-  # Russell 1000 (las 1.000 mayores de EEUU, incluye medianas del NYSE). Se omiten solas las que
+  # Ampliacion: S&P 400 MidCap (empresas medianas, muchas del NYSE). Se omiten solas las que
   # casi no negocian opciones (media < min_avg_opt_vol contratos/dia en las ultimas 20 sesiones).
-  russell1000: true
+  midcap400: true
+  russell1000: false          # iShares ya no publica el CSV en abierto
+
   min_avg_opt_vol: 300
 
 # ---------- Escaner de opciones ----------
@@ -43,8 +45,8 @@ scoring:
   congress_window_days: 90
   congress_cluster_days: 30
   entry_min_points: 3         # checklist: congreso(+1) futuros(+1) flujo confirmado(+2)
-  alta: 60                    # score >= alta  -> ALTA
-  media: 35                   # score >= media -> MEDIA
+  alta: 55                    # score >= alta  -> ALTA
+  media: 30                   # score >= media -> MEDIA
 
 # ---------- Enriquecimiento (Yahoo) para los mejores candidatos ----------
 enrich:

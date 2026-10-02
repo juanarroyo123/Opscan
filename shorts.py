@@ -68,9 +68,10 @@ def squeeze_risk(short_pct_float, short_vol_ratio, direction, change_pct, rel_vo
             pts += 2; why.append(f"{short_pct_float*100:.0f}% del flotante en corto")
         elif short_pct_float >= 0.12:
             pts += 1; why.append(f"{short_pct_float*100:.0f}% del flotante en corto")
-    if short_vol_ratio is not None and short_vol_ratio >= 0.55:
+    # el volumen "en corto" de FINRA ronda el 40-55% en casi todo (creadores de mercado): solo cuenta si es extremo
+    if short_vol_ratio is not None and short_vol_ratio >= 0.65:
         pts += 1; why.append(f"{short_vol_ratio*100:.0f}% del volumen diario es venta en corto")
-    if pts == 0:
+    if pts == 0 or (short_pct_float is not None and short_pct_float < 0.08):
         return None
     if direction == "ALCISTA":
         pts += 1; why.append("flujo de opciones alcista")
@@ -80,7 +81,7 @@ def squeeze_risk(short_pct_float, short_vol_ratio, direction, change_pct, rel_vo
         pts += 1; why.append(f"precio +{change_pct:.1f}% hoy")
     if rel_vol is not None and rel_vol >= 1.5:
         pts += 1; why.append(f"volumen de opciones {rel_vol}x")
-    if pts >= 5:
+    if pts >= 5 and (short_pct_float or 0) >= 0.12:
         return {"level": "ALTO", "points": pts, "reasons": why}
     if pts >= 3:
         return {"level": "MEDIO", "points": pts, "reasons": why}

@@ -12,7 +12,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from . import (alerts, catalysts, congress, enrich, futures, options, paper, scoring, shorts, state,
-               tracking, universe)
+               technicals, tracking, universe)
 from .config import DOCS_DIR, data_dir, load_config
 from .util import Status, iso_now, log, parse_date, read_json, rnd, today_et, write_json
 
@@ -22,6 +22,11 @@ YAHOO_TO_GICS = {
     "Consumer Defensive": "Consumer Staples", "Basic Materials": "Materials",
 }
 FULL_MODES = ("full", "premarket", "smoke")
+
+
+def pd_to_num(s):
+    import pandas as pd
+    return pd.to_numeric(s, errors="coerce")
 
 
 def _out(name):
@@ -136,7 +141,7 @@ def tag_dividends(m, unusual, enr, session):
     return m, unusual, None
 
 
-def build_record(tk, res, meta, base, fs, cats, cong, fctx, enr, cfg, session=None, short_vol=None):
+def build_record(tk, res, meta, base, fs, cats, cong, fctx, enr, cfg, session=None, short_vol=None, tech=None):
     m = dict(res["metrics"])
     unusual = res["unusual"]
     m, unusual, div = tag_dividends(m, unusual, enr, session or m.get("session_date") or "")
@@ -144,7 +149,7 @@ def build_record(tk, res, meta, base, fs, cats, cong, fctx, enr, cfg, session=No
     m["_grid"] = res.get("grid") or {}
     sector = _sector(meta, enr)
     fut_bias, fut_why = fctx.get(sector) or fctx.get("_default") or (None, [])
-    s = scoring.score_ticker(m, base, fs, cats, cong, fut_bias, fut_why, enr, cfg)
+    s = scoring.score_ticker(m, base, fs, cats, cong, fut_bias, fut_why, enr, cfg, tech)
     e = enr or {}
     if div:
         s["reasons"].append(f"{div['contracts']} call(s) muy dentro del dinero antes del ex-dividendo "
@@ -196,7 +201,7 @@ def build_record(tk, res, meta, base, fs, cats, cong, fctx, enr, cfg, session=No
         "news": e.get("news") if e else None,
         "short": {"vol_ratio_5d": sv.get("ratio_5d"), "vol_ratio_last": sv.get("ratio_last"),
                   "pct_float": e.get("short_pct_float"), "days_to_cover": e.get("short_ratio")},
-        "squeeze": sq, "earnings": earn, "dividend": ({"ex_div_date": e.get("ex_div_date"),
+        "squeeze": sq, "earnings": earn, "tech": tech, "dividend": ({"ex_div_date": e.get("ex_div_date"),
                                                        "yield": e.get("dividend_yield")} if e.get("ex_div_date") else None),
         **s,
     }
@@ -336,10 +341,19 @@ def run(mode="full", tickers_override=None, offline_universe=False):
         bases[tk] = state.baselines(daily, tk, m.get("session_date") or session, m.get("opt_vol"), m.get("iv30"))
         fsums[tk] = state.flag_summary(flags, tk, m.get("session_date") or session,
                                        cfg["options"]["oi_confirm_window"])
+    # contexto tecnico de la accion (Yahoo en modos completos, cache en intradia)
+    tcache = state.load_cache("tech.json", {})
+    if full:
+        stocks = [t for t in results if t not in options.INDEXES]
+        tcache = technicals.build(stocks, tcache, status)
+        state.save_cache("tech.json", tcache)
+    techs = {tk: technicals.features(tk, tcache, daily, res["metrics"].get("stock_volume"))
+             for tk, res in results.items()}
+
     prelim = []
     for tk, res in results.items():
         r = build_record(tk, res, uni.get(tk), bases[tk], fsums[tk], cal_by_tk.get(tk),
-                         cong_by.get(tk), fctx, ecache.get(tk), cfg, session, short_vol)
+                         cong_by.get(tk), fctx, ecache.get(tk), cfg, session, short_vol, techs.get(tk))
         prelim.append((r["score"], tk))
     if full:
         prelim.sort(reverse=True)
@@ -374,7 +388,7 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     records = []
     for tk, res in results.items():
         records.append(build_record(tk, res, uni.get(tk), bases[tk], fsums[tk], cal_by_tk.get(tk),
-                                    cong_by.get(tk), fctx, ecache.get(tk), cfg, session, short_vol))
+                                    cong_by.get(tk), fctx, ecache.get(tk), cfg, session, short_vol, techs.get(tk)))
     for tk, err in failed.items():
         records.append({"ticker": tk, "name": (uni.get(tk) or {}).get("name") or tk,
                         "sector": sectors.get(tk, ""), "score": 0, "signal": "ERR", "direction": "-",
@@ -390,7 +404,11 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     flow.sort(key=lambda u: (u["score"], u["premium"]), reverse=True)
     confirmed_recent = []
     if len(flags):
-        cf = flags[flags["status"] == "CONFIRMADA"].sort_values("checked_date", ascending=False).head(300)
+        cf = flags[flags["status"] == "CONFIRMADA"]
+        if "weight" in cf.columns:
+            w = pd_to_num(cf["weight"]).fillna(1.0)
+            cf = cf[w >= 0.5]
+        cf = cf.sort_values("checked_date", ascending=False).head(300)
         for _, r in cf.iterrows():
             confirmed_recent.append({k: (None if str(r[k]) == "nan" else r[k]) for k in
                                      ("date", "checked_date", "ticker", "symbol", "kind", "strike", "expiration",
