@@ -192,8 +192,8 @@ def estimate_side(c):
 
 
 DIR_WEIGHTS = {
-    ("C", "ASK"): ("ALCISTA", 1.0), ("C", "BID"): ("BAJISTA", 0.6), ("C", "MID"): ("NEUTRAL", 0.0),
-    ("P", "ASK"): ("BAJISTA", 1.0), ("P", "BID"): ("ALCISTA", 0.6), ("P", "MID"): ("NEUTRAL", 0.0),
+    ("C", "ASK"): ("ALCISTA", 1.0), ("C", "BID"): ("BAJISTA", 0.3), ("C", "MID"): ("NEUTRAL", 0.0),
+    ("P", "ASK"): ("BAJISTA", 1.0), ("P", "BID"): ("ALCISTA", 0.3), ("P", "MID"): ("NEUTRAL", 0.0),
 }
 
 
@@ -395,8 +395,10 @@ def analyze_chain(und, contracts, ocfg):
             for b in us[i + 1:]:
                 # mismo vencimiento, volumen casi igual y (distinto tipo o distinto lado):
                 # straddle/strangle/risk reversal o spread vertical
-                if 0.8 <= a["volume"] / max(b["volume"], 1) <= 1.25 and (
-                        a["kind"] != b["kind"] or a["side"] != b["side"]):
+                ratio = a["volume"] / max(b["volume"], 1)
+                vertical = a["kind"] == b["kind"] and {a["side"], b["side"]} == {"ASK", "BID"}
+                if (vertical and 0.4 <= ratio <= 2.5) or (
+                        0.8 <= ratio <= 1.25 and (a["kind"] != b["kind"] or a["side"] != b["side"])):
                     a["combo"] = b["combo"] = True
     for u in unusual:
         u.setdefault("combo", False)

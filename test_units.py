@@ -408,3 +408,12 @@ def test_strongest_catalyst_wins(cfg):
             {"date": "2026-11-14", "days": 43, "type": "PDUFA"}]
     s = scoring.score_ticker(m, {}, fs, cats, None, None, [], None, cfg)
     assert s["next_catalyst"]["type"] == "PDUFA"
+
+
+def test_vertical_spread_unequal_volume(cfg):
+    p = cboe_payload("XYZ", 100.0, SESSION, unusual=[
+        {"kind": "C", "strike": 90, "exp_idx": 7, "volume": 10000, "oi": 20, "side": "ASK"},
+        {"kind": "C", "strike": 130, "exp_idx": 7, "volume": 4300, "oi": 500, "side": "BID"}])
+    und, cs = options.parse_cboe(p, "XYZ")
+    _, unusual = options.analyze_chain(und, cs, cfg["options"])
+    assert all(u["combo"] for u in unusual)     # caso DYN: compra call 10 / venta call 30

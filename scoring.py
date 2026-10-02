@@ -88,7 +88,9 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg):
     prev_bull, prev_bear = fs.get("prev_bull_premium", 0), fs.get("prev_bear_premium", 0)
     bull_all = (m.get("bull_premium") or 0) + 0.5 * prev_bull
     bear_all = (m.get("bear_premium") or 0) + 0.5 * prev_bear
-    clarity = abs(bull_all - bear_all) / (bull_all + bear_all) if (bull_all + bear_all) else 0
+    # claridad sobre TODA la prima efectiva (lo indeterminado/MID diluye la direccion)
+    eff_all = max((m.get("effective_premium") or 0) + 0.5 * (prev_bull + prev_bear), bull_all + bear_all)
+    clarity = abs(bull_all - bear_all) / eff_all if eff_all else 0
     fp = flow_points(m, prev_bull + prev_bear, clarity)
     comp["flujo"] = round(fp, 1)
     if m.get("unusual_count"):
@@ -149,7 +151,7 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg):
         positioned = [u for u in list(m.get("_unusual", [])) + list(fs.get("confirmed_list") or [])
                       if parse_date(u["expiration"]) and cd and parse_date(u["expiration"]) >= cd]
         if positioned:
-            kp += 5
+            kp += 2 if nc["type"] == "Resultados" else 5   # casi todo vence despues de unos resultados
             reasons.append(f"{len(positioned)} contrato(s) inusual(es) vencen despues del catalizador")
         kp = min(15, kp)
         reasons.append(f"{nc['type']} en {nc['days']}d ({nc['date']}) (+{kp:.0f})")
