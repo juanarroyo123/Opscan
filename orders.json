@@ -1,0 +1,31 @@
+{
+ "orders": [
+  {
+   "n": 1,
+   "ts": "2026-10-02T17:58:01+00:00",
+   "title": "PAPER ABRIR CSCO",
+   "req": {
+    "op": "open",
+    "ticker": "CSCO",
+    "direction": "BAJISTA",
+    "price": 111.51,
+    "contracts": 2,
+    "structure": "Put comprada agresiva",
+    "legs": [
+     {
+      "action": "COMPRAR",
+      "symbol": "CSCO261120P00100000",
+      "kind": "P",
+      "strike": 100,
+      "expiration": "2026-11-20",
+      "mid": 1.98
+     }
+    ],
+    "notes": "Hoy: 13 contratos inusuales, $1.37M de prima; Sesiones previas: $10.30M en flujo inusual vigente; Puntos de flujo (+27)",
+    "nonce": "rihvr58o"
+   },
+   "source": "web",
+   "nonce": "rihvr58o"
+  }
+ ]
+}
