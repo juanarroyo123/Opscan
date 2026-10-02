@@ -6,6 +6,7 @@ Modos:
   intraday   solo opciones (reutiliza calendario/congreso/futuros ya generados)
   smoke      prueba rapida con pocos valores (para comprobar que todas las fuentes responden)
 """
+import datetime as dt
 import os
 import shutil
 import time
@@ -68,6 +69,15 @@ def scan_one_yf(tk, ocfg, pending_syms, watch_syms=(), keep_grid=False):
     out = _finish(tk, und, contracts, ocfg, pending_syms, set(watch_syms), keep_grid)
     out["secs"] = 0
     return out
+
+
+def _recent_flag_tickers(flags, days=10):
+    """Valores con flujo marcado en los ultimos dias: guardamos su cadena para la idea con patas."""
+    if not len(flags):
+        return set()
+    since = (today_et() - dt.timedelta(days=days)).isoformat()
+    f = flags[(flags["date"] >= since) & flags["status"].isin(["PENDIENTE", "CONFIRMADA"])]
+    return set(f["ticker"])
 
 
 def scan_options(tickers, cfg, flags, status, allow_fallback=True, watch=None, keep_grid=()):
@@ -310,7 +320,7 @@ def run(mode="full", tickers_override=None, offline_universe=False):
         if tk not in uni:
             uni[tk] = {"name": tk, "sector": "", "groups": ["cartera"]}
     results, failed = scan_options(list(uni.keys()), cfg, flags, status, allow_fallback=full or bool(tickers_override),
-                                   watch=watch, keep_grid=cfg["universe"]["watchlist"])
+                                   watch=watch, keep_grid=set(cfg["universe"]["watchlist"]) | _recent_flag_tickers(flags))
     sessions = [r["metrics"]["session_date"] for r in results.values() if r["metrics"].get("session_date")]
     session = max(set(sessions), key=sessions.count) if sessions else today_et().isoformat()
     for tk, res in results.items():
@@ -473,7 +483,7 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     write_json(_out("status.json"), {"generated_at": gen, "mode": mode, "session_date": session,
                                      "elapsed_s": elapsed, "tickers_ok": len(results),
                                      "tickers_failed": len(failed), "failed_sample": dict(list(failed.items())[:25]),
-                                     "sources": {**(prev.get("sources") or {}), **status.to_dict()},
+                                     "sources": status.to_dict() if full else {**(prev.get("sources") or {}), **status.to_dict()},
                                      "runs": runs})
     log(f"Hecho en {elapsed}s: {summary}")
     return summary, status

@@ -84,6 +84,18 @@ def today_et():
     return now_et().date()
 
 
+def last_session_et(now=None):
+    """Fecha de la ultima sesion con datos: antes de la apertura (9:30 ET) o en fin de
+    semana es la sesion habil anterior (sin contar festivos)."""
+    now = now or now_et()
+    d = now.date()
+    if now.weekday() < 5 and (now.hour, now.minute) < (9, 30):
+        d -= dt.timedelta(days=1)
+    while d.weekday() >= 5:
+        d -= dt.timedelta(days=1)
+    return d
+
+
 def iso_now():
     return now_utc().isoformat(timespec="seconds")
 

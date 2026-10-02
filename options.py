@@ -10,7 +10,7 @@ import datetime as dt
 import math
 import re
 
-from .util import (HttpError, get_json, num, parse_date, rnd, safe_ratio, third_friday,
+from .util import (HttpError, last_session_et, get_json, num, parse_date, rnd, safe_ratio, third_friday,
                    today_et)
 
 CBOE_URLS = [
@@ -135,7 +135,7 @@ def fetch_yfinance(ticker, max_dte=800, today=None):
             price = float(h["Close"].iloc[-1])
     und = {"ticker": ticker.upper(), "price": price, "prev_close": None, "change_pct": None,
            "stock_volume": None, "iv30": None, "iv30_change": None, "last_trade_time": None,
-           "source": "Yahoo", "session_date": today.isoformat()}
+           "source": "Yahoo", "session_date": last_session_et().isoformat()}
     contracts = []
     for e in list(t.options or []):
         exp = parse_date(e)

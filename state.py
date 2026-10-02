@@ -100,6 +100,9 @@ def load_flags():
                 if c not in df.columns:
                     df[c] = None
             df["status"] = df["status"].fillna("PENDIENTE")
+            # reparar: OI = 0 es un dato vacio (Yahoo antes de abrir), no una no-confirmacion
+            bad = (df["status"] == "NO CONFIRMADA") & (pd.to_numeric(df["oi_after"], errors="coerce") == 0)
+            df.loc[bad, ["status", "oi_after", "checked_date"]] = ["PENDIENTE", None, None]
             return df[FLAG_COLS]
         except Exception:
             pass
@@ -137,7 +140,7 @@ def confirm_flags(flags, ticker, oi_map, session, ratio=0.5):
     for idx in flags.index[sel]:
         sym = flags.at[idx, "symbol"]
         exp = parse_date(flags.at[idx, "expiration"])
-        if sym in oi_map:
+        if sym in oi_map and float(oi_map[sym] or 0) > 0:
             oi_now = float(oi_map[sym])
             oi_before = float(flags.at[idx, "oi_before"] or 0)
             vol = float(flags.at[idx, "volume"] or 0)

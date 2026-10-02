@@ -188,3 +188,19 @@ def test_technicals_features():
     from opscan import technicals
     f = technicals.features_from_series([100 + i for i in range(60)], [1000] * 60, today_volume=2500)
     assert f["above20"] and f["above50"] and f["rel_stock_vol"] == 2.5 and f["dist_52w_high"] == 0.0
+
+
+def test_oi_cero_no_desconfirma_y_sesion_previa():
+    import datetime as dt
+    import pandas as pd
+    from opscan import state
+    from opscan.util import last_session_et, ET
+    flags = pd.DataFrame([{"date": "2026-10-01", "ticker": "X", "symbol": "S1", "kind": "P", "strike": 1,
+                           "expiration": "2026-10-16", "volume": 100, "oi_before": 50, "premium": 1000,
+                           "direction": "BAJISTA", "side": "ASK", "status": "PENDIENTE", "oi_after": None,
+                           "checked_date": None, "weight": 1.0}], columns=state.FLAG_COLS)
+    out = state.confirm_flags(flags, "X", {"S1": 0}, "2026-10-02")
+    assert out.iloc[0]["status"] == "PENDIENTE"
+    out = state.confirm_flags(flags, "X", {"S1": 200}, "2026-10-02")
+    assert out.iloc[0]["status"] == "CONFIRMADA"
+    assert last_session_et(dt.datetime(2026, 10, 2, 7, 0, tzinfo=ET)).isoformat() == "2026-10-01"
