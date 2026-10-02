@@ -4,7 +4,7 @@ on:
   schedule:
     # Horas en UTC. Wall Street abre 13:30 UTC (verano) / 14:30 UTC (invierno).
     - cron: "35 12 * * 1-5"       # pre-apertura: confirma por OI el flujo de ayer + calendario/congreso/futuros
-    - cron: "5,35 13-20 * * 1-5"  # intradia cada 30 min: solo opciones (Cboe, 15 min de retraso)
+    - cron: "5 14-20 * * 1-5"     # intradia cada hora: solo opciones (Cboe, 15 min de retraso)
     - cron: "30 21 * * 1-5"       # cierre: todo
   workflow_dispatch:
     inputs:
