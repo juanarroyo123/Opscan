@@ -187,7 +187,7 @@ def fetch_clinicaltrials(ccfg, name_map):
         if token:
             params["pageToken"] = token
         data = get_json("https://clinicaltrials.gov/api/v2/studies", params=params, timeout=60)
-        out += parse_clinicaltrials(data, set(ccfg["trial_phases"]), name_map)
+        out += [r for r in parse_clinicaltrials(data, set(ccfg["trial_phases"]), name_map) if r["ticker"]]
         token = data.get("nextPageToken")
         if not token:
             break

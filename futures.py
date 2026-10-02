@@ -81,6 +81,8 @@ def analyze_cot(records, tff_records=None, weeks_long=156, weeks_short=52):
         "history": [{"d": h["date"], "spec": int(h["spec"]), "comm": int(h["comm"]), "oi": int(h["oi"])}
                     for h in hist[-weeks_short:]],
     }
+    prev_oi = last["oi"] - (out["oi_change"] or 0)
+    out["roll_distorted"] = bool(prev_oi > 0 and abs(out["oi_change"] or 0) / prev_oi > 0.2)
     if tff_records:
         t = sorted(tff_records, key=lambda r: r.get("report_date_as_yyyy_mm_dd", ""))
         lev = [num(r.get("lev_money_positions_long")) - num(r.get("lev_money_positions_short")) for r in t]
@@ -141,7 +143,11 @@ def classify(market, cot, px):
     """Combina cuadrante semanal, tendencia y extremos COT -> sesgo [-1, 1]."""
     reasons, bias = [], 0.0
     quad = None
-    if cot and px and px.get("cot_week_chg") is not None and cot.get("oi_change") is not None:
+    if cot and cot.get("roll_distorted"):
+        quad = {"name": "Roll / vencimiento", "desc": "El OI cambio mas de un 20% por el vencimiento del contrato: "
+                "esta semana el patron precio/OI no es fiable"}
+        reasons.append("Semana de roll: OI distorsionado, se ignora el cuadrante")
+    elif cot and px and px.get("cot_week_chg") is not None and cot.get("oi_change") is not None:
         ps = 1 if px["cot_week_chg"] >= 0 else -1
         os_ = 1 if cot["oi_change"] >= 0 else -1
         name, desc, b = QUADRANTS[(ps, os_)]

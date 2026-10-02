@@ -192,8 +192,8 @@ def estimate_side(c):
 
 
 DIR_WEIGHTS = {
-    ("C", "ASK"): ("ALCISTA", 1.0), ("C", "BID"): ("BAJISTA", 0.6), ("C", "MID"): ("ALCISTA", 0.4),
-    ("P", "ASK"): ("BAJISTA", 1.0), ("P", "BID"): ("ALCISTA", 0.6), ("P", "MID"): ("BAJISTA", 0.4),
+    ("C", "ASK"): ("ALCISTA", 1.0), ("C", "BID"): ("BAJISTA", 0.6), ("C", "MID"): ("NEUTRAL", 0.0),
+    ("P", "ASK"): ("BAJISTA", 1.0), ("P", "BID"): ("ALCISTA", 0.6), ("P", "MID"): ("NEUTRAL", 0.0),
 }
 
 
@@ -222,6 +222,8 @@ def contract_score(u, ocfg):
         s += 4
     if u["hedge_like"]:
         s -= 15
+    if u.get("combo"):
+        s -= 10
     return round(max(0, min(100, s)), 1)
 
 
@@ -363,6 +365,8 @@ def analyze_chain(und, contracts, ocfg):
         direction, w = DIR_WEIGHTS[(c["kind"], side)]
         if hedge_like:
             w *= 0.3
+        if c["dte"] <= 7:
+            w *= 0.5          # semanales muy cortas: mucho trading intradia
         u = {"_w": w, "ticker": und["ticker"], "symbol": c["symbol"], "kind": "CALL" if c["kind"] == "C" else "PUT",
              "strike": c["strike"], "expiration": c["expiration"], "dte": c["dte"],
              "volume": int(c["volume"]), "oi": int(c["oi"]), "vol_oi": round(vol_oi, 2),
@@ -376,11 +380,30 @@ def analyze_chain(und, contracts, ocfg):
     # en valores muy liquidos (SPY, SPX, NVDA...) exige ademas un % minimo de la prima total del dia
     floor = (cprem + pprem) * ocfg.get("min_premium_share", 0.0)
     unusual = [u for u in unusual if u["premium"] >= floor]
+    # ballena relativa: >= big_premium y >= 1% de toda la prima del valor
+    whale_floor = max(ocfg["big_premium"], 0.01 * (cprem + pprem))
+    for u in unusual:
+        u["whale"] = u["premium"] >= whale_floor
+    # posibles spreads/combinaciones: 2 patas del mismo vencimiento con volumen casi igual
+    by_exp = {}
+    for u in unusual:
+        by_exp.setdefault(u["expiration"], []).append(u)
+    for us in by_exp.values():
+        for i, a in enumerate(us):
+            for b in us[i + 1:]:
+                if 0.8 <= a["volume"] / max(b["volume"], 1) <= 1.25:
+                    a["combo"] = b["combo"] = True
+    for u in unusual:
+        u.setdefault("combo", False)
+        if u["combo"]:
+            u["_w"] *= 0.25
+            u["score"] = contract_score(u, ocfg)
+    unusual.sort(key=lambda x: (x["score"], x["premium"]), reverse=True)
     for u in unusual:
         w = u.pop("_w")
         if u["direction"] == "ALCISTA":
             bull += u["premium"] * w
-        else:
+        elif u["direction"] == "BAJISTA":
             bear += u["premium"] * w
     unusual.sort(key=lambda x: (x["score"], x["premium"]), reverse=True)
 

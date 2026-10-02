@@ -21,16 +21,20 @@ def _sign(x, thr=0.0):
     return 1 if x > thr else (-1 if x < -thr else 0)
 
 
-def flow_points(m, prev_premium=0):
-    """Prima inusual de hoy + la mitad de la de sesiones previas aun vigentes (pendiente/confirmada)."""
+def flow_points(m, prev_premium=0, clarity=None):
+    """0-30. Combina tamano (prima inusual de hoy + mitad de la previa vigente), concentracion
+    (que parte de TODA la prima del valor es inusual: en SPY/NVDA el flujo inusual es una gota)
+    y claridad direccional (todo calls compradas = 1; mezcla = 0)."""
     up = (m.get("unusual_premium") or 0) + 0.5 * (prev_premium or 0)
     if up <= 0:
         return 0.0
-    pts = 12 * math.log10(1 + up / 50000) + 2 * min(m.get("whales") or 0, 3)
     total = (m.get("call_premium") or 0) + (m.get("put_premium") or 0)
     share = up / total if total else 1
-    pts *= 0.5 + min(0.5, share * 2)
-    return min(30.0, pts)
+    size = min(1.0, math.log10(1 + up / 50000) / 1.5)
+    conc = math.sqrt(min(1.0, share / 0.3))
+    clar = abs(m.get("flow_bias") or 0) if clarity is None else clarity
+    pts = 30 * size * conc * (0.4 + 0.6 * clar) + min(m.get("whales") or 0, 3)
+    return round(min(30.0, pts), 1)
 
 
 def pick_expiration(m, min_dte):
@@ -81,7 +85,10 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg):
 
     # 1) flujo inusual
     prev_bull, prev_bear = fs.get("prev_bull_premium", 0), fs.get("prev_bear_premium", 0)
-    fp = flow_points(m, prev_bull + prev_bear)
+    bull_all = (m.get("bull_premium") or 0) + 0.5 * prev_bull
+    bear_all = (m.get("bear_premium") or 0) + 0.5 * prev_bear
+    clarity = abs(bull_all - bear_all) / (bull_all + bear_all) if (bull_all + bear_all) else 0
+    fp = flow_points(m, prev_bull + prev_bear, clarity)
     comp["flujo"] = round(fp, 1)
     if m.get("unusual_count"):
         reasons.append(f"Hoy: {m['unusual_count']} contratos inusuales, ${m['unusual_premium']/1e6:.2f}M de prima")
@@ -130,7 +137,8 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg):
     kp = 0.0
     if nc:
         strong = any(k in nc["type"] for k in STRONG_CATALYSTS)
-        kp = 10 * (1 - nc["days"] / horizon) * (1 if strong else 0.5)
+        factor = 0.6 if nc["type"] == "Resultados" else (1 if strong else 0.5)   # resultados: evento conocido por todos
+        kp = 10 * (1 - nc["days"] / horizon) * factor
         cd = parse_date(nc["date"])
         positioned = [u for u in m.get("_unusual", []) if parse_date(u["expiration"]) and cd
                       and parse_date(u["expiration"]) >= cd]
@@ -144,18 +152,25 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg):
     # 5) congreso
     gp = 0
     if cong:
-        nb = cong.get("n_buyers", 0)
-        if nb:
-            gp = 9 if nb >= 2 else 5
-            if cong.get("cluster"):
-                gp += 3
-            if cong.get("committee_relevant"):
-                gp += 3
-            gp = min(15, gp)
-            extra = " (comite relevante)" if cong.get("committee_relevant") else ""
-            reasons.append(f"{nb} congresista(s) compraron en {sc['congress_window_days']}d{extra} (+{gp})")
-        if cong.get("n_sellers"):
-            reasons.append(f"{cong['n_sellers']} congresista(s) vendieron")
+        nb, ns = cong.get("n_buyers", 0), cong.get("n_sellers", 0)
+        cb = _sign(cong.get("bias"), 0.3)
+        win = sc["congress_window_days"]
+        if dsign and cb == dsign:
+            n = nb if dsign > 0 else ns
+            if n:
+                gp = 9 if n >= 2 else 5
+                if dsign > 0 and cong.get("cluster"):
+                    gp += 3
+                if dsign > 0 and cong.get("committee_relevant"):
+                    gp += 3
+                gp = min(15, gp)
+                verb = "compraron" if dsign > 0 else "vendieron"
+                extra = " (comite relevante)" if dsign > 0 and cong.get("committee_relevant") else ""
+                reasons.append(f"{n} congresista(s) {verb} en {win}d{extra}: a favor (+{gp})")
+        elif dsign and cb == -dsign:
+            reasons.append(f"Congreso en contra: {nb} compradores / {ns} vendedores en {win}d")
+        elif nb or ns:
+            reasons.append(f"Congreso sin sesgo claro: {nb} compradores / {ns} vendedores en {win}d")
     comp["congreso"] = gp
 
     # 6) futuros
@@ -172,13 +187,13 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg):
     label = "ALTA" if total >= sc["alta"] else ("MEDIA" if total >= sc["media"] else "BAJA")
 
     # checklist de la estrategia
-    ck_cong = bool(cong) and dsign != 0 and _sign(cong.get("bias"), 0.1) == dsign and (
+    ck_cong = bool(cong) and dsign != 0 and _sign(cong.get("bias"), 0.3) == dsign and (
         cong.get("n_buyers") if dsign > 0 else cong.get("n_sellers"))
     ck_fut = fut_bias is not None and dsign != 0 and _sign(fut_bias, 0.2) == dsign
     conf_dir = fs["confirmed_bull_premium"] if dsign > 0 else fs["confirmed_bear_premium"] if dsign < 0 else 0
     ck_flow = conf_dir > 0
     pts = (1 if ck_cong else 0) + (1 if ck_fut else 0) + (2 if ck_flow else 0)
-    entry = bool(ck_flow and pts >= sc["entry_min_points"])
+    entry = bool(ck_flow and pts >= sc["entry_min_points"] and total >= sc["media"])
     pre_alert = bool(not ck_flow and (m.get("unusual_count") or prev_tot) and dsign != 0 and
                      (1 if ck_cong else 0) + (1 if ck_fut else 0) >= 1)
 

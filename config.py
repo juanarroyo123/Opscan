@@ -26,7 +26,7 @@ DEFAULTS = {
         "add_catalyst_tickers": True, "max_tickers": 900,
     },
     "options": {
-        "workers": 8, "max_dte": 800, "min_volume": 100, "min_vol_oi": 1.0,
+        "workers": 12, "max_dte": 800, "min_volume": 100, "min_vol_oi": 1.0,
         "min_premium": 50000, "big_premium": 1000000, "min_dte_unusual": 2, "min_premium_share": 0.003, "max_abs_delta_hedge": 0.90,
         "top_flow_rows": 800, "yfinance_fallback_max": 40,
         "oi_confirm_ratio": 0.5, "oi_confirm_window": 5,
@@ -41,7 +41,7 @@ DEFAULTS = {
         "sec_terms": ["merger agreement", "tender offer", "acquisition agreement"],
         "include_clinicaltrials": True, "include_sec": True, "include_opex": True,
     },
-    "congress": {"horizon_days": 365, "include_executive": True, "max_rows": 2500},
+    "congress": {"horizon_days": 365, "include_executive": True, "max_rows": 2500, "max_filer_trades": 60},
     "futures": {"cot_years": 3, "markets": [], "sector_links": {}},
     "alerts": {"telegram": True, "min_score": 60, "only_entries": True},
 }

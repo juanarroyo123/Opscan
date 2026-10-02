@@ -216,7 +216,8 @@ def run(mode="full", tickers_override=None, offline_universe=False):
         prelim.sort(reverse=True)
         want = [tk for _, tk in prelim[: int(cfg["enrich"]["top_n"])]]
         want += [t for t in cfg["universe"]["watchlist"] if t in results and t not in want]
-        want = [t for t in want if t not in options.INDEXES]
+        want = [t for t in want if t not in options.INDEXES
+                and not ({"etf", "indice"} & set((uni.get(t) or {}).get("groups", [])))]
         ecache = enrich.enrich(want, ecache, n_news=int(cfg["enrich"]["news"]), status=status)
         state.save_cache("enrich.json", ecache)
         # resultados desde Yahoo para valores sin fecha en el calendario

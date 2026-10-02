@@ -274,7 +274,7 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
   <section id="v-cal" hidden>
     <div class="toolbar">
       <input class="search" id="cq" placeholder="Buscar ticker o empresa…">
-      <label class="chk"><input type="checkbox" id="cUni"> Solo valores escaneados</label>
+      <label class="chk"><input type="checkbox" id="cUni" checked> Solo valores escaneados</label>
     </div>
     <div class="segs" id="segs"></div>
     <div id="callist"></div>
@@ -384,7 +384,7 @@ function renderRadar(){const L=S.latest;renderKPIs();
 $("#tbody").addEventListener("click",e=>{const tr=e.target.closest("tr[data-tk]");if(tr)openDetail(tr.dataset.tk);});
 
 // ---------- FLUJO
-function readLabel(u){return `${dirHTML(u.direction)}${u.whale?' <span class="tag y">BALLENA</span>':""}${u.hedge_like?' <span class="tag n">cobertura?</span>':""}`;}
+function readLabel(u){return `${u.direction==="NEUTRAL"?'<span class="dir d-NEUTRAL">• indeterminado</span>':dirHTML(u.direction)}${u.whale?' <span class="tag y">BALLENA</span>':""}${u.combo?' <span class="tag n" title="Dos patas del mismo vencimiento con volumen casi igual: probablemente un spread">¿spread?</span>':""}${u.hedge_like?' <span class="tag n">cobertura?</span>':""}`;}
 function contractTxt(u){return `${u.kind==="CALL"?'<span class="up">CALL</span>':'<span class="down">PUT</span>'} ${u.strike}`;}
 function renderFlow(){const F=S.flow;
   if(!F){$("#flowBody").innerHTML=`<tr><td colspan="12" class="empty">Sin datos de flujo todavía.</td></tr>`;$("#confBody").innerHTML="";return;}
@@ -454,7 +454,7 @@ function renderPol(){const P=S.pol;
     ||'<div class="muted">Sin clusters en la ventana.</div>';
   $("#pbody").innerHTML=T.slice(0,S.polN).map(t=>`<tr class="click" data-tk="${esc(t.ticker)}">
     <td class="l"><span class="tk">${esc(t.ticker)}</span>${t.is_option?' <span class="tag y">OPCIÓN</span>':""}<div class="nm">${esc(t.company)}</div></td>
-    <td class="l">${esc(t.member)}<div class="nm">${esc([t.party,t.state].filter(Boolean).join("-"))}${t.owner?" · "+esc(t.owner):""}</div></td>
+    <td class="l">${esc(t.member)}${t.managed?' <span class="tag n" title="Más de 60 operaciones en 90 días: cartera gestionada, no cuenta como señal">gestionada</span>':""}<div class="nm">${esc([t.party,t.state].filter(Boolean).join("-"))}${t.owner?" · "+esc(t.owner):""}</div></td>
     <td class="l"><span class="tag n">${esc(t.chamber)}</span></td>
     <td class="l"><span class="${t.direction==="Compra"?"up":t.direction==="Venta"?"down":"muted"}">${esc(t.direction)}</span></td>
     <td class="num">${esc(t.amount)}</td><td class="num">${esc(t.transaction_date)}<div class="nm">hace ${t.days}d</div></td>

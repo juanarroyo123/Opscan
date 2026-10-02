@@ -160,6 +160,8 @@ def flag_summary(flags, ticker, session, window_sessions=5):
     f = flags[(flags["ticker"] == ticker) & (flags["date"] >= since)]
     for _, r in f.iterrows():
         st = r["status"]
+        if r["direction"] not in ("ALCISTA", "BAJISTA"):
+            continue
         if r["date"] < session and st in ("PENDIENTE", "CONFIRMADA"):
             k = "prev_bull_premium" if r["direction"] == "ALCISTA" else "prev_bear_premium"
             out[k] += float(r["premium"] or 0)

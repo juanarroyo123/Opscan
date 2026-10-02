@@ -25,7 +25,7 @@ Funciona solo con **GitHub Actions** (gratis) y se publica en **GitHub Pages**. 
 | Hora (UTC, L-V) | Modo | Qué hace |
 |---|---|---|
 | 12:35 | `premarket` | Lo hace todo. Compara el OI nuevo, que la OCC publica de madrugada, con el flujo marcado ayer y lo marca como **confirmado** o **no confirmado**. |
-| Cada 30 min, de 13:05 a 20:35 | `intraday` | Solo cadenas de opciones de unos 650 valores (Cboe, con 15 min de retraso). |
+| Cada hora, de 14:05 a 20:05 | `intraday` | Solo cadenas de opciones de unos 650 valores (Cboe, con 15 min de retraso). |
 | 21:30 | `full` | Cierre completo: calendario, congreso, futuros, opciones, Yahoo y alertas. |
 
 ## Fuentes de datos (todas gratis)

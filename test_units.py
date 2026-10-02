@@ -342,3 +342,39 @@ def test_real_cboe_records_parse(cfg):
     assert len(cs) == 2 and cs[0]["kind"] == "C" and cs[0]["strike"] == 245.0 and cs[0]["dte"] == 1
     m, unusual = options.analyze_chain(und, cs, cfg["options"])
     assert m["unusual_count"] == 0 and m["call_vol"] == 10 and m["put_vol"] == 2
+
+
+def test_combo_and_mid_neutral(cfg):
+    p = cboe_payload("XYZ", 100.0, SESSION, unusual=[
+        {"kind": "C", "strike": 110, "exp_idx": 6, "volume": 5000, "oi": 100, "side": "ASK"},
+        {"kind": "P", "strike": 90, "exp_idx": 6, "volume": 5100, "oi": 100, "side": "ASK"}])
+    und, cs = options.parse_cboe(p, "XYZ")
+    m, unusual = options.analyze_chain(und, cs, cfg["options"])
+    assert all(u["combo"] for u in unusual)           # straddle/strangle detectado
+    c = {"bid": 1.0, "ask": 1.2, "last": 1.1}
+    assert options.DIR_WEIGHTS[("C", options.estimate_side(c))] == ("NEUTRAL", 0.0)
+
+
+def test_managed_filers_ignored():
+    t = lambda m, d, days: {"ticker": "MSFT", "member": m, "direction": d, "amount_mid": 8000, "days": days,
+                            "transaction_date": "2026-09-01", "committee_sectors": [], "is_option": False}
+    trades = [t("Robot", "Compra", 5) for _ in range(70)] + [t("Ana", "Venta", 10)]
+    s = congress.summarize_by_ticker(trades, {}, max_filer_trades=60)["MSFT"]
+    assert s["n_buyers"] == 0 and s["n_sellers"] == 1
+
+
+def test_cot_roll_distortion():
+    recs = cot_records("13874A")
+    recs[-1]["change_in_open_interest_all"] = "-600000"
+    cot = futures.analyze_cot(recs)
+    assert cot["roll_distorted"]
+    cls = futures.classify({}, cot, {"cot_week_chg": 1.0})
+    assert cls["quadrant"]["name"].startswith("Roll")
+
+
+def test_flow_points_not_saturated_for_megacaps():
+    mega = {"unusual_premium": 20_000_000, "call_premium": 300_000_000, "put_premium": 200_000_000,
+            "flow_bias": 0.1, "whales": 0}
+    small = {"unusual_premium": 2_000_000, "call_premium": 2_500_000, "put_premium": 500_000,
+             "flow_bias": 0.9, "whales": 1}
+    assert scoring.flow_points(small) > 20 > scoring.flow_points(mega)

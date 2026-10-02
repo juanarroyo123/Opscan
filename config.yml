@@ -19,7 +19,7 @@ universe:
 
 # ---------- Escaner de opciones ----------
 options:
-  workers: 8                  # descargas en paralelo
+  workers: 12                 # descargas en paralelo
   max_dte: 800                # todos los vencimientos (dias hasta vencimiento)
   min_volume: 100             # volumen minimo de un contrato para ser candidato
   min_vol_oi: 1.0             # volumen >= x veces el OI previo  -> posiciones nuevas
@@ -61,6 +61,7 @@ congress:
   horizon_days: 365
   include_executive: true
   max_rows: 2500
+  max_filer_trades: 60       # mas operaciones en 90d = cartera gestionada, no cuenta como senal
 
 # ---------- Futuros (COT de la CFTC + precio/volumen) ----------
 # code = codigo de mercado CFTC; yf = simbolo de Yahoo del futuro continuo

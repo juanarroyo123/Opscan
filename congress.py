@@ -146,11 +146,18 @@ def normalize_trades(raw, member_idx, include_executive=True, horizon_days=365, 
     return out
 
 
-def summarize_by_ticker(trades, sectors, window_days=90, cluster_days=30):
-    """Resumen por valor: compras/ventas, miembros distintos, relevancia de comite, cluster."""
+def summarize_by_ticker(trades, sectors, window_days=90, cluster_days=30, max_filer_trades=60):
+    """Resumen por valor: compras/ventas, miembros distintos, relevancia de comite, cluster.
+    Quien declara mas de `max_filer_trades` operaciones en la ventana suele tener una cartera
+    gestionada por terceros (cientos de compras automaticas): no cuenta como senal."""
+    counts = {}
+    for t in trades:
+        if t["days"] <= window_days:
+            counts[t["member"]] = counts.get(t["member"], 0) + 1
+    noisy = {m for m, n in counts.items() if n > max_filer_trades}
     out = {}
     for t in trades:
-        if t["days"] > window_days:
+        if t["days"] > window_days or t["member"] in noisy:
             continue
         s = out.setdefault(t["ticker"], {"buys": 0, "sells": 0, "buy_usd": 0.0, "sell_usd": 0.0,
                                          "buyers": set(), "sellers": set(), "recent_buyers": set(),
@@ -202,7 +209,15 @@ def build(cfg, status, sectors, today=None):
     trades = normalize_trades(raw, idx, cc["include_executive"], cc["horizon_days"], today)
     matched = sum(1 for t in trades if t["committees"])
     log(f"Congreso: {len(trades)} trades con ticker, {matched} con comites asociados")
-    summary = summarize_by_ticker(trades, sectors, sc["congress_window_days"], sc["congress_cluster_days"])
+    summary = summarize_by_ticker(trades, sectors, sc["congress_window_days"], sc["congress_cluster_days"],
+                                  int(cc.get("max_filer_trades", 60)))
+    counts = {}
+    for t in trades:
+        if t["days"] <= sc["congress_window_days"]:
+            counts[t["member"]] = counts.get(t["member"], 0) + 1
+    noisy = sorted([m for m, n in counts.items() if n > int(cc.get("max_filer_trades", 60))])
+    for t in trades:
+        t["managed"] = t["member"] in noisy
     clusters = sorted(
         [{"ticker": k, **{x: v[x] for x in ("buys", "sells", "n_buyers", "buy_usd", "recent_buyers",
                                               "committee_buyers", "cluster", "bias", "last")}}
@@ -211,6 +226,7 @@ def build(cfg, status, sectors, today=None):
     latest_filing = max((t["filing_date"] or "" for t in trades), default="")
     return {"generated_at": iso_now(), "count": len(trades), "latest_filing": latest_filing,
             "window_days": sc["congress_window_days"], "trades": trades[: cc["max_rows"]],
-            "by_ticker": summary, "clusters": clusters,
+            "by_ticker": summary, "clusters": clusters, "managed_filers": noisy,
             "note": "Fuente: House Clerk + Senate eFD + OGE via kadoa-org/congress-trading-monitor. "
-                    "Importes en rangos declarados. Retraso legal de hasta 45 dias."}
+                    "Importes en rangos declarados. Retraso legal de hasta 45 dias. "
+                    "Quien declara mas de 60 operaciones en 90 dias (cartera gestionada) no cuenta como senal."}
