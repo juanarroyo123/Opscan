@@ -1,21 +1,32 @@
 name: OpScan cartera simulada
 
-# Se activa cuando TU (el dueno del repo) abres un Issue desde el boton "Simular" o "Cerrar" de la web.
+# Anota compras/ventas de la cartera simulada. Se activa:
+#  - desde la web (boton "Comprar"/"Vender", con tu token guardado en tu navegador), o
+#  - con un Issue "PAPER ABRIR ..." / "PAPER CERRAR ..." abierto por el dueno del repo.
+# Las ordenes se guardan en la rama `orders` (cola). El escaner las aplica al empezar,
+# asi nunca se pisan aunque haya un escaneo en marcha.
 on:
   issues:
     types: [opened]
+  workflow_dispatch:
+    inputs:
+      accion:
+        description: "PAPER ABRIR TICKER / PAPER CERRAR M0001"
+        required: true
+      datos:
+        description: "JSON de la operacion"
+        required: false
+        default: "{}"
 
 permissions:
   contents: write
   issues: write
 
-concurrency:
-  group: opscan          # misma cola que el escaner: nunca escriben a la vez
-  cancel-in-progress: false
-
 jobs:
   paper:
-    if: startsWith(github.event.issue.title, 'PAPER') && github.event.issue.user.login == github.repository_owner
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (startsWith(github.event.issue.title, 'PAPER') && github.event.issue.user.login == github.repository_owner)
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -42,7 +53,7 @@ jobs:
             done
           fi
 
-      - name: Recuperar datos (rama data)
+      - name: Recuperar cartera (rama data, solo lectura)
         env:
           REPO_URL: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
         run: |
@@ -59,34 +70,54 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Anotar la operacion
+      - name: Preparar la orden
         env:
-          OPSCAN_DATA_DIR: ${{ github.workspace }}/data
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_BODY: ${{ github.event.issue.body }}
+          IN_ACCION: ${{ github.event.inputs.accion }}
+          IN_DATOS: ${{ github.event.inputs.datos }}
         run: |
-          printf '%s' "$ISSUE_BODY" > issue_body.txt
-          python -m opscan.paper --title "$ISSUE_TITLE" --body-file issue_body.txt \
-            --issue "${{ github.event.issue.number }}" --result-file paper_result.txt || true
-          cat paper_result.txt
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            printf '%s' "$IN_ACCION" > order_title.txt
+            printf '%s' "$IN_DATOS" > order_body.txt
+          else
+            printf '%s' "$ISSUE_TITLE" > order_title.txt
+            printf '%s' "$ISSUE_BODY" > order_body.txt
+          fi
+          cat order_title.txt; echo
 
-      - name: Guardar datos (rama data)
+      - name: Anotar en la cola (rama orders)
         env:
+          OPSCAN_DATA_DIR: ${{ github.workspace }}/data
           REPO_URL: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
         run: |
-          cd data
-          rm -rf .git
-          git init -q -b data
-          git config user.name  "opscan-bot"
-          git config user.email "opscan-bot@users.noreply.github.com"
-          git add -A
-          git commit -q -m "cartera: issue #${{ github.event.issue.number }}"
-          git push -q -f "$REPO_URL" data
+          ISSUE_ARG=""
+          [ -n "${{ github.event.issue.number }}" ] && ISSUE_ARG="--issue ${{ github.event.issue.number }}"
+          for i in 1 2 3 4 5 6; do
+            rm -rf orders
+            if git ls-remote --exit-code --heads "$REPO_URL" orders >/dev/null 2>&1; then
+              git clone --quiet --depth 1 --branch orders "$REPO_URL" orders
+            else
+              mkdir -p orders && (cd orders && git init -q -b orders && git remote add origin "$REPO_URL")
+            fi
+            python -m opscan.paper --title "$(cat order_title.txt)" --body-file order_body.txt \
+              --orders-dir orders --result-file paper_result.txt $ISSUE_ARG
+            cd orders
+            git config user.name  "opscan-bot"
+            git config user.email "opscan-bot@users.noreply.github.com"
+            git add -A
+            git commit -q -m "orden: $(cat ../order_title.txt)"
+            if git push -q origin HEAD:orders; then cd ..; echo "Orden guardada"; cat paper_result.txt; exit 0; fi
+            cd ..
+            echo "Otra orden se guardo a la vez; reintento ($i)"; sleep $((RANDOM % 5 + 2))
+          done
+          echo "No se pudo guardar la orden"; exit 1
 
       - name: Responder y cerrar el Issue
+        if: github.event_name == 'issues'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh issue comment "${{ github.event.issue.number }}" --repo "${{ github.repository }}" \
-            --body "$(cat paper_result.txt) — se vera en la web (pestana Seguimiento) tras la proxima actualizacion."
+            --body "$(cat paper_result.txt) — ya se ve en la web (pestana Mi cartera)."
           gh issue close "${{ github.event.issue.number }}" --repo "${{ github.repository }}"
