@@ -138,8 +138,10 @@ def trade_idea(direction, m, b, next_cat, style="simple"):
     expensive = (iv_rank is not None and iv_rank >= 60) or (m.get("front_premium") or 0) >= 1.25 \
         or (m.get("iv30") or 0) >= 0.6
     min_dte = 30
+    cat_days = None
     if next_cat and next_cat.get("days") is not None and next_cat["days"] >= 0:
-        min_dte = max(21, next_cat["days"] + 7)
+        cat_days = next_cat["days"]
+        min_dte = max(21, cat_days + 5)
     grid = m.get("_grid") or {}
     exp, dte = None, None
     for e in sorted(grid.keys()):
@@ -147,6 +149,12 @@ def trade_idea(direction, m, b, next_cat, style="simple"):
         if d >= min_dte:
             exp, dte = e, d
             break
+    if not exp and cat_days is not None:      # el ultimo vencimiento con cadena guardada que pase el evento
+        for e in sorted(grid.keys(), reverse=True):
+            d = grid[e][0]["dte"] if grid[e] else 0
+            if d > cat_days:
+                exp, dte = e, d
+                break
     if not exp:
         exp, dte = pick_expiration(m, min_dte)
     em = None
@@ -392,7 +400,12 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg, tech=None):
         reasons.append(f"Confirmacion debil: ${conf_dir/1e3:.0f}k confirmados, {conf_rate*100:.0f}% de alertas confirmadas "
                        "(no cuenta para ENTRADA)")
     pts = (1 if ck_cong else 0) + (1 if ck_fut else 0) + (2 if ck_flow else 0)
-    entry = bool(ck_flow and pts >= sc["entry_min_points"] and total >= float(sc.get("entry_min_score", 45)))
+    cong_against = bool(cong) and dsign != 0 and _sign(cong.get("bias"), 0.3) == -dsign and (
+        (cong.get("n_sellers") or 0) >= 2 if dsign > 0 else (cong.get("n_buyers") or 0) >= 2)
+    entry = bool(ck_flow and pts >= sc["entry_min_points"] and total >= float(sc.get("entry_min_score", 45))
+                 and not cong_against)
+    if cong_against and ck_flow and pts >= sc["entry_min_points"]:
+        reasons.append("Sin ENTRADA: varios congresistas operan en contra")
     pre_alert = bool(not ck_flow and (m.get("unusual_count") or prev_tot) and dsign != 0 and
                      (1 if ck_cong else 0) + (1 if ck_fut else 0) >= 1)
 

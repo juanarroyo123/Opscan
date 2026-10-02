@@ -318,6 +318,9 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
     <div class="help"><b>Tu cartera simulada</b> (dinero ficticio, precios reales con 15 min de retraso). Compras desde la ficha de cualquier
       valor (botón <b>Comprar</b>) y vendes aquí. Cada posición se revalora en cada escaneo y la herramienta te dice qué hacer:
       <b class="up">MANTENER</b>, <b class="warn">VIGILAR</b> o <b class="down">CERRAR</b> (con aviso por Telegram).</div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0">
+      <button class="btn sec" id="scanNow">Actualizar precios ahora</button>
+      <span class="small muted" id="scanInfo"></span></div>
     <div class="kpis" id="pkpis"></div>
     <div class="section-t">Posiciones abiertas</div>
     <div id="portOpen" class="pgrid"></div>
@@ -941,7 +944,15 @@ document.addEventListener("click",e=>{const g=e.target.closest("[data-sellgo]");
 $("#portClosed").addEventListener("click",e=>{const tr=e.target.closest("tr[data-tk]");if(tr)openDetail(tr.dataset.tk);});
 $("#autoBody").addEventListener("click",e=>{const tr=e.target.closest("tr[data-tk]");if(tr)openDetail(tr.dataset.tk);});
 
-function renderGH(){const c=GH.get();const rp=repoFull();
+async function scanNow(){const c=GH.get();if(!c||!c.token){toast('Conecta GitHub abajo para lanzar escaneos desde aquí. <a href="#" data-x>cerrar</a>',"err");return;}
+  toast("⏳ Lanzando un escaneo rápido (solo opciones, ~10–15 min)…");
+  try{const r=await ghApi(`/repos/${repoFull()}/actions/workflows/opscan.yml/dispatches`,{method:"POST",
+      body:JSON.stringify({ref:c.branch||"main",inputs:{mode:"intraday"}})});
+    if(r.status===204)toast("✅ Escaneo lanzado. Los precios se actualizarán en unos 10–15 minutos (la página se recarga sola).","ok",10000);
+    else toast(`❌ No se pudo lanzar (${r.status}). <a href="#" data-x>cerrar</a>`,"err");}catch(e){toast("❌ Sin conexión con GitHub","err",6000);}}
+function scanAge(){const L=S.latest;if(!L)return "";const m=Math.round((Date.now()-new Date(L.generated_at).getTime())/60000);
+  return `Datos de hace ${m<60?m+" min":Math.floor(m/60)+" h "+(m%60)+" min"}${m>90?' · <span class="warn">el escaneo automático va con retraso</span>':""}`;}
+function renderGH(){const sn=$("#scanNow");if(sn){sn.onclick=scanNow;$("#scanInfo").innerHTML=scanAge();}const c=GH.get();const rp=repoFull();
   $("#ghBox").innerHTML=c&&c.token?`<div>✅ Conectado a <b>${esc(rp)}</b>${c.login?" como <b>"+esc(c.login)+"</b>":""}. Ya puedes comprar y vender desde la web.
       <span class="muted small">(El token está guardado solo en este navegador.)</span></div>
       <div style="margin-top:10px"><button class="btn sec" id="ghTest">Probar conexión</button> <button class="btn sec" id="ghOut">Desconectar</button> <span id="ghMsg" class="small"></span></div>`
