@@ -17,7 +17,7 @@ from .util import parse_date, read_json, write_json
 DAILY_COLS = ["date", "ticker", "price", "opt_vol", "call_vol", "put_vol", "iv30",
               "unusual_premium", "bull_premium", "bear_premium", "stock_volume"]
 FLAG_COLS = ["date", "ticker", "symbol", "kind", "strike", "expiration", "volume", "oi_before",
-             "premium", "direction", "side", "status", "oi_after", "checked_date"]
+             "premium", "direction", "side", "status", "oi_after", "checked_date", "weight"]
 
 
 def _path(name):
@@ -113,7 +113,8 @@ def add_flags(flags, unusual, session):
     rows = [{"date": session, "ticker": u["ticker"], "symbol": u["symbol"], "kind": u["kind"],
              "strike": u["strike"], "expiration": u["expiration"], "volume": u["volume"],
              "oi_before": u["oi"], "premium": u["premium"], "direction": u["direction"],
-             "side": u["side"], "status": "PENDIENTE", "oi_after": None, "checked_date": None}
+             "side": u["side"], "status": "PENDIENTE", "oi_after": None, "checked_date": None,
+             "weight": u.get("weight", 1.0)}
             for u in unusual if u.get("symbol")]
     new = pd.DataFrame(rows, columns=FLAG_COLS)
     if len(flags):
@@ -162,12 +163,19 @@ def flag_summary(flags, ticker, session, window_sessions=5):
         st = r["status"]
         if r["direction"] not in ("ALCISTA", "BAJISTA"):
             continue
+        try:
+            wt = float(r.get("weight"))
+            wt = 1.0 if wt != wt else wt          # NaN (flags antiguos) -> 1
+        except (TypeError, ValueError):
+            wt = 1.0
+        if wt < 0.5:
+            continue    # coberturas, spreads o semanales: no cuentan como confirmacion direccional
         if r["date"] < session and st in ("PENDIENTE", "CONFIRMADA"):
             k = "prev_bull_premium" if r["direction"] == "ALCISTA" else "prev_bear_premium"
-            out[k] += float(r["premium"] or 0)
+            out[k] += float(r["premium"] or 0) * wt
         if st == "CONFIRMADA":
             out["confirmed"] += 1
-            prem = float(r["premium"] or 0)
+            prem = float(r["premium"] or 0) * wt
             if r["direction"] == "ALCISTA":
                 out["confirmed_bull_premium"] += prem
             else:

@@ -363,11 +363,13 @@ def analyze_chain(und, contracts, ocfg):
         otm = bool(spot) and ((c["kind"] == "C" and c["strike"] > spot) or
                               (c["kind"] == "P" and c["strike"] < spot))
         direction, w = DIR_WEIGHTS[(c["kind"], side)]
+        f = 1.0                # factor estructural (independiente del lado)
         if hedge_like:
-            w *= 0.3
+            f *= 0.3
         if c["dte"] <= 7:
-            w *= 0.5          # semanales muy cortas: mucho trading intradia
-        u = {"_w": w, "ticker": und["ticker"], "symbol": c["symbol"], "kind": "CALL" if c["kind"] == "C" else "PUT",
+            f *= 0.5          # semanales muy cortas: mucho trading intradia
+        w *= f
+        u = {"_w": w, "_f": f, "ticker": und["ticker"], "symbol": c["symbol"], "kind": "CALL" if c["kind"] == "C" else "PUT",
              "strike": c["strike"], "expiration": c["expiration"], "dte": c["dte"],
              "volume": int(c["volume"]), "oi": int(c["oi"]), "vol_oi": round(vol_oi, 2),
              "price": rnd(price, 2), "premium": round(prem), "iv": rnd(c["iv"], 4),
@@ -391,16 +393,23 @@ def analyze_chain(und, contracts, ocfg):
     for us in by_exp.values():
         for i, a in enumerate(us):
             for b in us[i + 1:]:
-                if 0.8 <= a["volume"] / max(b["volume"], 1) <= 1.25:
+                # mismo vencimiento, volumen casi igual y (distinto tipo o distinto lado):
+                # straddle/strangle/risk reversal o spread vertical
+                if 0.8 <= a["volume"] / max(b["volume"], 1) <= 1.25 and (
+                        a["kind"] != b["kind"] or a["side"] != b["side"]):
                     a["combo"] = b["combo"] = True
     for u in unusual:
         u.setdefault("combo", False)
         if u["combo"]:
             u["_w"] *= 0.25
+            u["_f"] *= 0.25
             u["score"] = contract_score(u, ocfg)
     unusual.sort(key=lambda x: (x["score"], x["premium"]), reverse=True)
+    eff = 0.0
     for u in unusual:
         w = u.pop("_w")
+        u["weight"] = round(u.pop("_f"), 3)
+        eff += u["premium"] * u["weight"]
         if u["direction"] == "ALCISTA":
             bull += u["premium"] * w
         elif u["direction"] == "BAJISTA":
@@ -417,6 +426,7 @@ def analyze_chain(und, contracts, ocfg):
         "bull_premium": round(bull), "bear_premium": round(bear),
         "unusual_count": len(unusual),
         "unusual_premium": round(sum(u["premium"] for u in unusual)),
+        "effective_premium": round(eff),   # sin coberturas/spreads/semanales: lo que de verdad cuenta
         "whales": sum(1 for u in unusual if u["whale"]),
         "gex_usd_1pct": round(gex) if spot else None,
     })

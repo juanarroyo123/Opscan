@@ -109,7 +109,7 @@ def build_record(tk, res, meta, base, fs, cats, cong, fctx, enr, cfg):
                                  "n_contracts", "opt_vol", "call_vol", "put_vol", "call_oi", "put_oi",
                                  "cp_vol_ratio", "cp_oi_ratio", "pc_vol_ratio", "vol_oi_total",
                                  "call_premium", "put_premium", "bull_premium", "bear_premium",
-                                 "flow_bias", "unusual_count", "unusual_premium", "whales", "iv30",
+                                 "flow_bias", "unusual_count", "unusual_premium", "effective_premium", "whales", "iv30",
                                  "iv30_change", "iv_front", "front_premium", "iv_term", "max_pain",
                                  "max_pain_exp", "call_wall", "put_wall", "gex_usd_1pct")},
         "expected_moves": (m.get("expected_moves") or [])[:6],

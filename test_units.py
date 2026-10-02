@@ -378,3 +378,33 @@ def test_flow_points_not_saturated_for_megacaps():
     small = {"unusual_premium": 2_000_000, "call_premium": 2_500_000, "put_premium": 500_000,
              "flow_bias": 0.9, "whales": 1}
     assert scoring.flow_points(small) > 20 > scoring.flow_points(mega)
+
+
+def test_same_side_same_kind_not_combo(cfg):
+    p = cboe_payload("XYZ", 100.0, SESSION, unusual=[
+        {"kind": "C", "strike": 110, "exp_idx": 6, "volume": 5000, "oi": 100, "side": "ASK"},
+        {"kind": "C", "strike": 115, "exp_idx": 6, "volume": 5100, "oi": 100, "side": "ASK"}])
+    und, cs = options.parse_cboe(p, "XYZ")
+    m, unusual = options.analyze_chain(und, cs, cfg["options"])
+    assert not any(u["combo"] for u in unusual)       # dos compras de calls: no es spread
+    assert m["effective_premium"] == m["unusual_premium"]
+
+
+def test_hedge_flags_do_not_confirm(cfg):
+    exp = (SESSION + dt.timedelta(days=30)).isoformat()
+    u = {"ticker": "XYZ", "symbol": "S1", "kind": "CALL", "strike": 50, "expiration": exp, "volume": 1000,
+         "oi": 10, "premium": 900000, "direction": "ALCISTA", "side": "ASK", "weight": 0.3}
+    f = state.add_flags(state.load_flags(), [u], "2026-09-29")
+    f = state.confirm_flags(f, "XYZ", {"S1": 1010}, "2026-09-30")
+    s = state.flag_summary(f, "XYZ", "2026-09-30")
+    assert s["confirmed"] == 0 and s["confirmed_bull_premium"] == 0
+
+
+def test_strongest_catalyst_wins(cfg):
+    m = {"unusual_count": 0, "unusual_premium": 0, "flow_bias": 0, "whales": 0, "_unusual": []}
+    fs = {"confirmed": 0, "confirmed_bull_premium": 0, "confirmed_bear_premium": 0,
+          "not_confirmed": 0, "pending": 0, "confirmed_list": []}
+    cats = [{"date": "2026-10-19", "days": 17, "type": "Resultados"},
+            {"date": "2026-11-14", "days": 43, "type": "PDUFA"}]
+    s = scoring.score_ticker(m, {}, fs, cats, None, None, [], None, cfg)
+    assert s["next_catalyst"]["type"] == "PDUFA"

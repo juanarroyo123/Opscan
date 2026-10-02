@@ -25,7 +25,8 @@ def flow_points(m, prev_premium=0, clarity=None):
     """0-30. Combina tamano (prima inusual de hoy + mitad de la previa vigente), concentracion
     (que parte de TODA la prima del valor es inusual: en SPY/NVDA el flujo inusual es una gota)
     y claridad direccional (todo calls compradas = 1; mezcla = 0)."""
-    up = (m.get("unusual_premium") or 0) + 0.5 * (prev_premium or 0)
+    today = m.get("effective_premium", m.get("unusual_premium")) or 0
+    up = today + 0.5 * (prev_premium or 0)
     if up <= 0:
         return 0.0
     total = (m.get("call_premium") or 0) + (m.get("put_premium") or 0)
@@ -132,16 +133,21 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg):
     # 4) catalizador
     horizon = sc["catalyst_horizon_days"]
     upcoming = [c for c in (cats or []) if c.get("days") is not None and 0 <= c["days"] <= horizon]
-    upcoming.sort(key=lambda c: c["days"])
-    nc = upcoming[0] if upcoming else None
+
+    def cat_base(c):
+        strong = any(k in c["type"] for k in STRONG_CATALYSTS)
+        factor = 0.6 if c["type"] == "Resultados" else (1 if strong else 0.5)   # resultados: evento conocido por todos
+        # PDUFA/AdCom/lecturas: binarios, cuentan casi enteros aunque falten semanas
+        decay = (1 - c["days"] / horizon) if c["type"] == "Resultados" or not strong else max(0.6, 1 - c["days"] / horizon)
+        return 10 * decay * factor
+
+    nc = max(upcoming, key=cat_base) if upcoming else None   # el catalizador mas relevante, no solo el mas cercano
     kp = 0.0
     if nc:
-        strong = any(k in nc["type"] for k in STRONG_CATALYSTS)
-        factor = 0.6 if nc["type"] == "Resultados" else (1 if strong else 0.5)   # resultados: evento conocido por todos
-        kp = 10 * (1 - nc["days"] / horizon) * factor
+        kp = cat_base(nc)
         cd = parse_date(nc["date"])
-        positioned = [u for u in m.get("_unusual", []) if parse_date(u["expiration"]) and cd
-                      and parse_date(u["expiration"]) >= cd]
+        positioned = [u for u in list(m.get("_unusual", [])) + list(fs.get("confirmed_list") or [])
+                      if parse_date(u["expiration"]) and cd and parse_date(u["expiration"]) >= cd]
         if positioned:
             kp += 5
             reasons.append(f"{len(positioned)} contrato(s) inusual(es) vencen despues del catalizador")
@@ -157,6 +163,8 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg):
         win = sc["congress_window_days"]
         if dsign and cb == dsign:
             n = nb if dsign > 0 else ns
+            if dsign < 0 and n < 2:
+                n = 0          # una venta aislada no dice nada (se vende por mil motivos)
             if n:
                 gp = 9 if n >= 2 else 5
                 if dsign > 0 and cong.get("cluster"):
