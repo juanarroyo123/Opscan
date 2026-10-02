@@ -202,6 +202,9 @@ def trade_idea(direction, m, b, next_cat, style="simple"):
     return idea
 
 
+INDEX_LIKE = {"SPX", "SPY", "QQQ", "NDX", "IWM", "RUT", "DIA", "DJX", "VIX", "XSP", "MDY", "RSP", "VOO", "IVV"}
+
+
 def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg, tech=None):
     sc = cfg["scoring"]
     reasons = []
@@ -374,11 +377,22 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg, tech=None):
     # checklist de la estrategia
     ck_cong = bool(cong) and dsign != 0 and _sign(cong.get("bias"), 0.3) == dsign and (
         cong.get("n_buyers") if dsign > 0 else cong.get("n_sellers"))
-    ck_fut = fut_bias is not None and dsign != 0 and _sign(fut_bias, 0.2) == dsign
+    # futuros: el regimen general de indices solo cuenta para indices/ETF de indices; para una
+    # accion hace falta un futuro ligado a su sector (petroleo, bonos, oro...) que acompane
+    specific = [w for w in (fut_why or []) if not str(w).startswith("Indices")]
+    is_index = str(m.get("ticker", "")).upper() in INDEX_LIKE
+    ck_fut = fut_bias is not None and dsign != 0 and _sign(fut_bias, 0.2) == dsign and (bool(specific) or is_index)
     conf_dir = fs["confirmed_bull_premium"] if dsign > 0 else fs["confirmed_bear_premium"] if dsign < 0 else 0
-    ck_flow = conf_dir > 0
+    conf_opp = fs["confirmed_bear_premium"] if dsign > 0 else fs["confirmed_bull_premium"] if dsign < 0 else 0
+    n_chk = (fs.get("confirmed") or 0) + (fs.get("not_confirmed") or 0)
+    conf_rate = (fs.get("confirmed") or 0) / n_chk if n_chk else 0
+    ck_flow = bool(conf_dir >= float(sc.get("entry_min_confirmed_premium", 200000))
+                   and conf_dir >= 2 * conf_opp and conf_rate >= float(sc.get("entry_min_confirm_rate", 0.4)))
+    if conf_dir > 0 and not ck_flow:
+        reasons.append(f"Confirmacion debil: ${conf_dir/1e3:.0f}k confirmados, {conf_rate*100:.0f}% de alertas confirmadas "
+                       "(no cuenta para ENTRADA)")
     pts = (1 if ck_cong else 0) + (1 if ck_fut else 0) + (2 if ck_flow else 0)
-    entry = bool(ck_flow and pts >= sc["entry_min_points"] and total >= sc["media"])
+    entry = bool(ck_flow and pts >= sc["entry_min_points"] and total >= float(sc.get("entry_min_score", 45)))
     pre_alert = bool(not ck_flow and (m.get("unusual_count") or prev_tot) and dsign != 0 and
                      (1 if ck_cong else 0) + (1 if ck_fut else 0) >= 1)
 

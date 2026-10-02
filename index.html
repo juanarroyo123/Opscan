@@ -100,6 +100,24 @@ tbody tr.click{cursor:pointer} tbody tr.click:hover{background:var(--surface2)}
 .dir{font-weight:800;font-size:12px;white-space:nowrap}
 .d-ALCISTA{color:var(--good-txt)} .d-BAJISTA{color:var(--bad-txt)} .d-MIXTO,.d-NEUTRAL,.d--{color:var(--mut)}
 .up{color:var(--good-txt);font-weight:700} .down{color:var(--bad-txt);font-weight:700}
+.warn{color:var(--warn-txt);font-weight:700}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px;margin-bottom:8px}
+.pos{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:13px 14px;box-shadow:var(--shadow)}
+.pos .ph{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.pos .pc{font-size:13px;color:var(--txt2);margin-top:2px}
+.pos .pnl{font-size:22px;font-weight:800;text-align:right;line-height:1.1}
+.pos .grid4{margin-top:10px}
+.adv{margin-top:10px;border-radius:10px;padding:8px 10px;font-size:12.5px;line-height:1.45}
+.adv.MANTENER{background:var(--good-bg)} .adv.VIGILAR{background:var(--warn-bg)} .adv.CERRAR{background:var(--bad-bg)}
+.adv b{font-size:12px;letter-spacing:.04em}
+.pos .acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.buybox{margin-top:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
+.buybox input{width:80px;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--txt)}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:80;max-width:min(560px,calc(100% - 32px));
+  background:var(--surface);border:1px solid var(--line);box-shadow:0 8px 30px rgba(0,0,0,.18);border-radius:12px;padding:12px 14px;font-size:13.5px;display:none}
+.toast.ok{border-color:var(--good-txt)} .toast.err{border-color:var(--bad-txt)}
+.ghbox input[type=password],.ghbox input[type=text]{width:100%;max-width:520px;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--txt)}
+.ghbox ol{margin:6px 0 10px 18px;padding:0;font-size:13px;line-height:1.6}
 .muted{color:var(--mut)} .small{font-size:11px}
 .ck{display:inline-flex;gap:3px;vertical-align:middle}
 .ck i{width:18px;height:18px;border-radius:5px;font-style:normal;font-size:10px;font-weight:800;display:inline-flex;
@@ -179,6 +197,7 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
   </div>
   <nav class="tabs" id="tabs">
     <button class="tab active" data-tab="radar">Radar</button>
+    <button class="tab" data-tab="port">Mi cartera</button>
     <button class="tab" data-tab="trk">Seguimiento</button>
     <button class="tab" data-tab="flow">Flujo</button>
     <button class="tab" data-tab="sec">Sectores</button>
@@ -294,6 +313,27 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
       ClinicalTrials.gov · SEC EDGAR · Finnhub · Reserva Federal · manual. Verifica siempre las fechas en la fuente original.</div>
   </section>
 
+  <!-- MI CARTERA -->
+  <section id="v-port" hidden>
+    <div class="help"><b>Tu cartera simulada</b> (dinero ficticio, precios reales con 15 min de retraso). Compras desde la ficha de cualquier
+      valor (botón <b>Comprar</b>) y vendes aquí. Cada posición se revalora en cada escaneo y la herramienta te dice qué hacer:
+      <b class="up">MANTENER</b>, <b class="warn">VIGILAR</b> o <b class="down">CERRAR</b> (con aviso por Telegram).</div>
+    <div class="kpis" id="pkpis"></div>
+    <div class="section-t">Posiciones abiertas</div>
+    <div id="portOpen" class="pgrid"></div>
+    <div class="section-t">Historial (cerradas)</div>
+    <div class="panel"><div class="tscroll"><table class="big"><thead><tr>
+      <th class="l">Id</th><th class="l">Valor</th><th class="l">Opción</th><th>Pagaste</th><th>Vendiste</th><th>Resultado</th><th>Abierta → cerrada</th><th class="l">Motivo</th>
+    </tr></thead><tbody id="portClosed"></tbody></table></div></div>
+    <div class="section-t">Estrategia automática <span class="muted small">(la herramienta sola, con otros $10.000: compra cada ENTRADA)</span></div>
+    <div class="kpis" id="akpis"></div>
+    <div class="panel"><div class="tscroll"><table class="big"><thead><tr>
+      <th class="l">Id</th><th class="l">Valor</th><th class="l">Opción</th><th>Coste</th><th>Valor hoy</th><th>Resultado</th><th>Abierta</th><th class="l">Qué hacer / motivo</th>
+    </tr></thead><tbody id="autoBody"></tbody></table></div></div>
+    <div class="section-t">Conexión con GitHub (para comprar y vender desde aquí)</div>
+    <div class="panel ghbox" style="padding:14px" id="ghBox"></div>
+  </section>
+
   <!-- SEGUIMIENTO -->
   <section id="v-trk" hidden>
     <div class="kpis" id="tkpis"></div>
@@ -306,16 +346,19 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
     <div class="panel"><div class="tscroll"><table><thead><tr>
       <th class="l">Grupo</th><th>Señales</th><th>5 sesiones</th><th>10 sesiones</th><th>20 sesiones</th>
     </tr></thead><tbody id="trkStats"></tbody></table></div></div>
+    <div class="help" style="margin-top:12px">La cartera simulada está ahora en la pestaña <a href="#port" onclick="switchTab('port');return false">Mi cartera</a>.</div>
+    <div hidden>
     <div class="section-t">Cartera simulada · cuenta</div>
     <div class="kpis" id="paperAcct"></div>
     <div class="section-t">Cartera simulada · abiertas</div>
     <div class="panel"><div class="tscroll"><table class="big"><thead><tr>
-      <th class="l">Id</th><th class="l">Valor</th><th class="l">Operación</th><th>Coste</th><th>Valor hoy</th><th>P&amp;L</th><th>Abierta</th><th>Vence</th><th class="l"></th>
+      <th class="l">Id</th><th class="l">Valor</th><th class="l">Operación</th><th>Coste</th><th>Valor hoy</th><th>P&amp;L</th><th>Abierta</th><th>Vence</th><th class="l">Qué hacer</th><th class="l"></th>
     </tr></thead><tbody id="paperOpen"></tbody></table></div></div>
     <div class="section-t">Cartera simulada · cerradas</div>
     <div class="panel"><div class="tscroll"><table class="big"><thead><tr>
       <th class="l">Id</th><th class="l">Valor</th><th class="l">Operación</th><th>Coste</th><th>Salida</th><th>P&amp;L</th><th>Abierta → cerrada</th><th class="l">Motivo</th>
     </tr></thead><tbody id="paperClosed"></tbody></table></div></div>
+    </div>
     <div class="section-t">Últimas señales registradas</div>
     <div class="panel"><div class="tscroll"><table class="big"><thead><tr>
       <th>Fecha</th><th class="l">Valor</th><th class="l">Dirección</th><th>Score</th><th class="l">Tipo</th><th>Precio</th><th>5d</th><th>10d</th><th>20d</th><th>Hasta hoy</th>
@@ -350,6 +393,7 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
 
 <div class="scrim" id="scrim"></div>
 <aside class="drawer" id="drawer" aria-label="Detalle"></aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="tooltip" id="tip"></div>
 
 <script>
@@ -391,8 +435,8 @@ async function getJSON(p){try{const r=await fetch(p+"?ts="+Date.now());if(!r.ok)
 // ---------- pestañas
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
 function switchTab(t){S.tab=t;document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===t));
-  ["radar","trk","flow","sec","fut","pol","cal","status"].forEach(x=>$("#v-"+x).hidden=x!==t);
-  ({radar:renderRadar,trk:renderTrk,flow:renderFlow,sec:renderSec,fut:renderFut,pol:renderPol,cal:renderCal,status:renderStatus})[t]();
+  ["radar","port","trk","flow","sec","fut","pol","cal","status"].forEach(x=>$("#v-"+x).hidden=x!==t);
+  ({radar:renderRadar,port:renderPort,trk:renderTrk,flow:renderFlow,sec:renderSec,fut:renderFut,pol:renderPol,cal:renderCal,status:renderStatus})[t]();
   try{history.replaceState(null,"","#"+t);}catch(e){}}
 
 // ---------- RADAR
@@ -421,7 +465,7 @@ function renderRadar(){const L=S.latest;renderKPIs();
     const nc=x.next_catalyst;
     const cat=nc?`<span class="${nc.days<=10?'soon':''}"><b>${esc(nc.type)}</b> · ${nc.days}d</span><div class="nm">${esc(nc.date)}</div>`:'<span class="muted">—</span>';
     return `<tr class="click" data-tk="${esc(x.ticker)}">
-      <td class="l"><div class="tk">${esc(x.ticker)}</div><div class="nm">${esc(x.name||"")}${x.sector?" · "+esc(x.sector):""}</div></td>
+      <td class="l"><div class="tk">${esc(x.ticker)}${heldSet().has(x.ticker)?' <span class="tag g" title="Tienes una posición abierta">EN CARTERA</span>':""}</div><div class="nm">${esc(x.name||"")}${x.sector?" · "+esc(x.sector):""}</div></td>
       <td class="num">${px(x.price)}<div class="small ${pctCls(x.change_pct)}">${pct(x.change_pct,2)}</div></td>
       <td>${sigPill(x)}</td><td class="l">${dirHTML(x.direction)}${x.squeeze?` <span class="tag y" title="${esc((x.squeeze.reasons||[]).join(", "))}">cortos ${esc(x.squeeze.level)}</span>`:""}</td><td class="l">${ckHTML(x.checklist)}</td>
       <td class="num">${x.unusual_count?`${money(x.unusual_premium)} <span class="muted small">(${x.unusual_count})</span>${biasBar(x.flow_bias)}`:'<span class="muted">—</span>'}</td>
@@ -505,8 +549,9 @@ function renderTrk(){const T=S.trk,P=S.paper;
     <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${esc(legsTxt(t.legs))}${(t.contracts||1)>1?` <b>×${t.contracts}</b>`:""}</td>
     <td class="num">${money(t.entry_cost)}</td><td class="num">${money(t.value)}</td><td class="num">${pnlH(t.pnl,t.pnl_pct)}</td>
     <td class="num">${esc(t.opened)}</td><td class="num">${esc(t.expiration||"")}</td>
+    <td class="l small" style="max-width:320px">${t.advice?`<b class="${t.advice.action==="CERRAR"?"down":t.advice.action==="VIGILAR"?"warn":"up"}">${esc(t.advice.action)}</b> · ${esc((t.advice.reasons||[]).join(" · "))}`:"—"}</td>
     <td class="l">${closeUrl(t)?`<a class="btn sec" href="${esc(closeUrl(t))}" target="_blank" rel="noopener">Cerrar</a>`:""}</td></tr>`).join("")
-    ||`<tr><td colspan="9" class="empty">Sin operaciones abiertas. Abre una desde el detalle de un valor (botón “Simular”) o espera a la próxima ENTRADA.</td></tr>`;
+    ||`<tr><td colspan="10" class="empty">Sin operaciones abiertas. Abre una desde el detalle de un valor (botón “Simular”) o espera a la próxima ENTRADA.</td></tr>`;
   $("#paperClosed").innerHTML=cl.slice(0,100).map(t=>`<tr class="click" data-tk="${esc(t.ticker)}"><td class="l">${esc(t.id)} <span class="tag ${t.source==="AUTO"?"":"y"}">${esc(t.source)}</span></td>
     <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${esc(legsTxt(t.legs))}${(t.contracts||1)>1?` <b>×${t.contracts}</b>`:""}</td>
     <td class="num">${money(t.entry_cost)}</td><td class="num">${money(t.exit_value)}</td><td class="num">${pnlH(t.pnl,t.pnl_pct)}</td>
@@ -676,7 +721,7 @@ function openDrawer(html){$("#drawer").innerHTML=html;$("#drawer").classList.add
 function closeDrawer(){$("#drawer").classList.remove("open");$("#scrim").classList.remove("open");hideTip();}
 $("#scrim").onclick=closeDrawer;document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer();});
 $("#drawer").addEventListener("click",e=>{if(e.target.closest("[data-close]"))closeDrawer();});
-function openDetail(tk){const r=(S.latest&&S.latest.records||[]).find(x=>x.ticker===tk);
+function openDetail(tk){$("#drawer").dataset.tk=tk;const r=(S.latest&&S.latest.records||[]).find(x=>x.ticker===tk);
   if(!r){const t=(S.pol&&S.pol.trades||[]).filter(x=>x.ticker===tk);
     openDrawer(`<div class="dh"><div><div class="tk" style="font-size:20px">${esc(tk)}</div><div class="muted small">No está en el universo escaneado (añádelo a la watchlist en config.yml)</div></div><button class="iconbtn" data-close>✕</button></div>
       <div class="db">${t.length?`<div class="section-t">Operaciones del Congreso</div>`+t.slice(0,20).map(x=>`<div class="small">${esc(x.transaction_date)} · ${esc(x.member)} · <b>${esc(x.direction)}</b> ${esc(x.amount)}</div>`).join(""):""}</div>`);return;}
@@ -689,15 +734,14 @@ function openDetail(tk){const r=(S.latest&&S.latest.records||[]).find(x=>x.ticke
     ${I.liquidity?`<div class="small" style="margin-top:4px">Liquidez: <span style="font-weight:800" class="${I.liquidity==="mala"?"down":I.liquidity==="buena"?"up":""}">${esc(I.liquidity)}</span>${I.liquidity_note?" · "+esc(I.liquidity_note):""}</div>`:""}
     ${I.choices&&I.choices.length>1?`<div class="small" style="margin-top:10px"><b>Elige cuánto arriesgar</b> (mismo vencimiento; más lejos = más barato pero necesita un movimiento mayor):</div>
     <table class="sm" style="margin-top:4px"><thead><tr><th class="l">Tipo</th><th class="l">Contrato</th><th>Coste</th><th>Gana si pasa de</th><th>Mov. necesario</th><th>Delta</th><th></th></tr></thead><tbody>
-    ${I.choices.map(c=>{const u=simUrl(r,[{action:"COMPRAR",...c}],(c.kind==="C"?"Call":"Put")+" comprada "+c.label.toLowerCase());
-      return `<tr><td class="l"><b>${esc(c.label)}</b></td><td class="l">${c.kind==="C"?"CALL":"PUT"} ${c.strike}</td><td class="num">${money(c.cost)}</td>
+    ${I.choices.map((c,ci)=>`<tr><td class="l"><b>${esc(c.label)}</b></td><td class="l">${c.kind==="C"?"CALL":"PUT"} ${c.strike}</td><td class="num">${money(c.cost)}</td>
       <td class="num">$${c.breakeven}</td><td class="num">${pct(c.breakeven_move_pct)}</td><td class="num">${c.delta??"—"}</td>
-      <td>${u?`<a href="${esc(u)}" target="_blank" rel="noopener">Simular</a>`:""}</td></tr>`}).join("")}</tbody></table>`:""}
+      <td><button class="btn" style="padding:5px 10px" data-buy="${ci}">Comprar</button></td></tr>`).join("")}</tbody></table>`:""}
     <div class="grid4" style="margin-top:8px">${M("Coste (1 contrato)",money(I.cost))}${M("Pérdida máxima",money(I.max_loss))}${M("Ganancia máxima",I.max_gain!=null?money(I.max_gain):"sin límite")}${M("Punto muerto",`$${I.breakeven} (${pct(I.breakeven_move_pct)})`)}</div>`:"";
   const idea=I?`<div class="idea"><div><b>Idea de estructura (educativa):</b> ${esc(I.structure)}${I.expiration?` · vencimiento ${esc(I.expiration)} (${I.dte}d)`:""}</div>
     <div class="small">${esc(I.strikes)} · ${esc(I.why_structure)}</div>${legRows}<div class="small" style="margin-top:6px">${esc(I.management)}</div>
-    <div class="small muted">${esc(I.note)}</div>${su?`<div style="margin-top:8px"><a class="btn" href="${esc(su)}" target="_blank" rel="noopener">Simular en mi cartera</a>
-    <span class="small muted"> abre un aviso en GitHub; pulsa “Submit” y queda anotada (sin dinero real)</span></div>`:""}</div>`:"";
+    <div class="small muted">${esc(I.note)}</div>${I.legs?`<div style="margin-top:8px"><button class="btn" data-buy="main">Comprar en mi cartera</button>
+    <span class="small muted"> cartera simulada, sin dinero real</span></div><div id="buyBox"></div>`:""}</div>`:"";
   const ER=r.earnings;const earnH=ER?`<div class="section-t">Resultados: ¿opciones caras o baratas?</div>
     <div class="grid4">${M("Resultados",esc(ER.date))}${M("Descuentan (hasta "+esc(String(ER.expiration).slice(5))+")","±"+ER.implied_pct+"%")}${M("Media histórica","±"+ER.hist_avg_pct+"%")}${M("Veredicto",`<span class="${ER.label==="baratas"?"up":ER.label==="caras"?"down":""}">${esc(ER.label||"—")}</span> (${ER.ratio}x)`)}</div>
     <div class="small muted" style="margin-top:4px">Últimas reacciones: ${(ER.moves||[]).map(x=>`${esc(x.date.slice(2))} <b class="${x.move_pct>=0?"up":"down"}">${x.move_pct>=0?"+":""}${x.move_pct}%</b>`).join(" · ")}</div>
@@ -771,12 +815,162 @@ function openFut(i){const m=S.fut.markets[i];const c=m.cot||{},p=m.price||{};
       ${M("Volumen relativo",p.vol_rel!=null?p.vol_rel+"x":"—")}${M("Sobre media 50d",p.above_sma50==null?"—":p.above_sma50?"Sí":"No")}${M("Sobre media 200d",p.above_sma200==null?"—":p.above_sma200?"Sí":"No")}${M("Semana COT",pct(p.cot_week_chg,2))}</div>
     </div>`);}
 
+
+// ---------- MI CARTERA: conexion GitHub, ordenes y vista
+const GH={k:"opscan_gh_v1",get(){try{return JSON.parse(localStorage.getItem(this.k)||"null");}catch(e){return null;}},
+  set(v){try{localStorage.setItem(this.k,JSON.stringify(v));}catch(e){}},clear(){try{localStorage.removeItem(this.k);}catch(e){}}};
+const repoFull=()=>(S.latest&&S.latest.repo)||repoName();
+async function ghApi(path,opt={}){const c=GH.get();if(!c||!c.token)throw new Error("sin token");
+  return fetch("https://api.github.com"+path,{...opt,headers:{"Accept":"application/vnd.github+json","Authorization":"Bearer "+c.token,
+    "X-GitHub-Api-Version":"2022-11-28",...(opt.headers||{})}});}
+async function ghRaw(branch,file){const rp=repoFull();if(!rp)return null;
+  try{if(GH.get()){const r=await ghApi(`/repos/${rp}/contents/${file}?ref=${branch}`,{headers:{"Accept":"application/vnd.github.raw+json"}});
+      if(r.ok)return await r.json();}}catch(e){}
+  try{const r=await fetch(`https://raw.githubusercontent.com/${rp}/${branch}/${file}?ts=${Date.now()}`);if(r.ok)return await r.json();}catch(e){}
+  return null;}
+// la cartera mas reciente: la de la rama data (revalorada) o la vista previa con ordenes aun no aplicadas
+async function loadPaperFresh(){const [d,pv]=await Promise.all([ghRaw("data","paper.json"),ghRaw("orders","preview.json")]);
+  let best=S.paper;const od=x=>x?(x.orders_done||0):-1,ts=x=>x?String(x.generated_at||""):"";
+  for(const c of [d,pv]){if(!c)continue;if(!best||od(c)>od(best)||(od(c)===od(best)&&!c.preview&&ts(c)>ts(best)))best=c;}
+  const ch=best!==S.paper;S.paper=best;return ch;}
+function heldSet(){return new Set(((S.paper&&S.paper.trades)||[]).filter(t=>t.status==="OPEN"&&t.source==="MANUAL").map(t=>t.ticker));}
+let toastT=null;
+function toast(html,kind="",ms=0){const t=$("#toast");t.className="toast "+kind;t.innerHTML=html;t.style.display="block";
+  clearTimeout(toastT);if(ms)toastT=setTimeout(()=>t.style.display="none",ms);}
+$("#toast").addEventListener("click",e=>{if(e.target.closest("[data-x]"))$("#toast").style.display="none";});
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function placeOrder(title,data,label){
+  const c=GH.get();
+  if(!c||!c.token){toast(`Para ${esc(label)} desde la web conecta GitHub una vez (abajo en <a href="#port" onclick="switchTab('port');document.getElementById('ghBox').scrollIntoView();return false">Mi cartera</a>).
+    <br><a href="${esc(issueUrl(title,"```json\n"+JSON.stringify(data,null,1)+"\n```"))}" target="_blank" rel="noopener">O hazlo con un aviso en GitHub</a> · <a href="#" data-x>cerrar</a>`,"err");return;}
+  const nonce=Math.random().toString(36).slice(2,10);data={...data,nonce};const t0=Date.now();
+  toast(`⏳ Enviando: ${esc(label)}…`);
+  const runsUrl=`/repos/${repoFull()}/actions/workflows/paper.yml/runs?event=workflow_dispatch&per_page=10`;
+  let known=new Set();try{const k=await (await ghApi(runsUrl)).json();known=new Set((k.workflow_runs||[]).map(x=>x.id));}catch(e){}
+  let r;try{r=await ghApi(`/repos/${repoFull()}/actions/workflows/paper.yml/dispatches`,{method:"POST",
+    body:JSON.stringify({ref:c.branch||"main",inputs:{accion:title,datos:JSON.stringify(data)}})});}catch(e){r=null;}
+  if(!r||r.status!==204){const m=r?(await r.text()).slice(0,160):"sin conexión";
+    toast(`❌ GitHub no aceptó la orden (${r?r.status:""}). ${esc(m)}<br>Revisa el token en Mi cartera. <a href="#" data-x>cerrar</a>`,"err");return;}
+  toast(`⏳ Orden enviada: ${esc(label)}. GitHub la está anotando (suele tardar 30–60 s)…`);
+  let run=null;
+  for(let i=0;i<60;i++){await sleep(5000);
+    try{const js=await (await ghApi(runsUrl)).json();
+      run=(js.workflow_runs||[]).filter(x=>!known.has(x.id)).sort((a,b)=>new Date(a.created_at)-new Date(b.created_at))[0]||run;}catch(e){}
+    if(run&&run.status==="completed")break;
+    if(run)toast(`⏳ Anotando ${esc(label)}… (${run.status==="queued"?"en cola":"en marcha"})`);}
+  if(!run||run.status!=="completed"){toast(`⌛ Sigue en marcha en GitHub. Recarga esta página en un par de minutos. <a href="#" data-x>cerrar</a>`);return;}
+  if(run.conclusion!=="success"){toast(`❌ Falló al anotar. <a href="${esc(run.html_url)}" target="_blank" rel="noopener">Ver detalle</a> · <a href="#" data-x>cerrar</a>`,"err");return;}
+  let res=null;for(let i=0;i<6&&!res;i++){const pv=await ghRaw("orders","preview.json");
+    if(pv&&pv.order_results&&pv.order_results[nonce]){res=pv.order_results[nonce];if((pv.orders_done||0)>=((S.paper&&S.paper.orders_done)||0))S.paper=pv;}
+    else await sleep(3000);}
+  if(res&&res.ok){toast(`✅ ${esc(res.msg)}`,"ok",9000);closeDrawer();switchTab("port");}
+  else toast(`❌ ${esc(res?res.msg:"No se pudo confirmar")} <a href="#" data-x>cerrar</a>`,"err");}
+
+// compra desde la ficha
+document.addEventListener("click",e=>{const b=e.target.closest("[data-buy]");if(!b)return;
+  const tk=($("#drawer").dataset.tk)||"";const r=(S.latest&&S.latest.records||[]).find(x=>x.ticker===tk);if(!r||!r.idea)return;
+  const I=r.idea;const leg=b.dataset.buy==="main"?(I.legs||[])[0]:(I.choices||[])[+b.dataset.buy];if(!leg)return;
+  const unit=Math.round(leg.mid*100*100)/100;const A=(S.paper&&S.paper.summary&&S.paper.summary.account)||{max_per_trade:500,cash:10000};
+  const sug=Math.max(1,Math.floor((A.max_per_trade||500)/unit));
+  const box=$("#buyBox");if(!box)return;
+  box.innerHTML=`<div class="buybox"><b>Comprar ${leg.kind==="C"?"CALL":"PUT"} ${esc(r.ticker)} ${leg.strike} · vence ${esc(leg.expiration)}</b>
+    <div class="small" style="margin:6px 0">Precio: <b>$${leg.mid}</b> por opción → <b>${money(unit)}</b> por contrato (100 opciones).
+    Lo máximo que puedes perder es lo que pagas.</div>
+    <label class="small">Contratos <input type="number" min="1" step="1" value="${sug}" id="buyN"></label>
+    <span class="small" id="buyTot" style="margin-left:10px"></span>
+    <div style="margin-top:10px;display:flex;gap:8px"><button class="btn" id="buyGo">Confirmar compra</button><button class="btn sec" id="buyNo">Cancelar</button></div></div>`;
+  const upd=()=>{const n=Math.max(1,parseInt($("#buyN").value||"1"));const tot=n*unit;
+    $("#buyTot").innerHTML=`Total <b>${money(tot)}</b> · saldo después ${moneyF((A.cash??10000)-tot)}${tot>(A.max_per_trade||500)?' · <span class="warn">supera tu máximo por operación ('+moneyF(A.max_per_trade||500)+')</span>':""}`;};
+  upd();$("#buyN").addEventListener("input",upd);$("#buyNo").onclick=()=>box.innerHTML="";
+  $("#buyGo").onclick=()=>{const n=Math.max(1,parseInt($("#buyN").value||"1"));
+    placeOrder("PAPER ABRIR "+r.ticker,{ticker:r.ticker,direction:r.direction,price:r.price,contracts:n,
+      structure:(leg.kind==="C"?"Call":"Put")+" comprada"+(leg.label?" "+String(leg.label).toLowerCase():""),
+      legs:[{action:"COMPRAR",symbol:leg.symbol,kind:leg.kind,strike:leg.strike,expiration:leg.expiration,mid:leg.mid}],
+      notes:(r.reasons||[]).slice(0,3).join("; ")},`compra de ${n} ${leg.kind==="C"?"call":"put"} ${r.ticker} ${leg.strike}`);
+    box.innerHTML="";};
+  box.scrollIntoView({behavior:"smooth",block:"nearest"});});
+
+function daysTo(d){if(!d)return null;const t=new Date(d+"T00:00:00");return Math.round((t-new Date(new Date().toDateString()))/864e5);}
+function legShort(t){const l=(t.legs||[])[0]||{};return `${l.kind==="C"?"CALL":"PUT"} ${l.strike} · ${esc(l.expiration||"")}${(t.contracts||1)>1?` · ×${t.contracts}`:""}`;}
+function acctKPIs(A,curve,label){if(!A||!A.capital)return "";
+  const spark=curve&&curve.length>1?(()=>{const v=curve.map(x=>x.equity),mn=Math.min(...v),mx=Math.max(...v),w=120,h=28;
+    const pts=v.map((y,i)=>`${(i/(v.length-1)*w).toFixed(1)},${(mx>mn?h-(y-mn)/(mx-mn)*h:h/2).toFixed(1)}`).join(" ");
+    return `<svg width="${w}" height="${h}" style="display:block;margin-top:4px" aria-hidden="true"><polyline fill="none" stroke="currentColor" stroke-width="1.5" points="${pts}"/></svg>`;})():"";
+  return `<div class="kpi"><div class="lbl">${label}</div><div class="val num">${moneyF(A.equity)}</div><div class="sub">${pnlH(A.equity-A.capital,A.return_pct)} desde ${moneyF(A.capital)}</div>${spark}</div>
+    <div class="kpi"><div class="lbl">Saldo disponible</div><div class="val num">${moneyF(A.cash)}</div><div class="sub">sin invertir</div></div>
+    <div class="kpi"><div class="lbl">Invertido ahora</div><div class="val num">${moneyF(A.invested)}</div><div class="sub">${A.n_open||0} posición(es) · vale ${moneyF(A.open_value)}</div></div>
+    <div class="kpi"><div class="lbl">Resultado abierto</div><div class="val num">${pnlH(A.unrealized??(A.open_value-A.invested))}</div><div class="sub">si vendieras hoy</div></div>
+    <div class="kpi"><div class="lbl">Resultado cerrado</div><div class="val num">${pnlH(A.realized||0)}</div><div class="sub">${A.n_closed||0} operación(es)</div></div>
+    <div class="kpi"><div class="lbl">Máximo por operación</div><div class="val num">${moneyF(A.max_per_trade)}</div><div class="sub">${A.max_pct}% de la cartera</div></div>`;}
+function renderPort(){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];const recs={};((S.latest&&S.latest.records)||[]).forEach(r=>recs[r.ticker]=r);
+  $("#pkpis").innerHTML=acctKPIs(sm.account,(P.curves||{}).MANUAL,"Valor de mi cartera")||`<div class="empty">Aún no hay datos de la cartera.</div>`;
+  const mine=tr.filter(t=>t.source==="MANUAL"),op=mine.filter(t=>t.status==="OPEN"),cl=mine.filter(t=>t.status!=="OPEN").reverse();
+  $("#portOpen").innerHTML=op.map(t=>{const r=recs[t.ticker]||{};const l=(t.legs||[])[0]||{};const spot=t.underlying_last??r.price;
+    const dte=daysTo(t.expiration),cat=t.catalyst||{},cd=daysTo(cat.date);const A=t.advice||{};
+    const sellData={id:t.id};
+    return `<div class="pos"><div class="ph"><div><span class="tk" style="font-size:18px">${esc(t.ticker)}</span> ${dirHTML(t.direction)}
+      <div class="pc">${legShort(t)}</div><div class="muted small">${esc(t.id)} · comprada ${esc(t.opened)}${P.preview?' · <span class="warn">pendiente de revalorar</span>':""}</div></div>
+      <div class="pnl">${pnlH(t.pnl||0)}<div class="small ${(t.pnl_pct||0)>=0?"up":"down"}">${(t.pnl_pct||0)>=0?"+":""}${t.pnl_pct||0}%</div></div></div>
+      <div class="grid4">${M("Pagaste",moneyF(t.entry_cost),"$"+(l.entry??"—")+" por opción")}${M("Vale hoy",moneyF(t.value),"$"+(l.last??"—")+" por opción")}
+        ${M("Acción",`$${t.underlying_entry??"—"} → $${spot??"—"}`)}${M("Vence en",dte!=null?dte+" días":"—")}</div>
+      ${cat.date?`<div class="small" style="margin-top:6px">Catalizador: <b>${esc(cat.type||"")}</b> ${esc(cat.date)} (${cd>=0?"en "+cd+" días":"ya pasó"})</div>`:""}
+      <div class="adv ${esc(A.action||"MANTENER")}"><b class="${A.action==="CERRAR"?"down":A.action==="VIGILAR"?"warn":"up"}">${esc(A.action||"SIN DATOS AÚN")}</b> · ${esc((A.reasons||["Se valorará en el próximo escaneo"]).join(" · "))}</div>
+      <div class="acts"><button class="btn sec" data-open="${esc(t.ticker)}">Ver ficha</button>
+        <button class="btn" style="background:var(--bad-txt)" data-sell="${esc(t.id)}" data-lbl="venta de ${esc(t.ticker)} (${esc(t.id)})">Vender (cerrar)</button></div>
+      <div data-sellbox="${esc(t.id)}"></div></div>`;}).join("")||`<div class="empty" style="grid-column:1/-1">No tienes posiciones abiertas. Abre la ficha de un valor del Radar y pulsa <b>Comprar</b>.</div>`;
+  $("#portClosed").innerHTML=cl.slice(0,100).map(t=>`<tr class="click" data-tk="${esc(t.ticker)}"><td class="l">${esc(t.id)}</td>
+    <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${legShort(t)}</td>
+    <td class="num">${moneyF(t.entry_cost)}</td><td class="num">${moneyF(t.exit_value)}</td><td class="num">${pnlH(t.pnl,t.pnl_pct)}</td>
+    <td class="num">${esc(t.opened)} → ${esc(t.closed||"")}</td><td class="l small">${esc(t.close_reason||"")}</td></tr>`).join("")
+    ||`<tr><td colspan="8" class="empty">Todavía no has cerrado ninguna operación.</td></tr>`;
+  $("#akpis").innerHTML=acctKPIs(sm.account_auto,(P.curves||{}).AUTO,"Valor estrategia automática");
+  const au=tr.filter(t=>t.source==="AUTO").sort((a,b)=>(a.status==="OPEN"?0:1)-(b.status==="OPEN"?0:1));
+  $("#autoBody").innerHTML=au.slice(0,80).map(t=>`<tr class="click" data-tk="${esc(t.ticker)}"><td class="l">${esc(t.id)}</td>
+    <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${legShort(t)}</td>
+    <td class="num">${moneyF(t.entry_cost)}</td><td class="num">${moneyF(t.status==="OPEN"?t.value:t.exit_value)}</td><td class="num">${pnlH(t.pnl||0,t.pnl_pct)}</td>
+    <td class="num">${esc(t.opened)}</td><td class="l small">${t.status==="OPEN"?(t.advice?`<b class="${t.advice.action==="CERRAR"?"down":t.advice.action==="VIGILAR"?"warn":"up"}">${esc(t.advice.action)}</b> · ${esc((t.advice.reasons||[]).join(" · "))}`:"—"):"cerrada: "+esc(t.close_reason||"")}</td></tr>`).join("")
+    ||`<tr><td colspan="8" class="empty">La estrategia automática aún no ha comprado nada (compra hasta 3 ENTRADAS al día).</td></tr>`;
+  renderGH();}
+document.addEventListener("click",e=>{const o=e.target.closest("[data-open]");if(o){openDetail(o.dataset.open);return;}
+  const sb=e.target.closest("[data-sell]");if(!sb)return;const id=sb.dataset.sell;const box=document.querySelector(`[data-sellbox="${CSS.escape(id)}"]`);
+  box.innerHTML=`<div class="buybox"><b>¿Vender ${esc(id)}?</b><div class="small" style="margin:4px 0 8px">Se cierra al último precio valorado. No se puede deshacer.</div>
+    <button class="btn" style="background:var(--bad-txt)" data-sellgo="${esc(id)}">Sí, vender</button> <button class="btn sec" data-sellno>Cancelar</button></div>`;});
+document.addEventListener("click",e=>{const g=e.target.closest("[data-sellgo]");if(g){const id=g.dataset.sellgo;g.closest(".buybox").remove();
+    placeOrder("PAPER CERRAR "+id,{id},"venta de "+id);return;}
+  const n=e.target.closest("[data-sellno]");if(n)n.closest(".buybox").remove();});
+$("#portClosed").addEventListener("click",e=>{const tr=e.target.closest("tr[data-tk]");if(tr)openDetail(tr.dataset.tk);});
+$("#autoBody").addEventListener("click",e=>{const tr=e.target.closest("tr[data-tk]");if(tr)openDetail(tr.dataset.tk);});
+
+function renderGH(){const c=GH.get();const rp=repoFull();
+  $("#ghBox").innerHTML=c&&c.token?`<div>✅ Conectado a <b>${esc(rp)}</b>${c.login?" como <b>"+esc(c.login)+"</b>":""}. Ya puedes comprar y vender desde la web.
+      <span class="muted small">(El token está guardado solo en este navegador.)</span></div>
+      <div style="margin-top:10px"><button class="btn sec" id="ghTest">Probar conexión</button> <button class="btn sec" id="ghOut">Desconectar</button> <span id="ghMsg" class="small"></span></div>`
+    :`<div class="small">Se hace <b>una sola vez</b> en cada navegador (ordenador y móvil). Crea una llave (token) que solo permite a esta web lanzar la anotación en tu repo:</div>
+      <ol><li>Abre <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a> (con tu sesión de GitHub iniciada).</li>
+      <li><b>Token name</b>: OpScan web · <b>Expiration</b>: 1 año (o la que quieras).</li>
+      <li><b>Repository access</b>: <i>Only select repositories</i> → elige <b>${esc(rp||"Opscan")}</b>.</li>
+      <li><b>Permissions → Repository permissions</b>: <b>Actions → Read and write</b> y <b>Contents → Read-only</b>.</li>
+      <li>Pulsa <b>Generate token</b>, cópialo (empieza por <code>github_pat_</code>) y pégalo aquí:</li></ol>
+      <input type="password" id="ghTok" placeholder="github_pat_..." autocomplete="off">
+      <div style="margin-top:10px"><button class="btn" id="ghSave">Guardar y probar</button> <span id="ghMsg" class="small"></span></div>
+      <div class="muted small" style="margin-top:8px">No lo compartas: quien lo tenga podría anotar operaciones simuladas en tu repo (nada más). Puedes borrarlo en GitHub cuando quieras.</div>`;
+  const msg=h=>{const m=$("#ghMsg");if(m)m.innerHTML=h;};
+  const test=async()=>{msg("Probando…");try{const r=await ghApi(`/repos/${rp}`);if(!r.ok)throw new Error("repo "+r.status);const j=await r.json();
+      const w=await ghApi(`/repos/${rp}/actions/workflows/paper.yml`);if(!w.ok)throw new Error("Actions "+w.status+" (¿permiso Actions?)");
+      const cc=GH.get();cc.branch=j.default_branch||"main";try{const u=await ghApi("/user");if(u.ok)cc.login=(await u.json()).login;}catch(e){}
+      GH.set(cc);msg('<span class="up">Conexión correcta ✓</span>');return true;}
+    catch(e){msg(`<span class="down">No funciona: ${esc(e.message)}. Revisa el repo elegido y los permisos.</span>`);return false;}};
+  const sv=$("#ghSave");if(sv)sv.onclick=async()=>{const v=($("#ghTok").value||"").trim();if(!v){msg('<span class="down">Pega el token</span>');return;}
+    GH.set({token:v});if(await test())setTimeout(renderGH,800);else GH.clear();};
+  const ts=$("#ghTest");if(ts)ts.onclick=test;const out=$("#ghOut");if(out)out.onclick=()=>{GH.clear();renderGH();};}
+
 // ---------- carga
 async function load(){
   const [L,F,FU,P,C,ST,TR,PA]=await Promise.all(["latest","flow","futures","political","catalysts","status","tracking","paper"].map(n=>getJSON("data/"+n+".json")));
   Object.assign(S,{latest:L,flow:F,fut:FU,pol:P,cal:C,status:ST,trk:TR,paper:PA});
   $("#updated").innerHTML=L?`Actualizado ${new Date(L.generated_at).toLocaleString("es-ES",{dateStyle:"short",timeStyle:"short"})}<br><span class="muted">sesión ${esc(L.session_date)}</span>`:"sin datos aún";
-  const h=(location.hash||"").slice(1);switchTab(["radar","trk","flow","sec","fut","pol","cal","status"].includes(h)?h:S.tab);}
+  const h=(location.hash||"").slice(1);switchTab(["radar","port","trk","flow","sec","fut","pol","cal","status"].includes(h)?h:S.tab);
+  loadPaperFresh().then(ch=>{if(ch&&S.tab==="port")renderPort();});}
 load();setInterval(load,5*60*1000);
 </script>
 </body>

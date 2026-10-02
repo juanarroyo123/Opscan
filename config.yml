@@ -47,12 +47,18 @@ scoring:
   entry_min_points: 3         # checklist: congreso(+1) futuros(+1) flujo confirmado(+2)
   alta: 55                    # score >= alta  -> ALTA
   media: 30                   # score >= media -> MEDIA
+  entry_min_score: 45         # ENTRADA exige al menos este score
+  entry_min_confirmed_premium: 200000   # y al menos $200k de prima confirmada por OI en su direccion
+  entry_min_confirm_rate: 0.4 # y que se confirmen >= 40% de las alertas revisadas
   idea_style: simple          # simple = solo comprar call/put | spread = spreads si la IV es cara | auto
 
 # ---------- Cartera simulada ----------
 paper:
   capital: 10000              # dinero inicial (USD, simulado)
   max_pct_trade: 5            # % maximo del valor de la cartera por operacion (5% de 10.000 = 500)
+  max_new_per_day: 3          # AUTO: como mucho 3 operaciones nuevas al dia (las de mas score)
+  max_open_auto: 8            # AUTO: como mucho 8 abiertas a la vez
+  skip_bad_liquidity: true    # AUTO: no entra si la liquidez de la opcion es "mala"
 
 # ---------- Enriquecimiento (Yahoo) para los mejores candidatos ----------
 enrich:

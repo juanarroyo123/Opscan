@@ -35,10 +35,12 @@ DEFAULTS = {
     "scoring": {
         "catalyst_horizon_days": 45, "congress_window_days": 90,
         "congress_cluster_days": 30, "entry_min_points": 3, "alta": 55, "media": 30,
-        "idea_style": "simple",
+        "idea_style": "simple", "entry_min_score": 45, "entry_min_confirmed_premium": 200000,
+        "entry_min_confirm_rate": 0.4,
     },
     "enrich": {"top_n": 75, "news": 5},
-    "paper": {"capital": 10000, "max_pct_trade": 5},
+    "paper": {"capital": 10000, "max_pct_trade": 5, "max_new_per_day": 3, "max_open_auto": 8,
+              "skip_bad_liquidity": True},
     "calendar": {
         "horizon_days": 90, "trial_phases": ["PHASE2", "PHASE3"],
         "sec_terms": ["merger agreement", "tender offer", "acquisition agreement"],

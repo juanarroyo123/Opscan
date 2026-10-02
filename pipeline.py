@@ -326,6 +326,9 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     flags = state.load_flags()
     paper.configure(cfg)
     book = paper.load()
+    orders = paper.load_orders(os.environ.get("OPSCAN_ORDERS_DIR"))
+    if orders:
+        paper.apply_orders(book, orders, today_et().isoformat())
     watch = paper.watch_symbols(book)
     for tk in watch:
         if tk not in uni:
@@ -438,6 +441,15 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     # 8) cartera simulada (AUTO abre cada ENTRADA), registro de aciertos, GEX y sectores
     ok_recs = [r for r in records if r.get("signal") != "ERR"]
     n_auto = paper.auto_open(book, ok_recs, session)
+    to_close = paper.advise(book, {r["ticker"]: r for r in ok_recs}, session, cfg["scoring"]["media"])
+    for t in to_close:
+        try:
+            alerts.send_telegram(f"OpScan - CERRAR {t['id']} {t['ticker']} ({t['source']})\n"
+                                 f"P&L {t.get('pnl_pct', 0):+.0f}% (${t.get('pnl', 0):+.0f})\n- "
+                                 + "\n- ".join(t["advice"]["reasons"])
+                                 + "\n(cartera simulada, no es asesoramiento)")
+        except Exception as e:
+            log(f"telegram cierre: {e}")
     paper.snapshot(book, session)
     paper.save(book)
     paper_out = paper.export(book)

@@ -280,7 +280,9 @@ def test_score_entry_checklist(cfg):
           "not_confirmed": 0, "pending": 0, "confirmed_list": []}
     cats = [{"date": (SESSION + dt.timedelta(days=20)).isoformat(), "days": 20, "type": "PDUFA"}]
     cong = {"n_buyers": 2, "n_sellers": 0, "cluster": True, "committee_relevant": True, "bias": 1.0}
-    s = scoring.score_ticker(m, b, fs, cats, cong, 0.5, ["Indices alcista"], None, cfg)
+    s0 = scoring.score_ticker(m, b, fs, cats, cong, 0.5, ["Indices alcista"], None, cfg)
+    assert s0["checklist"]["futuros"] is False      # solo el regimen de indices no basta para una accion
+    s = scoring.score_ticker(m, b, fs, cats, cong, 0.5, ["Indices alcista", "Petroleo alcista"], None, cfg)
     assert s["direction"] == "ALCISTA"
     assert s["checklist"]["puntos"] == 4 and s["checklist"]["entrada"]
     assert s["signal"] == "ALTA"
@@ -421,3 +423,16 @@ def test_vertical_spread_unequal_volume(cfg):
     und, cs = options.parse_cboe(p, "XYZ")
     _, unusual = options.analyze_chain(und, cs, cfg["options"])
     assert all(u["combo"] for u in unusual)     # caso DYN: compra call 10 / venta call 30
+
+
+def test_entrada_exige_confirmacion_solida(cfg):
+    p = cboe_payload("XYZ", 100.0, SESSION, unusual=[
+        {"kind": "C", "strike": 110, "exp_idx": 6, "volume": 6000, "oi": 100, "side": "ASK"}])
+    und, cs = options.parse_cboe(p, "XYZ")
+    m, unusual = options.analyze_chain(und, cs, cfg["options"])
+    m["_unusual"] = unusual
+    cong = {"n_buyers": 2, "n_sellers": 0, "cluster": True, "committee_relevant": True, "bias": 1.0}
+    weak = {"confirmed": 2, "confirmed_bull_premium": 1_500_000, "confirmed_bear_premium": 0,
+            "not_confirmed": 10, "pending": 0, "confirmed_list": []}      # solo 17% confirmadas
+    s = scoring.score_ticker(m, {"rel_vol": 3.2}, weak, [], cong, 0.5, ["Petroleo alcista"], None, cfg)
+    assert not s["checklist"]["flujo_confirmado"] and not s["checklist"]["entrada"]

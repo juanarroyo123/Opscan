@@ -214,7 +214,8 @@ def test_cartera_con_capital():
                               "action": "COMPRAR", "mid": mid}]
     t = paper.open_trade(book, "X", "ALCISTA", leg(1.8), "2026-10-02", "AUTO")
     assert t["contracts"] == 2 and t["entry_cost"] == 360.0          # 500 // 180 = 2
-    a = paper.account(book)
+    a = paper.account(book, "AUTO")
+    assert paper.account(book, "MANUAL")["cash"] == 10000.0      # carteras separadas
     assert a["cash"] == 9640.0 and a["equity"] == 10000.0
     # AUTO: 1 contrato de $900 supera el maximo de $500 -> no abre
     assert paper.open_trade(book, "Y", "ALCISTA", leg(9.0), "2026-10-02", "AUTO") is None
@@ -227,6 +228,71 @@ def test_cartera_con_capital():
     assert book["trades"][0]["value"] == 720.0 and book["trades"][0]["pnl_pct"] == 100.0
     assert book["trades"][0]["status"] == "CLOSED"                    # objetivo +100% (AUTO)
     paper.snapshot(book, "2026-10-05")
-    assert book["equity_curve"][-1]["equity"] == paper.account(book)["equity"]
+    assert book["curves"]["AUTO"][-1]["equity"] == paper.account(book, "AUTO")["equity"]
     ex = paper.export(book)
-    assert ex["summary"]["account"]["capital"] == 10000.0 and ex["equity_curve"]
+    assert ex["summary"]["account"]["capital"] == 10000.0 and ex["curves"]["MANUAL"]
+
+
+def test_gestion_y_limites_auto(monkeypatch):
+    from opscan import paper
+    paper.configure({"paper": {"capital": 10000, "max_pct_trade": 5, "max_new_per_day": 2, "max_open_auto": 8}})
+    book = {"trades": [], "seq": 0, "rules_version": paper.RULES_VERSION}
+    leg = lambda tk: [{"symbol": f"{tk}C", "kind": "C", "strike": 20, "expiration": "2026-11-20",
+                       "action": "COMPRAR", "mid": 1.0}]
+    recs = [{"ticker": t, "score": sc, "direction": "ALCISTA", "checklist": {"entrada": True},
+             "next_catalyst": {"date": "2026-11-14", "type": "PDUFA"},
+             "idea": {"legs": leg(t), "liquidity": liq}}
+            for t, sc, liq in (("A", 60, "buena"), ("B", 70, "mala"), ("C", 50, "aceptable"), ("D", 40, "buena"))]
+    assert paper.auto_open(book, recs, "2026-10-02") == 2            # max 2/dia, salta B (liquidez mala)
+    assert [t["ticker"] for t in book["trades"]] == ["A", "C"]
+    assert book["trades"][0]["catalyst"]["date"] == "2026-11-14"
+    rmap = {r["ticker"]: r for r in recs}
+    assert paper.advise(book, rmap, "2026-10-05") == []
+    assert book["trades"][0]["advice"]["action"] == "MANTENER"
+    # el catalizador ya paso -> CERRAR
+    ch = paper.advise(book, rmap, "2026-11-16")
+    assert {t["ticker"] for t in ch} == {"A", "C"} and book["trades"][0]["advice"]["action"] == "CERRAR"
+    # las AUTO abiertas con reglas antiguas se anulan al cargar
+    old = {"trades": [dict(book["trades"][0], status="OPEN")], "seq": 1}
+    import json, os, tempfile
+    from opscan import config
+    d = tempfile.mkdtemp()
+    monkeypatch.setenv("OPSCAN_DATA_DIR", d)
+    os.makedirs(config.state_dir(), exist_ok=True)
+    json.dump(old, open(os.path.join(config.state_dir(), "paper_trades.json"), "w"))
+    assert paper.load()["trades"] == []
+
+
+def test_cola_de_ordenes(tmp_path, monkeypatch):
+    import json
+    from opscan import paper
+    monkeypatch.setenv("OPSCAN_DATA_DIR", str(tmp_path / "data"))
+    paper.configure({"paper": {"capital": 10000, "max_pct_trade": 5}})
+    od = str(tmp_path / "orders")
+    body = json.dumps({"ticker": "NFLX", "direction": "ALCISTA", "contracts": 2, "nonce": "abc",
+                       "legs": [{"symbol": "NFLX261030C00071000", "kind": "C", "strike": 71,
+                                 "expiration": "2026-10-30", "action": "COMPRAR", "mid": 2.17}]})
+    res = tmp_path / "r.txt"
+    paper.main(["--title", "PAPER ABRIR NFLX", "--body-file", _w(tmp_path, body), "--orders-dir", od,
+                "--result-file", str(res)])
+    assert res.read_text().startswith("OK") and "M0001" in res.read_text()
+    prev = json.load(open(f"{od}/preview.json"))
+    assert prev["orders_done"] == 1 and prev["order_results"]["abc"]["ok"]
+    assert prev["summary"]["account"]["cash"] == 10000 - 434
+    # segunda orden: cerrar M0001 -> la vista previa aplica ambas sobre la cartera de la rama data
+    paper.main(["--title", "PAPER CERRAR M0001", "--body-file", _w(tmp_path, '{"id": "M0001"}'),
+                "--orders-dir", od, "--result-file", str(res)])
+    prev = json.load(open(f"{od}/preview.json"))
+    assert prev["orders_done"] == 2 and [t["status"] for t in prev["trades"]] == ["CLOSED"]
+    # el escaner aplica la cola a la cartera real una sola vez
+    book = paper.load()
+    paper.apply_orders(book, paper.load_orders(od), "2026-10-02")
+    paper.apply_orders(book, paper.load_orders(od), "2026-10-02")
+    assert len(book["trades"]) == 1 and book["orders_done"] == 2
+
+
+def _w(tmp_path, text):
+    import uuid
+    p = tmp_path / f"b{uuid.uuid4().hex}.txt"
+    p.write_text(text)
+    return str(p)

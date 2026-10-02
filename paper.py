@@ -25,21 +25,31 @@ CAPITAL = 10000.0        # capital inicial de la cartera simulada (config: paper
 MAX_PCT = 5.0            # % maximo del valor de la cartera por operacion (config: paper.max_pct_trade)
 
 
+MAX_NEW_DAY = 3
+MAX_OPEN_AUTO = 8
+SKIP_BAD_LIQ = True
+RULES_VERSION = 2
+
+
 def configure(cfg):
-    global CAPITAL, MAX_PCT
+    global CAPITAL, MAX_PCT, MAX_NEW_DAY, MAX_OPEN_AUTO, SKIP_BAD_LIQ
     pc = (cfg or {}).get("paper") or {}
     CAPITAL = float(pc.get("capital", CAPITAL))
     MAX_PCT = float(pc.get("max_pct_trade", MAX_PCT))
+    MAX_NEW_DAY = int(pc.get("max_new_per_day", MAX_NEW_DAY))
+    MAX_OPEN_AUTO = int(pc.get("max_open_auto", MAX_OPEN_AUTO))
+    SKIP_BAD_LIQ = bool(pc.get("skip_bad_liquidity", SKIP_BAD_LIQ))
 
 
 def _n(t):
     return int(t.get("contracts") or 1)
 
 
-def account(book):
-    """Saldo: capital - coste de lo abierto + resultado de lo cerrado. Valor total = saldo + valor de lo abierto."""
+def account(book, source="MANUAL"):
+    """Cuenta de una cartera: MANUAL = la tuya, AUTO = la estrategia sola (cada una con su capital).
+    Saldo = capital - coste de lo abierto + resultado de lo cerrado. Valor total = saldo + valor de lo abierto."""
     cap = float(book.get("capital") or CAPITAL)
-    tr = book["trades"]
+    tr = [t for t in book["trades"] if source is None or t["source"] == source]
     invested = sum(t["entry_cost"] for t in tr if t["status"] == "OPEN")
     open_value = sum(t.get("value", t["entry_cost"]) for t in tr if t["status"] == "OPEN")
     realized = sum(t.get("pnl", 0) for t in tr if t["status"] != "OPEN")
@@ -47,16 +57,22 @@ def account(book):
     equity = cash + open_value
     return {"capital": round(cap, 2), "cash": round(cash, 2), "invested": round(invested, 2),
             "open_value": round(open_value, 2), "equity": round(equity, 2),
-            "realized": round(realized, 2), "return_pct": round((equity / cap - 1) * 100, 2) if cap else None,
-            "max_per_trade": round(equity * MAX_PCT / 100, 2), "max_pct": MAX_PCT}
+            "realized": round(realized, 2), "unrealized": round(open_value - invested, 2),
+            "return_pct": round((equity / cap - 1) * 100, 2) if cap else None,
+            "max_per_trade": round(equity * MAX_PCT / 100, 2), "max_pct": MAX_PCT,
+            "n_open": sum(1 for t in tr if t["status"] == "OPEN"),
+            "n_closed": sum(1 for t in tr if t["status"] != "OPEN")}
 
 
 def snapshot(book, session):
-    """Guarda el valor de la cartera por sesion (curva de capital)."""
-    a = account(book)
-    curve = [x for x in book.get("equity_curve", []) if x["date"] != session]
-    curve.append({"date": session, "equity": a["equity"], "cash": a["cash"]})
-    book["equity_curve"] = sorted(curve, key=lambda x: x["date"])[-400:]
+    """Guarda el valor de cada cartera por sesion (curva de capital)."""
+    curves = book.setdefault("curves", {})
+    for src in ("MANUAL", "AUTO"):
+        a = account(book, src)
+        c = [x for x in curves.get(src, []) if x["date"] != session]
+        c.append({"date": session, "equity": a["equity"]})
+        curves[src] = sorted(c, key=lambda x: x["date"])[-400:]
+    book.pop("equity_curve", None)
     return book
 
 
@@ -65,7 +81,15 @@ def _path():
 
 
 def load():
-    return read_json(_path(), {"trades": [], "seq": 0}) or {"trades": [], "seq": 0}
+    book = read_json(_path(), {"trades": [], "seq": 0}) or {"trades": [], "seq": 0}
+    if int(book.get("rules_version") or 1) < RULES_VERSION:
+        # las AUTO abiertas con las reglas antiguas (demasiado laxas) se anulan: no cuentan en la estadistica
+        before = len(book["trades"])
+        book["trades"] = [t for t in book["trades"] if not (t["source"] == "AUTO" and t["status"] == "OPEN")]
+        if before != len(book["trades"]):
+            log(f"paper: anuladas {before - len(book['trades'])} operaciones AUTO de las reglas antiguas")
+        book["rules_version"] = RULES_VERSION
+    return book
 
 
 def save(book):
@@ -80,7 +104,7 @@ def _intrinsic(kind, strike, spot):
 
 
 def open_trade(book, ticker, direction, legs, session, source="AUTO", structure="", price=None,
-               notes="", issue=None, contracts=None):
+               notes="", issue=None, contracts=None, trade_id=None):
     """legs: [{symbol, kind, strike, expiration, action COMPRAR/VENDER, mid}]"""
     if not legs:
         return None
@@ -98,7 +122,7 @@ def open_trade(book, ticker, direction, legs, session, source="AUTO", structure=
     if unit <= 0:
         return None
     book.setdefault("capital", CAPITAL)
-    acc = account(book)
+    acc = account(book, source)
     if contracts:
         n = max(1, int(contracts))
     else:
@@ -114,8 +138,12 @@ def open_trade(book, ticker, direction, legs, session, source="AUTO", structure=
             book["_last_reject"] = f"saldo insuficiente (${acc['cash']}) para 1 contrato de ${unit}"
             return None
     cost = round(unit * n, 2)
-    book["seq"] = int(book.get("seq", 0)) + 1
-    t = {"id": f"P{book['seq']:04d}", "source": source, "opened": session, "ticker": ticker.upper(),
+    if trade_id:
+        tid = trade_id
+    else:
+        book["seq"] = int(book.get("seq", 0)) + 1
+        tid = f"P{book['seq']:04d}"
+    t = {"id": tid, "source": source, "opened": session, "ticker": ticker.upper(),
          "direction": direction, "structure": structure, "legs": clean, "entry_cost": cost,
          "contracts": n, "unit_cost": unit,
          "underlying_entry": price, "status": "OPEN", "value": cost, "pnl": 0.0, "pnl_pct": 0.0,
@@ -175,20 +203,91 @@ def mark(book, prices, spots, session):
 
 
 def auto_open(book, records, session):
+    """Abre las ENTRADAS del dia por orden de score, con limites de cantidad y liquidez."""
+    n_today = sum(1 for t in book["trades"] if t["source"] == "AUTO" and t["opened"] == session)
+    n_open = sum(1 for t in book["trades"] if t["source"] == "AUTO" and t["status"] == "OPEN")
     n = 0
-    for r in records:
-        ck = r.get("checklist") or {}
-        idea = r.get("idea") or {}
-        if ck.get("entrada") and idea.get("legs") and not has_open(book, r["ticker"], "AUTO"):
-            if open_trade(book, r["ticker"], r["direction"], idea["legs"], session, "AUTO",
-                          idea.get("structure", ""), r.get("price"),
-                          notes="; ".join((r.get("reasons") or [])[:3])):
-                n += 1
-            else:
-                why = book.pop("_last_reject", None)
-                if why:
-                    log(f"paper: {r['ticker']} no abierta ({why})")
+    cands = [r for r in records if (r.get("checklist") or {}).get("entrada") and (r.get("idea") or {}).get("legs")]
+    for r in sorted(cands, key=lambda r: -(r.get("score") or 0)):
+        idea = r["idea"]
+        if n_today >= MAX_NEW_DAY or n_open >= MAX_OPEN_AUTO:
+            break
+        if has_open(book, r["ticker"]):
+            continue
+        if SKIP_BAD_LIQ and idea.get("liquidity") == "mala":
+            log(f"paper: {r['ticker']} no abierta (liquidez mala)")
+            continue
+        t = open_trade(book, r["ticker"], r["direction"], idea["legs"], session, "AUTO",
+                       idea.get("structure", ""), r.get("price"),
+                       notes="; ".join((r.get("reasons") or [])[:3]))
+        if t:
+            nc = r.get("next_catalyst") or {}
+            if nc.get("date") and nc["date"] <= t["expiration"]:
+                t["catalyst"] = {"date": nc["date"], "type": nc.get("type")}
+            n += 1
+            n_today += 1
+            n_open += 1
+        else:
+            why = book.pop("_last_reject", None)
+            if why:
+                log(f"paper: {r['ticker']} no abierta ({why})")
     return n
+
+
+def advise(book, recs, session, media=30):
+    """Recomendacion de gestion para cada posicion ABIERTA: MANTENER / VIGILAR / CERRAR.
+    Devuelve la lista de operaciones cuya recomendacion ha pasado a CERRAR en esta ejecucion."""
+    d0 = parse_date(session)
+    changed = []
+    for t in book["trades"]:
+        if t["status"] != "OPEN":
+            continue
+        r = recs.get(t["ticker"]) or {}
+        nc = r.get("next_catalyst") or {}
+        if not t.get("catalyst") and nc.get("date") and nc.get("date") <= t["expiration"]:
+            t["catalyst"] = {"date": nc["date"], "type": nc.get("type")}
+        cat = t.get("catalyst") or {}
+        pnl = t.get("pnl_pct") or 0.0
+        exp = parse_date(t["expiration"])
+        dte = (exp - d0).days if exp and d0 else None
+        cdate = parse_date(cat.get("date")) if cat else None
+        cdays = (cdate - d0).days if cdate and d0 else None
+        close, watch, keep = [], [], []
+        if pnl >= TARGET_PCT:
+            close.append(f"Objetivo cumplido ({pnl:+.0f}%): asegura la ganancia")
+        if pnl <= STOP_PCT:
+            close.append(f"Stop alcanzado ({pnl:+.0f}%): corta la perdida, no esperes a que vuelva")
+        if dte is not None and dte <= 7:
+            close.append(f"Quedan {dte} dias para el vencimiento: el paso del tiempo se come la prima muy rapido")
+        if cdays is not None and cdays < 0:
+            close.append(f"El catalizador ({cat.get('type')} {cat.get('date')}) ya paso: la volatilidad cae y la "
+                         "opcion pierde valor aunque no se mueva la accion")
+        rd = r.get("direction")
+        if rd in ("ALCISTA", "BAJISTA") and rd != t["direction"] and (r.get("score") or 0) >= media:
+            close.append(f"El flujo de opciones ha girado a {rd} (score {r.get('score')})")
+        if not close:
+            if pnl >= 50:
+                watch.append(f"Vas {pnl:+.0f}%: valora vender la mitad y dejar correr el resto")
+            if pnl <= -30:
+                watch.append(f"Vas {pnl:+.0f}%: cerca del stop (-50%)")
+            if cdays is not None and 0 <= cdays <= 2:
+                watch.append(f"{cat.get('type')} en {cdays} dia(s): decide si quieres estar dentro durante el evento "
+                             "(todo o nada)")
+            if r and (r.get("score") or 0) < 15 and not (r.get("checklist") or {}).get("flujo_confirmado"):
+                watch.append("La senal se ha enfriado (score bajo y sin flujo confirmado)")
+            if not watch:
+                if cdays is not None and cdays > 2:
+                    keep.append(f"Tesis intacta; {cat.get('type')} en {cdays} dias")
+                else:
+                    keep.append("Tesis intacta")
+                if dte is not None:
+                    keep.append(f"vence en {dte} dias")
+        action = "CERRAR" if close else ("VIGILAR" if watch else "MANTENER")
+        prev = (t.get("advice") or {}).get("action")
+        t["advice"] = {"action": action, "reasons": close or watch or keep, "date": session}
+        if action == "CERRAR" and prev != "CERRAR":
+            changed.append(t)
+    return changed
 
 
 def summary(book):
@@ -209,7 +308,7 @@ def summary(book):
         "open": agg(opened), "closed": agg(closed),
         "auto_closed": agg([t for t in closed if t["source"] == "AUTO"]),
         "manual_closed": agg([t for t in closed if t["source"] == "MANUAL"]),
-        "account": account(book),
+        "account": account(book, "MANUAL"), "account_auto": account(book, "AUTO"),
     }
 
 
@@ -219,7 +318,9 @@ def export(book):
     return {"generated_at": iso_now(), "summary": summary(book), "trades": tr[-300:],
             "rules": {"target_pct": TARGET_PCT, "stop_pct": STOP_PCT, "capital": float(book.get("capital") or CAPITAL),
                       "max_pct_trade": MAX_PCT},
-            "equity_curve": book.get("equity_curve", [])[-250:]}
+            "curves": {k: v[-250:] for k, v in (book.get("curves") or {}).items()},
+            "orders_done": int(book.get("orders_done") or 0),
+            "order_results": book.get("order_results", {})}
 
 
 # ------------------------------------------------------------------ peticiones desde GitHub Issues
@@ -234,8 +335,8 @@ def parse_request(title, body):
         except json.JSONDecodeError:
             data = {}
     if "CERRAR" in title:
-        tid = data.get("id") or (re.search(r"P\d{4}", title) or [None])[0]
-        return {"op": "close", "id": tid}
+        tid = data.get("id") or (re.search(r"[PM]\d{4}", title) or [None])[0]
+        return {"op": "close", "id": tid, "nonce": data.get("nonce")}
     if "ABRIR" in title:
         return {"op": "open", **data}
     return {"op": "unknown"}
@@ -245,9 +346,9 @@ def apply_request(book, req, session, issue=None):
     if req.get("op") == "open":
         t = open_trade(book, req.get("ticker", ""), req.get("direction", ""), req.get("legs") or [], session,
                        "MANUAL", req.get("structure", ""), req.get("price"), req.get("notes", ""), issue,
-                       contracts=req.get("contracts"))
+                       contracts=req.get("contracts"), trade_id=req.get("trade_id"))
         if t:
-            a = account(book)
+            a = account(book, "MANUAL")
             return True, (f"Abierta {t['id']} ({t['ticker']}): {t['contracts']} contrato(s) x ${t['unit_cost']} = "
                           f"${t['entry_cost']}. Saldo disponible: ${a['cash']}")
         return False, book.pop("_last_reject", None) or "Datos de la operacion no validos"
@@ -257,14 +358,61 @@ def apply_request(book, req, session, issue=None):
                 _close(t, session, "cierre manual")
                 return True, f"Cerrada {t['id']} con P&L ${t['pnl']} ({t['pnl_pct']}%)"
         return False, f"No hay operacion abierta con id {req.get('id')}"
-    return False, "Titulo no reconocido (usa 'PAPER ABRIR TICKER' o 'PAPER CERRAR P0001')"
+    return False, "Titulo no reconocido (usa 'PAPER ABRIR TICKER' o 'PAPER CERRAR M0001')"
+
+
+# ------------------------------------------------------------------ cola de ordenes (rama `orders`)
+# La web (o un Issue) solo AGREGA ordenes a orders/orders.json. El escaner las aplica al empezar,
+# asi nunca se pisan datos aunque haya un escaneo en marcha. preview.json = cartera con las
+# ordenes pendientes ya aplicadas, para verlas al momento en la web.
+def load_orders(orders_dir):
+    if not orders_dir:
+        return []
+    return (read_json(os.path.join(orders_dir, "orders.json"), {"orders": []}) or {}).get("orders", [])
+
+
+def add_order(orders_dir, title, body, source="web"):
+    os.makedirs(orders_dir, exist_ok=True)
+    orders = load_orders(orders_dir)
+    n = max([o["n"] for o in orders] or [0]) + 1
+    req = parse_request(title, body)
+    o = {"n": n, "ts": iso_now(), "title": (title or "").strip(), "req": req, "source": source,
+         "nonce": str(req.get("nonce") or "")}
+    orders.append(o)
+    write_json(os.path.join(orders_dir, "orders.json"), {"orders": orders[-500:]}, indent=1)
+    return o
+
+
+def apply_orders(book, orders, session):
+    """Aplica en orden las ordenes con n > orders_done. Ids estables: M + numero de orden."""
+    done = int(book.get("orders_done") or 0)
+    res = book.setdefault("order_results", {})
+    applied = []
+    for o in sorted(orders, key=lambda x: x["n"]):
+        if o["n"] <= done:
+            continue
+        req = dict(o.get("req") or {})
+        if req.get("op") == "open":
+            req["trade_id"] = f"M{o['n']:04d}"
+        ok, msg = apply_request(book, req, session)
+        key = o.get("nonce") or str(o["n"])
+        res[key] = {"ok": ok, "msg": msg, "n": o["n"], "ts": o.get("ts")}
+        book["orders_done"] = o["n"]
+        applied.append((o, ok, msg))
+        log(f"paper: orden {o['n']} {o.get('title')} -> {'OK' if ok else 'ERROR'}: {msg}")
+    if len(res) > 200:
+        for k in sorted(res, key=lambda k: res[k].get("n", 0))[:-200]:
+            res.pop(k, None)
+    return applied
 
 
 def main(argv=None):
+    """Lo usa el workflow paper.yml: agrega la orden a la cola y genera la vista previa."""
     p = argparse.ArgumentParser(prog="opscan.paper")
     p.add_argument("--title", required=True)
     p.add_argument("--body-file", required=True)
     p.add_argument("--issue", default=None)
+    p.add_argument("--orders-dir", default="orders")
     p.add_argument("--result-file", default="paper_result.txt")
     a = p.parse_args(argv)
     body = open(a.body_file, encoding="utf-8").read()
@@ -273,17 +421,18 @@ def main(argv=None):
         configure(load_config())
     except Exception:
         pass
-    book = load()
-    session = today_et().isoformat()
-    ok, msg = apply_request(book, parse_request(a.title, body), session, a.issue)
-    if ok:
-        save(book)
-        from .config import data_dir
-        write_json(os.path.join(data_dir(), "paper.json"), export(book))
+    o = add_order(a.orders_dir, a.title, body, "issue" if a.issue else "web")
+    book = load()                                       # cartera de la rama data (solo lectura)
+    applied = apply_orders(book, load_orders(a.orders_dir), today_et().isoformat())
+    out = export(book)
+    out["preview"] = True
+    write_json(os.path.join(a.orders_dir, "preview.json"), out)
+    mine = [x for x in applied if x[0]["n"] == o["n"]]
+    ok, msg = (mine[0][1], mine[0][2]) if mine else (False, "orden no aplicada")
     with open(a.result_file, "w", encoding="utf-8") as f:
         f.write(("OK: " if ok else "ERROR: ") + msg)
     print(msg)
-    return 0 if ok else 1
+    return 0
 
 
 if __name__ == "__main__":
