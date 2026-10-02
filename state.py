@@ -103,6 +103,9 @@ def load_flags():
             # reparar: OI = 0 es un dato vacio (Yahoo antes de abrir), no una no-confirmacion
             bad = (df["status"] == "NO CONFIRMADA") & (pd.to_numeric(df["oi_after"], errors="coerce") == 0)
             df.loc[bad, ["status", "oi_after", "checked_date"]] = ["PENDIENTE", None, None]
+            # flags fechados en una sesion que aun no ha empezado (respaldo Yahoo antes de abrir)
+            from .util import last_session_et
+            df = df[df["date"] <= last_session_et().isoformat()]
             return df[FLAG_COLS]
         except Exception:
             pass

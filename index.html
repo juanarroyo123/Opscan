@@ -460,9 +460,9 @@ function repoName(){const L=S.latest||{};if(L.repo)return L.repo;
   const host=location.hostname.split(".")[0],seg=location.pathname.split("/").filter(Boolean)[0];return host&&seg?host+"/"+seg:"";}
 function issueUrl(title,body){const r=repoName();if(!r)return "";
   return `https://github.com/${r}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;}
-function simUrl(r){const i=r.idea||{};if(!i.legs)return "";
-  const payload={ticker:r.ticker,direction:r.direction,structure:i.structure,price:r.price,
-    legs:i.legs.map(l=>({action:l.action,symbol:l.symbol,kind:l.kind,strike:l.strike,expiration:l.expiration,mid:l.mid})),
+function simUrl(r,legs,structure){const i=r.idea||{};legs=legs||i.legs;if(!legs)return "";
+  const payload={ticker:r.ticker,direction:r.direction,structure:structure||i.structure,price:r.price,
+    legs:legs.map(l=>({action:l.action,symbol:l.symbol,kind:l.kind,strike:l.strike,expiration:l.expiration,mid:l.mid})),
     notes:(r.reasons||[]).slice(0,3).join("; ")};
   const body="Operación SIMULADA creada desde la web de OpScan. Pulsa \"Submit new issue\" y el bot la anotará en la cartera (no se mueve dinero real).\n\n```json\n"+JSON.stringify(payload,null,1)+"\n```";
   return issueUrl("PAPER ABRIR "+r.ticker,body);}
@@ -674,6 +674,12 @@ function openDetail(tk){const r=(S.latest&&S.latest.records||[]).find(x=>x.ticke
     ${I.legs.map(l=>`<tr><td class="l"><b class="${l.action==="COMPRAR"?"up":"down"}">${esc(l.action)}</b></td><td class="l">${l.kind==="C"?"CALL":"PUT"} ${l.strike}</td>
       <td class="num">${esc(l.expiration)}</td><td class="num">$${l.mid}</td><td class="num">${l.bid}/${l.ask}</td><td class="num ${l.spread_pct>15?"down":""}">${l.spread_pct!=null?l.spread_pct+"%":"—"}</td><td class="num">${l.delta??"—"}</td></tr>`).join("")}</tbody></table>
     ${I.liquidity?`<div class="small" style="margin-top:4px">Liquidez: <span style="font-weight:800" class="${I.liquidity==="mala"?"down":I.liquidity==="buena"?"up":""}">${esc(I.liquidity)}</span>${I.liquidity_note?" · "+esc(I.liquidity_note):""}</div>`:""}
+    ${I.choices&&I.choices.length>1?`<div class="small" style="margin-top:10px"><b>Elige cuánto arriesgar</b> (mismo vencimiento; más lejos = más barato pero necesita un movimiento mayor):</div>
+    <table class="sm" style="margin-top:4px"><thead><tr><th class="l">Tipo</th><th class="l">Contrato</th><th>Coste</th><th>Gana si pasa de</th><th>Mov. necesario</th><th>Delta</th><th></th></tr></thead><tbody>
+    ${I.choices.map(c=>{const u=simUrl(r,[{action:"COMPRAR",...c}],(c.kind==="C"?"Call":"Put")+" comprada "+c.label.toLowerCase());
+      return `<tr><td class="l"><b>${esc(c.label)}</b></td><td class="l">${c.kind==="C"?"CALL":"PUT"} ${c.strike}</td><td class="num">${money(c.cost)}</td>
+      <td class="num">$${c.breakeven}</td><td class="num">${pct(c.breakeven_move_pct)}</td><td class="num">${c.delta??"—"}</td>
+      <td>${u?`<a href="${esc(u)}" target="_blank" rel="noopener">Simular</a>`:""}</td></tr>`}).join("")}</tbody></table>`:""}
     <div class="grid4" style="margin-top:8px">${M("Coste (1 contrato)",money(I.cost))}${M("Pérdida máxima",money(I.max_loss))}${M("Ganancia máxima",I.max_gain!=null?money(I.max_gain):"sin límite")}${M("Punto muerto",`$${I.breakeven} (${pct(I.breakeven_move_pct)})`)}</div>`:"";
   const idea=I?`<div class="idea"><div><b>Idea de estructura (educativa):</b> ${esc(I.structure)}${I.expiration?` · vencimiento ${esc(I.expiration)} (${I.dte}d)`:""}</div>
     <div class="small">${esc(I.strikes)} · ${esc(I.why_structure)}</div>${legRows}<div class="small" style="margin-top:6px">${esc(I.management)}</div>

@@ -48,7 +48,7 @@ def pick_expiration(m, min_dte):
     return None, None
 
 
-def build_legs(direction, grid, exp, price, em, spread):
+def build_legs(direction, grid, exp, price, em, spread, buy=None):
     """Elige contratos REALES de la rejilla: compra ~ATM y, si es spread, vende ~precio +/- mov. esperado."""
     if not grid or exp not in grid or not price:
         return None
@@ -62,7 +62,8 @@ def build_legs(direction, grid, exp, price, em, spread):
 
     # preferir contratos liquidos (diferencia compra/venta <= 15% del precio) cerca del dinero
     liquid = [c for c in cs if spr(c) <= 0.15 and abs(c["strike"] / price - 1) <= 0.08]
-    buy = min(liquid or cs, key=lambda c: abs(c["strike"] - price))
+    if buy is None:
+        buy = min(liquid or cs, key=lambda c: abs(c["strike"] - price))
     legs = [{"action": "COMPRAR", **buy}]
     sell = None
     if spread and em:
@@ -95,7 +96,41 @@ def build_legs(direction, grid, exp, price, em, spread):
     return out
 
 
-def trade_idea(direction, m, b, next_cat):
+def _spr(c):
+    return (c["ask"] - c["bid"]) / c["mid"] if c.get("mid") and c.get("ask", 0) > 0 and c.get("bid", 0) > 0 else 9.9
+
+
+def single_choices(direction, grid, exp, price):
+    """Tres opciones simples del mismo vencimiento: ATM, moderada (delta ~0.40) y agresiva (delta ~0.25)."""
+    if not grid or exp not in grid or not price:
+        return {}
+    kind = "C" if direction == "ALCISTA" else "P"
+    cs = [c for c in grid[exp] if c["kind"] == kind and c.get("mid") and c["mid"] > 0]
+    if not cs:
+        return {}
+    liquid = [c for c in cs if _spr(c) <= 0.25] or cs
+    otm = [c for c in liquid if (c["strike"] >= price if kind == "C" else c["strike"] <= price)]
+    out = {"atm": min(liquid, key=lambda c: abs(c["strike"] - price))}
+
+    def by_delta(target, pool):
+        pool = [c for c in pool if c.get("delta") is not None]
+        if pool:
+            return min(pool, key=lambda c: abs(abs(float(c["delta"])) - target))
+        return None
+    mod = by_delta(0.40, otm or liquid)
+    agr = by_delta(0.25, otm or liquid)
+    if mod is None and otm:   # sin griegas: por distancia al precio
+        srt = sorted(otm, key=lambda c: abs(c["strike"] - price))
+        mod = srt[min(1, len(srt) - 1)]
+        agr = srt[min(3, len(srt) - 1)]
+    if mod:
+        out["moderada"] = mod
+    if agr and agr is not mod:
+        out["agresiva"] = agr
+    return out
+
+
+def trade_idea(direction, m, b, next_cat, style="simple"):
     if direction not in ("ALCISTA", "BAJISTA"):
         return None
     price = m.get("price")
@@ -135,7 +170,31 @@ def trade_idea(direction, m, b, next_cat):
         "management": "Stop -50% de la prima; objetivo +50/100%; salir si el OI de los contratos marcados empieza a caer",
         "note": "Ejemplo educativo, no es una recomendacion.",
     }
-    legs = build_legs(direction, grid, exp, price, em, spread=expensive)
+    if style == "simple" or (style == "auto" and not expensive):
+        ch = single_choices(direction, grid, exp, price)
+        main = ch.get("moderada") or ch.get("atm")
+        idea["structure"] = f"{leg.capitalize()} comprada (opcion simple)"
+        idea["why_structure"] = ((f"IV cara ({(m.get('iv30') or 0)*100:.0f}%): pagas mas de lo normal y tras el evento "
+                                  "la opcion puede perder valor aunque aciertes la direccion (IV crush). ")
+                                 if expensive else "IV razonable. ") + \
+            "Strike moderado (delta ~0,40): equilibrio entre coste y probabilidad. Lo maximo que pierdes es lo que pagas."
+        idea["management"] = "Stop -50% de la prima; objetivo +100%; salir si el OI de los contratos marcados empieza a caer"
+        legs = build_legs(direction, grid, exp, price, em, spread=False, buy=main) if main else None
+        alts = []
+        for lab, c in (("ATM", ch.get("atm")), ("Moderada", ch.get("moderada")), ("Agresiva", ch.get("agresiva"))):
+            if not c or any(a["strike"] == c["strike"] for a in alts):
+                continue
+            be = c["strike"] + c["mid"] if c["kind"] == "C" else c["strike"] - c["mid"]
+            alts.append({"label": lab, "symbol": c.get("symbol"), "kind": c["kind"], "strike": c["strike"],
+                         "expiration": c.get("expiration"), "dte": c.get("dte"), "mid": c["mid"],
+                         "bid": c.get("bid"), "ask": c.get("ask"), "delta": c.get("delta"), "iv": c.get("iv"),
+                         "cost": round(c["mid"] * 100, 2), "breakeven": round(be, 2),
+                         "breakeven_move_pct": round((be / price - 1) * 100, 1),
+                         "spread_pct": round(_spr(c) * 100, 1) if _spr(c) < 9 else None})
+        if alts:
+            idea["choices"] = alts
+    else:
+        legs = build_legs(direction, grid, exp, price, em, spread=expensive)
     if legs:
         idea.update(legs)
         k = [l["strike"] for l in legs["legs"]]
@@ -333,5 +392,5 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg, tech=None):
         "components": comp, "reasons": reasons,
         "checklist": {"congreso": bool(ck_cong), "futuros": bool(ck_fut), "flujo_confirmado": ck_flow,
                       "puntos": pts, "entrada": entry, "pre_alerta": pre_alert},
-        "next_catalyst": nc, "idea": trade_idea(direction, m, b, nc) if (entry or label != "BAJA") else None,
+        "next_catalyst": nc, "idea": trade_idea(direction, m, b, nc, sc.get("idea_style", "simple")) if (entry or label != "BAJA") else None,
     }

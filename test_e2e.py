@@ -180,7 +180,8 @@ def test_two_sessions_confirmation(env, monkeypatch):
     assert recs["RCKT"]["idea"]["dte"] >= 27                # vence despues del PDUFA
     idea = recs["RCKT"]["idea"]
     assert idea["legs"] and idea["legs"][0]["action"] == "COMPRAR" and idea["cost"] > 0
-    assert idea["structure"].startswith("Call debit spread") and len(idea["legs"]) == 2
+    assert idea["structure"].startswith("Call comprada") and len(idea["legs"]) == 1
+    assert idea["choices"] and all(c["cost"] > 0 and c["kind"] == "C" for c in idea["choices"])
     paper_out = json.load(open(data / "paper.json"))
     auto = [t for t in paper_out["trades"] if t["source"] == "AUTO" and t["ticker"] == "RCKT"]
     assert auto and auto[0]["status"] == "OPEN"            # la ENTRADA abre operacion simulada

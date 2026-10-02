@@ -47,6 +47,7 @@ scoring:
   entry_min_points: 3         # checklist: congreso(+1) futuros(+1) flujo confirmado(+2)
   alta: 55                    # score >= alta  -> ALTA
   media: 30                   # score >= media -> MEDIA
+  idea_style: simple          # simple = solo comprar call/put | spread = spreads si la IV es cara | auto
 
 # ---------- Enriquecimiento (Yahoo) para los mejores candidatos ----------
 enrich:

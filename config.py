@@ -35,6 +35,7 @@ DEFAULTS = {
     "scoring": {
         "catalyst_horizon_days": 45, "congress_window_days": 90,
         "congress_cluster_days": 30, "entry_min_points": 3, "alta": 55, "media": 30,
+        "idea_style": "simple",
     },
     "enrich": {"top_n": 75, "news": 5},
     "calendar": {

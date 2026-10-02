@@ -102,6 +102,16 @@ def scan_options(tickers, cfg, flags, status, allow_fallback=True, watch=None, k
                 failed[tk] = str(e)[:200]
             if i % 100 == 0:
                 log(f"  opciones: {i}/{len(tickers)} ({time.time()-t0:.0f}s)")
+    # segundo intento con Cboe (fallos puntuales de red): evita saltar a Yahoo, que estima peor el lado
+    if failed:
+        time.sleep(3)
+        for tk in list(failed.keys()):
+            try:
+                results[tk] = scan_one(tk, ocfg, pending.get(tk, set()), watch.get(tk, set()), tk in keep_grid)
+                failed.pop(tk, None)
+            except Exception:
+                pass
+            time.sleep(0.3)
     status.ok("Cboe opciones", len(results), f"{len(failed)} fallos" if failed else "")
     # respaldo Yahoo
     fb = list(failed.keys())[: int(ocfg["yfinance_fallback_max"])] if allow_fallback else []

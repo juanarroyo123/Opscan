@@ -284,7 +284,11 @@ def test_score_entry_checklist(cfg):
     assert s["direction"] == "ALCISTA"
     assert s["checklist"]["puntos"] == 4 and s["checklist"]["entrada"]
     assert s["signal"] == "ALTA"
-    assert s["idea"]["structure"].startswith("Call debit spread")   # IV rank alto -> spread
+    assert s["idea"]["structure"].startswith("Call comprada")       # por defecto: opcion simple
+    assert "IV cara" in s["idea"]["why_structure"]
+    cfg2 = {**cfg, "scoring": {**cfg["scoring"], "idea_style": "spread"}}
+    s2 = scoring.score_ticker(m, b, fs, cats, cong, 0.5, ["Indices alcista"], None, cfg2)
+    assert s2["idea"]["structure"].startswith("Call debit spread")  # modo spread sigue disponible
     assert s["idea"]["dte"] >= 27                                    # vence despues del catalizador
 
 
