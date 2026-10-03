@@ -1,0 +1,250 @@
+{
+ "trades": [
+  {
+   "id": "P0001",
+   "source": "MANUAL",
+   "opened": "2026-10-02",
+   "ticker": "SMMT",
+   "direction": "ALCISTA",
+   "structure": "Call comprada moderada",
+   "legs": [
+    {
+     "symbol": "SMMT261120C00020000",
+     "kind": "C",
+     "strike": 20.0,
+     "expiration": "2026-11-20",
+     "qty": 1,
+     "entry": 1.8,
+     "last": 1.725
+    }
+   ],
+   "entry_cost": 360.0,
+   "contracts": 2,
+   "unit_cost": 180.0,
+   "underlying_entry": 16.79,
+   "status": "OPEN",
+   "value": 345.0,
+   "pnl": -15.0,
+   "pnl_pct": -4.2,
+   "last_update": "2026-10-02",
+   "notes": "Sesiones previas: $1.51M en flujo inusual vigente; Puntos de flujo (+24); 5 alerta(s) confirmadas por subida de OI (+20)",
+   "issue": "1",
+   "expiration": "2026-11-20",
+   "underlying_last": 16.75,
+   "catalyst": {
+    "date": "2026-11-14",
+    "type": "PDUFA"
+   },
+   "advice": {
+    "action": "MANTENER",
+    "reasons": [
+     "Tesis intacta; PDUFA en 43 dias",
+     "vence en 49 dias"
+    ],
+    "date": "2026-10-02"
+   }
+  },
+  {
+   "id": "P0014",
+   "source": "AUTO",
+   "opened": "2026-10-02",
+   "ticker": "BAC",
+   "direction": "BAJISTA",
+   "structure": "Put comprada (opcion simple)",
+   "legs": [
+    {
+     "symbol": "BAC261023P00053000",
+     "kind": "P",
+     "strike": 53.0,
+     "expiration": "2026-10-23",
+     "qty": 1,
+     "entry": 1.2,
+     "last": 1.115
+    }
+   ],
+   "entry_cost": 480.0,
+   "contracts": 4,
+   "unit_cost": 120.0,
+   "underlying_entry": 53.76,
+   "status": "OPEN",
+   "value": 446.0,
+   "pnl": -34.0,
+   "pnl_pct": -7.1,
+   "last_update": "2026-10-02",
+   "notes": "Hoy: 2 contratos inusuales, $0.74M de prima; Sesiones previas: $1.99M en flujo inusual vigente; Puntos de flujo (+22)",
+   "issue": null,
+   "expiration": "2026-10-23",
+   "catalyst": {
+    "date": "2026-10-14",
+    "type": "Resultados"
+   },
+   "advice": {
+    "action": "MANTENER",
+    "reasons": [
+     "Tesis intacta; Resultados en 12 dias",
+     "vence en 21 dias"
+    ],
+    "date": "2026-10-02"
+   },
+   "underlying_last": 53.76
+  },
+  {
+   "id": "P0015",
+   "source": "AUTO",
+   "opened": "2026-10-02",
+   "ticker": "NFLX",
+   "direction": "ALCISTA",
+   "structure": "Call comprada (opcion simple)",
+   "legs": [
+    {
+     "symbol": "NFLX261030C00071000",
+     "kind": "C",
+     "strike": 71.0,
+     "expiration": "2026-10-30",
+     "qty": 1,
+     "entry": 2.09,
+     "last": 1.915
+    }
+   ],
+   "entry_cost": 418.0,
+   "contracts": 2,
+   "unit_cost": 209.0,
+   "underlying_entry": 67.49,
+   "status": "OPEN",
+   "value": 383.0,
+   "pnl": -35.0,
+   "pnl_pct": -8.4,
+   "last_update": "2026-10-02",
+   "notes": "Hoy: 4 contratos inusuales, $0.90M de prima; Sesiones previas: $4.79M en flujo inusual vigente; Puntos de flujo (+16)",
+   "issue": null,
+   "expiration": "2026-10-30",
+   "catalyst": {
+    "date": "2026-10-20",
+    "type": "Resultados"
+   },
+   "advice": {
+    "action": "MANTENER",
+    "reasons": [
+     "Tesis intacta; Resultados en 18 dias",
+     "vence en 28 dias"
+    ],
+    "date": "2026-10-02"
+   },
+   "underlying_last": 67.07
+  },
+  {
+   "id": "P0016",
+   "source": "AUTO",
+   "opened": "2026-10-02",
+   "ticker": "MRK",
+   "direction": "ALCISTA",
+   "structure": "Call comprada (opcion simple)",
+   "legs": [
+    {
+     "symbol": "MRK261023C00145000",
+     "kind": "C",
+     "strike": 145.0,
+     "expiration": "2026-10-23",
+     "qty": 1,
+     "entry": 3.33,
+     "last": 3.315
+    }
+   ],
+   "entry_cost": 333.0,
+   "contracts": 1,
+   "unit_cost": 333.0,
+   "underlying_entry": 143.74,
+   "status": "OPEN",
+   "value": 331.5,
+   "pnl": -1.5,
+   "pnl_pct": -0.5,
+   "last_update": "2026-10-02",
+   "notes": "Hoy: 1 contratos inusuales, $0.31M de prima; Sesiones previas: $1.24M en flujo inusual vigente; Puntos de flujo (+15)",
+   "issue": null,
+   "expiration": "2026-10-23",
+   "catalyst": {
+    "date": "2026-10-10",
+    "type": "PDUFA"
+   },
+   "advice": {
+    "action": "MANTENER",
+    "reasons": [
+     "Tesis intacta; PDUFA en 8 dias",
+     "vence en 21 dias"
+    ],
+    "date": "2026-10-02"
+   },
+   "underlying_last": 143.31
+  },
+  {
+   "id": "M0001",
+   "source": "MANUAL",
+   "opened": "2026-10-02",
+   "ticker": "CSCO",
+   "direction": "BAJISTA",
+   "structure": "Put comprada agresiva",
+   "legs": [
+    {
+     "symbol": "CSCO261120P00100000",
+     "kind": "P",
+     "strike": 100.0,
+     "expiration": "2026-11-20",
+     "qty": 1,
+     "entry": 1.98,
+     "last": 1.92
+    }
+   ],
+   "entry_cost": 396.0,
+   "contracts": 2,
+   "unit_cost": 198.0,
+   "underlying_entry": 111.51,
+   "status": "OPEN",
+   "value": 384.0,
+   "pnl": -12.0,
+   "pnl_pct": -3.0,
+   "last_update": "2026-10-02",
+   "notes": "Hoy: 13 contratos inusuales, $1.37M de prima; Sesiones previas: $10.30M en flujo inusual vigente; Puntos de flujo (+27)",
+   "issue": null,
+   "expiration": "2026-11-20",
+   "underlying_last": 112.19,
+   "catalyst": {
+    "date": "2026-11-10",
+    "type": "Resultados"
+   },
+   "advice": {
+    "action": "MANTENER",
+    "reasons": [
+     "Tesis intacta; Resultados en 39 dias",
+     "vence en 49 dias"
+    ],
+    "date": "2026-10-02"
+   }
+  }
+ ],
+ "seq": 16,
+ "capital": 10000.0,
+ "rules_version": 2,
+ "curves": {
+  "MANUAL": [
+   {
+    "date": "2026-10-02",
+    "equity": 9973.0
+   }
+  ],
+  "AUTO": [
+   {
+    "date": "2026-10-02",
+    "equity": 9929.5
+   }
+  ]
+ },
+ "order_results": {
+  "rihvr58o": {
+   "ok": true,
+   "msg": "Abierta M0001 (CSCO): 2 contrato(s) x $198.0 = $396.0. Saldo disponible: $9244.0",
+   "n": 1,
+   "ts": "2026-10-02T17:58:01+00:00"
+  }
+ },
+ "orders_done": 1
+}
