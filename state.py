@@ -156,7 +156,31 @@ def confirm_flags(flags, ticker, oi_map, session, ratio=0.5):
     return flags
 
 
-def flag_summary(flags, ticker, session, window_sessions=5):
+def flag_factor(row, price=None, ex_divs=()):
+    """Cuanto vale de verdad una alerta como apuesta direccional (0-1):
+    - opcion VENDIDA (lado BID): ambigua (puede ser cobertura o venta de calls cubiertas) -> 0,3
+    - call muy dentro del dinero (strike <= 90 % del precio): parecido a tener la accion -> 0,3
+    - call dentro del dinero en los dias previos a un ex-dividendo: captura de dividendo -> 0"""
+    f = 1.0
+    kind, side = str(row.get("kind") or ""), str(row.get("side") or "")
+    try:
+        k = float(row.get("strike"))
+    except (TypeError, ValueError):
+        k = None
+    if side == "BID":
+        f *= 0.3
+    if kind == "CALL" and price and k and k <= 0.9 * float(price):
+        f *= 0.3
+    d = parse_date(row.get("date"))
+    if kind == "CALL" and d and price and k and k < float(price):
+        for ex in ex_divs or ():
+            e = parse_date(ex)
+            if e and 0 <= (e - d).days <= 7:
+                return 0.0
+    return f
+
+
+def flag_summary(flags, ticker, session, window_sessions=5, price=None, ex_divs=()):
     out = {"confirmed": 0, "confirmed_bull_premium": 0, "confirmed_bear_premium": 0,
            "not_confirmed": 0, "pending": 0, "confirmed_list": [],
            "prev_bull_premium": 0, "prev_bear_premium": 0, "sessions_bull": 0, "sessions_bear": 0}
@@ -177,6 +201,9 @@ def flag_summary(flags, ticker, session, window_sessions=5):
             wt = 1.0
         if wt < 0.5:
             continue    # coberturas, spreads o semanales: no cuentan como confirmacion direccional
+        wt *= flag_factor(r, price, ex_divs)
+        if wt <= 0:
+            continue    # captura de dividendo
         days_by_dir.setdefault(r["direction"], set()).add(r["date"])
         if r["date"] < session and st in ("PENDIENTE", "CONFIRMADA"):
             k = "prev_bull_premium" if r["direction"] == "ALCISTA" else "prev_bear_premium"

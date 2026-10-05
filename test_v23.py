@@ -147,3 +147,19 @@ def test_informe_semanal():
                        "catalyst": {"type": "PDUFA", "date": "2026-10-09"}, "expiration": "2026-11-20"}]}
     txt = market.weekly_report(out, [{"ticker": "SPY", "tech": {"chg_5d": 0.8}}], dt.date(2026, 10, 5))
     assert "+1.50% esta semana" in txt and "SPY" in txt and "PDUFA el 2026-10-09" in txt
+
+
+def test_dividendo_y_calls_vendidas_no_confirman():
+    import pandas as pd
+    from opscan import state
+    rows = [{"date": "2026-10-01", "ticker": "CSCO", "symbol": "C87", "kind": "CALL", "strike": 87.5,
+             "expiration": "2027-01-15", "volume": 4432, "oi_before": 881, "premium": 9963136, "direction": "BAJISTA",
+             "side": "BID", "status": "CONFIRMADA", "oi_after": 4803, "checked_date": "2026-10-02", "weight": 1.0},
+            {"date": "2026-10-01", "ticker": "CSCO", "symbol": "P105", "kind": "PUT", "strike": 105,
+             "expiration": "2026-11-20", "volume": 3000, "oi_before": 100, "premium": 900000, "direction": "BAJISTA",
+             "side": "ASK", "status": "CONFIRMADA", "oi_after": 3000, "checked_date": "2026-10-02", "weight": 1.0}]
+    f = pd.DataFrame(rows, columns=state.FLAG_COLS)
+    s = state.flag_summary(f, "CSCO", "2026-10-05", 5, 111.9, ["2026-10-02"])
+    assert s["confirmed_bear_premium"] == 900000            # solo la put comprada; la call de dividendo no cuenta
+    s2 = state.flag_summary(f, "CSCO", "2026-10-05", 5, 111.9, [])
+    assert s2["confirmed_bear_premium"] == round(900000 + 9963136 * 0.3 * 0.3)   # vendida + muy dentro del dinero

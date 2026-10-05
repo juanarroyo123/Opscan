@@ -361,12 +361,21 @@ def run(mode="full", tickers_override=None, offline_universe=False):
 
     # 6) puntuacion preliminar -> enriquecer top N -> puntuacion final
     ecache = state.load_cache("enrich.json", {})
+    # historico de fechas ex-dividendo (Yahoo solo da la proxima; guardamos las vistas)
+    exdiv = {k: list(v) for k, v in (state.load_cache("exdiv.json", {}) or {}).items()}
+
+    def _note_exdiv(ec):
+        for t, e in (ec or {}).items():
+            d = (e or {}).get("ex_div_date")
+            if d and d not in exdiv.setdefault(t, []):
+                exdiv[t] = sorted(exdiv[t] + [d])[-6:]
+    _note_exdiv(ecache)
     bases, fsums = {}, {}
     for tk, res in results.items():
         m = res["metrics"]
         bases[tk] = state.baselines(daily, tk, m.get("session_date") or session, m.get("opt_vol"), m.get("iv30"))
         fsums[tk] = state.flag_summary(flags, tk, m.get("session_date") or session,
-                                       cfg["options"]["oi_confirm_window"])
+                                       cfg["options"]["oi_confirm_window"], m.get("price"), exdiv.get(tk, ()))
     # contexto tecnico de la accion (Yahoo en modos completos, cache en intradia)
     tcache = state.load_cache("tech.json", {})
     if full:
@@ -416,7 +425,14 @@ def run(mode="full", tickers_override=None, offline_universe=False):
                 or (lambda d: d is not None and 0 <= (d - today_et()).days <= 30)(
                     parse_date((ecache.get(tk) or {}).get("earnings_date")))]
         ecache = enrich.enrich_earnings(soon, ecache, status=status)
+        _note_exdiv(ecache)
+        for tk in want:      # recalcular la confirmacion con la fecha de dividendo recien conocida
+            if tk in results:
+                mm = results[tk]["metrics"]
+                fsums[tk] = state.flag_summary(flags, tk, mm.get("session_date") or session,
+                                               cfg["options"]["oi_confirm_window"], mm.get("price"), exdiv.get(tk, ()))
         state.save_cache("enrich.json", ecache)
+        state.save_cache("exdiv.json", exdiv)
         # resultados desde Yahoo para valores sin fecha en el calendario
         for tk in want:
             ed = (ecache.get(tk) or {}).get("earnings_date")

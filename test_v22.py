@@ -239,7 +239,7 @@ def test_gestion_y_limites_auto(monkeypatch):
     book = {"trades": [], "seq": 0, "rules_version": paper.RULES_VERSION}
     leg = lambda tk: [{"symbol": f"{tk}C", "kind": "C", "strike": 20, "expiration": "2026-11-20",
                        "action": "COMPRAR", "mid": 1.0}]
-    recs = [{"ticker": t, "score": sc, "direction": "ALCISTA", "checklist": {"entrada": True},
+    recs = [{"ticker": t, "score": sc, "direction": "ALCISTA", "checklist": {"entrada": True, "flujo_confirmado": True},
              "next_catalyst": {"date": "2026-11-14", "type": "PDUFA"},
              "idea": {"legs": leg(t), "liquidity": liq}}
             for t, sc, liq in (("A", 60, "buena"), ("B", 70, "mala"), ("C", 50, "aceptable"), ("D", 40, "buena"))]

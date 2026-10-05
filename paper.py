@@ -276,6 +276,8 @@ def advise(book, recs, session, media=30):
                              "(todo o nada)")
             if r and (r.get("score") or 0) < 15 and not (r.get("checklist") or {}).get("flujo_confirmado"):
                 watch.append("La senal se ha enfriado (score bajo y sin flujo confirmado)")
+            elif r and not (r.get("checklist") or {}).get("flujo_confirmado"):
+                watch.append("Ya no hay flujo de opciones confirmado a favor: la razon principal de la idea se ha debilitado")
             if not watch:
                 if cdays is not None and cdays > 2:
                     keep.append(f"Tesis intacta; {cat.get('type')} en {cdays} dias")
