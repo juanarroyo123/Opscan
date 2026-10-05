@@ -113,6 +113,12 @@ tbody tr.click{cursor:pointer} tbody tr.click:hover{background:var(--surface2)}
 .pos .acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
 .buybox{margin-top:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
 .buybox input{width:80px;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--txt)}
+.sim{margin-top:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
+.sim input[type=range]{width:100%}
+.sim .row{display:grid;grid-template-columns:150px 1fr 90px;gap:10px;align-items:center;font-size:12.5px;margin:4px 0}
+.sim svg text{font-size:10px;fill:var(--txt2)}
+.risk-w{background:var(--warn-bg);border-radius:10px;padding:8px 10px;font-size:12.5px;margin-top:8px}
+.lvp{color:var(--good-txt);font-size:9px;vertical-align:super;margin-left:2px}
 .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:80;max-width:min(560px,calc(100% - 32px));
   background:var(--surface);border:1px solid var(--line);box-shadow:0 8px 30px rgba(0,0,0,.18);border-radius:12px;padding:12px 14px;font-size:13.5px;display:none}
 .toast.ok{border-color:var(--good-txt)} .toast.err{border-color:var(--bad-txt)}
@@ -285,6 +291,11 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
     <div class="kpis" id="pkpis"></div>
     <div class="section-t">Valores con varias compras o con comité relevante</div>
     <div class="cards" id="clusters"></div>
+    <div class="section-t">Compras de directivos de la propia empresa (SEC Formulario 4, 30 días)</div>
+    <div class="help small">Cuando varios directivos compran acciones de su empresa con su dinero, suele ser buena señal. Solo cuentan compras en mercado abierto (las ventas casi siempre son rutinarias).</div>
+    <div class="panel"><div class="tscroll"><table class="big"><thead><tr>
+      <th class="l">Valor</th><th>Directivos que compran</th><th>Importe comprado</th><th class="l">Quiénes</th><th>Última compra</th><th>Ventas (contexto)</th>
+    </tr></thead><tbody id="insBody"></tbody></table></div></div>
     <div class="section-t">Todas las operaciones</div>
     <div class="toolbar">
       <input class="search" id="pq" placeholder="Buscar ticker, empresa o congresista…">
@@ -321,7 +332,9 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0">
       <button class="btn sec" id="scanNow">Escanear ahora</button>
       <span class="small muted" id="scanInfo"></span><span class="small" id="liveInfo"></span></div>
-    <div class="kpis" id="pkpis"></div>
+    <div class="kpis" id="portK"></div>
+    <div class="section-t">Riesgo de tu cartera</div>
+    <div id="riskBox"></div>
     <div class="section-t">Posiciones abiertas</div>
     <div id="portOpen" class="pgrid"></div>
     <div class="section-t">Historial (cerradas)</div>
@@ -422,7 +435,7 @@ const ivp=v=>v==null?"—":(v*100).toFixed(0)+"%";
 function dirHTML(d){const ic={ALCISTA:"▲",BAJISTA:"▼"}[d]||"•";return `<span class="dir d-${esc(d||"-")}">${ic} ${esc(d||"—")}</span>`;}
 function sigPill(r){return `<span class="pill p-${esc(r.signal||"BAJA")}">${r.signal==="ERR"?"ERR":(r.score??0)}</span>`;}
 function ckHTML(c){if(!c||c.puntos==null)return '<span class="muted">—</span>';
-  return `<span class="ck" title="Congreso / Futuros / Flujo confirmado por OI · ${c.puntos} pts"><i class="${c.congreso?'on':''}">C</i><i class="${c.futuros?'on':''}">F</i><i class="${c.flujo_confirmado?'on':''}">O</i></span>`+
+  return `<span class="ck" title="Congreso / Futuros / Directivos compran / Flujo confirmado por OI · ${c.puntos} pts"><i class="${c.congreso?'on':''}">C</i><i class="${c.futuros?'on':''}">F</i><i class="${c.directivos?'on':''}">D</i><i class="${c.flujo_confirmado?'on':''}">O</i></span>`+
     (c.entrada?'<span class="entry">ENTRADA</span>':c.pre_alerta?'<span class="pre">PRE</span>':"");}
 function biasBar(b){if(b==null)return"";const w=Math.min(50,Math.abs(b)*50);
   const col=b>=0?"var(--good)":"var(--bad)";const left=b>=0?50:50-w;
@@ -441,7 +454,7 @@ async function getJSON(p){try{const r=await fetch(p+"?ts="+Date.now());if(!r.ok)
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
 function switchTab(t){S.tab=t;document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===t));
   ["radar","port","trk","flow","sec","fut","pol","cal","status"].forEach(x=>$("#v-"+x).hidden=x!==t);
-  ({radar:renderRadar,port:renderPort,trk:renderTrk,flow:renderFlow,sec:renderSec,fut:renderFut,pol:renderPol,cal:renderCal,status:renderStatus})[t]();
+  ({radar:renderRadar,port:renderPort,trk:renderTrk,flow:renderFlow,sec:renderSec,fut:renderFut,pol:()=>{renderPol();renderIns();},cal:renderCal,status:renderStatus})[t]();
   try{history.replaceState(null,"","#"+t);}catch(e){}}
 
 // ---------- RADAR
@@ -726,7 +739,7 @@ function openDrawer(html){$("#drawer").innerHTML=html;$("#drawer").classList.add
 function closeDrawer(){$("#drawer").classList.remove("open");$("#scrim").classList.remove("open");hideTip();}
 $("#scrim").onclick=closeDrawer;document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer();});
 $("#drawer").addEventListener("click",e=>{if(e.target.closest("[data-close]"))closeDrawer();});
-function openDetail(tk){$("#drawer").dataset.tk=tk;const r=(S.latest&&S.latest.records||[]).find(x=>x.ticker===tk);
+function openDetail(tk){S._detailTk=tk;const r=(S.latest&&S.latest.records||[]).find(x=>x.ticker===tk);
   if(!r){const t=(S.pol&&S.pol.trades||[]).filter(x=>x.ticker===tk);
     openDrawer(`<div class="dh"><div><div class="tk" style="font-size:20px">${esc(tk)}</div><div class="muted small">No está en el universo escaneado (añádelo a la watchlist en config.yml)</div></div><button class="iconbtn" data-close>✕</button></div>
       <div class="db">${t.length?`<div class="section-t">Operaciones del Congreso</div>`+t.slice(0,20).map(x=>`<div class="small">${esc(x.transaction_date)} · ${esc(x.member)} · <b>${esc(x.direction)}</b> ${esc(x.amount)}</div>`).join(""):""}</div>`);return;}
@@ -738,11 +751,13 @@ function openDetail(tk){$("#drawer").dataset.tk=tk;const r=(S.latest&&S.latest.r
       <td class="num">${esc(l.expiration)}</td><td class="num">$${l.mid}</td><td class="num">${l.bid}/${l.ask}</td><td class="num ${l.spread_pct>15?"down":""}">${l.spread_pct!=null?l.spread_pct+"%":"—"}</td><td class="num">${l.delta??"—"}</td></tr>`).join("")}</tbody></table>
     ${I.liquidity?`<div class="small" style="margin-top:4px">Liquidez: <span style="font-weight:800" class="${I.liquidity==="mala"?"down":I.liquidity==="buena"?"up":""}">${esc(I.liquidity)}</span>${I.liquidity_note?" · "+esc(I.liquidity_note):""}</div>`:""}
     ${I.choices&&I.choices.length>1?`<div class="small" style="margin-top:10px"><b>Elige cuánto arriesgar</b> (mismo vencimiento; más lejos = más barato pero necesita un movimiento mayor):</div>
-    <table class="sm" style="margin-top:4px"><thead><tr><th class="l">Tipo</th><th class="l">Contrato</th><th>Coste</th><th>Gana si pasa de</th><th>Mov. necesario</th><th>Delta</th><th></th></tr></thead><tbody>
-    ${I.choices.map((c,ci)=>`<tr><td class="l"><b>${esc(c.label)}</b></td><td class="l">${c.kind==="C"?"CALL":"PUT"} ${c.strike}</td><td class="num">${money(c.cost)}</td>
-      <td class="num">$${c.breakeven}</td><td class="num">${pct(c.breakeven_move_pct)}</td><td class="num">${c.delta??"—"}</td>
-      <td><button class="btn" style="padding:5px 10px" data-buy="${ci}">Comprar</button></td></tr>`).join("")}</tbody></table>`:""}
-    <div class="grid4" style="margin-top:8px">${M("Coste (1 contrato)",money(I.cost))}${M("Pérdida máxima",money(I.max_loss))}${M("Ganancia máxima",I.max_gain!=null?money(I.max_gain):"sin límite")}${M("Punto muerto",`$${I.breakeven} (${pct(I.breakeven_move_pct)})`)}</div>`:"";
+    <table class="sm" style="margin-top:4px"><thead><tr><th class="l">Tipo</th><th class="l">Contrato</th><th>Coste</th><th>Gana si pasa de</th><th>Mov. necesario</th><th title="Probabilidad de que al vencimiento la opción valga más de lo que pagaste (según la volatilidad que descuenta el mercado)">Prob. ganar</th><th>Delta</th><th></th></tr></thead><tbody>
+    ${I.choices.map((c,ci)=>`<tr data-sym="${esc(c.symbol||"")}"><td class="l"><b>${esc(c.label)}</b></td><td class="l">${c.kind==="C"?"CALL":"PUT"} ${c.strike}</td><td class="num c-cost">${money(c.cost)}</td>
+      <td class="num c-be">$${c.breakeven}</td><td class="num c-mv">${pct(c.breakeven_move_pct)}</td><td class="num c-pop">${c.pop!=null?c.pop+"%":"—"}</td><td class="num">${c.delta??"—"}</td>
+      <td style="white-space:nowrap"><button class="btn" style="padding:5px 10px" data-buy="${ci}">Comprar</button> <button class="btn sec" style="padding:5px 8px" data-simc="${ci}" title="Simular escenarios">📈</button></td></tr>`).join("")}</tbody></table>
+    <div id="simBox"></div>`:""}
+    <div class="grid4" style="margin-top:8px">${M("Coste (1 contrato)",money(I.cost))}${M("Pérdida máxima",money(I.max_loss))}${M("Ganancia máxima",I.max_gain!=null?money(I.max_gain):"sin límite")}${M("Punto muerto",`$${I.breakeven} (${pct(I.breakeven_move_pct)})`)}</div>
+    ${I.pop!=null?`<div class="small" style="margin-top:6px">Probabilidad de acabar ganando al vencimiento: <b>${I.pop}%</b> <span class="muted">(según la volatilidad que descuentan las opciones; no es una predicción)</span></div>`:""}`:"";
   const idea=I?`<div class="idea"><div><b>Idea de estructura (educativa):</b> ${esc(I.structure)}${I.expiration?` · vencimiento ${esc(I.expiration)} (${I.dte}d)`:""}</div>
     <div class="small">${esc(I.strikes)} · ${esc(I.why_structure)}</div>${legRows}<div class="small" style="margin-top:6px">${esc(I.management)}</div>
     <div class="small muted">${esc(I.note)}</div>${I.legs?`<div style="margin-top:8px"><button class="btn" data-buy="main">Comprar en mi cartera</button>
@@ -769,18 +784,22 @@ function openDetail(tk){$("#drawer").dataset.tk=tk;const r=(S.latest&&S.latest.r
     <div class="small" style="margin-top:6px">${cg.cluster?'<span class="tag g">CLUSTER</span> ':""}${cg.committee_relevant?'<span class="tag">COMITÉ RELEVANTE</span> ':""}${esc((cg.buyers||[]).join(", "))}${cg.sellers&&cg.sellers.length?` · <span class="down">vendieron:</span> ${esc(cg.sellers.join(", "))}`:""}</div>`
     :'<span class="muted small">Sin operaciones de congresistas en la ventana.</span>';
   const fc=r.futures_ctx||{};
+  const F4=r.form4;const f4H=F4?`<div class="small">Últimos ${F4.window_days} días: <b class="up">${F4.buyers} directivo(s) compraron ${money(F4.buy_usd)}</b>${F4.sells?` · <span class="muted">${F4.sellers} vendieron ${money(F4.sell_usd)} (las ventas suelen ser rutinarias)</span>`:""}</div>`+
+    (F4.top_buyers||[]).map(b=>`<div class="small muted">${esc(b.last)} · ${esc((b.owner||"").toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()))} (${esc((b.roles||[]).join(", "))}) · compró ${money(b.value)}</div>`).join("")
+    :'<span class="muted small">Sin compras de directivos en los últimos 30 días.</span>';
   const ins=r.insiders;const insH=ins?`<div class="small">Últimos 90 días: <span class="up">${ins.buys} compras (${money(ins.buy_usd)})</span> · <span class="down">${ins.sells} ventas (${money(ins.sell_usd)})</span></div>`+
     (ins.recent||[]).map(x=>`<div class="small muted">${esc(x.date)} · ${esc(x.insider||"")} (${esc(x.position||"")}) · ${esc(x.text||"")}</div>`).join(""):'<span class="muted small">Sin datos.</span>';
   const news=(r.news||[]).map(n=>`<div class="small" style="padding:4px 0;border-bottom:1px solid var(--line2)">${safeUrl(n.link)?`<a href="${safeUrl(n.link)}" target="_blank" rel="noopener">${esc(n.title)}</a>`:esc(n.title)}<div class="muted">${esc(n.publisher)} ${esc(n.date||"")}</div></div>`).join("");
   const term=(r.iv_term||[]).filter(t=>t.iv!=null).map(t=>({x:`${t.expiration} (${t.dte}d)`,y:t.iv}));
   openDrawer(`<div class="dh"><div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="tk" style="font-size:21px">${esc(r.ticker)}</span>${sigPill(r)} ${dirHTML(r.direction)} ${ckHTML(ck)}</div>
-      <div class="muted small">${esc(r.name||"")} · ${esc(r.sector||"")} · ${px(r.price)} <span class="${pctCls(r.change_pct)}">${pct(r.change_pct,2)}</span> · ${esc(r.source||"")} ${esc(r.session_date||"")}</div></div>
+      <div class="muted small">${esc(r.name||"")} · ${esc(r.sector||"")} · <span id="dPrice">${px(r.price)}</span> <span class="${pctCls(r.change_pct)}">${pct(r.change_pct,2)}</span> · ${esc(r.source||"")} ${esc(r.session_date||"")} <span id="dLive"></span></div></div>
       <button class="iconbtn" data-close aria-label="Cerrar">✕</button></div>
     <div class="db">
       ${r.error?`<div class="ko">⚠ ${esc(r.error)}</div>`:""}${r.compact?`<div class="small muted" style="margin-bottom:8px">Valor sin actividad destacada hoy: se muestra la información básica.</div>`:""}
       <div class="chips">${reasons}</div>${idea}
       <div class="section-t">Checklist de la estrategia</div>
-      <div class="grid4">${M("Congreso a favor (+1)",ck.congreso?"Sí":"No")}${M("Futuros a favor (+1)",ck.futuros?"Sí":"No")}${M("Flujo confirmado OI (+2)",ck.flujo_confirmado?"Sí":"No")}${M("Puntos",(ck.puntos??0)+(ck.entrada?" · ENTRADA":""))}</div>
+      <div class="grid4">${M("Congreso a favor (+1)",ck.congreso?"Sí":"No")}${M("Futuros a favor (+1)",ck.futuros?"Sí":"No")}${M("Directivos compran (+1)",ck.directivos?"Sí":"No")}${M("Flujo confirmado OI (+2)",ck.flujo_confirmado?"Sí":"No")}</div>
+      <div class="small" style="margin-top:6px">Puntos: <b>${ck.puntos??0}</b>${ck.entrada?' · <span class="entry">ENTRADA</span>':""} (hace falta 3 con flujo confirmado y score ≥ 45)</div>
       <div class="section-t">Desglose del score (${r.score})</div><div class="grid4">${comp}</div>
       <div class="section-t">Opciones (${r.n_expirations||0} vencimientos, ${fmtN(r.n_contracts)} contratos)</div>
       <div class="grid4">
@@ -801,7 +820,8 @@ function openDetail(tk){$("#drawer").dataset.tk=tk;const r=(S.latest&&S.latest.r
       <div class="section-t">Contexto de futuros</div><div class="small">${fc.bias!=null?`Sesgo ${fc.bias} · `:""}${esc((fc.why||[]).join(" · "))||'<span class="muted">—</span>'}</div>
       ${f&&Object.keys(f).length?`<div class="section-t">Fundamentales y analistas</div><div class="grid4">${M("Capitalización",money(f.market_cap))}${M("Short % float",f.short_pct_float!=null?(f.short_pct_float*100).toFixed(1)+"%":"—")}
         ${M("Precio objetivo",f.target_mean!=null?"$"+f.target_mean:"—")}${M("Potencial",pct(r.upside_pct))}</div>${gauge(f.analyst_breakdown)}`:""}
-      <div class="section-t">Insiders corporativos (Formulario 4)</div>${insH}
+      <div class="section-t">Compras de directivos (SEC Formulario 4)</div>${f4H}
+      <div class="section-t">Insiders según Yahoo (90 días)</div>${insH}
       ${news?`<div class="section-t">Noticias</div>${news}`:""}
     </div>`);}
 function openFut(i){const m=S.fut.markets[i];const c=m.cot||{},p=m.price||{};
@@ -874,7 +894,8 @@ async function placeOrder(title,data,label){
 // compra desde la ficha
 document.addEventListener("click",e=>{const b=e.target.closest("[data-buy]");if(!b)return;
   const tk=($("#drawer").dataset.tk)||"";const r=(S.latest&&S.latest.records||[]).find(x=>x.ticker===tk);if(!r||!r.idea)return;
-  const I=r.idea;const leg=b.dataset.buy==="main"?(I.legs||[])[0]:(I.choices||[])[+b.dataset.buy];if(!leg)return;
+  const I=r.idea;let leg=b.dataset.buy==="main"?(I.legs||[])[0]:(I.choices||[])[+b.dataset.buy];if(!leg)return;
+  const lo=S.live[r.ticker]&&S.live[r.ticker].options[leg.symbol];if(lo&&lo.mid>0)leg={...leg,mid:lo.mid,iv:lo.iv??leg.iv};
   const unit=Math.round(leg.mid*100*100)/100;const A=(S.paper&&S.paper.summary&&S.paper.summary.account)||{max_per_trade:500,cash:10000};
   const sug=Math.max(1,Math.floor((A.max_per_trade||500)/unit));
   const box=$("#buyBox");if(!box)return;
@@ -890,7 +911,7 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-buy]");if(
   $("#buyGo").onclick=()=>{const n=Math.max(1,parseInt($("#buyN").value||"1"));
     placeOrder("PAPER ABRIR "+r.ticker,{ticker:r.ticker,direction:r.direction,price:r.price,contracts:n,
       structure:(leg.kind==="C"?"Call":"Put")+" comprada"+(leg.label?" "+String(leg.label).toLowerCase():""),
-      legs:[{action:"COMPRAR",symbol:leg.symbol,kind:leg.kind,strike:leg.strike,expiration:leg.expiration,mid:leg.mid}],
+      legs:[{action:"COMPRAR",symbol:leg.symbol,kind:leg.kind,strike:leg.strike,expiration:leg.expiration,mid:leg.mid,iv:leg.iv,delta:leg.delta}],
       notes:(r.reasons||[]).slice(0,3).join("; ")},`compra de ${n} ${leg.kind==="C"?"call":"put"} ${r.ticker} ${leg.strike}`);
     box.innerHTML="";};
   box.scrollIntoView({behavior:"smooth",block:"nearest"});});
@@ -953,7 +974,7 @@ function liveAccount(A,trades){if(!A||!Object.keys(S.live).length)return A;let o
 function renderPort(){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];const recs={};((S.latest&&S.latest.records)||[]).forEach(r=>recs[r.ticker]=r);
   const liveAt=Object.values(S.live).map(x=>x.at).sort((a,b)=>a-b).pop();
   $("#liveInfo").innerHTML=liveErr?` · <span class="down">precios en vivo: ${esc(liveErr)}</span>`:liveAt?` · <span class="up">● EN VIVO</span> ${liveAt.toLocaleTimeString("es-ES")} (Cboe, 15 min de retraso)`:"";
-  $("#pkpis").innerHTML=acctKPIs(liveAccount(sm.account,tr.filter(t=>t.source==="MANUAL")),(P.curves||{}).MANUAL,"Valor de mi cartera")||`<div class="empty">Aún no hay datos de la cartera.</div>`;
+  $("#portK").innerHTML=acctKPIs(liveAccount(sm.account,tr.filter(t=>t.source==="MANUAL")),(P.curves||{}).MANUAL,"Valor de mi cartera")||`<div class="empty">Aún no hay datos de la cartera.</div>`;
   const mine=tr.filter(t=>t.source==="MANUAL"),op=mine.filter(t=>t.status==="OPEN"),cl=mine.filter(t=>t.status!=="OPEN").reverse();
   $("#portOpen").innerHTML=op.map(t0=>{const lv=liveTrade(t0);const t=lv?{...t0,value:lv.value,pnl:lv.pnl,pnl_pct:lv.pnl_pct}:t0;
     const r=recs[t.ticker]||{};const l={...((t.legs||[])[0]||{}),...(lv?{last:lv.mid}:{})};const spot=lv&&lv.price!=null?lv.price:(t.underlying_last??r.price);
@@ -967,8 +988,9 @@ function renderPort(){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];const
       ${cat.date?`<div class="small" style="margin-top:6px">Catalizador: <b>${esc(cat.type||"")}</b> ${esc(cat.date)} (${cd>=0?"en "+cd+" días":"ya pasó"})</div>`:""}
       <div class="adv ${esc(A.action||"MANTENER")}"><b class="${A.action==="CERRAR"?"down":A.action==="VIGILAR"?"warn":"up"}">${esc(A.action||"SIN DATOS AÚN")}</b> · ${esc((A.reasons||["Se valorará en el próximo escaneo"]).join(" · "))}</div>
       <div class="acts"><button class="btn sec" data-open="${esc(t.ticker)}">Ver ficha</button>
+        <button class="btn sec" data-simp="${esc(t.id)}">📈 Escenarios</button>
         <button class="btn" style="background:var(--bad-txt)" data-sell="${esc(t.id)}" data-lbl="venta de ${esc(t.ticker)} (${esc(t.id)})">Vender (cerrar)</button></div>
-      <div data-sellbox="${esc(t.id)}"></div></div>`;}).join("")||`<div class="empty" style="grid-column:1/-1">No tienes posiciones abiertas. Abre la ficha de un valor del Radar y pulsa <b>Comprar</b>.</div>`;
+      <div data-sellbox="${esc(t.id)}"></div><div data-simbox="${esc(t.id)}"></div></div>`;}).join("")||`<div class="empty" style="grid-column:1/-1">No tienes posiciones abiertas. Abre la ficha de un valor del Radar y pulsa <b>Comprar</b>.</div>`;
   $("#portClosed").innerHTML=cl.slice(0,100).map(t=>`<tr class="click" data-tk="${esc(t.ticker)}"><td class="l">${esc(t.id)}</td>
     <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${legShort(t)}</td>
     <td class="num">${moneyF(t.entry_cost)}</td><td class="num">${moneyF(t.exit_value)}</td><td class="num">${pnlH(t.pnl,t.pnl_pct)}</td>
@@ -981,7 +1003,7 @@ function renderPort(){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];const
     <td class="num">${moneyF(t.entry_cost)}</td><td class="num">${moneyF(t.status==="OPEN"?t.value:t.exit_value)}</td><td class="num">${pnlH(t.pnl||0,t.pnl_pct)}</td>
     <td class="num">${esc(t.opened)}</td><td class="l small">${t.status==="OPEN"?(t.advice?`<b class="${t.advice.action==="CERRAR"?"down":t.advice.action==="VIGILAR"?"warn":"up"}">${esc(t.advice.action)}</b> · ${esc((t.advice.reasons||[]).join(" · "))}`:"—"):"cerrada: "+esc(t.close_reason||"")}</td></tr>`;}).join("")
     ||`<tr><td colspan="8" class="empty">La estrategia automática aún no ha comprado nada (compra hasta 3 ENTRADAS al día).</td></tr>`;
-  renderGH();renderLiveBox();}
+  renderGH();renderLiveBox();renderRisk();}
 document.addEventListener("click",e=>{const o=e.target.closest("[data-open]");if(o){openDetail(o.dataset.open);return;}
   const sb=e.target.closest("[data-sell]");if(!sb)return;const id=sb.dataset.sell;const box=document.querySelector(`[data-sellbox="${CSS.escape(id)}"]`);
   box.innerHTML=`<div class="buybox"><b>¿Vender ${esc(id)}?</b><div class="small" style="margin:4px 0 8px">Se cierra al último precio valorado. No se puede deshacer.</div>
@@ -1000,6 +1022,13 @@ async function scanNow(){const c=GH.get();if(!c||!c.token){toast('Conecta GitHub
     else toast(`❌ No se pudo lanzar (${r.status}). <a href="#" data-x>cerrar</a>`,"err");}catch(e){toast("❌ Sin conexión con GitHub","err",6000);}}
 function scanAge(){const L=S.latest;if(!L)return "";const m=Math.round((Date.now()-new Date(L.generated_at).getTime())/60000);
   return `Datos de hace ${m<60?m+" min":Math.floor(m/60)+" h "+(m%60)+" min"}${m>90?' · <span class="warn">el escaneo automático va con retraso</span>':""}`;}
+function renderIns(){const b=$("#insBody");if(!b)return;const rows=(S.ins&&S.ins.rows)||[];
+  b.innerHTML=rows.slice(0,80).map(x=>`<tr class="click" data-tk="${esc(x.ticker)}"><td class="l"><span class="tk">${esc(x.ticker)}</span><div class="nm">${esc(x.name||"")}</div></td>
+    <td class="num"><b>${x.buyers}</b></td><td class="num up">${money(x.buy_usd)}</td>
+    <td class="l small">${(x.top_buyers||[]).slice(0,3).map(t=>esc((t.owner||"").toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()))+" <span class='muted'>("+esc((t.roles||[])[0]||"")+")</span>").join("<br>")}</td>
+    <td class="num">${esc(x.last_buy||"")}</td><td class="num muted">${x.sells?money(x.sell_usd):"—"}</td></tr>`).join("")
+    ||`<tr><td colspan="6" class="empty">Sin compras registradas todavía (se actualiza en los escaneos completos; la primera vez tarda unos días en llenarse).</td></tr>`;}
+$("#insBody").addEventListener("click",e=>{const tr=e.target.closest("tr[data-tk]");if(tr)openDetail(tr.dataset.tk);});
 function renderGH(){const sn=$("#scanNow");if(sn){sn.onclick=scanNow;$("#scanInfo").innerHTML=scanAge();}const c=GH.get();const rp=repoFull();
   $("#ghBox").innerHTML=c&&c.token?`<div>✅ Conectado a <b>${esc(rp)}</b>${c.login?" como <b>"+esc(c.login)+"</b>":""}. Ya puedes comprar y vender desde la web.
       <span class="muted small">(El token está guardado solo en este navegador.)</span></div>
@@ -1023,13 +1052,117 @@ function renderGH(){const sn=$("#scanNow");if(sn){sn.onclick=scanNow;$("#scanInf
     GH.set({token:v});if(await test())setTimeout(renderGH,800);else GH.clear();};
   const ts=$("#ghTest");if(ts)ts.onclick=test;const out=$("#ghOut");if(out)out.onclick=()=>{GH.clear();renderGH();};}
 
+
+// ---------- Black-Scholes (para escenarios y riesgo)
+const Ncdf=x=>{const t=1/(1+0.2316419*Math.abs(x)),d=0.3989423*Math.exp(-x*x/2);const p=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return x>0?1-p:p;};
+const npdf=x=>Math.exp(-x*x/2)/Math.sqrt(2*Math.PI);
+function bs(kind,S0,K,T,iv,r=0.04){if(T<=0||!iv)return Math.max(0,kind==="C"?S0-K:K-S0);
+  const d1=(Math.log(S0/K)+(r+iv*iv/2)*T)/(iv*Math.sqrt(T)),d2=d1-iv*Math.sqrt(T);
+  return kind==="C"?S0*Ncdf(d1)-K*Math.exp(-r*T)*Ncdf(d2):K*Math.exp(-r*T)*Ncdf(-d2)-S0*Ncdf(-d1);}
+function greeks(kind,S0,K,T,iv,r=0.04){if(T<=0||!iv||!S0)return {delta:0,theta:0};
+  const d1=(Math.log(S0/K)+(r+iv*iv/2)*T)/(iv*Math.sqrt(T)),d2=d1-iv*Math.sqrt(T);
+  const delta=kind==="C"?Ncdf(d1):Ncdf(d1)-1;
+  const th=-(S0*npdf(d1)*iv)/(2*Math.sqrt(T))+(kind==="C"?-r*K*Math.exp(-r*T)*Ncdf(d2):r*K*Math.exp(-r*T)*Ncdf(-d2));
+  return {delta,theta:th/365};}
+function yearsTo(exp,from){const e=new Date(exp+"T21:00:00Z"),f=from||new Date();return Math.max(0,(e-f)/(365*864e5));}
+function ivFor(ticker,leg){const lo=S.live[ticker]&&S.live[ticker].options[leg.symbol];if(lo&&lo.iv)return +lo.iv;
+  if(leg.iv)return +leg.iv;const r=((S.latest&&S.latest.records)||[]).find(x=>x.ticker===ticker);return r&&r.iv30?+r.iv30:0.5;}
+function spotFor(ticker,fallback){const L=S.live[ticker];if(L&&L.price)return +L.price;
+  const r=((S.latest&&S.latest.records)||[]).find(x=>x.ticker===ticker);return r&&r.price?+r.price:fallback;}
+
+// simulador: spec={ticker,kind,strike,exp,iv,cost(total),n(contratos),spot}
+function simRender(box,spec){const S0=spec.spot,Tn=yearsTo(spec.exp),days=Math.max(1,Math.round(Tn*365));
+  box.innerHTML=`<div class="sim"><b>Escenarios: ${spec.kind==="C"?"CALL":"PUT"} ${esc(spec.ticker)} ${spec.strike} · vence ${esc(spec.exp)} · ${spec.n} contrato(s)</b>
+    <div class="small muted">Mueve el precio de la acción y la fecha para ver cuánto valdría tu opción (modelo Black-Scholes con IV ${Math.round(spec.iv*100)}%; es una estimación).</div>
+    <div class="row"><span>Precio de ${esc(spec.ticker)}</span><input type="range" min="-40" max="40" step="1" value="0" data-sp><b data-spv></b></div>
+    <div class="row"><span>Días que pasan</span><input type="range" min="0" max="${days}" step="1" value="0" data-dt><b data-dtv></b></div>
+    <div class="grid4" style="margin-top:6px" data-out></div><div data-ch style="margin-top:8px"></div>
+    <div style="text-align:right;margin-top:4px"><button class="btn sec" data-simx style="padding:4px 10px">Cerrar</button></div></div>`;
+  const sp=box.querySelector("[data-sp]"),dtr=box.querySelector("[data-dt]");
+  const val=(Sx,dd)=>bs(spec.kind,Sx,spec.strike,Math.max(0,Tn-dd/365),spec.iv)*100*spec.n;
+  const draw=()=>{const mv=+sp.value,dd=+dtr.value,Sx=S0*(1+mv/100),v=val(Sx,dd),pl=v-spec.cost;
+    box.querySelector("[data-spv]").textContent=`$${Sx.toFixed(2)} (${mv>0?"+":""}${mv}%)`;
+    const dte=new Date(Date.now()+dd*864e5);box.querySelector("[data-dtv]").textContent=dd===days?"al vencer":dd===0?"hoy":"el "+dte.toLocaleDateString("es-ES",{day:"numeric",month:"short"});
+    box.querySelector("[data-out]").innerHTML=M("Valdría",moneyF(v))+M("Resultado",pnlH(Math.round(pl),spec.cost?Math.round(pl/spec.cost*1000)/10:null))+M("Pagaste",moneyF(spec.cost))+M("Precio hoy","$"+S0.toFixed(2));
+    // grafico P&L vs precio para hoy, la fecha elegida y el vencimiento
+    const W=520,H=150,pad=28,xs=[];for(let i=0;i<=60;i++)xs.push(S0*(0.6+0.8*i/60));
+    const curves=[[0,"var(--txt2)","si fuera hoy"],[dd,"var(--pri)","en la fecha elegida"],[days,"var(--warn)","al vencimiento"]].filter((c,i,a)=>i===0||c[0]!==a[i-1][0]);
+    const ys=curves.map(c=>xs.map(x=>val(x,c[0])-spec.cost));const all=ys.flat();const mn=Math.min(...all,-spec.cost),mx=Math.max(...all,spec.cost*0.5);
+    const X=x=>pad+(x-xs[0])/(xs[xs.length-1]-xs[0])*(W-pad-6),Y=y=>6+(mx-y)/(mx-mn||1)*(H-pad);
+    const paths=curves.map((c,i)=>`<polyline fill="none" stroke="${c[1]}" stroke-width="${i===1?2:1.4}" points="${xs.map((x,j)=>X(x).toFixed(1)+","+Y(ys[i][j]).toFixed(1)).join(" ")}"/>`).join("");
+    box.querySelector("[data-ch]").innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:${W}px" role="img" aria-label="Resultado según el precio de la acción">
+      <line x1="${pad}" x2="${W-6}" y1="${Y(0)}" y2="${Y(0)}" stroke="var(--line)"/><line x1="${X(S0)}" x2="${X(S0)}" y1="4" y2="${H-pad+6}" stroke="var(--line)" stroke-dasharray="3 3"/>
+      <line x1="${X(Sx)}" x2="${X(Sx)}" y1="4" y2="${H-pad+6}" stroke="var(--pri)" stroke-dasharray="2 2"/>${paths}
+      <text x="${pad}" y="${H-6}">$${xs[0].toFixed(0)}</text><text x="${W-40}" y="${H-6}">$${xs[xs.length-1].toFixed(0)}</text>
+      <text x="2" y="${Y(0)-3}">$0</text><text x="${X(S0)+3}" y="12">hoy</text></svg>
+      <div class="small muted">${curves.map(c=>`<span style="color:${c[1]}">━</span> ${c[2]}`).join(" · ")} · eje vertical: ganancia/pérdida en $</div>`;};
+  sp.oninput=draw;dtr.oninput=draw;draw();box.querySelector("[data-simx]").onclick=()=>box.innerHTML="";}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-simc]");if(b){const tk=$("#drawer").dataset.tk;
+    const r=((S.latest&&S.latest.records)||[]).find(x=>x.ticker===tk);const c=r&&r.idea&&(r.idea.choices||[])[+b.dataset.simc];if(!c)return;
+    const lo=S.live[tk]&&S.live[tk].options[c.symbol];const mid=lo&&lo.mid>0?lo.mid:c.mid;
+    simRender($("#simBox"),{ticker:tk,kind:c.kind,strike:c.strike,exp:c.expiration,iv:ivFor(tk,c),cost:mid*100,n:1,spot:spotFor(tk,r.price)});
+    $("#simBox").scrollIntoView({behavior:"smooth",block:"nearest"});return;}
+  const pbtn=e.target.closest("[data-simp]");if(pbtn){const t=((S.paper&&S.paper.trades)||[]).find(x=>x.id===pbtn.dataset.simp);if(!t)return;
+    const l=t.legs[0];const box=document.querySelector(`[data-simbox="${CSS.escape(t.id)}"]`);
+    simRender(box,{ticker:t.ticker,kind:l.kind,strike:l.strike,exp:l.expiration,iv:ivFor(t.ticker,l),cost:t.entry_cost,n:(t.contracts||1)*(l.qty||1),spot:spotFor(t.ticker,t.underlying_entry)});}});
+
+// panel de riesgo de la cartera (posiciones MANUAL abiertas)
+function renderRisk(){const box=$("#riskBox");if(!box)return;const tr=((S.paper&&S.paper.trades)||[]).filter(t=>t.status==="OPEN"&&t.source==="MANUAL");
+  if(!tr.length){box.innerHTML='<div class="muted small">Sin posiciones abiertas.</div>';return;}
+  const recs={};((S.latest&&S.latest.records)||[]).forEach(r=>recs[r.ticker]=r);
+  let theta=0,dUp=0,dDn=0,costUp=0,costDn=0;const sect={},events=[];
+  tr.forEach(t=>{const l=t.legs[0],n=(t.contracts||1)*(l.qty||1),Sx=spotFor(t.ticker,t.underlying_entry),iv=ivFor(t.ticker,l),T=yearsTo(l.expiration);
+    const g=greeks(l.kind,Sx,l.strike,T,iv);theta+=g.theta*100*n;const dd=g.delta*100*n*Sx;if(dd>=0)dUp+=dd;else dDn+=-dd;
+    if(t.direction==="BAJISTA")costDn+=t.entry_cost;else costUp+=t.entry_cost;
+    const sc=(recs[t.ticker]||{}).sector||"Otros";sect[sc]=(sect[sc]||0)+t.entry_cost;
+    const c=t.catalyst;if(c&&c.date){const d=daysTo(c.date);if(d!=null&&d>=0&&d<=14)events.push(`${t.ticker}: ${c.type} en ${d} días`);}
+    const dte=daysTo(l.expiration);if(dte!=null&&dte<=10)events.push(`${t.ticker}: vence en ${dte} días`);});
+  const tot=costUp+costDn,A=(S.paper.summary||{}).account||{},eq=A.equity||10000;
+  const topS=Object.entries(sect).sort((a,b)=>b[1]-a[1])[0];const warns=[];
+  if(tot>eq*0.3)warns.push(`Tienes invertido el ${Math.round(tot/eq*100)}% de la cartera en opciones: es mucho riesgo.`);
+  if(topS&&tr.length>=3&&topS[1]>tot*0.6)warns.push(`El ${Math.round(topS[1]/tot*100)}% está en un solo sector (${esc(topS[0])}).`);
+  if(tot&&Math.max(costUp,costDn)>tot*0.8&&tr.length>=3)warns.push(`Casi todo apuesta en la misma dirección (${costUp>costDn?"alcista":"bajista"}): si el mercado gira, todo va en contra a la vez.`);
+  if(events.length)warns.push("Fechas clave próximas: "+events.map(esc).join(" · "));
+  box.innerHTML=`<div class="kpis">
+    <div class="kpi"><div class="lbl">Pierdes cada día por el tiempo</div><div class="val num down">${moneyF(theta)}</div><div class="sub">theta: lo que se "evaporan" tus opciones si la acción no se mueve</div></div>
+    <div class="kpi"><div class="lbl">Apostado al alza</div><div class="val num up">${moneyF(costUp)}</div><div class="sub">como tener ${moneyF(dUp)} en acciones</div></div>
+    <div class="kpi"><div class="lbl">Apostado a la baja</div><div class="val num down">${moneyF(costDn)}</div><div class="sub">como tener ${moneyF(dDn)} vendidos</div></div>
+    <div class="kpi"><div class="lbl">Invertido / cartera</div><div class="val num">${eq?Math.round(tot/eq*100):0}%</div><div class="sub">recomendable &lt; 20–30%</div></div></div>
+    ${warns.length?warns.map(w=>`<div class="risk-w">⚠️ ${w}</div>`).join(""):'<div class="small up">Sin alertas de riesgo.</div>'}`;}
+
+// precios en vivo en la ficha abierta y en las mejores senales del Radar
+let dLiveT=null,rLiveT=null;
+async function liveFetch(tk,syms){const base=LIVE.get();if(!base)return null;
+  const r=await fetch(`${base.replace(/\/$/,"")}/?t=${encodeURIComponent(tk)}&o=${[...syms].filter(Boolean).join(",")}`);
+  if(!r.ok)return null;const j=await r.json();if(j.error)return null;
+  const prev=S.live[tk]||{options:{}};S.live[tk]={price:j.price,options:{...prev.options,...(j.options||{})},at:new Date()};return S.live[tk];}
+async function drawerLive(){const tk=$("#drawer").dataset.tk;if(!tk||!$("#drawer").classList.contains("open")){clearInterval(dLiveT);dLiveT=null;return;}
+  const r=((S.latest&&S.latest.records)||[]).find(x=>x.ticker===tk);if(!r)return;const I=r.idea||{};
+  const syms=new Set([...(I.choices||[]).map(c=>c.symbol),...(I.legs||[]).map(l=>l.symbol)]);
+  try{const L=await liveFetch(tk,syms);if(!L)return;
+    if(L.price&&$("#dPrice"))$("#dPrice").textContent="$"+(+L.price).toFixed(2);
+    if($("#dLive"))$("#dLive").innerHTML=`<span class="up">● en vivo ${L.at.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})}</span>`;
+    document.querySelectorAll("#drawer tr[data-sym]").forEach(row=>{const o=L.options[row.dataset.sym];const c=(I.choices||[]).find(x=>x.symbol===row.dataset.sym);if(!o||!(o.mid>0)||!c)return;
+      const be=c.kind==="C"?c.strike+o.mid:c.strike-o.mid,sp=L.price||r.price;
+      row.querySelector(".c-cost").innerHTML=money(o.mid*100)+'<span class="lvp">●</span>';row.querySelector(".c-be").textContent="$"+be.toFixed(2);
+      row.querySelector(".c-mv").textContent=pct(Math.round((be/sp-1)*1000)/10);
+      if(o.iv){const T=yearsTo(c.expiration);const pa=1-Ncdf((Math.log(be/sp)-(0.04-o.iv*o.iv/2)*T)/(o.iv*Math.sqrt(T)));row.querySelector(".c-pop").textContent=(Math.round((c.kind==="C"?pa:1-pa)*1000)/10)+"%";}});}catch(e){}}
+const _openDrawer=openDrawer;openDrawer=function(html){$("#drawer").dataset.tk=S._detailTk||"";S._detailTk=null;_openDrawer(html);clearInterval(dLiveT);dLiveT=null;
+  if(LIVE.get()&&$("#drawer").dataset.tk){drawerLive();dLiveT=setInterval(()=>{if(document.visibilityState==="visible"&&marketOpen())drawerLive();},30000);}};
+async function radarLive(){if(!LIVE.get()||S.tab!=="radar"||document.visibilityState!=="visible"||!marketOpen())return;
+  const top=((S.latest&&S.latest.records)||[]).filter(r=>r.signal==="ALTA"||r.signal==="MEDIA").slice(0,25);
+  await Promise.all(top.map(r=>liveFetch(r.ticker,new Set(((r.idea||{}).legs||[]).map(l=>l.symbol))).catch(()=>null)));
+  top.forEach(r=>{const L=S.live[r.ticker];const row=document.querySelector(`#tbody tr[data-tk="${CSS.escape(r.ticker)}"] td.num`);
+    if(L&&L.price&&row){const ch=r.price?((L.price/r.price-1)*100):null;row.innerHTML=`${px(L.price)}<span class="lvp" title="En vivo (Cboe, 15 min de retraso)">●</span><div class="small ${pctCls(ch)}">${ch!=null?(ch>=0?"+":"")+ch.toFixed(2)+"% vs escaneo":""}</div>`;}});}
+rLiveT=setInterval(radarLive,60000);
+
 // ---------- carga
 async function load(){
-  const [L,F,FU,P,C,ST,TR,PA]=await Promise.all(["latest","flow","futures","political","catalysts","status","tracking","paper"].map(n=>getJSON("data/"+n+".json")));
-  Object.assign(S,{latest:L,flow:F,fut:FU,pol:P,cal:C,status:ST,trk:TR,paper:PA});
+  const [L,F,FU,P,C,ST,TR,PA,IN]=await Promise.all(["latest","flow","futures","political","catalysts","status","tracking","paper","insiders"].map(n=>getJSON("data/"+n+".json")));
+  Object.assign(S,{latest:L,flow:F,fut:FU,pol:P,cal:C,status:ST,trk:TR,paper:PA,ins:IN});
   $("#updated").innerHTML=L?`Actualizado ${new Date(L.generated_at).toLocaleString("es-ES",{dateStyle:"short",timeStyle:"short"})}<br><span class="muted">sesión ${esc(L.session_date)}</span>`:"sin datos aún";
   const h=(location.hash||"").slice(1);switchTab(["radar","port","trk","flow","sec","fut","pol","cal","status"].includes(h)?h:S.tab);
-  loadPaperFresh().then(ch=>{if(ch&&S.tab==="port")renderPort();if(LIVE.get()&&!liveTimer)liveStart();});}
+  loadPaperFresh().then(ch=>{if(ch&&S.tab==="port")renderPort();if(LIVE.get()&&!liveTimer)liveStart();});setTimeout(radarLive,1500);}
 load();setInterval(load,5*60*1000);
 </script>
 </body>

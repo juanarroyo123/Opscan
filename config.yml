@@ -60,6 +60,12 @@ paper:
   max_open_auto: 8            # AUTO: como mucho 8 abiertas a la vez
   skip_bad_liquidity: true    # AUTO: no entra si la liquidez de la opcion es "mala"
 
+# ---------- Compras de directivos (SEC Form 4) ----------
+insiders:
+  enabled: true
+  days: 25                    # dias hacia atras que se revisan
+  max_fetch: 1200             # formularios leidos por ejecucion (la primera vez tarda mas)
+
 # ---------- Enriquecimiento (Yahoo) para los mejores candidatos ----------
 enrich:
   top_n: 75

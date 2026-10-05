@@ -93,11 +93,32 @@ def build_legs(direction, grid, exp, price, em, spread, buy=None):
         out["max_gain"] = None   # ilimitada (call) / hasta strike (put)
     out["breakeven"] = round(buy["strike"] + debit, 2) if kind == "C" else round(buy["strike"] - debit, 2)
     out["breakeven_move_pct"] = round((out["breakeven"] / price - 1) * 100, 1)
+    if not sell:
+        out["pop"] = prob_profit(kind, price, out["breakeven"], buy.get("iv"), buy.get("dte"))
     return out
 
 
 def _spr(c):
     return (c["ask"] - c["bid"]) / c["mid"] if c.get("mid") and c.get("ask", 0) > 0 and c.get("bid", 0) > 0 else 9.9
+
+
+def prob_above(spot, level, iv, days, r=0.04):
+    """Probabilidad (riesgo neutral) de que la accion acabe por encima de `level` en `days` dias."""
+    try:
+        if not (spot and level and iv and days) or spot <= 0 or level <= 0 or iv <= 0 or days <= 0:
+            return None
+        t = days / 365.0
+        d2 = (math.log(spot / level) + (r - iv * iv / 2) * t) / (iv * math.sqrt(t))
+        return 0.5 * (1 + math.erf(d2 / math.sqrt(2)))
+    except (ValueError, ZeroDivisionError):
+        return None
+
+
+def prob_profit(kind, spot, breakeven, iv, days):
+    p = prob_above(spot, breakeven, iv, days)
+    if p is None:
+        return None
+    return round((p if kind == "C" else 1 - p) * 100, 1)
 
 
 def single_choices(direction, grid, exp, price):
@@ -198,6 +219,7 @@ def trade_idea(direction, m, b, next_cat, style="simple"):
                          "bid": c.get("bid"), "ask": c.get("ask"), "delta": c.get("delta"), "iv": c.get("iv"),
                          "cost": round(c["mid"] * 100, 2), "breakeven": round(be, 2),
                          "breakeven_move_pct": round((be / price - 1) * 100, 1),
+                         "pop": prob_profit(c["kind"], price, be, c.get("iv"), c.get("dte")),
                          "spread_pct": round(_spr(c) * 100, 1) if _spr(c) < 9 else None})
         if alts:
             idea["choices"] = alts
@@ -379,6 +401,18 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg, tech=None):
             reasons.append(f"Futuros en contra: {', '.join(fut_why)}")
     comp["futuros"] = fpnt
 
+    # 7) compras de directivos (SEC Form 4): solo cuentan las COMPRAS y solo si la idea es alcista
+    from . import insiders as _ins
+    f4 = (enr or {}).get("form4")
+    ip, iwhy = _ins.score(f4)
+    if ip and dsign > 0:
+        comp["directivos"] = ip
+        reasons.append(f"Directivos compran: {iwhy} (+{ip})")
+    else:
+        comp["directivos"] = 0
+        if ip >= 7 and dsign < 0:
+            reasons.append(f"Ojo, directivos compran (en contra de la idea bajista): {iwhy}")
+
     total = round(min(100, sum(comp.values())), 1)
     label = "ALTA" if total >= sc["alta"] else ("MEDIA" if total >= sc["media"] else "BAJA")
 
@@ -399,7 +433,8 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg, tech=None):
     if conf_dir > 0 and not ck_flow:
         reasons.append(f"Confirmacion debil: ${conf_dir/1e3:.0f}k confirmados, {conf_rate*100:.0f}% de alertas confirmadas "
                        "(no cuenta para ENTRADA)")
-    pts = (1 if ck_cong else 0) + (1 if ck_fut else 0) + (2 if ck_flow else 0)
+    ck_ins = dsign > 0 and comp.get("directivos", 0) >= 7
+    pts = (1 if ck_cong else 0) + (1 if ck_fut else 0) + (1 if ck_ins else 0) + (2 if ck_flow else 0)
     cong_against = bool(cong) and dsign != 0 and _sign(cong.get("bias"), 0.3) == -dsign and (
         (cong.get("n_sellers") or 0) >= 2 if dsign > 0 else (cong.get("n_buyers") or 0) >= 2)
     entry = bool(ck_flow and pts >= sc["entry_min_points"] and total >= float(sc.get("entry_min_score", 45))
@@ -407,7 +442,7 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg, tech=None):
     if cong_against and ck_flow and pts >= sc["entry_min_points"]:
         reasons.append("Sin ENTRADA: varios congresistas operan en contra")
     pre_alert = bool(not ck_flow and (m.get("unusual_count") or prev_tot) and dsign != 0 and
-                     (1 if ck_cong else 0) + (1 if ck_fut else 0) >= 1)
+                     (1 if ck_cong else 0) + (1 if ck_fut else 0) + (1 if ck_ins else 0) >= 1)
 
     if b.get("iv_rank") is not None:
         reasons.append(f"IV rank {b['iv_rank']:.0f} (IV30 {m['iv30']*100:.0f}%)" if m.get("iv30") else f"IV rank {b['iv_rank']:.0f}")
@@ -417,7 +452,8 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg, tech=None):
     return {
         "score": total, "signal": label, "direction": direction, "direction_strength": rnd(d, 2),
         "components": comp, "reasons": reasons,
-        "checklist": {"congreso": bool(ck_cong), "futuros": bool(ck_fut), "flujo_confirmado": ck_flow,
+        "checklist": {"congreso": bool(ck_cong), "futuros": bool(ck_fut), "directivos": bool(ck_ins),
+                      "flujo_confirmado": ck_flow,
                       "puntos": pts, "entrada": entry, "pre_alerta": pre_alert},
         "next_catalyst": nc, "idea": trade_idea(direction, m, b, nc, sc.get("idea_style", "simple")) if (entry or label != "BAJA") else None,
     }

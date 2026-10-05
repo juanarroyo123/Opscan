@@ -117,7 +117,8 @@ def open_trade(book, ticker, direction, legs, session, source="AUTO", structure=
         qty = 1 if str(l.get("action", "COMPRAR")).upper().startswith("COMP") else -1
         clean.append({"symbol": l["symbol"], "kind": str(l.get("kind", "C"))[0].upper(),
                       "strike": float(l["strike"]), "expiration": l["expiration"], "qty": qty,
-                      "entry": round(mid, 3), "last": round(mid, 3)})
+                      "entry": round(mid, 3), "last": round(mid, 3),
+                      **({"iv": round(float(l["iv"]), 4)} if l.get("iv") not in (None, "") else {})})
     unit = round(sum(l["qty"] * l["entry"] for l in clean) * 100, 2)   # coste de 1 contrato
     if unit <= 0:
         return None

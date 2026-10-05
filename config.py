@@ -39,6 +39,7 @@ DEFAULTS = {
         "entry_min_confirm_rate": 0.4,
     },
     "enrich": {"top_n": 75, "news": 5},
+    "insiders": {"enabled": True, "days": 25, "max_fetch": 1200},
     "paper": {"capital": 10000, "max_pct_trade": 5, "max_new_per_day": 3, "max_open_auto": 8,
               "skip_bad_liquidity": True},
     "calendar": {

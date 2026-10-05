@@ -12,7 +12,7 @@ import shutil
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from . import (alerts, catalysts, congress, enrich, futures, options, paper, scoring, shorts, state,
+from . import (alerts, catalysts, congress, enrich, futures, insiders, options, paper, scoring, shorts, state,
                technicals, tracking, universe)
 from .config import DOCS_DIR, data_dir, load_config
 from .util import Status, iso_now, log, parse_date, read_json, rnd, today_et, write_json
@@ -218,6 +218,7 @@ def build_record(tk, res, meta, base, fs, cats, cong, fctx, enr, cfg, session=No
                                        "analyst_breakdown", "beta")} if e else None,
         "upside_pct": enrich.upside(m.get("price"), e.get("target_mean")) if e else None,
         "insiders": e.get("insiders") if e else None,
+        "form4": e.get("form4") if e else None,
         "news": e.get("news") if e else None,
         "short": {"vol_ratio_5d": sv.get("ratio_5d"), "vol_ratio_last": sv.get("ratio_last"),
                   "pct_float": e.get("short_pct_float"), "days_to_cover": e.get("short_ratio")},
@@ -373,11 +374,30 @@ def run(mode="full", tickers_override=None, offline_universe=False):
         state.save_cache("tech.json", tcache)
     techs = {tk: technicals.features(tk, tcache, daily, res["metrics"].get("stock_volume"))
              for tk, res in results.items()}
+    # compras de directivos (SEC Form 4): se actualiza en modos completos, cache en intradia
+    icache = state.load_cache("insiders.json", {})
+    if full and cfg.get("insiders", {}).get("enabled", True) and mode != "smoke":
+        stocks = {t for t in results if t not in options.INDEXES
+                  and not ({"etf", "indice"} & set((uni.get(t) or {}).get("groups", [])))}
+        icache = insiders.build(stocks, icache, status, days=int(cfg.get("insiders", {}).get("days", 25)),
+                                max_fetch=int(cfg.get("insiders", {}).get("max_fetch", 1200)))
+        state.save_cache("insiders.json", icache)
+    f4 = {tk: insiders.summarize(icache, tk) for tk in results}
+
+    ins_list = sorted([{"ticker": tk, "name": (uni.get(tk) or {}).get("name") or tk,
+                        "price": (results[tk]["metrics"] or {}).get("price"), **v}
+                       for tk, v in f4.items() if v and v.get("buys")], key=lambda x: -x["buy_usd"])
+    write_json(_out("insiders.json"), {"generated_at": iso_now(), "updated": icache.get("updated"),
+                                       "rows": ins_list[:150]})
+
+    def _enr(tk):
+        e = ecache.get(tk)
+        return {**(e or {}), "form4": f4[tk]} if f4.get(tk) else e
 
     prelim = []
     for tk, res in results.items():
         r = build_record(tk, res, uni.get(tk), bases[tk], fsums[tk], cal_by_tk.get(tk),
-                         cong_by.get(tk), fctx, ecache.get(tk), cfg, session, short_vol, techs.get(tk))
+                         cong_by.get(tk), fctx, _enr(tk), cfg, session, short_vol, techs.get(tk))
         prelim.append((r["score"], tk))
     if full:
         prelim.sort(reverse=True)
@@ -412,7 +432,7 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     records = []
     for tk, res in results.items():
         records.append(build_record(tk, res, uni.get(tk), bases[tk], fsums[tk], cal_by_tk.get(tk),
-                                    cong_by.get(tk), fctx, ecache.get(tk), cfg, session, short_vol, techs.get(tk)))
+                                    cong_by.get(tk), fctx, _enr(tk), cfg, session, short_vol, techs.get(tk)))
     for tk, err in failed.items():
         records.append({"ticker": tk, "name": (uni.get(tk) or {}).get("name") or tk,
                         "sector": sectors.get(tk, ""), "score": 0, "signal": "ERR", "direction": "-",
@@ -521,7 +541,7 @@ def build_site(out_dir):
     dd = os.path.join(out_dir, "data")
     os.makedirs(dd, exist_ok=True)
     for f in ("latest.json", "flow.json", "catalysts.json", "political.json", "futures.json", "status.json",
-              "tracking.json", "paper.json"):
+              "tracking.json", "paper.json", "insiders.json"):
         src = _out(f)
         if os.path.exists(src):
             shutil.copy(src, os.path.join(dd, f))
