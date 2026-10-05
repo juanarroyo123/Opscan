@@ -337,7 +337,7 @@ def parse_request(title, body):
             data = {}
     if "CERRAR" in title:
         tid = data.get("id") or (re.search(r"[PM]\d{4}", title) or [None])[0]
-        return {"op": "close", "id": tid, "nonce": data.get("nonce")}
+        return {"op": "close", "id": tid, "nonce": data.get("nonce"), "lesson": data.get("lesson")}
     if "ABRIR" in title:
         return {"op": "open", **data}
     return {"op": "unknown"}
@@ -349,6 +349,8 @@ def apply_request(book, req, session, issue=None):
                        "MANUAL", req.get("structure", ""), req.get("price"), req.get("notes", ""), issue,
                        contracts=req.get("contracts"), trade_id=req.get("trade_id"))
         if t:
+            if req.get("why"):
+                t["why"] = str(req["why"])[:300]
             a = account(book, "MANUAL")
             return True, (f"Abierta {t['id']} ({t['ticker']}): {t['contracts']} contrato(s) x ${t['unit_cost']} = "
                           f"${t['entry_cost']}. Saldo disponible: ${a['cash']}")
@@ -357,6 +359,8 @@ def apply_request(book, req, session, issue=None):
         for t in book["trades"]:
             if t["id"] == req.get("id") and t["status"] == "OPEN":
                 _close(t, session, "cierre manual")
+                if req.get("lesson"):
+                    t["lesson"] = str(req["lesson"])[:300]
                 return True, f"Cerrada {t['id']} con P&L ${t['pnl']} ({t['pnl_pct']}%)"
         return False, f"No hay operacion abierta con id {req.get('id')}"
     return False, "Titulo no reconocido (usa 'PAPER ABRIR TICKER' o 'PAPER CERRAR M0001')"

@@ -45,7 +45,8 @@ def test_summarize_and_score():
     today = dt.date(2026, 10, 5)
     cache = {"tx": [_tx("ANA", 300000, "2026-09-20"), _tx("LUIS", 150000, "2026-09-28"),
                     _tx("OLD", 900000, "2026-07-01"), _tx("ANA", 5000, "2026-09-30"),
-                    _tx("PEDRO", 2000000, "2026-09-25", "S")]}
+                    _tx("PEDRO", 2000000, "2026-09-25", "S"),
+                    dict(_tx("FONDO", 5000000, "2026-09-26"), officer=False, director=False)]}
     s = insiders.summarize(cache, "XYZ", today)
     assert s["buys"] == 2 and s["buyers"] == 2 and s["buy_usd"] == 450000     # la antigua y la pequena no cuentan
     assert s["sells"] == 1 and s["sell_usd"] == 2000000
@@ -99,3 +100,50 @@ def test_scoring_directivos_checklist(cfg):
     s = scoring.score_ticker(m, {"rel_vol": 3}, fs, [], None, None, [], {"form4": f4}, cfg)
     assert s["components"]["directivos"] == 10 and s["checklist"]["directivos"]
     assert s["checklist"]["puntos"] == 3 and s["checklist"]["entrada"]          # directivos + flujo confirmado
+
+
+def test_semaforo_y_cambios():
+    from opscan import market
+    recs = [{"ticker": "VIX", "price": 27.0, "change_pct": 5.0, "signal": "BAJA"},
+            {"ticker": "AAA", "call_vol": 1000, "put_vol": 1300, "signal": "MEDIA"}]
+    s = market.semaforo(recs, {"regime": "negativa"})
+    assert s["level"] == "rojo" and s["pc_ratio"] == 1.3
+    assert market.semaforo([{"ticker": "VIX", "price": 14, "change_pct": -2}], {"regime": "positiva"})["level"] == "verde"
+
+    def rec(tk, sc, sig, d, ent=False, conf=False):
+        return {"ticker": tk, "score": sc, "signal": sig, "direction": d,
+                "checklist": {"entrada": ent, "flujo_confirmado": conf}}
+    c = market.roll({}, "2026-10-01", [rec("A", 50, "MEDIA", "ALCISTA", True, True), rec("B", 40, "MEDIA", "ALCISTA")])
+    assert market.changes(c)["since"] is None
+    c = market.roll(c, "2026-10-01", [rec("A", 50, "MEDIA", "ALCISTA", True, True), rec("B", 40, "MEDIA", "ALCISTA")])
+    c = market.roll(c, "2026-10-02", [rec("A", 30, "MEDIA", "ALCISTA"), rec("B", 60, "ALTA", "BAJISTA", True, True)])
+    ch = market.changes(c)
+    assert ch["since"] == "2026-10-01"
+    assert [x["ticker"] for x in ch["new_entries"]] == ["B"] and [x["ticker"] for x in ch["lost_entries"]] == ["A"]
+    assert ch["flips"][0]["ticker"] == "B" and ch["new_alta"][0]["ticker"] == "B" and ch["confirmed"][0]["ticker"] == "B"
+
+
+def test_split_score_y_diario():
+    from opscan import market, paper
+    sp = market.split_score({"score": 60, "components": {"flujo": 20}}, 1_000_000, 0, {"bull_premium": 500_000})
+    assert sp == {"confirmed": 50.0, "provisional": 10.0}
+    paper.configure({})
+    book = {"trades": [], "seq": 0}
+    leg = [{"symbol": "X1", "kind": "C", "strike": 10, "expiration": "2026-11-20", "action": "COMPRAR", "mid": 1, "iv": 0.5}]
+    ok, _ = paper.apply_request(book, {"op": "open", "ticker": "X", "direction": "ALCISTA", "legs": leg,
+                                       "why": "flujo confirmado + FDA", "trade_id": "M0009"}, "2026-10-05")
+    t = book["trades"][0]
+    assert ok and t["why"] == "flujo confirmado + FDA" and t["legs"][0]["iv"] == 0.5
+    req = paper.parse_request("PAPER CERRAR M0009", '{"id":"M0009","lesson":"no esperar al evento"}')
+    ok, _ = paper.apply_request(book, req, "2026-10-06")
+    assert ok and t["lesson"] == "no esperar al evento" and t["status"] == "CLOSED"
+
+
+def test_informe_semanal():
+    from opscan import market
+    out = {"curves": {"MANUAL": [{"date": "2026-09-28", "equity": 10000}, {"date": "2026-10-05", "equity": 10150}]},
+           "summary": {"account": {"return_pct": 1.5}},
+           "trades": [{"status": "OPEN", "source": "MANUAL", "ticker": "SMMT", "pnl_pct": 12, "advice": {"action": "MANTENER"},
+                       "catalyst": {"type": "PDUFA", "date": "2026-10-09"}, "expiration": "2026-11-20"}]}
+    txt = market.weekly_report(out, [{"ticker": "SPY", "tech": {"chg_5d": 0.8}}], dt.date(2026, 10, 5))
+    assert "+1.50% esta semana" in txt and "SPY" in txt and "PDUFA el 2026-10-09" in txt

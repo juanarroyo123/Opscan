@@ -189,7 +189,11 @@ def summarize(cache, ticker, today=None, window=30, min_value=10000):
     tx = [t for t in (cache or {}).get("tx", []) if t.get("ticker") == ticker and (t.get("date") or "") >= since]
     if not tx:
         return None
-    buys = [t for t in tx if t["code"] == "P" and (t.get("value") or 0) >= min_value]
+    # solo directivos y consejeros: los "accionistas >10%" suelen ser fondos o empresas matriz
+    buys = [t for t in tx if t["code"] == "P" and (t.get("value") or 0) >= min_value
+            and (t.get("officer") or t.get("director"))]
+    if not buys and not [t for t in tx if t["code"] == "S"]:
+        return None
     sells = [t for t in tx if t["code"] == "S"]
     buyers = {}
     for t in buys:

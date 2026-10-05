@@ -12,7 +12,7 @@ import shutil
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from . import (alerts, catalysts, congress, enrich, futures, insiders, options, paper, scoring, shorts, state,
+from . import (alerts, catalysts, congress, enrich, futures, insiders, market, options, paper, scoring, shorts, state,
                technicals, tracking, universe)
 from .config import DOCS_DIR, data_dir, load_config
 from .util import Status, iso_now, log, parse_date, read_json, rnd, today_et, write_json
@@ -227,6 +227,7 @@ def build_record(tk, res, meta, base, fs, cats, cong, fctx, enr, cfg, session=No
         **s,
     }
     rec["unusual"] = unusual[:10]
+    rec["score_split"] = market.split_score(rec, fs.get("prev_bull_premium"), fs.get("prev_bear_premium"), m)
     # registros sin interes: version compacta para que la web cargue rapido
     if (rec.get("score") or 0) < 20 and not unusual and "watchlist" not in rec["groups"]:
         for k in ("iv_term", "expected_moves", "news", "insiders", "confirmed", "catalysts"):
@@ -485,6 +486,16 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     # 9) alertas
     sent = state.load_cache("alerts.json", {})
     sent = alerts.process(ok_recs, cfg, sent, session, status)
+    # informe semanal (lunes, una vez)
+    if today_et().weekday() == 0 and mode in ("premarket", "full", "intraday"):
+        wkey = f"{today_et().isocalendar()[0]}-W{today_et().isocalendar()[1]}:semanal"
+        if wkey not in sent and os.environ.get("TELEGRAM_BOT_TOKEN"):
+            try:
+                if alerts.send_telegram(market.weekly_report(paper_out, ok_recs, today_et(),
+                                                             os.environ.get("OPSCAN_SITE_URL", ""))):
+                    sent[wkey] = True
+            except Exception as e:
+                log(f"informe semanal: {e}")
     if mode == "full":
         conf_today = [c for c in confirmed_recent if c.get("checked_date") == session]
         sent = alerts.daily_summary(ok_recs, {
@@ -507,11 +518,16 @@ def run(mode="full", tickers_override=None, offline_universe=False):
         "bajistas": sum(1 for r in ok if r["direction"] == "BAJISTA" and r["signal"] != "BAJA"),
     }
     gen = iso_now()
+    sem = market.semaforo(ok_recs, market_gex.get("SPX") or market_gex.get("SPY"), (fut or {}).get("regime"))
+    chg_cache = market.roll(state.load_cache("signals_snap.json", {}), session, ok_recs)
+    state.save_cache("signals_snap.json", chg_cache)
+    day_changes = market.changes(chg_cache)
     write_json(_out("tracking.json"), track)
     write_json(_out("paper.json"), paper_out)
     write_json(_out("latest.json"), {"generated_at": gen, "mode": mode, "session_date": session,
                                      "repo": os.environ.get("GITHUB_REPOSITORY", ""),
                                      "market_gex": market_gex, "sectors": sectors_out,
+                                     "semaforo": sem, "changes": day_changes,
                                      "summary": summary, "regime": (fut or {}).get("regime"),
                                      "config": {"scoring": cfg["scoring"], "options": cfg["options"]},
                                      "records": records})
