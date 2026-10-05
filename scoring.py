@@ -255,6 +255,10 @@ def score_ticker(m, b, fs, cats, cong, fut_bias, fut_why, enr, cfg, tech=None):
         reasons.append(f"Sesiones previas: ${(prev_bull + prev_bear)/1e6:.2f}M en flujo inusual vigente")
     if fp > 0:
         reasons.append(f"Puntos de flujo (+{fp:.0f})")
+        bp, ob = m.get("buy_premium") or 0, m.get("otm_buy_premium") or 0
+        if bp and ob / bp >= 0.5 and ob >= 100000:
+            reasons.append(f"{ob/bp*100:.0f}% de lo comprado hoy es FUERA del dinero (${ob/1e6:.2f}M): apuestas "
+                           "apalancadas a un movimiento, lo mas revelador")
         if m.get("whales"):
             reasons.append(f"{m['whales']} orden(es) ballena >= $1M")
 

@@ -160,6 +160,28 @@ def test_dividendo_y_calls_vendidas_no_confirman():
              "side": "ASK", "status": "CONFIRMADA", "oi_after": 3000, "checked_date": "2026-10-02", "weight": 1.0}]
     f = pd.DataFrame(rows, columns=state.FLAG_COLS)
     s = state.flag_summary(f, "CSCO", "2026-10-05", 5, 111.9, ["2026-10-02"])
-    assert s["confirmed_bear_premium"] == 900000            # solo la put comprada; la call de dividendo no cuenta
+    assert s["confirmed_bear_premium"] == 1800000           # solo la put comprada (OTM x1,5); la call de dividendo no cuenta
     s2 = state.flag_summary(f, "CSCO", "2026-10-05", 5, 111.9, [])
-    assert s2["confirmed_bear_premium"] == round(900000 + 9963136 * 0.3 * 0.3)   # vendida + muy dentro del dinero
+    assert s2["confirmed_bear_premium"] == 1800000                    # una call VENDIDA no cuenta (solo compras)
+    state.SOLD_WEIGHT = 0.3
+    s3 = state.flag_summary(f, "CSCO", "2026-10-05", 5, 111.9, [])
+    state.SOLD_WEIGHT = 0.0
+    assert s3["confirmed_bear_premium"] == round(1800000 + 9963136 * 0.3 * 0.3)
+
+
+def test_otm_comprada_pesa_mas():
+    from opscan.options import money_factor
+    assert money_factor("C", 115, 100) == 2.0 and money_factor("P", 90, 100) == 2.0      # OTM 10 %
+    assert money_factor("C", 101, 100) == 1.3                                              # casi ATM
+    assert money_factor("C", 140, 100) == 1.2                                              # loteria
+    assert money_factor("C", 95, 100) == 0.4 and money_factor("P", 105, 100) == 0.4       # dentro del dinero
+
+
+def test_coberturas_y_loteria():
+    from opscan.options import conviction
+    assert conviction("P", "ASK", 90, 100, "CSCO", 2.0, 40, 800000) == 2.0     # put OTM en una empresa normal
+    assert conviction("P", "ASK", 90, 100, "SPY", 2.0, 40, 800000) == 0.5      # en SPY: probable seguro
+    assert conviction("C", "ASK", 110, 100, "SPY", 2.0, 40, 800000) == 2.0     # las calls OTM no son seguros
+    assert conviction("C", "ASK", 110, 100, "XYZ", 0.20, 5, 60000) == 0.8      # loteria barata y corta: 2 x 0,4
+    assert conviction("C", "ASK", 110, 100, "XYZ", 0.20, 5, 900000) == 2.0     # ...salvo que sea mucho dinero
+    assert conviction("C", "BID", 110, 100, "XYZ", 2.0, 40, 800000) == 1.0     # vendida: lo decide sold_weight

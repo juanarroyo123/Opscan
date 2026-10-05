@@ -197,6 +197,67 @@ DIR_WEIGHTS = {
 }
 
 
+MONEY_W = {"otm": 2.0, "atm": 1.3, "lottery": 1.2, "itm": 0.4}   # config options.money_weights
+
+
+def money_factor(kind, strike, spot):
+    """Conviccion segun lo lejos que esta el strike (solo para opciones COMPRADAS):
+    fuera del dinero (OTM) 3-25 % -> x2 (apuesta apalancada a un movimiento: lo mas revelador);
+    casi en el dinero (0-3 %) -> x1,3; muy lejos (>25 %) -> x1,2 (loteria); dentro del dinero -> x0,4."""
+    if not spot or not strike:
+        return 1.0
+    k = kind[0].upper()
+    otm = (strike / spot - 1) if k == "C" else (1 - strike / spot)
+    if otm < 0:
+        return MONEY_W["itm"]
+    if otm < 0.03:
+        return MONEY_W["atm"]
+    if otm <= 0.25:
+        return MONEY_W["otm"]
+    return MONEY_W["lottery"]
+
+
+# Valores donde las puts fuera del dinero suelen ser SEGUROS de grandes carteras, no apuestas
+HEDGE_TICKERS = set(INDEXES) | {
+    "SPY", "QQQ", "IWM", "DIA", "XLF", "XLE", "XLV", "XLK", "SMH", "TLT", "HYG", "KRE", "GLD", "SLV", "USO",
+    "AAPL", "MSFT", "NVDA", "AMZN", "GOOGL", "GOOG", "META", "TSLA", "BRK.B", "AVGO", "JPM", "LLY", "V", "MA",
+    "XOM", "UNH", "WMT", "ORCL", "COST", "HD", "PG", "JNJ", "BAC", "NFLX", "ABBV", "KO", "CVX", "MRK", "CRM"}
+HEDGE_PUT_W = 0.5        # peso de una put OTM comprada en esos valores (en vez de x2)
+LOTTO = {"max_price": 0.50, "max_dte": 14, "min_premium": 500000, "w": 0.4}
+
+
+def conviction(kind, side, strike, spot, ticker="", opt_price=None, dte=None, premium=None):
+    """Peso de conviccion de una opcion (1 = normal). Solo las COMPRAS reciben extra por estar OTM.
+    - put OTM comprada en indices/ETF/gigantes -> probable cobertura de cartera (HEDGE_PUT_W)
+    - 'loteria' del inversor particular: muy barata (<$0,50), corta (<=14 dias) y sin tamano -> x0,4"""
+    if side != "ASK":
+        return 1.0
+    f = money_factor(kind, strike, spot)
+    k = (kind or "C")[0].upper()
+    otm = bool(spot and strike) and ((k == "C" and strike > spot) or (k == "P" and strike < spot))
+    if otm and k == "P" and str(ticker).upper() in HEDGE_TICKERS:
+        f = min(f, HEDGE_PUT_W)
+    if (otm and opt_price is not None and opt_price < LOTTO["max_price"] and dte is not None
+            and dte <= LOTTO["max_dte"] and (premium or 0) < LOTTO["min_premium"]):
+        f *= LOTTO["w"]
+    return f
+
+
+def money_factor_u(u):
+    mp = u.get("moneyness_pct")
+    if mp is None or u.get("side") != "ASK":
+        return 1.0
+    return conviction(u["kind"], "ASK", 100 + mp, 100, u.get("ticker", ""), u.get("price"), u.get("dte"),
+                      u.get("premium"))
+
+
+def set_sold_weight(w):
+    """Peso de las opciones VENDIDAS (lado BID). 0 = solo cuentan las COMPRAS (quien paga por apostar)."""
+    w = float(w)
+    DIR_WEIGHTS[("C", "BID")] = ("BAJISTA", w)
+    DIR_WEIGHTS[("P", "BID")] = ("ALCISTA", w)
+
+
 def ensure_greeks(c, spot):
     if (c.get("delta") in (None, 0) or c.get("gamma") is None) and spot and c["iv"] > 0:
         d, g = bs_greeks(c["kind"], spot, c["strike"], max(c["dte"], 0.5) / 365.0, c["iv"])
@@ -211,7 +272,7 @@ def contract_score(u, ocfg):
     s = min(s, 45)
     s += min(20, 4 * u["vol_oi"])
     if u["otm"]:
-        s += 10
+        s += 15
     if u["dte"] <= 21:
         s += 8
     elif u["dte"] <= 60:
@@ -363,6 +424,8 @@ def analyze_chain(und, contracts, ocfg):
         otm = bool(spot) and ((c["kind"] == "C" and c["strike"] > spot) or
                               (c["kind"] == "P" and c["strike"] < spot))
         direction, w = DIR_WEIGHTS[(c["kind"], side)]
+        if side == "ASK":   # comprar fuera del dinero = mas conviccion (salvo coberturas y loteria)
+            w *= conviction(c["kind"], side, c["strike"], spot, und["ticker"], price, c["dte"], prem)
         f = 1.0                # factor estructural (independiente del lado)
         if hedge_like:
             f *= 0.3
@@ -429,6 +492,9 @@ def analyze_chain(und, contracts, ocfg):
         "unusual_count": len(unusual),
         "unusual_premium": round(sum(u["premium"] for u in unusual)),
         "effective_premium": round(eff),   # sin coberturas/spreads/semanales: lo que de verdad cuenta
+        "buy_premium": round(sum(u["premium"] * u["weight"] for u in unusual if u["side"] == "ASK")),
+        "otm_buy_premium": round(sum(u["premium"] * u["weight"] for u in unusual
+                                     if u["side"] == "ASK" and money_factor_u(u) >= MONEY_W["otm"])),
         "whales": sum(1 for u in unusual if u["whale"]),
         "gex_usd_1pct": round(gex) if spot else None,
     })
@@ -537,6 +603,7 @@ def recompute_flow(m, unusual):
     bull = bear = eff = 0.0
     for u in unusual:
         _, w = DIR_WEIGHTS[(u["kind"][0], u["side"])]
+        w *= money_factor_u(u)
         wt = u.get("weight", 1.0)
         eff += u["premium"] * wt
         if u["direction"] == "ALCISTA":

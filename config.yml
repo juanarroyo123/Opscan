@@ -25,6 +25,13 @@ universe:
 
 # ---------- Escaner de opciones ----------
 options:
+  sold_weight: 0.0           # opciones VENDIDAS: 0 = solo cuentan las COMPRAS (quien paga por apostar). 0.3 = cuentan algo
+  money_weights:              # peso de las opciones COMPRADAS segun donde esta el strike
+    otm: 2.0                  # fuera del dinero 3-25 %: apuesta apalancada, lo mas revelador
+    atm: 1.3                  # casi en el dinero (0-3 %)
+    lottery: 1.2              # muy fuera del dinero (>25 %): mas loteria
+    itm: 0.4                  # dentro del dinero: se parece a tener la accion o a una cobertura
+  hedge_tickers: []           # valores extra donde las puts OTM se tratan como seguros (indices, ETF y gigantes ya incluidos)
   workers: 12                 # descargas en paralelo
   max_dte: 800                # todos los vencimientos (dias hasta vencimiento)
   min_volume: 100             # volumen minimo de un contrato para ser candidato

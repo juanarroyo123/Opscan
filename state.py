@@ -156,9 +156,13 @@ def confirm_flags(flags, ticker, oi_map, session, ratio=0.5):
     return flags
 
 
+SOLD_WEIGHT = 0.0     # opciones vendidas: 0 = no cuentan como apuesta (config options.sold_weight)
+
+
 def flag_factor(row, price=None, ex_divs=()):
     """Cuanto vale de verdad una alerta como apuesta direccional (0-1):
-    - opcion VENDIDA (lado BID): ambigua (puede ser cobertura o venta de calls cubiertas) -> 0,3
+    - opcion VENDIDA (lado BID): no es alguien apostando, puede ser cobertura o venta de calls cubiertas -> SOLD_WEIGHT (0)
+    - put muy dentro del dinero (strike >= 110 % del precio): cobertura de acciones -> 0,3
     - call muy dentro del dinero (strike <= 90 % del precio): parecido a tener la accion -> 0,3
     - call dentro del dinero en los dias previos a un ex-dividendo: captura de dividendo -> 0"""
     f = 1.0
@@ -168,8 +172,21 @@ def flag_factor(row, price=None, ex_divs=()):
     except (TypeError, ValueError):
         k = None
     if side == "BID":
-        f *= 0.3
+        f *= SOLD_WEIGHT
+    elif side == "ASK" and price and k:
+        from .options import conviction
+        try:
+            vol = float(row.get("volume") or 0)
+            opt_px = float(row.get("premium") or 0) / (vol * 100) if vol else None
+        except (TypeError, ValueError):
+            opt_px = None
+        dd, ee = parse_date(row.get("date")), parse_date(row.get("expiration"))
+        dte = (ee - dd).days if dd and ee else None
+        f *= conviction(kind, "ASK", k, float(price), row.get("ticker", ""), opt_px, dte,
+                        float(row.get("premium") or 0))       # comprada OTM = mas conviccion
     if kind == "CALL" and price and k and k <= 0.9 * float(price):
+        f *= 0.3
+    if kind == "PUT" and price and k and k >= 1.1 * float(price):
         f *= 0.3
     d = parse_date(row.get("date"))
     if kind == "CALL" and d and price and k and k < float(price):

@@ -270,6 +270,11 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     os.makedirs(data_dir(), exist_ok=True)
     log(f"OpScan modo={mode} datos={data_dir()}")
     full = mode in FULL_MODES
+    sw = float(cfg["options"].get("sold_weight", 0.0))
+    options.set_sold_weight(sw)
+    options.MONEY_W.update({k: float(v) for k, v in (cfg["options"].get("money_weights") or {}).items()})
+    options.HEDGE_TICKERS |= set(cfg["universe"].get("etfs") or []) | set(cfg["options"].get("hedge_tickers") or [])
+    state.SOLD_WEIGHT = sw
 
     # 1) calendario
     if full:

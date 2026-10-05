@@ -27,6 +27,8 @@ DEFAULTS = {
         "midcap400": True, "russell1000": False, "min_avg_opt_vol": 300,
     },
     "options": {
+        "sold_weight": 0.0,
+        "money_weights": {"otm": 2.0, "atm": 1.3, "lottery": 1.2, "itm": 0.4},
         "workers": 12, "max_dte": 800, "min_volume": 100, "min_vol_oi": 1.0,
         "min_premium": 50000, "big_premium": 1000000, "min_dte_unusual": 2, "min_premium_share": 0.003, "max_abs_delta_hedge": 0.90,
         "top_flow_rows": 800, "yfinance_fallback_max": 40,
