@@ -319,8 +319,8 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
       valor (botón <b>Comprar</b>) y vendes aquí. Cada posición se revalora en cada escaneo y la herramienta te dice qué hacer:
       <b class="up">MANTENER</b>, <b class="warn">VIGILAR</b> o <b class="down">CERRAR</b> (con aviso por Telegram).</div>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0">
-      <button class="btn sec" id="scanNow">Actualizar precios ahora</button>
-      <span class="small muted" id="scanInfo"></span></div>
+      <button class="btn sec" id="scanNow">Escanear ahora</button>
+      <span class="small muted" id="scanInfo"></span><span class="small" id="liveInfo"></span></div>
     <div class="kpis" id="pkpis"></div>
     <div class="section-t">Posiciones abiertas</div>
     <div id="portOpen" class="pgrid"></div>
@@ -333,6 +333,8 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
     <div class="panel"><div class="tscroll"><table class="big"><thead><tr>
       <th class="l">Id</th><th class="l">Valor</th><th class="l">Opción</th><th>Coste</th><th>Valor hoy</th><th>Resultado</th><th>Abierta</th><th class="l">Qué hacer / motivo</th>
     </tr></thead><tbody id="autoBody"></tbody></table></div></div>
+    <div class="section-t">Precios en vivo (cada 30 segundos)</div>
+    <div class="panel ghbox" style="padding:14px" id="liveBox"></div>
     <div class="section-t">Conexión con GitHub (para comprar y vender desde aquí)</div>
     <div class="panel ghbox" style="padding:14px" id="ghBox"></div>
   </section>
@@ -893,6 +895,45 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-buy]");if(
     box.innerHTML="";};
   box.scrollIntoView({behavior:"smooth",block:"nearest"});});
 
+// ---------- precios en vivo (via tu Cloudflare Worker)
+const LIVE={k:"opscan_live_url",get(){try{return localStorage.getItem(this.k)||"";}catch(e){return "";}},
+  set(v){try{localStorage.setItem(this.k,v);}catch(e){}},clear(){try{localStorage.removeItem(this.k);}catch(e){}}};
+S.live={};let liveTimer=null,liveBusy=false,liveErr="";
+function liveTrade(t){const L=S.live[t.ticker];if(!L)return null;let v=0;
+  for(const l of t.legs||[]){const o=L.options[l.symbol];if(!o||!(o.mid>0))return null;v+=(l.qty||1)*o.mid;}
+  const value=Math.round(v*100*(t.contracts||1)*100)/100,pnl=Math.round((value-t.entry_cost)*100)/100;
+  return {value,pnl,pnl_pct:t.entry_cost?Math.round(pnl/t.entry_cost*1000)/10:0,price:L.price,at:L.at,
+    mid:(L.options[(t.legs||[])[0].symbol]||{}).mid};}
+function marketOpen(){const ny=new Date(new Date().toLocaleString("en-US",{timeZone:"America/New_York"}));
+  const d=ny.getDay(),m=ny.getHours()*60+ny.getMinutes();return d>0&&d<6&&m>=570&&m<=975;}
+async function livePoll(){const base=LIVE.get();if(!base||liveBusy)return;liveBusy=true;
+  const open=((S.paper&&S.paper.trades)||[]).filter(t=>t.status==="OPEN");const by={};
+  open.forEach(t=>(t.legs||[]).forEach(l=>(by[t.ticker]=by[t.ticker]||new Set()).add(l.symbol)));
+  try{await Promise.all(Object.entries(by).map(async([tk,syms])=>{
+      const r=await fetch(`${base.replace(/\/$/,"")}/?t=${encodeURIComponent(tk)}&o=${[...syms].join(",")}`);
+      if(!r.ok)throw new Error("HTTP "+r.status);const j=await r.json();if(j.error)throw new Error(j.error);
+      S.live[tk]={price:j.price,options:j.options||{},at:new Date()};}));liveErr="";}
+  catch(e){liveErr=e.message;}
+  liveBusy=false;if(S.tab==="port")renderPort();}
+function liveStart(){clearInterval(liveTimer);if(!LIVE.get())return;livePoll();
+  liveTimer=setInterval(()=>{if(document.visibilityState==="visible"&&(marketOpen()||!Object.keys(S.live).length))livePoll();},30000);}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&LIVE.get())livePoll();});
+function renderLiveBox(){const u=LIVE.get();const box=$("#liveBox");if(!box)return;
+  box.innerHTML=u?`<div>✅ Activado. Tus posiciones se revaloran cada 30 s mientras tengas esta página abierta${marketOpen()?"":" (ahora el mercado está cerrado: los precios no cambian)"}.
+      <span class="muted small">Los precios de Cboe llevan 15 min de retraso.</span></div>
+      <div class="small muted" style="margin-top:4px">Puente: ${esc(u)}</div>
+      <div style="margin-top:10px"><button class="btn sec" id="liveNow">Actualizar ya</button> <button class="btn sec" id="liveOff">Desactivar</button></div>`
+    :`<div class="small">Para ver tus posiciones moverse cada 30 segundos hace falta un pequeño "puente" gratuito (el navegador no deja leer Cboe directamente).
+      Se hace <b>una sola vez</b> (5 minutos). Cuando lo tengas, pega aquí su dirección:</div>
+      <input type="text" id="liveUrl" placeholder="https://opscan-precios.TU-NOMBRE.workers.dev" style="margin-top:8px">
+      <div style="margin-top:10px"><button class="btn" id="liveSave">Guardar y probar</button> <span id="liveMsg" class="small"></span></div>`;
+  const sv=$("#liveSave");if(sv)sv.onclick=async()=>{const v=($("#liveUrl").value||"").trim();if(!/^https:\/\//.test(v)){$("#liveMsg").innerHTML='<span class="down">Pega la dirección completa (https://...)</span>';return;}
+    $("#liveMsg").textContent="Probando…";
+    try{const r=await fetch(v.replace(/\/$/,"")+"/?t=SPY&o=");const j=await r.json();if(!j.price)throw new Error(j.error||"sin precio");
+      LIVE.set(v);$("#liveMsg").innerHTML='<span class="up">Funciona ✓ (SPY $'+j.price+')</span>';setTimeout(()=>{renderLiveBox();liveStart();},700);}
+    catch(e){$("#liveMsg").innerHTML='<span class="down">No responde: '+esc(e.message)+'. Revisa la dirección.</span>';}};
+  const nw=$("#liveNow");if(nw)nw.onclick=livePoll;const off=$("#liveOff");if(off)off.onclick=()=>{LIVE.clear();S.live={};clearInterval(liveTimer);liveTimer=null;renderPort();};}
+
 function daysTo(d){if(!d)return null;const t=new Date(d+"T00:00:00");return Math.round((t-new Date(new Date().toDateString()))/864e5);}
 function legShort(t){const l=(t.legs||[])[0]||{};return `${l.kind==="C"?"CALL":"PUT"} ${l.strike} · ${esc(l.expiration||"")}${(t.contracts||1)>1?` · ×${t.contracts}`:""}`;}
 function acctKPIs(A,curve,label){if(!A||!A.capital)return "";
@@ -905,14 +946,21 @@ function acctKPIs(A,curve,label){if(!A||!A.capital)return "";
     <div class="kpi"><div class="lbl">Resultado abierto</div><div class="val num">${pnlH(A.unrealized??(A.open_value-A.invested))}</div><div class="sub">si vendieras hoy</div></div>
     <div class="kpi"><div class="lbl">Resultado cerrado</div><div class="val num">${pnlH(A.realized||0)}</div><div class="sub">${A.n_closed||0} operación(es)</div></div>
     <div class="kpi"><div class="lbl">Máximo por operación</div><div class="val num">${moneyF(A.max_per_trade)}</div><div class="sub">${A.max_pct}% de la cartera</div></div>`;}
+function liveAccount(A,trades){if(!A||!Object.keys(S.live).length)return A;let ov=0,inv=0,any=false;
+  trades.filter(t=>t.status==="OPEN").forEach(t=>{const lv=liveTrade(t);if(lv)any=true;ov+=lv?lv.value:(t.value??t.entry_cost);inv+=t.entry_cost;});
+  if(!any)return A;const eq=A.cash+ov;return {...A,open_value:Math.round(ov*100)/100,unrealized:Math.round((ov-inv)*100)/100,equity:Math.round(eq*100)/100,
+    return_pct:Math.round((eq/A.capital-1)*10000)/100};}
 function renderPort(){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];const recs={};((S.latest&&S.latest.records)||[]).forEach(r=>recs[r.ticker]=r);
-  $("#pkpis").innerHTML=acctKPIs(sm.account,(P.curves||{}).MANUAL,"Valor de mi cartera")||`<div class="empty">Aún no hay datos de la cartera.</div>`;
+  const liveAt=Object.values(S.live).map(x=>x.at).sort((a,b)=>a-b).pop();
+  $("#liveInfo").innerHTML=liveErr?` · <span class="down">precios en vivo: ${esc(liveErr)}</span>`:liveAt?` · <span class="up">● EN VIVO</span> ${liveAt.toLocaleTimeString("es-ES")} (Cboe, 15 min de retraso)`:"";
+  $("#pkpis").innerHTML=acctKPIs(liveAccount(sm.account,tr.filter(t=>t.source==="MANUAL")),(P.curves||{}).MANUAL,"Valor de mi cartera")||`<div class="empty">Aún no hay datos de la cartera.</div>`;
   const mine=tr.filter(t=>t.source==="MANUAL"),op=mine.filter(t=>t.status==="OPEN"),cl=mine.filter(t=>t.status!=="OPEN").reverse();
-  $("#portOpen").innerHTML=op.map(t=>{const r=recs[t.ticker]||{};const l=(t.legs||[])[0]||{};const spot=t.underlying_last??r.price;
+  $("#portOpen").innerHTML=op.map(t0=>{const lv=liveTrade(t0);const t=lv?{...t0,value:lv.value,pnl:lv.pnl,pnl_pct:lv.pnl_pct}:t0;
+    const r=recs[t.ticker]||{};const l={...((t.legs||[])[0]||{}),...(lv?{last:lv.mid}:{})};const spot=lv&&lv.price!=null?lv.price:(t.underlying_last??r.price);
     const dte=daysTo(t.expiration),cat=t.catalyst||{},cd=daysTo(cat.date);const A=t.advice||{};
     const sellData={id:t.id};
     return `<div class="pos"><div class="ph"><div><span class="tk" style="font-size:18px">${esc(t.ticker)}</span> ${dirHTML(t.direction)}
-      <div class="pc">${legShort(t)}</div><div class="muted small">${esc(t.id)} · comprada ${esc(t.opened)}${P.preview?' · <span class="warn">pendiente de revalorar</span>':""}</div></div>
+      <div class="pc">${legShort(t)}</div><div class="muted small">${esc(t.id)} · comprada ${esc(t.opened)}${lv?' · <span class="up">● en vivo '+lv.at.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})+'</span>':P.preview?' · <span class="warn">pendiente de revalorar</span>':""}</div></div>
       <div class="pnl">${pnlH(t.pnl||0)}<div class="small ${(t.pnl_pct||0)>=0?"up":"down"}">${(t.pnl_pct||0)>=0?"+":""}${t.pnl_pct||0}%</div></div></div>
       <div class="grid4">${M("Pagaste",moneyF(t.entry_cost),"$"+(l.entry??"—")+" por opción")}${M("Vale hoy",moneyF(t.value),"$"+(l.last??"—")+" por opción")}
         ${M("Acción",`$${t.underlying_entry??"—"} → $${spot??"—"}`)}${M("Vence en",dte!=null?dte+" días":"—")}</div>
@@ -926,14 +974,14 @@ function renderPort(){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];const
     <td class="num">${moneyF(t.entry_cost)}</td><td class="num">${moneyF(t.exit_value)}</td><td class="num">${pnlH(t.pnl,t.pnl_pct)}</td>
     <td class="num">${esc(t.opened)} → ${esc(t.closed||"")}</td><td class="l small">${esc(t.close_reason||"")}</td></tr>`).join("")
     ||`<tr><td colspan="8" class="empty">Todavía no has cerrado ninguna operación.</td></tr>`;
-  $("#akpis").innerHTML=acctKPIs(sm.account_auto,(P.curves||{}).AUTO,"Valor estrategia automática");
+  $("#akpis").innerHTML=acctKPIs(liveAccount(sm.account_auto,tr.filter(t=>t.source==="AUTO")),(P.curves||{}).AUTO,"Valor estrategia automática");
   const au=tr.filter(t=>t.source==="AUTO").sort((a,b)=>(a.status==="OPEN"?0:1)-(b.status==="OPEN"?0:1));
-  $("#autoBody").innerHTML=au.slice(0,80).map(t=>`<tr class="click" data-tk="${esc(t.ticker)}"><td class="l">${esc(t.id)}</td>
+  $("#autoBody").innerHTML=au.slice(0,80).map(t0=>{const lv=t0.status==="OPEN"?liveTrade(t0):null;const t=lv?{...t0,value:lv.value,pnl:lv.pnl,pnl_pct:lv.pnl_pct}:t0;return `<tr class="click" data-tk="${esc(t.ticker)}"><td class="l">${esc(t.id)}</td>
     <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${legShort(t)}</td>
     <td class="num">${moneyF(t.entry_cost)}</td><td class="num">${moneyF(t.status==="OPEN"?t.value:t.exit_value)}</td><td class="num">${pnlH(t.pnl||0,t.pnl_pct)}</td>
-    <td class="num">${esc(t.opened)}</td><td class="l small">${t.status==="OPEN"?(t.advice?`<b class="${t.advice.action==="CERRAR"?"down":t.advice.action==="VIGILAR"?"warn":"up"}">${esc(t.advice.action)}</b> · ${esc((t.advice.reasons||[]).join(" · "))}`:"—"):"cerrada: "+esc(t.close_reason||"")}</td></tr>`).join("")
+    <td class="num">${esc(t.opened)}</td><td class="l small">${t.status==="OPEN"?(t.advice?`<b class="${t.advice.action==="CERRAR"?"down":t.advice.action==="VIGILAR"?"warn":"up"}">${esc(t.advice.action)}</b> · ${esc((t.advice.reasons||[]).join(" · "))}`:"—"):"cerrada: "+esc(t.close_reason||"")}</td></tr>`;}).join("")
     ||`<tr><td colspan="8" class="empty">La estrategia automática aún no ha comprado nada (compra hasta 3 ENTRADAS al día).</td></tr>`;
-  renderGH();}
+  renderGH();renderLiveBox();}
 document.addEventListener("click",e=>{const o=e.target.closest("[data-open]");if(o){openDetail(o.dataset.open);return;}
   const sb=e.target.closest("[data-sell]");if(!sb)return;const id=sb.dataset.sell;const box=document.querySelector(`[data-sellbox="${CSS.escape(id)}"]`);
   box.innerHTML=`<div class="buybox"><b>¿Vender ${esc(id)}?</b><div class="small" style="margin:4px 0 8px">Se cierra al último precio valorado. No se puede deshacer.</div>
@@ -981,7 +1029,7 @@ async function load(){
   Object.assign(S,{latest:L,flow:F,fut:FU,pol:P,cal:C,status:ST,trk:TR,paper:PA});
   $("#updated").innerHTML=L?`Actualizado ${new Date(L.generated_at).toLocaleString("es-ES",{dateStyle:"short",timeStyle:"short"})}<br><span class="muted">sesión ${esc(L.session_date)}</span>`:"sin datos aún";
   const h=(location.hash||"").slice(1);switchTab(["radar","port","trk","flow","sec","fut","pol","cal","status"].includes(h)?h:S.tab);
-  loadPaperFresh().then(ch=>{if(ch&&S.tab==="port")renderPort();});}
+  loadPaperFresh().then(ch=>{if(ch&&S.tab==="port")renderPort();if(LIVE.get()&&!liveTimer)liveStart();});}
 load();setInterval(load,5*60*1000);
 </script>
 </body>
