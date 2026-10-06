@@ -252,6 +252,13 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
 
   <!-- FLUJO -->
   <section id="v-flow" hidden>
+    <div class="section-t" style="margin-top:4px">Actividad anómala en el resto del mercado <span class="muted small" id="ampInfo"></span></div>
+    <div class="help small">Una vez al día (tras el cierre) se revisan <b>todos</b> los valores con opciones (~5.300). Aquí salen los de <b>fuera</b> del universo
+      principal con contratos negociados muy por encima de lo que había abierto (como AIT: 795 calls en un valor con 41 contratos abiertos).
+      Pasan unos días al escaneo principal (etiqueta <span class="tag y">CALIENTE</span>) para comprobar al día siguiente si la apuesta se mantiene.</div>
+    <div class="panel"><div class="tscroll"><table class="big"><thead><tr>
+      <th class="l">Valor</th><th>Nivel</th><th class="l">Dirección</th><th class="l">Qué pasó</th><th>Dinero</th><th>Lado</th><th>Fuera del dinero</th><th class="l">Liquidez</th>
+    </tr></thead><tbody id="ampBody"></tbody></table></div></div>
     <div class="help"><b>Cómo leerlo.</b> Contratos con volumen ≥ OI previo y prima relevante (todas las fechas de vencimiento).
       El <b>lado</b> se estima comparando el último precio con el bid/ask: <b>ASK</b> = compra agresiva, <b>BID</b> = venta.
       Al día siguiente se comprueba si el OI subió: si sube, eran <b>posiciones nuevas</b> (abajo, "Confirmadas por OI").</div>
@@ -501,7 +508,7 @@ function renderRadar(){const L=S.latest;renderKPIs();
     const nc=x.next_catalyst;
     const cat=nc?`<span class="${nc.days<=10?'soon':''}"><b>${esc(nc.type)}</b> · ${nc.days}d</span><div class="nm">${esc(nc.date)}</div>`:'<span class="muted">—</span>';
     return `<tr class="click" data-tk="${esc(x.ticker)}">
-      <td class="l"><div class="tk">${esc(x.ticker)}${heldSet().has(x.ticker)?' <span class="tag g" title="Tienes una posición abierta">EN CARTERA</span>':""}</div><div class="nm">${esc(x.name||"")}${x.sector?" · "+esc(x.sector):""}</div></td>
+      <td class="l"><div class="tk">${esc(x.ticker)}${heldSet().has(x.ticker)?' <span class="tag g" title="Tienes una posición abierta">EN CARTERA</span>':""}${(x.groups||[]).includes("caliente")?' <span class="tag y" title="Detectado por actividad anómala en el escaneo del mercado completo">CALIENTE</span>':""}</div><div class="nm">${esc(x.name||"")}${x.sector?" · "+esc(x.sector):""}</div></td>
       <td class="num">${px(x.price)}<div class="small ${pctCls(x.change_pct)}">${pct(x.change_pct,2)}</div></td>
       <td>${sigPill(x)}${x.score_split&&x.score_split.provisional>=3?`<div class="split" title="Parte confirmada (fiable) / parte provisional del flujo de hoy (se confirma mañana con el OI)">✓${x.score_split.confirmed} · ~${x.score_split.provisional}</div>`:""}</td><td class="l">${dirHTML(x.direction)}${x.squeeze?` <span class="tag y" title="${esc((x.squeeze.reasons||[]).join(", "))}">cortos ${esc(x.squeeze.level)}</span>`:""}</td><td class="l">${ckHTML(x.checklist)}</td>
       <td class="num">${x.unusual_count?`${money(x.unusual_premium)} <span class="muted small">(${x.unusual_count})</span>${biasBar(x.flow_bias)}`:'<span class="muted">—</span>'}</td>
@@ -515,7 +522,18 @@ $("#tbody").addEventListener("click",e=>{const tr=e.target.closest("tr[data-tk]"
 // ---------- FLUJO
 function readLabel(u){return `${u.direction==="NEUTRAL"?'<span class="dir d-NEUTRAL">• indeterminado</span>':dirHTML(u.direction)}${u.whale?' <span class="tag y">BALLENA</span>':""}${u.combo?' <span class="tag n" title="Dos patas del mismo vencimiento con volumen casi igual: probablemente un spread">¿spread?</span>':""}${u.hedge_like?' <span class="tag n">cobertura?</span>':""}`;}
 function contractTxt(u){return `${u.kind==="CALL"?'<span class="up">CALL</span>':'<span class="down">PUT</span>'} ${u.strike}`;}
-function renderFlow(){const F=S.flow;
+function renderAmp(){const A=S.amp;const b=$("#ampBody");if(!b)return;
+  $("#ampInfo").textContent=A&&A.generated_at?`· ${A.universe||"?"} valores revisados · ${new Date(A.generated_at).toLocaleString("es-ES",{dateStyle:"short",timeStyle:"short"})}`:"";
+  b.innerHTML=((A&&A.found)||[]).slice(0,60).map(x=>{const c=(x.contracts||[])[0]||{};
+    return `<tr class="click" data-tk="${esc(x.ticker)}"><td class="l"><span class="tk">${esc(x.ticker)}</span><div class="nm">${esc(x.name||"")}</div></td>
+    <td><span class="pill p-${x.level==="ALTA"?"ALTA":"MEDIA"}">${esc(x.level)}</span></td><td class="l">${dirHTML(x.direction)}</td>
+    <td class="l small">${esc(x.why||"")}</td><td class="num">${money(x.premium)}</td>
+    <td class="small">${c.side==="ASK"?'<b class="up">compra</b>':c.side==="BID"?'<span class="muted">venta</span>':'<span class="muted">¿?</span>'}</td>
+    <td class="num">${c.otm_pct!=null?(c.otm_pct>=0?c.otm_pct+"%":"dentro"):"—"}</td>
+    <td class="l small"><span class="${x.liquidity==="mala"?"down":x.liquidity==="buena"?"up":"warn"}">${esc(x.liquidity)}</span>${c.spread_pct!=null?` · dif. ${c.spread_pct}%`:""}</td></tr>`;}).join("")
+    ||`<tr><td colspan="8" class="empty">Aún no hay datos del escaneo del mercado completo (se ejecuta cada noche tras el cierre).</td></tr>`;}
+$("#ampBody").addEventListener("click",e=>{const tr=e.target.closest("tr[data-tk]");if(tr)openDetail(tr.dataset.tk);});
+function renderFlow(){renderAmp();const F=S.flow;
   if(!F){$("#flowBody").innerHTML=`<tr><td colspan="12" class="empty">Sin datos de flujo todavía.</td></tr>`;$("#confBody").innerHTML="";return;}
   const q=$("#fq").value.toLowerCase().trim(),k=$("#fKind").value,dte=$("#fDte").value,prem=+$("#fPrem").value,side=$("#fSide").value,
     otm=$("#fOtm").checked,hideH=$("#fHedge").checked;
@@ -776,7 +794,7 @@ function openDetail(tk){S._detailTk=tk;const r=(S.latest&&S.latest.records||[]).
     <div id="simBox"></div>`:""}
     <div class="grid4" style="margin-top:8px">${M("Coste (1 contrato)",money(I.cost))}${M("Pérdida máxima",money(I.max_loss))}${M("Ganancia máxima",I.max_gain!=null?money(I.max_gain):"sin límite")}${M("Punto muerto",`$${I.breakeven} (${pct(I.breakeven_move_pct)})`)}</div>
     ${I.pop!=null?`<div class="small" style="margin-top:6px">Probabilidad de acabar ganando al vencimiento: <b>${I.pop}%</b> <span class="muted">(según la volatilidad que descuentan las opciones; no es una predicción)</span></div>`:""}`:"";
-  const idea=I?`<div class="idea"><div><b>Idea de estructura (educativa):</b> ${esc(I.structure)}${I.expiration?` · vencimiento ${esc(I.expiration)} (${I.dte}d)`:""}</div>
+  const idea=I?`${I.liquidity==="mala"?'<div class="risk-w" style="margin-top:10px">⚠️ <b>Señal interesante, pero difícil de operar:</b> las opciones de este valor tienen mucha diferencia entre precio de compra y de venta. Entrarías perdiendo parte solo por eso. Si operas, usa órdenes limitadas al precio medio y pocos contratos.</div>':""}<div class="idea"><div><b>Idea de estructura (educativa):</b> ${esc(I.structure)}${I.expiration?` · vencimiento ${esc(I.expiration)} (${I.dte}d)`:""}</div>
     <div class="small">${esc(I.strikes)} · ${esc(I.why_structure)}</div>${legRows}<div class="small" style="margin-top:6px">${esc(I.management)}</div>
     <div class="small muted">${esc(I.note)}</div>${I.legs?`<div style="margin-top:8px"><button class="btn" data-buy="main">Comprar en mi cartera</button>
     <span class="small muted"> cartera simulada, sin dinero real</span></div><div id="buyBox"></div>`:""}</div>`:"";
@@ -1181,8 +1199,8 @@ rLiveT=setInterval(radarLive,60000);
 
 // ---------- carga
 async function load(){
-  const [L,F,FU,P,C,ST,TR,PA,IN]=await Promise.all(["latest","flow","futures","political","catalysts","status","tracking","paper","insiders"].map(n=>getJSON("data/"+n+".json")));
-  Object.assign(S,{latest:L,flow:F,fut:FU,pol:P,cal:C,status:ST,trk:TR,paper:PA,ins:IN});
+  const [L,F,FU,P,C,ST,TR,PA,IN,AM]=await Promise.all(["latest","flow","futures","political","catalysts","status","tracking","paper","insiders","amplio"].map(n=>getJSON("data/"+n+".json")));
+  Object.assign(S,{latest:L,flow:F,fut:FU,pol:P,cal:C,status:ST,trk:TR,paper:PA,ins:IN,amp:AM});
   $("#updated").innerHTML=L?`Actualizado ${new Date(L.generated_at).toLocaleString("es-ES",{dateStyle:"short",timeStyle:"short"})}<br><span class="muted">sesión ${esc(L.session_date)}</span>`:"sin datos aún";
   const h=(location.hash||"").slice(1);switchTab(["radar","port","trk","flow","sec","fut","pol","cal","status"].includes(h)?h:S.tab);
   loadPaperFresh().then(ch=>{if(ch&&S.tab==="port")renderPort();if(LIVE.get()&&!liveTimer)liveStart();});setTimeout(radarLive,1500);}

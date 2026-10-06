@@ -12,7 +12,7 @@ import shutil
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from . import (alerts, catalysts, congress, enrich, futures, insiders, market, options, paper, scoring, shorts, state,
+from . import (alerts, amplio, catalysts, congress, enrich, futures, insiders, market, options, paper, scoring, shorts, state,
                technicals, tracking, universe)
 from .config import DOCS_DIR, data_dir, load_config
 from .util import Status, iso_now, log, parse_date, read_json, rnd, today_et, write_json
@@ -304,6 +304,21 @@ def run(mode="full", tickers_override=None, offline_universe=False):
         uni = {t: base_u.get(t, {"name": t, "sector": "", "groups": ["smoke"]}) for t in pick}
     else:
         uni = universe.build_universe(cfg, status, cat_tickers, offline=offline_universe, low_activity=low_act)
+    # valores "calientes" del escaneo del mercado completo (rama amplio): se siguen unos dias
+    hot_path = os.environ.get("OPSCAN_HOT_FILE")
+    if not tickers_override and mode != "smoke":
+        for h in amplio.load_hot(hot_path):
+            m_ = uni.setdefault(h["ticker"], {"name": h.get("name") or h["ticker"], "sector": "", "groups": []})
+            if "caliente" not in m_.setdefault("groups", []):
+                m_["groups"].append("caliente")
+        if hot_path and os.path.exists(hot_path):
+            try:
+                hj = read_json(hot_path, {}) or {}
+                write_json(_out("amplio.json"), {"generated_at": hj.get("generated_at"), "universe": hj.get("universe"),
+                                                 "stats": hj.get("stats"), "found": (hj.get("found") or [])[:150],
+                                                 "hot": hj.get("hot") or []})
+            except Exception as e:
+                log(f"amplio.json: {e}")
     sectors = {t: m.get("sector", "") for t, m in uni.items()}
 
     # 3) futuros
@@ -578,7 +593,7 @@ def build_site(out_dir):
     dd = os.path.join(out_dir, "data")
     os.makedirs(dd, exist_ok=True)
     for f in ("latest.json", "flow.json", "catalysts.json", "political.json", "futures.json", "status.json",
-              "tracking.json", "paper.json", "insiders.json"):
+              "tracking.json", "paper.json", "insiders.json", "amplio.json"):
         src = _out(f)
         if os.path.exists(src):
             shutil.copy(src, os.path.join(dd, f))

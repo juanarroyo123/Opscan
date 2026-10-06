@@ -11,7 +11,7 @@ universe:
   etfs: [SPY, QQQ, IWM, DIA, XLF, XLE, XLV, XBI, XLK, SMH, GLD, SLV, USO, TLT, HYG, KRE, ARKK]
   indices: [SPX, NDX, VIX, RUT]
   # Tus valores propios (biotech, pequenas, etc.). Siempre se escanean.
-  watchlist: [CRNX, RCKT, DYN, CADL, AUPH, ACHV, ZVRA, IOVA, MELI, PLTR, SOFI, HOOD, MSTR, COIN]
+  watchlist: [CRNX, RCKT, DYN, CADL, AUPH, ACHV, ZVRA, IOVA, MELI, PLTR, SOFI, HOOD, MSTR, COIN, AIT]
   exclude: []
   # Anadir automaticamente las biotech con fecha PDUFA / lectura en el horizonte
   add_catalyst_tickers: true

@@ -185,3 +185,38 @@ def test_coberturas_y_loteria():
     assert conviction("C", "ASK", 110, 100, "XYZ", 0.20, 5, 60000) == 0.8      # loteria barata y corta: 2 x 0,4
     assert conviction("C", "ASK", 110, 100, "XYZ", 0.20, 5, 900000) == 2.0     # ...salvo que sea mucho dinero
     assert conviction("C", "BID", 110, 100, "XYZ", 2.0, 40, 800000) == 1.0     # vendida: lo decide sold_weight
+
+
+def test_amplio_detecta_caso_ait():
+    from opscan import amplio
+    und = {"ticker": "AIT", "price": 345.79, "change_pct": 0.68, "session_date": "2026-10-05"}
+
+    def c(sym, kind, k, vol, oi, bid, ask, last, dte=11):
+        return {"symbol": sym, "kind": kind, "strike": k, "expiration": "2026-10-16", "dte": dte, "volume": vol,
+                "oi": oi, "bid": bid, "ask": ask, "last": last}
+    cs = [c("AIT261016C00370000", "C", 370, 795, 0, 0.0, 1.15, 0.60), c("AIT261016C00350000", "C", 350, 1, 3, 3.1, 5.8, 6.8),
+          c("AIT261016P00330000", "P", 330, 10, 10, 0, 4, 4.37)] + [c(f"X{i}", "C", 300 + i, 0, 3, 1, 2, 0) for i in range(9)]
+    r = amplio.detect(und, cs, "Applied Industrial")
+    assert r and r["ticker"] == "AIT" and r["contracts"][0]["strike"] == 370
+    assert r["contracts"][0]["x_ticker_oi"] >= 10 and r["level"] == "ALTA" and r["liquidity"] == "mala"
+    assert r["direction"] == "ALCISTA"
+    # un valor normal con volumen corriente no salta
+    cs2 = [c("Y", "C", 350, 150, 5000, 2, 2.1, 2.05)]
+    assert amplio.detect(und, cs2) is None
+    hot = amplio.update_hot([], [r], dt.date(2026, 10, 5))
+    assert hot[0]["ticker"] == "AIT" and hot[0]["first_seen"] == "2026-10-05"
+    hot = amplio.update_hot(hot, [], dt.date(2026, 10, 20))
+    assert hot == []                                     # caduca a los pocos dias
+
+
+def test_hot_robusto(tmp_path):
+    from opscan import amplio
+    bad = tmp_path / "hot.json"
+    bad.write_text("{esto no es json")
+    assert amplio.load_hot(str(bad)) == []
+    assert amplio.load_hot(str(tmp_path / "no_existe.json")) == []
+    import json
+    many = [{"ticker": f"T{i}", "last_seen": "2026-10-06", "score": i} for i in range(200)]
+    bad.write_text(json.dumps({"hot": many}))
+    got = amplio.load_hot(str(bad), dt.date(2026, 10, 6))
+    assert len(got) == 60 and got[0]["ticker"] == "T199"
