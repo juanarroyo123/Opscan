@@ -1092,8 +1092,9 @@ function renderPort(){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];rende
       <div class="adv ${esc(A.action||"MANTENER")}"><b class="${A.action==="CERRAR"?"down":A.action==="VIGILAR"?"warn":"up"}">${esc(A.action||"SIN DATOS AÚN")}</b> · ${esc((A.reasons||["Se valorará en el próximo escaneo"]).join(" · "))}</div>
       <div class="acts"><button class="btn sec" data-open="${esc(t.ticker)}">Ver ficha</button>
         <button class="btn sec" data-simp="${esc(t.id)}">📈 Escenarios</button>
+        <button class="btn sec" data-edit="${esc(t.id)}">✏️ Corregir</button>
         <button class="btn" style="background:var(--bad-txt)" data-sell="${esc(t.id)}" data-lbl="venta de ${esc(t.ticker)} (${esc(t.id)})">Vender (cerrar)</button></div>
-      <div data-sellbox="${esc(t.id)}"></div><div data-simbox="${esc(t.id)}"></div></div>`;}).join("")||`<div class="empty" style="grid-column:1/-1">No tienes posiciones abiertas en <b>${ACC[S.acct]}</b>. Abre la ficha de un valor del Radar y pulsa <b>Comprar</b>, o usa <b>Añadir una operación hecha fuera</b>.</div>`;
+      <div data-sellbox="${esc(t.id)}"></div><div data-editbox="${esc(t.id)}"></div><div data-simbox="${esc(t.id)}"></div></div>`;}).join("")||`<div class="empty" style="grid-column:1/-1">No tienes posiciones abiertas en <b>${ACC[S.acct]}</b>. Abre la ficha de un valor del Radar y pulsa <b>Comprar</b>, o usa <b>Añadir una operación hecha fuera</b>.</div>`;
   $("#portClosed").innerHTML=cl.slice(0,100).map(t=>`<tr class="click" data-tk="${esc(t.ticker)}"><td class="l">${esc(t.id)}</td>
     <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${legShort(t)}</td>
     <td class="num">${moneyF(t.entry_cost)}</td><td class="num">${moneyF(t.exit_value)}</td><td class="num">${pnlH(t.pnl,t.pnl_pct)}</td>
@@ -1116,6 +1117,25 @@ document.addEventListener("click",e=>{const g=e.target.closest("[data-sellgo]");
     const lesson=((bx.querySelector("[data-lesson]")||{}).value||"").trim();bx.remove();
     placeOrder("PAPER CERRAR "+id,{id,lesson},"venta de "+id);return;}
   const n=e.target.closest("[data-sellno]");if(n)n.closest(".buybox").remove();});
+// corregir una operacion tuya (precio pagado, contratos, fecha, motivo)
+document.addEventListener("click",e=>{const b=e.target.closest("[data-edit]");if(!b)return;const id=b.dataset.edit;
+  const t=((S.paper&&S.paper.trades)||[]).find(x=>x.id===id);if(!t)return;const l=(t.legs||[])[0]||{};
+  const box=document.querySelector(`[data-editbox="${CSS.escape(id)}"]`);if(!box)return;
+  if(box.innerHTML){box.innerHTML="";return;}
+  box.innerHTML=`<div class="buybox"><b>Corregir ${esc(id)} · ${esc(t.ticker)}</b>
+    <div class="small muted" style="margin:4px 0 8px">Cambia solo lo que esté mal. Se recalcula el coste y el resultado.</div>
+    <div class="extf"><label>Precio pagado (por opción)<input type="number" step="0.01" min="0.01" data-e="entry" value="${l.entry??""}"></label>
+      <label>Contratos<input type="number" step="1" min="1" data-e="contracts" value="${t.contracts||1}"></label>
+      <label>Fecha de compra<input type="date" data-e="opened" value="${esc(t.opened||"")}"></label></div>
+    <textarea data-e="why" rows="2" style="margin-top:8px" placeholder="Por qué entraste">${esc(t.why||"")}</textarea>
+    <div style="margin-top:10px;display:flex;gap:8px"><button class="btn" data-editgo="${esc(id)}">Guardar corrección</button><button class="btn sec" data-editno>Cancelar</button></div></div>`;});
+document.addEventListener("click",e=>{const g=e.target.closest("[data-editgo]");if(g){const id=g.dataset.editgo;const bx=g.closest(".buybox");
+    const t=((S.paper&&S.paper.trades)||[]).find(x=>x.id===id)||{};const l=(t.legs||[])[0]||{};const v=k=>(bx.querySelector(`[data-e="${k}"]`)||{}).value;
+    const d={id};const px=parseFloat(v("entry")),n=parseInt(v("contracts")||"0"),od=v("opened"),why=(v("why")||"").trim();
+    if(px>0&&px!==l.entry)d.entry=px;if(n>=1&&n!==(t.contracts||1))d.contracts=n;if(od&&od!==t.opened)d.opened=od;if(why&&why!==(t.why||""))d.why=why;
+    if(Object.keys(d).length<2){toast('No has cambiado nada. <a href="#" data-x>cerrar</a>');return;}
+    bx.remove();placeOrder("PAPER CORREGIR "+id,d,"corrección de "+id);return;}
+  const n=e.target.closest("[data-editno]");if(n)n.closest(".buybox").remove();});
 $("#portClosed").addEventListener("click",e=>{const tr=e.target.closest("tr[data-tk]");if(tr)openDetail(tr.dataset.tk);});
 $("#autoBody").addEventListener("click",e=>{const tr=e.target.closest("tr[data-tk]");if(tr)openDetail(tr.dataset.tk);});
 

@@ -93,3 +93,19 @@ def test_rsi_sin_consejos_de_flujo():
     paper.seed(book, [{"account": "RSI", "symbol": "HD261030C00300000", "price": 2.32}], "2026-10-06")
     paper.advise(book, {"HD": {"direction": "BAJISTA", "score": 70, "checklist": {}}}, "2026-10-06")
     assert book["trades"][0]["advice"]["action"] == "MANTENER"
+
+
+def test_corregir_precio():
+    book = {"trades": [], "seq": 0}
+    ok, _ = paper.apply_request(book, {"op": "open", "account": "RSI", "ticker": "DDOG", "direction": "BAJISTA",
+                                       "legs": [{"symbol": "DDOG261030P00250000", "kind": "P", "strike": 250,
+                                                 "expiration": "2026-10-30", "action": "COMPRAR", "mid": 5.4}],
+                                       "contracts": 1, "trade_id": "M0002"}, "2026-10-06")
+    assert ok
+    req = paper.parse_request("PAPER CORREGIR M0002", '{"id": "M0002", "entry": 5.15, "nonce": "x"}')
+    ok, msg = paper.apply_request(book, req, "2026-10-06")
+    t = book["trades"][0]
+    assert ok and t["entry_cost"] == 515.0 and t["legs"][0]["entry"] == 5.15 and t["pnl"] == 25.0
+    assert paper.account(book, "RSI")["cash"] == 10000 - 515
+    ok, _ = paper.apply_request(book, {"op": "edit", "id": "M0002"}, "2026-10-06")
+    assert not ok                                                       # nada que cambiar

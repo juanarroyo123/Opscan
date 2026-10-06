@@ -497,12 +497,59 @@ def parse_request(title, body):
             data = json.loads(m.group(0))
         except json.JSONDecodeError:
             data = {}
+    if "CORREGIR" in title:
+        tid = data.get("id") or (re.search(r"[PMR]\d{4}", title) or [None])[0]
+        return {"op": "edit", **data, "id": tid}
     if "CERRAR" in title:
         tid = data.get("id") or (re.search(r"[PMR]\d{4}", title) or [None])[0]
         return {"op": "close", "id": tid, "nonce": data.get("nonce"), "lesson": data.get("lesson")}
     if "ABRIR" in title:
         return {"op": "open", **data}
     return {"op": "unknown"}
+
+
+def edit_trade(book, req, session):
+    """Corrige una operacion TUYA abierta: precio pagado por opcion, contratos, fecha de compra, motivo."""
+    t = next((x for x in book["trades"] if x["id"] == req.get("id") and x["status"] == "OPEN"
+              and x["source"] in USER_ACCOUNTS), None)
+    if not t:
+        return False, f"No hay operacion tuya abierta con id {req.get('id')}"
+    changes = []
+    if req.get("entry") not in (None, ""):
+        if len(t["legs"]) != 1:
+            return False, "Solo se puede corregir el precio de operaciones de una sola opcion"
+        try:
+            px = round(float(req["entry"]), 3)
+        except (TypeError, ValueError):
+            return False, "Precio no valido"
+        if px <= 0:
+            return False, "El precio tiene que ser mayor que 0"
+        old = t["legs"][0]["entry"]
+        t["legs"][0]["entry"] = px
+        t["unit_cost"] = round(px * 100 * t["legs"][0]["qty"], 2)
+        changes.append(f"precio ${old} -> ${px}")
+    if req.get("contracts") not in (None, ""):
+        n = int(req["contracts"])
+        if n < 1:
+            return False, "Minimo 1 contrato"
+        if n != _n(t):
+            changes.append(f"contratos {_n(t)} -> {n}")
+            t["value"] = round(t["value"] / _n(t) * n, 2)
+            t["contracts"] = n
+    od = parse_date(req.get("opened"))
+    if od and od.isoformat() <= session and od.isoformat() != t["opened"]:
+        changes.append(f"fecha {t['opened']} -> {od.isoformat()}")
+        t["opened"] = od.isoformat()
+    if req.get("why") is not None and str(req["why"]).strip() and str(req["why"]) != t.get("why"):
+        t["why"] = str(req["why"])[:300]
+        changes.append("motivo")
+    if not changes:
+        return False, "No hay nada que cambiar"
+    t["entry_cost"] = round(t["unit_cost"] * _n(t), 2)
+    t["pnl"] = round(t["value"] - t["entry_cost"], 2)
+    t["pnl_pct"] = round(t["pnl"] / t["entry_cost"] * 100, 1) if t["entry_cost"] else 0.0
+    t.setdefault("edits", []).append({"date": session, "what": ", ".join(changes)})
+    return True, f"Corregida {t['id']} ({t['ticker']}): " + ", ".join(changes) + f". Coste ahora ${t['entry_cost']}"
 
 
 def apply_request(book, req, session, issue=None):
@@ -524,6 +571,8 @@ def apply_request(book, req, session, issue=None):
             return True, (f"Abierta {t['id']} ({t['ticker']}) en {ACCOUNTS[src]}: {t['contracts']} contrato(s) x ${t['unit_cost']} = "
                           f"${t['entry_cost']}. Saldo disponible: ${a['cash']}")
         return False, book.pop("_last_reject", None) or "Datos de la operacion no validos"
+    if req.get("op") == "edit":
+        return edit_trade(book, req, session)
     if req.get("op") == "close":
         for t in book["trades"]:
             if t["id"] == req.get("id") and t["status"] == "OPEN" and t["source"] in USER_ACCOUNTS:
