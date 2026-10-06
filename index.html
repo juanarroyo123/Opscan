@@ -208,6 +208,70 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
 .extf{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;align-items:end}
 .extf label{display:flex;flex-direction:column;gap:3px;font-size:13px}
 .extf input,.extf select,#extBox textarea{width:100%;box-sizing:border-box;background:var(--bg);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:7px 9px;font:inherit}
+/* ---- Mi cartera estilo broker (act. 17c) ---- */
+.ib{font-variant-numeric:tabular-nums}
+.ib .up{color:var(--good-txt)} .ib .down{color:var(--bad-txt)}
+.ib-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.ib-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.ib-accts{display:flex;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);max-width:100%;overflow-x:auto}
+.ib-accts button{border:0;border-right:1px solid var(--line);background:transparent;color:var(--txt2);font:inherit;padding:8px 14px;cursor:pointer;text-align:left;min-width:130px}
+.ib-accts button:last-child{border-right:0}
+.ib-accts button .a1{font-size:12px;font-weight:700;display:block}
+.ib-accts button .a2{font-size:13px;color:var(--txt)}
+.ib-accts button.on{background:var(--pri-soft);color:var(--pri-txt);box-shadow:inset 0 -3px 0 var(--pri)}
+.ib-desc{margin:2px 2px 10px}
+.ib-sum{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:12px}
+.ib-sum>div{padding:10px 12px;border-right:1px solid var(--line2);min-width:0}
+.ib-sum>div:last-child{border-right:0}
+.ib-sum .l{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ib-sum .v{font-size:17px;font-weight:700;margin-top:3px;white-space:nowrap}
+.ib-sum .s{font-size:11.5px;color:var(--mut);margin-top:1px}
+.ib-sum .big .v{font-size:22px}
+@media(max-width:1000px){.ib-sum{grid-template-columns:repeat(4,minmax(0,1fr))}.ib-sum>div{border-bottom:1px solid var(--line2)}}
+@media(max-width:560px){.ib-sum{grid-template-columns:repeat(2,minmax(0,1fr))}.ib-sum .big{grid-column:1/-1}}
+.ib-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px;position:relative}
+.ib-ch{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.ib-ct{font-weight:800;font-size:14px}
+.ib-det summary{cursor:pointer;list-style:none}.ib-det summary::-webkit-details-marker{display:none}
+.ib-det summary::before{content:"▸ ";color:var(--mut)}.ib-det[open] summary::before{content:"▾ "}
+.ib-seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.ib-seg button{border:0;border-right:1px solid var(--line);background:transparent;color:var(--txt2);font:inherit;font-size:12px;font-weight:700;padding:5px 10px;cursor:pointer}
+.ib-seg button:last-child{border-right:0}
+.ib-seg button.on{background:var(--pri-soft);color:var(--pri-txt)}
+.ib-chart{width:100%;position:relative}
+.ib-chart svg{display:block;width:100%}
+.ib-chart .ax{font-size:10.5px;fill:var(--mut)}
+.ib-chart .grid{stroke:var(--line2);stroke-width:1}
+.ib-chart .zero{stroke:var(--div-mid);stroke-width:1}
+.ib-chart .ln{fill:none;stroke:var(--series);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.ib-chart .ar{fill:var(--series);opacity:.10}
+.ib-chart .xh{stroke:var(--mut);stroke-width:1;stroke-dasharray:3 3}
+.ib-chart .dot{fill:var(--series);stroke:var(--surface);stroke-width:2}
+.ib-chart .bp{fill:var(--good)} .ib-chart .bn{fill:var(--bad)}
+.ib-chart .bar:hover{opacity:.8}
+.ib-empty{padding:28px 6px;text-align:center;color:var(--mut);font-size:13px}
+.ib-tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;box-shadow:0 4px 14px rgba(0,0,0,.15);z-index:5;white-space:nowrap}
+.ib-tip b{display:block;font-size:13px}
+.ib-t{width:100%;border-collapse:collapse;font-size:12.5px;min-width:860px}
+.ib-t th{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);font-weight:700;text-align:right;padding:7px 8px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--surface)}
+.ib-t td{padding:8px;text-align:right;border-bottom:1px solid var(--line2);white-space:nowrap}
+.ib-t th.l,.ib-t td.l{text-align:left}
+.ib-t tr.row{cursor:pointer} .ib-t tr.row:hover td{background:var(--surface2)}
+.ib-t tr.row.open td{background:var(--surface2)}
+.ib-t tr.tot td{font-weight:800;border-top:1px solid var(--line);border-bottom:0}
+.ib-t .ins b{font-size:13px} .ib-t .ins .sub{color:var(--mut);font-size:11.5px}
+.ib-t .cp{display:inline-block;font-size:10px;font-weight:800;padding:1px 5px;border-radius:4px;margin-left:5px;vertical-align:1px}
+.ib-t .cp.C{background:var(--good-bg);color:var(--good-txt)} .ib-t .cp.P{background:var(--bad-bg);color:var(--bad-txt)}
+.ib-t .badge{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:5px;letter-spacing:.03em}
+.ib-t .badge.MANTENER{background:var(--good-bg);color:var(--good-txt)} .ib-t .badge.VIGILAR{background:var(--warn-bg);color:var(--warn-txt)}
+.ib-t .badge.CERRAR{background:var(--bad-bg);color:var(--bad-txt)} .ib-t .badge.NA{background:var(--neu-bg);color:var(--neu-txt)}
+.ib-t tr.dt td{white-space:normal;text-align:left;background:var(--surface2);padding:10px 12px 14px}
+.ib-dt{display:grid;grid-template-columns:1.3fr 1fr;gap:14px}
+@media(max-width:800px){.ib-dt{grid-template-columns:1fr}}
+.ib-dt .kv{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:12.5px}
+.ib-dt .kv span{color:var(--mut)}
+.ib-dt .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.ib .live-dot{color:var(--good-txt);font-size:11px}
 </style>
 </head>
 <body>
@@ -353,38 +417,53 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
 
   <!-- MI CARTERA -->
   <section id="v-port" hidden>
-    <div class="help"><b>Tres carteras simuladas de $10.000</b> (dinero ficticio, precios reales con 15 min de retraso):
-      <b>OpScan</b> (tus compras con las señales de la web), <b>Soportes + RSI</b> (tu estrategia propia; no se usa para ajustar la web)
-      y el <b>Robot</b> (la web sola, con reglas fijas). Compras desde la ficha de cualquier valor (botón <b>Comprar</b>, eliges la cartera)
-      o con <b>Añadir operación hecha fuera</b>, y vendes aquí. Cada posición se revalora en cada escaneo y la herramienta te dice qué hacer:
-      <b class="up">MANTENER</b>, <b class="warn">VIGILAR</b> o <b class="down">CERRAR</b> (con aviso por Telegram).</div>
-    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0">
-      <button class="btn sec" id="scanNow">Escanear ahora</button>
-      <span class="small muted" id="scanInfo"></span><span class="small" id="liveInfo"></span></div>
-    <div class="section-t">Comparativa de carteras</div>
-    <div class="cmpgrid" id="cmpK"></div>
-    <div class="acctsw" id="acctSw" role="tablist" aria-label="Elegir cartera"></div>
-    <div class="kpis" id="portK"></div>
-    <div class="section-t">Riesgo de tu cartera</div>
-    <div id="riskBox"></div>
-    <div class="section-t">Posiciones abiertas</div>
-    <div id="portOpen" class="pgrid"></div>
-    <div class="section-t">Historial (cerradas)</div>
-    <div class="panel"><div class="tscroll"><table class="big"><thead><tr>
-      <th class="l">Id</th><th class="l">Valor</th><th class="l">Opción</th><th>Pagaste</th><th>Vendiste</th><th>Resultado</th><th>Abierta → cerrada</th><th class="l">Motivo</th>
-    </tr></thead><tbody id="portClosed"></tbody></table></div></div>
-    <div class="section-t">Añadir una operación hecha fuera de la web</div>
-    <div class="panel" style="padding:14px" id="extBox"></div>
-    <div class="section-t">Robot · estrategia automática <span class="muted small">(la web sola, con otros $10.000)</span></div>
-    <div class="help small" id="robotRules"></div>
-    <div class="kpis" id="akpis"></div>
-    <div class="panel"><div class="tscroll"><table class="big"><thead><tr>
-      <th class="l">Id</th><th class="l">Valor</th><th class="l">Opción</th><th>Coste</th><th>Valor hoy</th><th>Resultado</th><th>Abierta</th><th class="l">Qué hacer / motivo</th>
-    </tr></thead><tbody id="autoBody"></tbody></table></div></div>
-    <div class="section-t">Precios en vivo (cada 30 segundos)</div>
-    <div class="panel ghbox" style="padding:14px" id="liveBox"></div>
-    <div class="section-t">Conexión con GitHub (para comprar y vender desde aquí)</div>
-    <div class="panel ghbox" style="padding:14px" id="ghBox"></div>
+    <div class="ib">
+      <div class="ib-top">
+        <div class="ib-accts" id="ibAccts" role="tablist" aria-label="Elegir cartera"></div>
+        <div class="ib-tools"><button class="btn sec" id="scanNow">Escanear ahora</button>
+          <span class="small muted" id="scanInfo"></span><span class="small" id="liveInfo"></span></div>
+      </div>
+      <div class="ib-desc small muted" id="ibDesc"></div>
+      <div class="ib-sum" id="ibSum"></div>
+
+      <div class="ib-card">
+        <div class="ib-ch">
+          <div class="ib-ct">Rendimiento <span class="muted small" id="ibPerfNote"></span></div>
+          <div class="ib-seg" id="ibRange" role="group" aria-label="Periodo"></div>
+        </div>
+        <div class="ib-chart" id="ibLine"></div>
+        <div class="ib-ch" style="margin-top:6px">
+          <div class="ib-ct">Ganancia por <span id="ibGroupLbl">día</span></div>
+          <div class="ib-seg" id="ibGroup" role="group" aria-label="Agrupar"></div>
+        </div>
+        <div class="ib-chart" id="ibBars"></div>
+        <div class="ib-tip" id="ibTip" hidden></div>
+      </div>
+
+      <div class="ib-card">
+        <div class="ib-ch"><div class="ib-ct">Posiciones <span class="muted small" id="ibPosN"></span></div>
+          <div class="small muted">Pulsa una fila para ver detalles y acciones</div></div>
+        <div class="tscroll"><table class="ib-t" id="ibPos"></table></div>
+      </div>
+
+      <div class="ib-card" id="ibRobot" hidden><div class="ib-ct">Reglas del Robot</div><div class="small" id="robotRules" style="margin-top:6px;line-height:1.5"></div></div>
+
+      <details class="ib-card ib-det" id="ibRiskD"><summary class="ib-ct">Riesgo de la cartera</summary><div id="riskBox" style="margin-top:10px"></div></details>
+      <details class="ib-card ib-det" id="ibExtD"><summary class="ib-ct">+ Añadir una operación hecha fuera de la web</summary><div id="extBox" style="margin-top:10px"></div></details>
+
+      <div class="ib-card">
+        <div class="ib-ch"><div class="ib-ct">Operaciones cerradas <span class="muted small" id="ibClN"></span></div></div>
+        <div class="tscroll"><table class="ib-t" id="ibClosed"></table></div>
+      </div>
+
+      <details class="ib-card ib-det"><summary class="ib-ct">Ajustes: precios en vivo y conexión con GitHub</summary>
+        <div class="section-t" style="margin-top:12px">Precios en vivo (cada 30 segundos)</div>
+        <div class="ghbox" id="liveBox"></div>
+        <div class="section-t">Conexión con GitHub (para comprar y vender desde aquí)</div>
+        <div class="ghbox" id="ghBox"></div>
+      </details>
+      <div class="small muted" style="margin:10px 2px">Carteras simuladas (dinero ficticio, precios de Cboe con 15 min de retraso). No es asesoramiento de inversión.</div>
+    </div>
   </section>
 
   <!-- SEGUIMIENTO -->
@@ -951,7 +1030,7 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-buy]");if(
   const tk=($("#drawer").dataset.tk)||"";const r=(S.latest&&S.latest.records||[]).find(x=>x.ticker===tk);if(!r||!r.idea)return;
   const I=r.idea;let leg=b.dataset.buy==="main"?(I.legs||[])[0]:(I.choices||[])[+b.dataset.buy];if(!leg)return;
   const lo=S.live[r.ticker]&&S.live[r.ticker].options[leg.symbol];if(lo&&lo.mid>0)leg={...leg,mid:lo.mid,iv:lo.iv??leg.iv};
-  const unit=Math.round(leg.mid*100*100)/100;let acc=S.acct;
+  const unit=Math.round(leg.mid*100*100)/100;let acc=USER_ACC.includes(S.acct)?S.acct:"MANUAL";
   let A=acctSum((S.paper&&S.paper.summary)||{},acc)||{max_per_trade:500,cash:10000};
   const sug=Math.max(1,Math.floor((A.max_per_trade||500)/unit));
   const box=$("#buyBox");if(!box)return;
@@ -968,7 +1047,7 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-buy]");if(
   upd();$("#buyN").addEventListener("input",upd);
   $("#buyAcc").addEventListener("change",()=>{acc=$("#buyAcc").value;A=acctSum((S.paper&&S.paper.summary)||{},acc)||{max_per_trade:500,cash:10000};upd();});$("#buyNo").onclick=()=>box.innerHTML="";
   $("#buyGo").onclick=()=>{const n=Math.max(1,parseInt($("#buyN").value||"1"));
-    if(USER_ACC.includes(acc)&&acc!==S.acct){S.acct=acc;try{localStorage.setItem("opscan_acct",acc);}catch(e){}}
+    if(acc!==S.acct){S.acct=acc;lsSet("opscan_acct",acc);}
     placeOrder("PAPER ABRIR "+r.ticker,{ticker:r.ticker,direction:r.direction,price:r.price,contracts:n,account:acc,
       structure:(leg.kind==="C"?"Call":"Put")+" comprada"+(leg.label?" "+String(leg.label).toLowerCase():""),
       legs:[{action:"COMPRAR",symbol:leg.symbol,kind:leg.kind,strike:leg.strike,expiration:leg.expiration,mid:leg.mid,iv:leg.iv,delta:leg.delta}],
@@ -1056,57 +1135,178 @@ function liveAccount(A,trades){if(!A||!Object.keys(S.live).length)return A;let o
   trades.filter(t=>t.status==="OPEN").forEach(t=>{const lv=liveTrade(t);if(lv)any=true;ov+=lv?lv.value:(t.value??t.entry_cost);inv+=t.entry_cost;});
   if(!any)return A;const eq=A.cash+ov;return {...A,open_value:Math.round(ov*100)/100,unrealized:Math.round((ov-inv)*100)/100,equity:Math.round(eq*100)/100,
     return_pct:Math.round((eq/A.capital-1)*10000)/100};}
-const ACC={MANUAL:"OpScan",RSI:"Soportes + RSI",AUTO:"Robot"},USER_ACC=["MANUAL","RSI"];
-S.acct=(()=>{try{const v=localStorage.getItem("opscan_acct");return USER_ACC.includes(v)?v:"MANUAL";}catch(e){return "MANUAL";}})();
-function setAcct(a){if(!USER_ACC.includes(a))return;S.acct=a;try{localStorage.setItem("opscan_acct",a);}catch(e){}renderPort();}
+const ACC={MANUAL:"OpScan",RSI:"Soportes + RSI",AUTO:"Robot"},USER_ACC=["MANUAL","RSI"],ALL_ACC=["MANUAL","RSI","AUTO"];
+const ACC_DESC={MANUAL:"Tus compras con las señales de OpScan.",RSI:"Tu estrategia propia de soportes/resistencias y RSI (no se usa para ajustar la web).",
+  AUTO:"La web sola: compra cada ENTRADA y la gestiona con reglas fijas."};
+const lsGet=(k,d)=>{try{return localStorage.getItem(k)||d;}catch(e){return d;}},lsSet=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
+S.acct=(v=>ALL_ACC.includes(v)?v:"MANUAL")(lsGet("opscan_acct","MANUAL"));
+S.pRange=lsGet("opscan_prange","ALL");S.pGroup=lsGet("opscan_pgroup","D");S.ibOpen=new Set();
+function setAcct(a){if(!ALL_ACC.includes(a))return;S.acct=a;lsSet("opscan_acct",a);S.ibOpen.clear();renderPort(true);}
 function acctSum(sm,src){return (sm.accounts&&sm.accounts[src])||(src==="AUTO"?sm.account_auto:src==="RSI"?sm.account_rsi:sm.account)||null;}
-function renderCmp(P){const sm=P.summary||{},tr=P.trades||[];
-  $("#cmpK").innerHTML=Object.keys(ACC).map(k=>{const A0=acctSum(sm,k);if(!A0)return `<div class="cmp static"><div class="nm2">${ACC[k]}</div><div class="muted small">Se creará en el próximo escaneo</div></div>`;
-    const A=liveAccount(A0,tr.filter(t=>t.source===k));const cl=(A0.closed)||{};const user=USER_ACC.includes(k);
-    return `<button class="cmp ${user?"":"static"} ${k===S.acct?"on":""}" ${user?`data-acct="${k}"`:'data-robot="1"'}><div class="nm2">${ACC[k]}${k==="AUTO"?' <span class="muted small">automática</span>':""}</div>
-      <div class="big2 num">${moneyF(A.equity)}</div><div class="small">${pnlH(A.equity-A.capital,A.return_pct)}</div>
-      <div class="small muted">${A.n_open||0} abiertas · ${A.n_closed||0} cerradas${cl.win_rate!=null?" · "+cl.win_rate+"% ganadoras":""}</div></button>`;}).join("");
-  $("#acctSw").innerHTML=USER_ACC.map(k=>`<button role="tab" aria-selected="${k===S.acct}" class="${k===S.acct?"on":""}" data-acct="${k}">${ACC[k]}</button>`).join("");
-  const R=P.rules||{};$("#robotRules").innerHTML=`Reglas: compra cada ENTRADA (máx. 3 al día, ${R.max_pct_trade||5}% por operación, vencimiento ≥ ${R.min_dte_auto||30} días, al <b>ask</b>);
-    no compra puts de índices; con semáforo ámbar solo score ≥ ${R.amber_min_score||55} y en rojo nada; tras una pérdida espera ${R.cooldown_days||4} días para volver al mismo valor.
-    Decide las salidas <b>una vez al día, al cierre</b> y vende al <b>bid</b>: +${R.target_pct||100}% objetivo, ${R.stop_pct||-50}% stop, a +${R.half_at_pct||50}% vende la mitad y protege el resto, y cierra si su consejo dice CERRAR.`;}
-document.addEventListener("click",e=>{const a=e.target.closest("[data-acct]");if(a){setAcct(a.dataset.acct);return;}
-  const rb=e.target.closest("[data-robot]");if(rb){const t=$("#akpis");if(t)t.scrollIntoView({behavior:"smooth"});}});
-function renderPort(){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];renderCmp(P);renderExt();const recs={};((S.latest&&S.latest.records)||[]).forEach(r=>recs[r.ticker]=r);
+const sgn=(n,f=moneyF)=>n==null||isNaN(n)?"—":(n>0?"+":"")+f(n);
+const cls=n=>n>0?"up":n<0?"down":"";
+const usd0=v=>(v<0?"-":"")+"$"+Math.abs(v).toFixed(0),usd2=v=>(v<0?"-":"")+"$"+Math.abs(v).toFixed(2);
+const MON3=["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
+function insName(t){const l=(t.legs||[])[0]||{};const d=new Date((l.expiration||"")+"T12:00:00");
+  const e=isNaN(d)?"":`${MON3[d.getMonth()]}${String(d.getDate()).padStart(2,"0")}'${String(d.getFullYear()).slice(2)}`;
+  return `<b>${esc(t.ticker)}</b> <span class="sub">${e} ${l.strike??""}</span><span class="cp ${l.kind==="C"?"C":"P"}">${l.kind==="C"?"CALL":"PUT"}</span>`;}
+function sessionToday(){return (S.latest&&S.latest.session_date)||new Date().toISOString().slice(0,10);}
+
+// ---- serie de valor de la cuenta (curva diaria + punto en vivo de hoy)
+function acctSeries(src,A){const P=S.paper||{};const c=((P.curves||{})[src]||[]).map(x=>({d:x.date,v:x.equity}));
+  const cap=(A&&A.capital)||10000;const tr=(P.trades||[]).filter(t=>t.source===src);
+  const first=tr.map(t=>t.opened).sort()[0];const today=sessionToday();
+  let pts=c.filter(p=>p.d<today);
+  if(A)pts.push({d:today,v:A.equity});else{const t=c.find(p=>p.d===today);if(t)pts.push(t);}
+  const start=[first,pts[0]&&pts[0].d].filter(Boolean).sort()[0];
+  if(start){const d0=new Date(start+"T12:00:00");d0.setDate(d0.getDate()-1);while(d0.getDay()===0||d0.getDay()===6)d0.setDate(d0.getDate()-1);
+    pts.unshift({d:d0.toISOString().slice(0,10),v:cap});}
+  return pts.map(p=>({...p,pl:p.v-cap}));}
+function rangeCut(pts){if(S.pRange==="ALL"||!pts.length)return pts;const last=new Date(pts[pts.length-1].d+"T12:00:00");const d=new Date(last);
+  if(S.pRange==="1W")d.setDate(d.getDate()-7);else if(S.pRange==="1M")d.setMonth(d.getMonth()-1);else if(S.pRange==="3M")d.setMonth(d.getMonth()-3);
+  else if(S.pRange==="YTD")d.setMonth(0,0);const k=d.toISOString().slice(0,10);
+  const i=pts.findIndex(p=>p.d>=k);return i<=0?pts:pts.slice(i-1);}
+function periodPL(pts){const out=[];for(let i=1;i<pts.length;i++){const d=pts[i].d,v=pts[i].v-pts[i-1].v;let k=d,lab=d;
+    const dt=new Date(d+"T12:00:00");
+    if(S.pGroup==="W"){const m=new Date(dt);m.setDate(m.getDate()-((m.getDay()+6)%7));k=m.toISOString().slice(0,10);lab="Semana del "+m.getDate()+" "+MON3[m.getMonth()];}
+    else if(S.pGroup==="M"){k=d.slice(0,7);lab=MON3[dt.getMonth()]+" "+dt.getFullYear();}
+    else lab=dt.getDate()+" "+MON3[dt.getMonth()];
+    const o=out[out.length-1];if(o&&o.k===k)o.v+=v;else out.push({k,lab,v});}
+  return out;}
+const fmtD=d=>{const x=new Date(d+"T12:00:00");return x.getDate()+" "+MON3[x.getMonth()];};
+function niceTicks(lo,hi,n=4){if(lo===hi){lo-=1;hi+=1;}const span=hi-lo,step0=span/n,mag=Math.pow(10,Math.floor(Math.log10(step0)));
+  const step=[1,2,2.5,5,10].map(m=>m*mag).find(s=>s>=step0);const a=Math.floor(lo/step)*step,b=Math.ceil(hi/step)*step;const t=[];
+  for(let v=a;v<=b+step/2;v+=step)t.push(Math.round(v*100)/100);return t;}
+function showTip(card,x,y,html){const tip=$("#ibTip");tip.innerHTML=html;tip.hidden=false;const cw=card.clientWidth;
+  const w=tip.offsetWidth;tip.style.left=Math.min(Math.max(4,x-w/2),cw-w-4)+"px";tip.style.top=(y-tip.offsetHeight-10)+"px";}
+function hideTip(){const t=$("#ibTip");if(t)t.hidden=true;}
+
+function drawLine(el,pts){if(pts.length<2){el.innerHTML=`<div class="ib-empty">La gráfica se irá llenando con cada sesión (un punto al día).</div>`;return;}
+  const W=Math.max(300,el.clientWidth||600),H=210,L=56,R=12,T=10,B=24;const vals=pts.map(p=>p.pl);
+  const ticks=niceTicks(Math.min(0,...vals),Math.max(0,...vals));const y0=ticks[0],y1=ticks[ticks.length-1];
+  const X=i=>L+(W-L-R)*(pts.length===1?0.5:i/(pts.length-1)),Y=v=>T+(H-T-B)*(1-(v-y0)/(y1-y0||1));
+  const path=pts.map((p,i)=>`${i?"L":"M"}${X(i).toFixed(1)},${Y(p.pl).toFixed(1)}`).join("");
+  const area=`${path}L${X(pts.length-1).toFixed(1)},${Y(Math.max(y0,0)).toFixed(1)}L${X(0).toFixed(1)},${Y(Math.max(y0,0)).toFixed(1)}Z`;
+  const nx=Math.min(pts.length,Math.max(2,Math.floor((W-L-R)/80)));const xi=[...new Set(Array.from({length:nx},(_,k)=>Math.round(k*(pts.length-1)/(nx-1))))];
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" height="${H}" role="img" aria-label="Ganancia acumulada de la cartera">
+    ${ticks.map(v=>`<line class="grid" x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}"/><text class="ax" x="${L-6}" y="${Y(v)+3.5}" text-anchor="end">${sgn(v)}</text>`).join("")}
+    <line class="zero" x1="${L}" x2="${W-R}" y1="${Y(0)}" y2="${Y(0)}"/>
+    <path class="ar" d="${area}"/><path class="ln" d="${path}"/>
+    ${xi.map(i=>`<text class="ax" x="${X(i)}" y="${H-6}" text-anchor="${i===0?"start":i===pts.length-1?"end":"middle"}">${fmtD(pts[i].d)}</text>`).join("")}
+    <circle class="dot" cx="${X(pts.length-1)}" cy="${Y(pts[pts.length-1].pl)}" r="4"/>
+    <g id="ibXh" style="display:none"><line class="xh" y1="${T}" y2="${H-B}"/><circle class="dot" r="4.5"/></g>
+    <rect x="${L}" y="0" width="${W-L-R}" height="${H}" fill="transparent" id="ibHit"/></svg>`;
+  const svg=el.querySelector("svg"),hit=el.querySelector("#ibHit"),g=el.querySelector("#ibXh"),card=el.closest(".ib-card");
+  const move=ev=>{const r=svg.getBoundingClientRect(),sx=(ev.touches?ev.touches[0].clientX:ev.clientX)-r.left;const k=W/r.width;
+    const i=Math.max(0,Math.min(pts.length-1,Math.round(((sx*k)-L)/((W-L-R)/(pts.length-1||1)))));const p=pts[i];
+    g.style.display="";g.querySelector("line").setAttribute("x1",X(i));g.querySelector("line").setAttribute("x2",X(i));
+    const c=g.querySelector("circle");c.setAttribute("cx",X(i));c.setAttribute("cy",Y(p.pl));
+    const cr=card.getBoundingClientRect();const dd=i?p.v-pts[i-1].v:0;
+    showTip(card,r.left-cr.left+X(i)/k,r.top-cr.top+Y(p.pl)/k,`<span class="muted">${fmtD(p.d)}</span><b class="${cls(p.pl)}">${sgn(p.pl)} acumulado</b>Valor ${moneyF(p.v)}${i?` · día <span class="${cls(dd)}">${sgn(dd)}</span>`:""}`);};
+  hit.addEventListener("mousemove",move);hit.addEventListener("touchmove",move,{passive:true});
+  hit.addEventListener("mouseleave",()=>{g.style.display="none";hideTip();});}
+
+function drawBars(el,items){if(!items.length){el.innerHTML=`<div class="ib-empty">Sin datos todavía.</div>`;return;}
+  const W=Math.max(300,el.clientWidth||600),H=150,L=56,R=12,T=8,B=22;const vals=items.map(x=>x.v);
+  const ticks=niceTicks(Math.min(0,...vals),Math.max(0,...vals),3);const y0=ticks[0],y1=ticks[ticks.length-1];
+  const Y=v=>T+(H-T-B)*(1-(v-y0)/(y1-y0||1));const slot=(W-L-R)/items.length,bw=Math.max(3,Math.min(36,slot-2));
+  const lblEvery=Math.ceil(items.length/Math.max(1,Math.floor((W-L-R)/70)));
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" height="${H}" role="img" aria-label="Ganancia por periodo">
+    ${ticks.map(v=>`<line class="grid" x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}"/><text class="ax" x="${L-6}" y="${Y(v)+3.5}" text-anchor="end">${sgn(v)}</text>`).join("")}
+    <line class="zero" x1="${L}" x2="${W-R}" y1="${Y(0)}" y2="${Y(0)}"/>
+    ${items.map((x,i)=>{const cx=L+slot*i+slot/2,y=Math.min(Y(0),Y(x.v)),h=Math.max(1,Math.abs(Y(x.v)-Y(0)));
+      const r=Math.min(4,bw/2,h);const up=x.v>=0;
+      const d=up?`M${cx-bw/2},${y+h}V${y+r}Q${cx-bw/2},${y} ${cx-bw/2+r},${y}H${cx+bw/2-r}Q${cx+bw/2},${y} ${cx+bw/2},${y+r}V${y+h}Z`
+               :`M${cx-bw/2},${y}V${y+h-r}Q${cx-bw/2},${y+h} ${cx-bw/2+r},${y+h}H${cx+bw/2-r}Q${cx+bw/2},${y+h} ${cx+bw/2},${y+h-r}V${y}Z`;
+      return `<path class="bar ${up?"bp":"bn"}" d="${d}" data-i="${i}"/><rect x="${L+slot*i}" y="${T}" width="${slot}" height="${H-T-B}" fill="transparent" data-i="${i}"/>
+        ${i%lblEvery===0?`<text class="ax" x="${cx}" y="${H-6}" text-anchor="middle">${esc(S.pGroup==="D"?x.lab:S.pGroup==="M"?x.lab.split(" ")[0]:x.lab.replace("Semana del ",""))}</text>`:""}`;}).join("")}</svg>`;
+  const svg=el.querySelector("svg"),card=el.closest(".ib-card");
+  svg.addEventListener("mousemove",ev=>{const t=ev.target.closest("[data-i]");if(!t){hideTip();return;}const x=items[+t.dataset.i];
+    const r=svg.getBoundingClientRect(),cr=card.getBoundingClientRect(),k=W/r.width,i=+t.dataset.i;
+    showTip(card,r.left-cr.left+(L+slot*i+slot/2)/k,r.top-cr.top+Math.min(Y(0),Y(x.v))/k,`<span class="muted">${esc(x.lab)}</span><b class="${cls(x.v)}">${sgn(x.v)}</b>`);});
+  svg.addEventListener("mouseleave",hideTip);}
+
+function renderPerf(src,A){const all=acctSeries(src,A),pts=rangeCut(all);
+  $("#ibRange").innerHTML=[["1W","1S"],["1M","1M"],["3M","3M"],["YTD","Año"],["ALL","Todo"]].map(([k,l])=>`<button class="${S.pRange===k?"on":""}" data-prange="${k}">${l}</button>`).join("");
+  $("#ibGroup").innerHTML=[["D","Día"],["W","Semana"],["M","Mes"]].map(([k,l])=>`<button class="${S.pGroup===k?"on":""}" data-pgroup="${k}">${l}</button>`).join("");
+  $("#ibGroupLbl").textContent={D:"día",W:"semana",M:"mes"}[S.pGroup];
+  const pl=pts.length>1?pts[pts.length-1].v-pts[0].v:0;
+  $("#ibPerfNote").innerHTML=pts.length>1?`· <span class="${cls(pl)}">${sgn(pl)}</span> en el periodo`:"";
+  drawLine($("#ibLine"),pts);drawBars($("#ibBars"),periodPL(pts));}
+document.addEventListener("click",e=>{const a=e.target.closest("[data-prange]");if(a){S.pRange=a.dataset.prange;lsSet("opscan_prange",S.pRange);renderPort(true);return;}
+  const g=e.target.closest("[data-pgroup]");if(g){S.pGroup=g.dataset.pgroup;lsSet("opscan_pgroup",S.pGroup);renderPort(true);return;}
+  const ac=e.target.closest("[data-acct]");if(ac){setAcct(ac.dataset.acct);return;}
+  const row=e.target.closest("tr.row[data-id]");if(row&&!e.target.closest("button")){const id=row.dataset.id;S.ibOpen.has(id)?S.ibOpen.delete(id):S.ibOpen.add(id);renderPort(true);return;}
+  const cr=e.target.closest("tr.crow[data-tk]");if(cr){openDetail(cr.dataset.tk);}});
+let ibResizeT=null;window.addEventListener("resize",()=>{clearTimeout(ibResizeT);ibResizeT=setTimeout(()=>{if(S.tab==="port")renderPort(true);},200);});
+
+function ibBusy(){return !!document.querySelector("#ibPos .buybox, #ibPos [data-simbox] > *, #ibPos [data-editbox] > *, #ibPos [data-sellbox] > *");}
+function renderPort(force){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];const recs={};((S.latest&&S.latest.records)||[]).forEach(r=>recs[r.ticker]=r);
+  const src=S.acct,user=USER_ACC.includes(src);renderExt();
   const liveAt=Object.values(S.live).map(x=>x.at).sort((a,b)=>a-b).pop();
-  $("#liveInfo").innerHTML=liveErr?` · <span class="down">precios en vivo: ${esc(liveErr)}</span>`:liveAt?` · <span class="up">● EN VIVO</span> ${liveAt.toLocaleTimeString("es-ES")} (Cboe, 15 min de retraso)`:"";
-  const A0=acctSum(sm,S.acct);
-  $("#portK").innerHTML=(A0?acctKPIs(liveAccount(A0,tr.filter(t=>t.source===S.acct)),(P.curves||{})[S.acct],"Valor · "+ACC[S.acct]):"")||`<div class="empty">Aún no hay datos de esta cartera: se crea en el próximo escaneo.</div>`;
-  const mine=tr.filter(t=>t.source===S.acct),op=mine.filter(t=>t.status==="OPEN"),cl=mine.filter(t=>t.status!=="OPEN").reverse();
-  $("#portOpen").innerHTML=op.map(t0=>{const lv=liveTrade(t0);const t=lv?{...t0,value:lv.value,pnl:lv.pnl,pnl_pct:lv.pnl_pct}:t0;
-    const r=recs[t.ticker]||{};const l={...((t.legs||[])[0]||{}),...(lv?{last:lv.mid}:{})};const spot=lv&&lv.price!=null?lv.price:(t.underlying_last??r.price);
-    const dte=daysTo(t.expiration),cat=t.catalyst||{},cd=daysTo(cat.date);const A=t.advice||{};
-    const sellData={id:t.id};
-    return `<div class="pos"><div class="ph"><div><span class="tk" style="font-size:18px">${esc(t.ticker)}</span> ${dirHTML(t.direction)}
-      <div class="pc">${legShort(t)}</div><div class="muted small">${esc(t.id)} · comprada ${esc(t.opened)}${lv?' · <span class="up">● en vivo '+lv.at.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})+'</span>':P.preview?' · <span class="warn">pendiente de revalorar</span>':""}</div></div>
-      <div class="pnl">${pnlH(t.pnl||0)}<div class="small ${(t.pnl_pct||0)>=0?"up":"down"}">${(t.pnl_pct||0)>=0?"+":""}${t.pnl_pct||0}%</div></div></div>
-      <div class="grid4">${M("Pagaste",moneyF(t.entry_cost),"$"+(l.entry??"—")+" por opción")}${M("Vale hoy",moneyF(t.value),"$"+(l.last??"—")+" por opción")}
-        ${M("Acción",`${t.underlying_entry!=null?"$"+t.underlying_entry+" → ":""}$${spot??"—"}`)}${M("Vence en",dte!=null?dte+" días":"—")}</div>
-      ${cat.date?`<div class="small" style="margin-top:6px">Catalizador: <b>${esc(cat.type||"")}</b> ${esc(cat.date)} (${cd>=0?"en "+cd+" días":"ya pasó"})</div>`:""}
-      ${t.why?`<div class="journal">📝 <b>Por qué entré:</b> ${esc(t.why)}</div>`:""}
-      <div class="adv ${esc(A.action||"MANTENER")}"><b class="${A.action==="CERRAR"?"down":A.action==="VIGILAR"?"warn":"up"}">${esc(A.action||"SIN DATOS AÚN")}</b> · ${esc((A.reasons||["Se valorará en el próximo escaneo"]).join(" · "))}</div>
-      <div class="acts"><button class="btn sec" data-open="${esc(t.ticker)}">Ver ficha</button>
-        <button class="btn sec" data-simp="${esc(t.id)}">📈 Escenarios</button>
-        <button class="btn sec" data-edit="${esc(t.id)}">✏️ Corregir</button>
-        <button class="btn" style="background:var(--bad-txt)" data-sell="${esc(t.id)}" data-lbl="venta de ${esc(t.ticker)} (${esc(t.id)})">Vender (cerrar)</button></div>
-      <div data-sellbox="${esc(t.id)}"></div><div data-editbox="${esc(t.id)}"></div><div data-simbox="${esc(t.id)}"></div></div>`;}).join("")||`<div class="empty" style="grid-column:1/-1">No tienes posiciones abiertas en <b>${ACC[S.acct]}</b>. Abre la ficha de un valor del Radar y pulsa <b>Comprar</b>, o usa <b>Añadir una operación hecha fuera</b>.</div>`;
-  $("#portClosed").innerHTML=cl.slice(0,100).map(t=>`<tr class="click" data-tk="${esc(t.ticker)}"><td class="l">${esc(t.id)}</td>
-    <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${legShort(t)}</td>
-    <td class="num">${moneyF(t.entry_cost)}</td><td class="num">${moneyF(t.exit_value)}</td><td class="num">${pnlH(t.pnl,t.pnl_pct)}</td>
-    <td class="num">${esc(t.opened)} → ${esc(t.closed||"")}</td><td class="l small">${esc(t.close_reason||"")}${t.why?`<div class="muted">📝 ${esc(t.why)}</div>`:""}${t.lesson?`<div>💡 ${esc(t.lesson)}</div>`:""}</td></tr>`).join("")
-    ||`<tr><td colspan="8" class="empty">Todavía no has cerrado ninguna operación.</td></tr>`;
-  $("#akpis").innerHTML=acctKPIs(liveAccount(acctSum(sm,"AUTO")||sm.account_auto,tr.filter(t=>t.source==="AUTO")),(P.curves||{}).AUTO,"Valor · Robot");
-  const au=tr.filter(t=>t.source==="AUTO").sort((a,b)=>(a.status==="OPEN"?0:1)-(b.status==="OPEN"?0:1));
-  $("#autoBody").innerHTML=au.slice(0,80).map(t0=>{const lv=t0.status==="OPEN"?liveTrade(t0):null;const t=lv?{...t0,value:lv.value,pnl:lv.pnl,pnl_pct:lv.pnl_pct}:t0;return `<tr class="click" data-tk="${esc(t.ticker)}"><td class="l">${esc(t.id)}</td>
-    <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${legShort(t)}</td>
-    <td class="num">${moneyF(t.entry_cost)}</td><td class="num">${moneyF(t.status==="OPEN"?t.value:t.exit_value)}</td><td class="num">${pnlH(t.pnl||0,t.pnl_pct)}</td>
-    <td class="num">${esc(t.opened)}</td><td class="l small">${t.status==="OPEN"?(t.advice?`<b class="${t.advice.action==="CERRAR"?"down":t.advice.action==="VIGILAR"?"warn":"up"}">${esc(t.advice.action)}</b> · ${esc((t.advice.reasons||[]).join(" · "))}`:"—"):"cerrada: "+esc(t.close_reason||"")}</td></tr>`;}).join("")
-    ||`<tr><td colspan="8" class="empty">La estrategia automática aún no ha comprado nada (compra hasta 3 ENTRADAS al día).</td></tr>`;
+  $("#liveInfo").innerHTML=liveErr?` · <span class="down">precios en vivo: ${esc(liveErr)}</span>`:liveAt?` · <span class="live-dot">● EN VIVO</span> ${liveAt.toLocaleTimeString("es-ES")} <span class="muted">(Cboe, 15 min de retraso)</span>`:"";
+  // pestañas de cuenta con su valor
+  const accs={};ALL_ACC.forEach(k=>{const A0=acctSum(sm,k);accs[k]=A0?liveAccount(A0,tr.filter(t=>t.source===k)):null;});
+  $("#ibAccts").innerHTML=ALL_ACC.map(k=>{const A=accs[k];return `<button role="tab" aria-selected="${k===src}" class="${k===src?"on":""}" data-acct="${k}">
+    <span class="a1">${ACC[k]}${k==="AUTO"?" · automática":""}</span><span class="a2">${A?moneyF(A.equity)+` <span class="${cls(A.return_pct)} small">${pct(A.return_pct,2)}</span>`:'<span class="muted small">próximo escaneo</span>'}</span></button>`;}).join("");
+  $("#ibDesc").textContent=ACC_DESC[src];
+  const A=accs[src];
+  // resumen tipo broker
+  const ser=acctSeries(src,A);const today=sessionToday();const prev=ser.filter(p=>p.d<today).pop();
+  const dayPL=A&&prev?A.equity-prev.v:null;
+  $("#ibSum").innerHTML=A?`<div class="big"><div class="l">Valor neto</div><div class="v">${moneyF(A.equity)}</div><div class="s"><span class="${cls(A.equity-A.capital)}">${sgn(A.equity-A.capital)} (${pct(A.return_pct,2)})</span> desde ${moneyF(A.capital)}</div></div>
+    <div><div class="l">P&amp;L del día</div><div class="v ${cls(dayPL)}">${sgn(dayPL)}</div><div class="s">${prev&&prev.v?pct(dayPL/prev.v*100,2):"—"}</div></div>
+    <div><div class="l">P&amp;L no realizado</div><div class="v ${cls(A.unrealized)}">${sgn(A.unrealized)}</div><div class="s">${A.invested?pct(A.unrealized/A.invested*100,1)+" sobre lo invertido":"sin posiciones"}</div></div>
+    <div><div class="l">P&amp;L realizado</div><div class="v ${cls(A.realized)}">${sgn(A.realized||0)}</div><div class="s">${A.n_closed||0} cerrada(s)</div></div>
+    <div><div class="l">Efectivo</div><div class="v">${moneyF(A.cash)}</div><div class="s">disponible</div></div>
+    <div><div class="l">Valor posiciones</div><div class="v">${moneyF(A.open_value)}</div><div class="s">${A.n_open||0} abierta(s) · coste ${moneyF(A.invested)}</div></div>
+    <div><div class="l">Máx. por operación</div><div class="v">${moneyF(A.max_per_trade)}</div><div class="s">${A.max_pct}% de la cartera</div></div>`
+    :`<div class="big" style="grid-column:1/-1"><div class="l">${ACC[src]}</div><div class="s">Esta cartera se crea en el próximo escaneo.</div></div>`;
+  renderPerf(src,A);
+  // posiciones
+  const mine=tr.filter(t=>t.source===src),op=mine.filter(t=>t.status==="OPEN"),cl=mine.filter(t=>t.status!=="OPEN").sort((a,b)=>(b.closed||"").localeCompare(a.closed||""));
+  $("#ibPosN").textContent=op.length?`(${op.length})`:"";
+  if(force||!ibBusy()){let tv=0,tc=0,tpl=0,tth=0;
+    const rows=op.map(t0=>{const lv=liveTrade(t0);const t=lv?{...t0,value:lv.value,pnl:lv.pnl,pnl_pct:lv.pnl_pct}:t0;const l=(t.legs||[])[0]||{};
+      const last=lv?lv.mid:l.last,n=(t.contracts||1)*(l.qty||1),spot=lv&&lv.price!=null?lv.price:(t.underlying_last??(recs[t.ticker]||{}).price);
+      const g=spot?greeks(l.kind,spot,l.strike,yearsTo(l.expiration),ivFor(t.ticker,l)):{delta:0,theta:0};const dte=daysTo(l.expiration);
+      tv+=t.value||0;tc+=t.entry_cost||0;tpl+=t.pnl||0;tth+=g.theta*100*n;const Ad=t.advice||{};const isOpen=S.ibOpen.has(t.id);
+      const cat=t.catalyst||{},cd=daysTo(cat.date);
+      return `<tr class="row ${isOpen?"open":""}" data-id="${esc(t.id)}" aria-expanded="${isOpen}">
+        <td class="l ins">${isOpen?"▾":"▸"} ${insName(t)}${lv?' <span class="live-dot" title="precio en vivo">●</span>':""}</td>
+        <td>${n}</td><td>${last!=null?"$"+Number(last).toFixed(2):"—"}</td><td>$${Number(l.entry).toFixed(2)}</td>
+        <td>${moneyF(t.value)}</td><td class="${cls(t.pnl)}">${sgn(t.pnl)}</td><td class="${cls(t.pnl_pct)}">${pct(t.pnl_pct,1)}</td>
+        <td>${spot!=null?"$"+Number(spot).toFixed(2):"—"}</td><td>${(g.delta*100*n).toFixed(0)}</td><td class="${cls(g.theta)}">${sgn(g.theta*100*n,usd0)}</td>
+        <td class="${dte!=null&&dte<=7?"down":""}">${dte!=null?dte+" d":"—"}</td>
+        <td class="l"><span class="badge ${esc(Ad.action||"NA")}">${esc(Ad.action||"SIN DATOS")}</span></td></tr>
+      ${isOpen?`<tr class="dt"><td colspan="12"><div class="ib-dt"><div>
+          <div class="adv ${esc(Ad.action||"MANTENER")}" style="margin-top:0"><b class="${Ad.action==="CERRAR"?"down":Ad.action==="VIGILAR"?"warn":"up"}">${esc(Ad.action||"SIN DATOS AÚN")}</b> · ${esc((Ad.reasons||["Se valorará en el próximo escaneo"]).join(" · "))}</div>
+          ${t.why?`<div class="journal">📝 <b>Por qué entré:</b> ${esc(t.why)}</div>`:""}
+          ${src==="AUTO"&&t.notes?`<div class="journal">🤖 ${esc(t.notes)}</div>`:""}
+          <div class="acts"><button class="btn sec" data-open="${esc(t.ticker)}">Ver ficha</button><button class="btn sec" data-simp="${esc(t.id)}">📈 Escenarios</button>
+            ${user?`<button class="btn sec" data-edit="${esc(t.id)}">✏️ Corregir</button><button class="btn" style="background:var(--bad-txt)" data-sell="${esc(t.id)}">Vender (cerrar)</button>`:""}</div></div>
+          <div class="kv"><span>Id</span><b>${esc(t.id)}</b><span>Dirección</span><span style="color:inherit">${dirHTML(t.direction)}</span>
+            <span>Comprada</span><b>${esc(t.opened)}</b><span>Coste</span><b>${moneyF(t.entry_cost)} (${n} × $${(t.unit_cost||l.entry*100).toFixed(0)})</b>
+            <span>Acción</span><b>${t.underlying_entry!=null?"$"+t.underlying_entry+" → ":""}${spot!=null?"$"+Number(spot).toFixed(2):"—"}</b>
+            <span>Vence</span><b>${esc(l.expiration||"")} (${dte??"—"} días)</b>
+            ${cat.date?`<span>Catalizador</span><b>${esc(cat.type||"")} ${esc(cat.date)} (${cd>=0?"en "+cd+" días":"ya pasó"})</b>`:""}
+            <span>Delta</span><b>${(g.delta*100*n).toFixed(0)} acciones equivalentes</b><span>Theta</span><b>${sgn(g.theta*100*n,usd2)} al día</b></div>
+        </div><div data-sellbox="${esc(t.id)}"></div><div data-editbox="${esc(t.id)}"></div><div data-simbox="${esc(t.id)}"></div></td></tr>`:""}`;}).join("");
+    $("#ibPos").innerHTML=`<thead><tr><th class="l">Instrumento</th><th>Contratos</th><th>Último</th><th>Precio medio</th><th>Valor mercado</th><th>P&amp;L no real.</th><th>%</th><th>Subyacente</th><th>Delta</th><th>Theta/día</th><th>Vence</th><th class="l">Consejo</th></tr></thead>
+      <tbody>${rows||`<tr><td colspan="12" class="l" style="padding:22px 8px;color:var(--mut)">${user?`No hay posiciones abiertas en <b>${ACC[src]}</b>. Compra desde la ficha de un valor del Radar o con <b>+ Añadir una operación</b>.`:"El Robot no tiene posiciones abiertas."}</td></tr>`}
+      ${op.length?`<tr class="tot"><td class="l">Total</td><td></td><td></td><td></td><td>${moneyF(tv)}</td><td class="${cls(tpl)}">${sgn(tpl)}</td><td class="${cls(tpl)}">${tc?pct(tpl/tc*100,1):"—"}</td><td></td><td></td><td class="${cls(tth)}">${sgn(tth,usd0)}</td><td></td><td></td></tr>`:""}</tbody>`;}
+  // cerradas
+  $("#ibClN").textContent=cl.length?`(${cl.length})`:"";
+  $("#ibClosed").innerHTML=`<thead><tr><th class="l">Instrumento</th><th>Contratos</th><th>Coste</th><th>Venta</th><th>P&amp;L</th><th>%</th><th class="l">Abierta → cerrada</th><th class="l">Motivo</th></tr></thead><tbody>${
+    cl.slice(0,100).map(t=>`<tr class="crow row" data-tk="${esc(t.ticker)}"><td class="l ins">${insName(t)}</td><td>${(t.contracts||1)}</td><td>${moneyF(t.entry_cost)}</td><td>${moneyF(t.exit_value)}</td>
+      <td class="${cls(t.pnl)}">${sgn(t.pnl)}</td><td class="${cls(t.pnl_pct)}">${pct(t.pnl_pct,1)}</td><td class="l">${esc(t.opened)} → ${esc(t.closed||"")}</td>
+      <td class="l small" style="white-space:normal;min-width:220px">${esc(t.close_reason||"")}${t.lesson?`<div>💡 ${esc(t.lesson)}</div>`:""}</td></tr>`).join("")
+    ||`<tr><td colspan="8" class="l" style="padding:18px 8px;color:var(--mut)">Todavía no hay operaciones cerradas en esta cartera.</td></tr>`}</tbody>`;
+  // secciones segun cartera
+  $("#ibExtD").hidden=!user;$("#ibRobot").hidden=src!=="AUTO";
+  const R=P.rules||{};$("#robotRules").innerHTML=`Compra cada ENTRADA (máx. 3 al día, ${R.max_pct_trade||5}% por operación, vencimiento ≥ ${R.min_dte_auto||30} días, al <b>ask</b>);
+    no compra puts de índices; con semáforo ámbar solo score ≥ ${R.amber_min_score||55} y en rojo nada; tras una pérdida espera ${R.cooldown_days||4} días para volver al mismo valor.
+    Decide las salidas <b>una vez al día, al cierre</b>, y vende al <b>bid</b>: +${R.target_pct||100}% objetivo, ${R.stop_pct||-50}% stop, a +${R.half_at_pct||50}% vende la mitad y protege el resto, y cierra si su consejo dice CERRAR.`;
   renderGH();renderLiveBox();renderRisk();}
 document.addEventListener("click",e=>{const o=e.target.closest("[data-open]");if(o){openDetail(o.dataset.open);return;}
   const sb=e.target.closest("[data-sell]");if(!sb)return;const id=sb.dataset.sell;const box=document.querySelector(`[data-sellbox="${CSS.escape(id)}"]`);
@@ -1136,8 +1336,6 @@ document.addEventListener("click",e=>{const g=e.target.closest("[data-editgo]");
     if(Object.keys(d).length<2){toast('No has cambiado nada. <a href="#" data-x>cerrar</a>');return;}
     bx.remove();placeOrder("PAPER CORREGIR "+id,d,"corrección de "+id);return;}
   const n=e.target.closest("[data-editno]");if(n)n.closest(".buybox").remove();});
-$("#portClosed").addEventListener("click",e=>{const tr=e.target.closest("tr[data-tk]");if(tr)openDetail(tr.dataset.tk);});
-$("#autoBody").addEventListener("click",e=>{const tr=e.target.closest("tr[data-tk]");if(tr)openDetail(tr.dataset.tk);});
 
 async function scanNow(){const c=GH.get();if(!c||!c.token){toast('Conecta GitHub abajo para lanzar escaneos desde aquí. <a href="#" data-x>cerrar</a>',"err");return;}
   toast("⏳ Lanzando un escaneo rápido (solo opciones, ~10–15 min)…");
