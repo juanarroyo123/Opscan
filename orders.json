@@ -80,6 +80,37 @@
    },
    "source": "web",
    "nonce": "jd1thb43"
+  },
+  {
+   "n": 5,
+   "ts": "2026-10-06T17:40:41+00:00",
+   "title": "PAPER ABRIR MRK",
+   "req": {
+    "op": "open",
+    "ticker": "MRK",
+    "direction": "ALCISTA",
+    "price": 141.5,
+    "contracts": 1,
+    "account": "MANUAL",
+    "structure": "Call comprada agresiva",
+    "legs": [
+     {
+      "action": "COMPRAR",
+      "symbol": "MRK261106C00150000",
+      "kind": "C",
+      "strike": 150,
+      "expiration": "2026-11-06",
+      "mid": 2.855,
+      "iv": 0.3611,
+      "delta": 0.318
+     }
+    ],
+    "notes": "Hoy: 2 contratos inusuales, $0.28M de prima; Sesiones previas: $3.48M en flujo inusual vigente; Puntos de flujo (+26)",
+    "why": "Clara compra con un un  ratio puts/call open interest 0.25 para el 30 de octubre. Compramosantes de PFDA, se espera aprobacion de medicamento",
+    "nonce": "95eleekn"
+   },
+   "source": "web",
+   "nonce": "95eleekn"
   }
  ]
 }
