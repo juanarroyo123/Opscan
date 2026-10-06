@@ -1,0 +1,83 @@
+name: OpScan mercado completo
+
+# Una vez al dia, tras el cierre: revisa TODOS los valores con opciones (~5.300, listado oficial de
+# Cboe) buscando actividad anomala fuera del universo principal. Los valores "calientes" pasan al
+# escaneo principal (cada 30 min) durante unos dias. Guarda en la rama `amplio`.
+on:
+  schedule:
+    - cron: "15 22 * * 1-5"       # 00:15 en Madrid (verano), tras el cierre de Wall Street
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: opscan-amplio
+  cancel-in-progress: false
+
+jobs:
+  amplio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Organizar carpetas (por si los archivos se subieron sueltos)
+        run: |
+          if [ ! -f opscan/pipeline.py ]; then
+            echo "Archivos sueltos en la raiz: los organizo en carpetas"
+            mkdir -p opscan docs config tests/fixtures
+            for f in test_*.py fakes.py; do [ -f "$f" ] && mv "$f" tests/; done
+            for f in __init__*.py; do
+              [ -f "$f" ] && grep -q "__version__" "$f" && cp "$f" opscan/__init__.py
+            done
+            rm -f __init__*.py
+            for f in *.py; do [ -f "$f" ] && mv "$f" opscan/; done
+            [ -f opscan/__init__.py ] || echo '__version__ = "2.2.0"' > opscan/__init__.py
+            touch tests/__init__.py
+            [ -f index.html ] && mv index.html docs/
+            for f in sp500.csv nasdaq100.csv catalysts_manual.csv; do [ -f "$f" ] && mv "$f" config/; done
+            [ -f config/catalysts_manual.csv ] || echo "ticker,date,type,note" > config/catalysts_manual.csv
+            for f in kadoa_trades.json cboe_real_sample.json committee-membership-current.yaml committees-current.yaml legislators-current.yaml; do
+              [ -f "$f" ] && mv "$f" tests/fixtures/
+            done
+          fi
+          ls opscan docs config
+
+      - name: Recuperar datos (ramas data y amplio)
+        env:
+          REPO_URL: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+        run: |
+          if git ls-remote --exit-code --heads "$REPO_URL" data >/dev/null 2>&1; then
+            git clone --quiet --depth 1 --branch data "$REPO_URL" data
+          else
+            mkdir -p data
+          fi
+          if git ls-remote --exit-code --heads "$REPO_URL" amplio >/dev/null 2>&1; then
+            git clone --quiet --depth 1 --branch amplio "$REPO_URL" amplio
+          else
+            mkdir -p amplio
+          fi
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Escanear el mercado completo
+        run: python -m opscan.amplio --out amplio --core data/latest.json --workers 16
+
+      - name: Guardar (rama amplio)
+        env:
+          REPO_URL: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+        run: |
+          cd amplio
+          rm -rf .git
+          git init -q -b amplio
+          git config user.name  "opscan-bot"
+          git config user.email "opscan-bot@users.noreply.github.com"
+          git add -A
+          git commit -q -m "mercado completo $(date -u +%F)"
+          git push -q -f "$REPO_URL" amplio
