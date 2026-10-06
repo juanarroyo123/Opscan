@@ -351,6 +351,9 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     orders = paper.load_orders(os.environ.get("OPSCAN_ORDERS_DIR"))
     if orders:
         paper.apply_orders(book, orders, today_et().isoformat())
+    n_seed = paper.seed(book, (cfg.get("paper") or {}).get("seed"), today_et().isoformat())
+    if n_seed:
+        log(f"paper: {n_seed} operaciones anadidas desde config (paper.seed)")
     watch = paper.watch_symbols(book)
     for tk in watch:
         if tk not in uni:
@@ -497,9 +500,19 @@ def run(mode="full", tickers_override=None, offline_universe=False):
 
     # 8) cartera simulada (AUTO abre cada ENTRADA), registro de aciertos, GEX y sectores
     ok_recs = [r for r in records if r.get("signal") != "ERR"]
-    n_auto = paper.auto_open(book, ok_recs, session)
+    market_gex = {tk: res["gex"] for tk, res in results.items() if res.get("gex")}
+    sem = market.semaforo(ok_recs, market_gex.get("SPX") or market_gex.get("SPY"), (fut or {}).get("regime"))
+    n_auto = paper.auto_open(book, ok_recs, session, sem)
     to_close = paper.advise(book, {r["ticker"]: r for r in ok_recs}, session, cfg["scoring"]["media"])
-    for t in to_close:
+    if mode in ("full", "smoke"):        # el Robot decide sus salidas una vez al dia, con el cierre
+        for t, why in paper.manage_auto(book, session):
+            try:
+                alerts.send_telegram(f"OpScan Robot - {t['ticker']} {t['id']}: {why}\n"
+                                     f"P&L {t.get('pnl_pct', 0):+.0f}% (${t.get('pnl', 0):+.0f})\n"
+                                     "(cartera simulada, no es asesoramiento)")
+            except Exception as e:
+                log(f"telegram robot: {e}")
+    for t in [x for x in to_close if x["source"] != "AUTO"]:      # avisos solo para TUS carteras
         try:
             alerts.send_telegram(f"OpScan - CERRAR {t['id']} {t['ticker']} ({t['source']})\n"
                                  f"P&L {t.get('pnl_pct', 0):+.0f}% (${t.get('pnl', 0):+.0f})\n- "
@@ -516,7 +529,6 @@ def run(mode="full", tickers_override=None, offline_universe=False):
         signals = tracking.record_signals(signals, ok_recs, session)
         tracking.save_signals(signals)
     track = tracking.build(signals, daily)
-    market_gex = {tk: res["gex"] for tk, res in results.items() if res.get("gex")}
     sectors_out = sector_map(ok_recs)
 
     # 9) alertas
@@ -554,7 +566,6 @@ def run(mode="full", tickers_override=None, offline_universe=False):
         "bajistas": sum(1 for r in ok if r["direction"] == "BAJISTA" and r["signal"] != "BAJA"),
     }
     gen = iso_now()
-    sem = market.semaforo(ok_recs, market_gex.get("SPX") or market_gex.get("SPY"), (fut or {}).get("regime"))
     chg_cache = market.roll(state.load_cache("signals_snap.json", {}), session, ok_recs)
     state.save_cache("signals_snap.json", chg_cache)
     day_changes = market.changes(chg_cache)

@@ -1,12 +1,13 @@
-"""Cartera simulada (paper trading) de opciones.
+"""Cartera simulada (paper trading) de opciones. Tres carteras de $10.000 cada una:
 
-- AUTO: cada ENTRADA del checklist abre una operacion simulada con la idea propuesta
-  (1 contrato/spread). Se cierra sola con +100% (objetivo), -50% (stop) o al vencer.
-  Es el registro objetivo de "que habria pasado si sigo la estrategia al pie de la letra".
-- MANUAL: desde la web, boton "Simular" -> abre un Issue en GitHub -> el workflow
-  paper.yml lo anota aqui. Para cerrarla, boton "Cerrar" (otro Issue).
+- MANUAL  "OpScan": la tuya, con las senales de la web.
+- RSI     "Soportes + RSI": la tuya, con tu estrategia propia (no se usa para calibrar la web).
+- AUTO    "Robot": cada ENTRADA del checklist abre una operacion sola y la gestiona con reglas fijas
+  (decide UNA vez al dia, con el escaneo de cierre: stop -50%, objetivo +100%, a +50% vende la
+  mitad y protege el resto, y cierra si su propio consejo dice CERRAR).
 
-Las posiciones se valoran en cada escaneo con el precio medio (bid+ask)/2 de Cboe.
+Valoracion: precio medio (bid+ask)/2 mientras esta abierta; al CERRAR se usa el bid (lo que te
+pagarian de verdad). El Robot compra al ask.
 state/paper_trades.json
 """
 import argparse
@@ -29,11 +30,25 @@ MAX_NEW_DAY = 3
 MAX_OPEN_AUTO = 8
 SKIP_BAD_LIQ = True
 RULES_VERSION = 2
+HALF_PCT = 50.0          # Robot: a +50% vende la mitad y el resto queda protegido en el precio de entrada
+COOLDOWN_DAYS = 4        # Robot: tras cerrar con perdida no vuelve a entrar en ese valor en 4 dias
+MIN_DTE_AUTO = 30        # Robot: vencimiento minimo de 30 dias
+AMBER_MIN_SCORE = 55     # Robot: con el semaforo en ambar solo entra con score >= 55 (en rojo, nada)
+NO_INDEX_PUTS = True     # Robot: no compra puts de indices (casi todo ese flujo son coberturas)
+
+ACCOUNTS = {"MANUAL": "OpScan", "RSI": "Soportes + RSI", "AUTO": "Robot"}
+USER_ACCOUNTS = ("MANUAL", "RSI")
 
 
 def configure(cfg):
-    global CAPITAL, MAX_PCT, MAX_NEW_DAY, MAX_OPEN_AUTO, SKIP_BAD_LIQ
+    global CAPITAL, MAX_PCT, MAX_NEW_DAY, MAX_OPEN_AUTO, SKIP_BAD_LIQ, HALF_PCT, COOLDOWN_DAYS, MIN_DTE_AUTO
+    global AMBER_MIN_SCORE, NO_INDEX_PUTS
     pc = (cfg or {}).get("paper") or {}
+    HALF_PCT = float(pc.get("half_at_pct", HALF_PCT))
+    COOLDOWN_DAYS = int(pc.get("cooldown_days", COOLDOWN_DAYS))
+    MIN_DTE_AUTO = int(pc.get("min_dte_auto", MIN_DTE_AUTO))
+    AMBER_MIN_SCORE = float(pc.get("amber_min_score", AMBER_MIN_SCORE))
+    NO_INDEX_PUTS = bool(pc.get("no_index_puts", NO_INDEX_PUTS))
     CAPITAL = float(pc.get("capital", CAPITAL))
     MAX_PCT = float(pc.get("max_pct_trade", MAX_PCT))
     MAX_NEW_DAY = int(pc.get("max_new_per_day", MAX_NEW_DAY))
@@ -46,7 +61,7 @@ def _n(t):
 
 
 def account(book, source="MANUAL"):
-    """Cuenta de una cartera: MANUAL = la tuya, AUTO = la estrategia sola (cada una con su capital).
+    """Cuenta de una cartera: MANUAL = OpScan, RSI = Soportes + RSI, AUTO = Robot (cada una con su capital).
     Saldo = capital - coste de lo abierto + resultado de lo cerrado. Valor total = saldo + valor de lo abierto."""
     cap = float(book.get("capital") or CAPITAL)
     tr = [t for t in book["trades"] if source is None or t["source"] == source]
@@ -67,7 +82,7 @@ def account(book, source="MANUAL"):
 def snapshot(book, session):
     """Guarda el valor de cada cartera por sesion (curva de capital)."""
     curves = book.setdefault("curves", {})
-    for src in ("MANUAL", "AUTO"):
+    for src in ACCOUNTS:
         a = account(book, src)
         c = [x for x in curves.get(src, []) if x["date"] != session]
         c.append({"date": session, "equity": a["equity"]})
@@ -104,8 +119,9 @@ def _intrinsic(kind, strike, spot):
 
 
 def open_trade(book, ticker, direction, legs, session, source="AUTO", structure="", price=None,
-               notes="", issue=None, contracts=None, trade_id=None):
-    """legs: [{symbol, kind, strike, expiration, action COMPRAR/VENDER, mid}]"""
+               notes="", issue=None, contracts=None, trade_id=None, opened=None):
+    """legs: [{symbol, kind, strike, expiration, action COMPRAR/VENDER, mid}]
+    El Robot (AUTO) compra al ask si lo hay (como en la realidad); las tuyas al precio que indiques."""
     if not legs:
         return None
     clean = []
@@ -115,6 +131,13 @@ def open_trade(book, ticker, direction, legs, session, source="AUTO", structure=
         except (TypeError, ValueError):
             return None
         qty = 1 if str(l.get("action", "COMPRAR")).upper().startswith("COMP") else -1
+        if source == "AUTO":
+            try:
+                px = float(l.get("ask") if qty > 0 else l.get("bid"))
+                if px > 0:
+                    mid = px
+            except (TypeError, ValueError):
+                pass
         clean.append({"symbol": l["symbol"], "kind": str(l.get("kind", "C"))[0].upper(),
                       "strike": float(l["strike"]), "expiration": l["expiration"], "qty": qty,
                       "entry": round(mid, 3), "last": round(mid, 3),
@@ -144,7 +167,7 @@ def open_trade(book, ticker, direction, legs, session, source="AUTO", structure=
     else:
         book["seq"] = int(book.get("seq", 0)) + 1
         tid = f"P{book['seq']:04d}"
-    t = {"id": tid, "source": source, "opened": session, "ticker": ticker.upper(),
+    t = {"id": tid, "source": source, "opened": opened or session, "ticker": ticker.upper(),
          "direction": direction, "structure": structure, "legs": clean, "entry_cost": cost,
          "contracts": n, "unit_cost": unit,
          "underlying_entry": price, "status": "OPEN", "value": cost, "pnl": 0.0, "pnl_pct": 0.0,
@@ -169,15 +192,53 @@ def watch_symbols(book):
     return out
 
 
-def _close(t, session, reason):
+def _exit_value(t):
+    """Lo que te pagarian al cerrar: bid para lo comprado (ask para lo vendido); si no hay, el ultimo."""
+    tot = 0.0
+    for l in t["legs"]:
+        px = l.get("bid") if l["qty"] > 0 else l.get("ask")
+        if not px or px <= 0 or l.get("expired"):
+            px = l["last"]
+        tot += l["qty"] * px
+    return round(max(0.0, tot) * 100 * _n(t), 2)
+
+
+def _close(t, session, reason, at_bid=True):
+    if at_bid:
+        t["value"] = _exit_value(t)
+        t["pnl"] = round(t["value"] - t["entry_cost"], 2)
+        t["pnl_pct"] = round(t["pnl"] / t["entry_cost"] * 100, 1) if t["entry_cost"] else 0.0
     t["status"] = "CLOSED"
     t["closed"] = session
     t["exit_value"] = t["value"]
     t["close_reason"] = reason
 
 
+def _split_half(book, t, session):
+    """Vende la mitad de los contratos (operacion hija cerrada); el resto sigue abierto."""
+    n = _n(t)
+    k = n // 2
+    if k < 1:
+        return None
+    part = json.loads(json.dumps(t))
+    part["id"] = f"{t['id']}a"
+    part["contracts"] = k
+    part["entry_cost"] = round(t["unit_cost"] * k, 2)
+    part["value"] = round(t["value"] * k / n, 2)
+    _close(part, session, f"mitad vendida a +{HALF_PCT:.0f}%")
+    part["advice"] = None
+    t["contracts"] = n - k
+    t["entry_cost"] = round(t["unit_cost"] * (n - k), 2)
+    t["value"] = round(t["value"] * (n - k) / n, 2)
+    t["pnl"] = round(t["value"] - t["entry_cost"], 2)
+    book["trades"].append(part)
+    return part
+
+
 def mark(book, prices, spots, session):
-    """prices: {ticker: {symbol: {mid,...}}}; spots: {ticker: precio}."""
+    """prices: {ticker: {symbol: {mid,bid,ask...}}}; spots: {ticker: precio}.
+    Aqui solo se valora (y se cierra lo vencido). Las salidas del Robot las decide manage_auto()
+    una vez al dia con el escaneo de cierre, para que un precio puntual raro no dispare el stop."""
     for t in book["trades"]:
         if t["status"] != "OPEN":
             continue
@@ -187,24 +248,71 @@ def mark(book, prices, spots, session):
         for l in t["legs"]:
             if l["expiration"] < session:
                 l["last"] = round(_intrinsic(l["kind"], l["strike"], spot), 3)
+                l["expired"] = True
             elif l["symbol"] in pm and pm[l["symbol"]].get("mid", 0) > 0:
-                l["last"] = pm[l["symbol"]]["mid"]
+                q = pm[l["symbol"]]
+                l["last"] = q["mid"]
+                l["bid"], l["ask"] = q.get("bid"), q.get("ask")
         t["value"] = round(sum(l["qty"] * l["last"] for l in t["legs"]) * 100 * _n(t), 2)
         t["pnl"] = round(t["value"] - t["entry_cost"], 2)
         t["pnl_pct"] = round(t["pnl"] / t["entry_cost"] * 100, 1) if t["entry_cost"] else 0.0
         t["underlying_last"] = spot
         t["last_update"] = session
         if expired:
-            _close(t, session, "vencimiento")
-        elif t["source"] == "AUTO" and t["pnl_pct"] >= TARGET_PCT:
-            _close(t, session, f"objetivo +{TARGET_PCT:.0f}%")
-        elif t["source"] == "AUTO" and t["pnl_pct"] <= STOP_PCT:
-            _close(t, session, f"stop {STOP_PCT:.0f}%")
+            _close(t, session, "vencimiento", at_bid=False)
     return book
 
 
-def auto_open(book, records, session):
-    """Abre las ENTRADAS del dia por orden de score, con limites de cantidad y liquidez."""
+def manage_auto(book, session):
+    """Reglas de salida del Robot. Se llama SOLO con el escaneo de cierre (una decision al dia),
+    despues de advise(), para que el Robot haga lo mismo que te recomienda a ti."""
+    out = []
+    for t in list(book["trades"]):
+        if t["source"] != "AUTO" or t["status"] != "OPEN":
+            continue
+        pnl = t.get("pnl_pct") or 0.0
+        adv = t.get("advice") or {}
+        if pnl >= TARGET_PCT:
+            _close(t, session, f"objetivo +{TARGET_PCT:.0f}%")
+        elif pnl <= STOP_PCT:
+            _close(t, session, f"stop {STOP_PCT:.0f}% (al cierre)")
+        elif t.get("protected") and pnl <= 0:
+            _close(t, session, "proteccion: volvio al precio de entrada tras vender la mitad")
+        elif adv.get("action") == "CERRAR":
+            _close(t, session, "consejo CERRAR: " + "; ".join(adv.get("reasons") or [])[:150])
+        elif pnl >= HALF_PCT and not t.get("protected"):
+            part = _split_half(book, t, session)
+            t["protected"] = True
+            if part:
+                out.append((part, "mitad"))
+            continue
+        else:
+            continue
+        out.append((t, t["close_reason"]))
+    for t, why in out:
+        log(f"paper: Robot {t['id']} {t['ticker']} -> {why} ({t.get('pnl_pct', 0):+.0f}%)")
+    return out
+
+
+def _cooldown(book, ticker, session):
+    d0 = parse_date(session)
+    for t in book["trades"]:
+        if t["source"] == "AUTO" and t["ticker"] == ticker and t["status"] == "CLOSED" and (t.get("pnl") or 0) < 0:
+            d = parse_date(t.get("closed"))
+            if d and d0 and (d0 - d).days < COOLDOWN_DAYS:
+                return True
+    return False
+
+
+def auto_open(book, records, session, semaforo=None):
+    """Abre las ENTRADAS del dia por orden de score, con limites de cantidad, liquidez, vencimiento,
+    semaforo de mercado, enfriamiento tras una perdida y sin puts de indices."""
+    from .scoring import INDEX_LIKE
+    level = (semaforo or {}).get("level")
+    if level == "rojo":
+        log("paper: semaforo ROJO, el Robot no abre nada hoy")
+        return 0
+    d0 = parse_date(session)
     n_today = sum(1 for t in book["trades"] if t["source"] == "AUTO" and t["opened"] == session)
     n_open = sum(1 for t in book["trades"] if t["source"] == "AUTO" and t["status"] == "OPEN")
     n = 0
@@ -217,6 +325,17 @@ def auto_open(book, records, session):
             continue
         if SKIP_BAD_LIQ and idea.get("liquidity") == "mala":
             log(f"paper: {r['ticker']} no abierta (liquidez mala)")
+            continue
+        if level == "ambar" and (r.get("score") or 0) < AMBER_MIN_SCORE:
+            continue
+        if NO_INDEX_PUTS and r["ticker"] in INDEX_LIKE and r.get("direction") == "BAJISTA":
+            continue
+        exps = [parse_date(l.get("expiration")) for l in idea["legs"]]
+        if d0 and exps and all(exps) and (min(exps) - d0).days < MIN_DTE_AUTO:
+            log(f"paper: {r['ticker']} no abierta (vence en menos de {MIN_DTE_AUTO} dias)")
+            continue
+        if _cooldown(book, r["ticker"], session):
+            log(f"paper: {r['ticker']} no abierta (cerro con perdida hace menos de {COOLDOWN_DAYS} dias)")
             continue
         t = open_trade(book, r["ticker"], r["direction"], idea["legs"], session, "AUTO",
                        idea.get("structure", ""), r.get("price"),
@@ -263,8 +382,9 @@ def advise(book, recs, session, media=30):
         if cdays is not None and cdays < 0:
             close.append(f"El catalizador ({cat.get('type')} {cat.get('date')}) ya paso: la volatilidad cae y la "
                          "opcion pierde valor aunque no se mueva la accion")
+        own = t["source"] == "RSI"          # tu estrategia propia: no se juzga con el flujo de opciones
         rd = r.get("direction")
-        if rd in ("ALCISTA", "BAJISTA") and rd != t["direction"] and (r.get("score") or 0) >= media:
+        if not own and rd in ("ALCISTA", "BAJISTA") and rd != t["direction"] and (r.get("score") or 0) >= media:
             close.append(f"El flujo de opciones ha girado a {rd} (score {r.get('score')})")
         if not close:
             if pnl >= 50:
@@ -274,7 +394,9 @@ def advise(book, recs, session, media=30):
             if cdays is not None and 0 <= cdays <= 2:
                 watch.append(f"{cat.get('type')} en {cdays} dia(s): decide si quieres estar dentro durante el evento "
                              "(todo o nada)")
-            if r and (r.get("score") or 0) < 15 and not (r.get("checklist") or {}).get("flujo_confirmado"):
+            if own:
+                pass
+            elif r and (r.get("score") or 0) < 15 and not (r.get("checklist") or {}).get("flujo_confirmado"):
                 watch.append("La senal se ha enfriado (score bajo y sin flujo confirmado)")
             elif r and not (r.get("checklist") or {}).get("flujo_confirmado"):
                 watch.append("Ya no hay flujo de opciones confirmado a favor: la razon principal de la idea se ha debilitado")
@@ -311,7 +433,11 @@ def summary(book):
         "open": agg(opened), "closed": agg(closed),
         "auto_closed": agg([t for t in closed if t["source"] == "AUTO"]),
         "manual_closed": agg([t for t in closed if t["source"] == "MANUAL"]),
+        "rsi_closed": agg([t for t in closed if t["source"] == "RSI"]),
         "account": account(book, "MANUAL"), "account_auto": account(book, "AUTO"),
+        "account_rsi": account(book, "RSI"),
+        "accounts": {k: {"name": v, **account(book, k), "closed": agg([t for t in closed if t["source"] == k])}
+                     for k, v in ACCOUNTS.items()},
     }
 
 
@@ -320,10 +446,44 @@ def export(book):
                 reverse=False)
     return {"generated_at": iso_now(), "summary": summary(book), "trades": tr[-300:],
             "rules": {"target_pct": TARGET_PCT, "stop_pct": STOP_PCT, "capital": float(book.get("capital") or CAPITAL),
-                      "max_pct_trade": MAX_PCT},
+                      "max_pct_trade": MAX_PCT, "half_at_pct": HALF_PCT, "cooldown_days": COOLDOWN_DAYS,
+                      "min_dte_auto": MIN_DTE_AUTO, "amber_min_score": AMBER_MIN_SCORE,
+                      "no_index_puts": NO_INDEX_PUTS, "accounts": ACCOUNTS},
             "curves": {k: v[-250:] for k, v in (book.get("curves") or {}).items()},
             "orders_done": int(book.get("orders_done") or 0),
             "order_results": book.get("order_results", {})}
+
+
+def seed(book, items, session):
+    """Operaciones ya hechas fuera de la web (config paper.seed). Cada una se mete UNA sola vez."""
+    done = set(book.get("seeded") or [])
+    n = 0
+    for it in items or []:
+        key = it.get("key") or f"{it.get('account')}:{it.get('symbol')}:{it.get('opened')}"
+        if key in done:
+            continue
+        sym = str(it["symbol"]).upper()
+        m = re.match(r"^([A-Z.]+)(\d{2})(\d{2})(\d{2})([CP])(\d{8})$", sym)
+        if not m:
+            log(f"paper: seed {sym} no valido")
+            continue
+        exp = f"20{m.group(2)}-{m.group(3)}-{m.group(4)}"
+        kind = m.group(5)
+        leg = {"symbol": sym, "kind": kind, "strike": int(m.group(6)) / 1000, "expiration": exp,
+               "action": "COMPRAR", "mid": it["price"]}
+        src = str(it.get("account") or "RSI").upper()
+        book["rseq"] = int(book.get("rseq", 0)) + 1
+        t = open_trade(book, m.group(1), "ALCISTA" if kind == "C" else "BAJISTA", [leg], session, src,
+                       "Call comprada" if kind == "C" else "Put comprada", it.get("underlying"),
+                       it.get("notes", ""), contracts=it.get("contracts", 1),
+                       trade_id=f"R{book['rseq']:04d}", opened=it.get("opened"))
+        if t:
+            if it.get("why"):
+                t["why"] = str(it["why"])[:300]
+            done.add(key)
+            n += 1
+    book["seeded"] = sorted(done)
+    return n
 
 
 # ------------------------------------------------------------------ peticiones desde GitHub Issues
@@ -338,7 +498,7 @@ def parse_request(title, body):
         except json.JSONDecodeError:
             data = {}
     if "CERRAR" in title:
-        tid = data.get("id") or (re.search(r"[PM]\d{4}", title) or [None])[0]
+        tid = data.get("id") or (re.search(r"[PMR]\d{4}", title) or [None])[0]
         return {"op": "close", "id": tid, "nonce": data.get("nonce"), "lesson": data.get("lesson")}
     if "ABRIR" in title:
         return {"op": "open", **data}
@@ -347,19 +507,26 @@ def parse_request(title, body):
 
 def apply_request(book, req, session, issue=None):
     if req.get("op") == "open":
+        src = str(req.get("account") or "MANUAL").upper()
+        if src not in USER_ACCOUNTS:
+            return False, f"Cartera no valida: {src}"
+        opened = None
+        od = parse_date(req.get("opened"))
+        if od and od.isoformat() <= session:
+            opened = od.isoformat()
         t = open_trade(book, req.get("ticker", ""), req.get("direction", ""), req.get("legs") or [], session,
-                       "MANUAL", req.get("structure", ""), req.get("price"), req.get("notes", ""), issue,
-                       contracts=req.get("contracts"), trade_id=req.get("trade_id"))
+                       src, req.get("structure", ""), req.get("price"), req.get("notes", ""), issue,
+                       contracts=req.get("contracts"), trade_id=req.get("trade_id"), opened=opened)
         if t:
             if req.get("why"):
                 t["why"] = str(req["why"])[:300]
-            a = account(book, "MANUAL")
-            return True, (f"Abierta {t['id']} ({t['ticker']}): {t['contracts']} contrato(s) x ${t['unit_cost']} = "
+            a = account(book, src)
+            return True, (f"Abierta {t['id']} ({t['ticker']}) en {ACCOUNTS[src]}: {t['contracts']} contrato(s) x ${t['unit_cost']} = "
                           f"${t['entry_cost']}. Saldo disponible: ${a['cash']}")
         return False, book.pop("_last_reject", None) or "Datos de la operacion no validos"
     if req.get("op") == "close":
         for t in book["trades"]:
-            if t["id"] == req.get("id") and t["status"] == "OPEN":
+            if t["id"] == req.get("id") and t["status"] == "OPEN" and t["source"] in USER_ACCOUNTS:
                 _close(t, session, "cierre manual")
                 if req.get("lesson"):
                     t["lesson"] = str(req["lesson"])[:300]

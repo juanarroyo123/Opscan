@@ -66,6 +66,18 @@ paper:
   max_new_per_day: 3          # AUTO: como mucho 3 operaciones nuevas al dia (las de mas score)
   max_open_auto: 8            # AUTO: como mucho 8 abiertas a la vez
   skip_bad_liquidity: true    # AUTO: no entra si la liquidez de la opcion es "mala"
+  # --- reglas del Robot (act. 17) ---
+  half_at_pct: 50             # a +50% vende la mitad; el resto queda protegido en el precio de entrada
+  cooldown_days: 4            # tras cerrar con perdida, no vuelve a entrar en ese valor en 4 dias
+  min_dte_auto: 30            # vencimiento minimo 30 dias
+  amber_min_score: 55         # semaforo ambar: solo score >= 55 (rojo: no abre nada)
+  no_index_puts: true         # no compra puts de indices (SPY, QQQ, IWM...): casi todo son coberturas
+  # --- operaciones hechas fuera de la web (se meten UNA vez; no borres las ya metidas) ---
+  # account: MANUAL = OpScan, RSI = Soportes + RSI. symbol: TICKER + AAMMDD + C/P + strike x1000 (8 cifras)
+  seed:
+    - {account: RSI, symbol: CHWY261030C00020000, price: 0.28, contracts: 1, opened: "2026-10-05", why: "Soportes + RSI"}
+    - {account: RSI, symbol: EFX261016C00150000,  price: 1.53, contracts: 1, opened: "2026-10-05", why: "Soportes + RSI"}
+    - {account: RSI, symbol: HD261030C00300000,   price: 2.32, contracts: 1, opened: "2026-10-05", why: "Soportes + RSI"}
 
 # ---------- Compras de directivos (SEC Form 4) ----------
 insiders:

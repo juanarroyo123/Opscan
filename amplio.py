@@ -121,6 +121,7 @@ def scan(symbols, skip=(), workers=16, max_seconds=4800):
                 log(f"  amplio: {i}/{len(todo)} ({time.time()-t0:.0f}s), {len(found)} anomalias")
             if time.time() - t0 > max_seconds:
                 log("amplio: tiempo maximo alcanzado, se corta")
+                ex.shutdown(wait=False, cancel_futures=True)   # sin esto seguiria con los pendientes
                 break
     found.sort(key=lambda x: -x["score"])
     return found, {"scanned": len(todo), "errors": errors, "secs": round(time.time() - t0)}

@@ -80,6 +80,7 @@ def test_paper_lifecycle(tmp_path, monkeypatch):
     t = paper.open_trade(book, "XYZ", "ALCISTA", legs, "2026-10-01", "AUTO")
     assert t["entry_cost"] == 300.0
     paper.mark(book, {"XYZ": {"A1": {"mid": 9.0}, "A2": {"mid": 3.0}}}, {"XYZ": 108}, "2026-10-05")
+    paper.manage_auto(book, "2026-10-05")       # act. 17: el Robot decide al cierre
     assert t["pnl"] == 300.0 and t["status"] == "CLOSED" and "objetivo" in t["close_reason"]
     t2 = paper.open_trade(book, "XYZ", "ALCISTA", legs, "2026-10-06", "MANUAL")
     paper.mark(book, {"XYZ": {"A1": {"mid": 1.0}, "A2": {"mid": 0.5}}}, {"XYZ": 95}, "2026-10-07")
@@ -225,6 +226,7 @@ def test_cartera_con_capital():
     assert ok and "1 contrato" in msg
     # se valora por numero de contratos
     paper.mark(book, {"X": {"X20": {"mid": 3.6}}}, {"X": 21}, "2026-10-05")
+    paper.manage_auto(book, "2026-10-05")       # act. 17: el Robot decide al cierre
     assert book["trades"][0]["value"] == 720.0 and book["trades"][0]["pnl_pct"] == 100.0
     assert book["trades"][0]["status"] == "CLOSED"                    # objetivo +100% (AUTO)
     paper.snapshot(book, "2026-10-05")

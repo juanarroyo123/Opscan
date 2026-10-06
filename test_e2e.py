@@ -157,7 +157,7 @@ def test_two_sessions_confirmation(env, monkeypatch):
     latest = json.load(open(data / "latest.json"))
     assert latest["session_date"] == "2026-09-29"
     recs = {r["ticker"]: r for r in latest["records"]}
-    assert set(recs) == set(TICKERS)
+    assert set(TICKERS) <= set(recs)          # + valores de la cartera (paper.seed)
     assert recs["NVDA"]["unusual_count"] >= 1 and recs["NVDA"]["direction"] == "ALCISTA"
     assert recs["XOM"]["direction"] == "BAJISTA"
     assert recs["RCKT"]["next_catalyst"]["type"] == "PDUFA"
@@ -211,7 +211,7 @@ def test_two_sessions_confirmation(env, monkeypatch):
     _use(monkeypatch, FakeSession(d2))
     pipeline.run("intraday", TICKERS)
     latest = json.load(open(data / "latest.json"))
-    assert latest["mode"] == "intraday" and len(latest["records"]) == len(TICKERS)
+    assert latest["mode"] == "intraday" and len(latest["records"]) >= len(TICKERS)
 
     # web
     site = env / "_site"

@@ -198,6 +198,16 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
 .btn.sec{background:var(--surface2);color:var(--txt);border:1px solid var(--line)}
 .btn:hover{text-decoration:none;filter:brightness(1.05)}
 .more{display:block;margin:10px auto 0;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 16px;cursor:pointer;font-weight:700}
+.cmpgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:12px}
+.cmp{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.cmp.on{outline:2px solid var(--pri)}.cmp .nm2{font-weight:600}.cmp .big2{font-size:22px;font-weight:600;margin:4px 0}
+.cmp.static{cursor:default}
+.acctsw{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 10px}
+.acctsw button{border:1px solid var(--line);background:transparent;color:inherit;border-radius:999px;padding:6px 14px;font:inherit;cursor:pointer}
+.acctsw button.on{background:var(--pri-soft);border-color:var(--pri);color:var(--pri-txt);font-weight:600}
+.extf{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;align-items:end}
+.extf label{display:flex;flex-direction:column;gap:3px;font-size:13px}
+.extf input,.extf select,#extBox textarea{width:100%;box-sizing:border-box;background:var(--bg);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:7px 9px;font:inherit}
 </style>
 </head>
 <body>
@@ -343,12 +353,17 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
 
   <!-- MI CARTERA -->
   <section id="v-port" hidden>
-    <div class="help"><b>Tu cartera simulada</b> (dinero ficticio, precios reales con 15 min de retraso). Compras desde la ficha de cualquier
-      valor (botón <b>Comprar</b>) y vendes aquí. Cada posición se revalora en cada escaneo y la herramienta te dice qué hacer:
+    <div class="help"><b>Tres carteras simuladas de $10.000</b> (dinero ficticio, precios reales con 15 min de retraso):
+      <b>OpScan</b> (tus compras con las señales de la web), <b>Soportes + RSI</b> (tu estrategia propia; no se usa para ajustar la web)
+      y el <b>Robot</b> (la web sola, con reglas fijas). Compras desde la ficha de cualquier valor (botón <b>Comprar</b>, eliges la cartera)
+      o con <b>Añadir operación hecha fuera</b>, y vendes aquí. Cada posición se revalora en cada escaneo y la herramienta te dice qué hacer:
       <b class="up">MANTENER</b>, <b class="warn">VIGILAR</b> o <b class="down">CERRAR</b> (con aviso por Telegram).</div>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0">
       <button class="btn sec" id="scanNow">Escanear ahora</button>
       <span class="small muted" id="scanInfo"></span><span class="small" id="liveInfo"></span></div>
+    <div class="section-t">Comparativa de carteras</div>
+    <div class="cmpgrid" id="cmpK"></div>
+    <div class="acctsw" id="acctSw" role="tablist" aria-label="Elegir cartera"></div>
     <div class="kpis" id="portK"></div>
     <div class="section-t">Riesgo de tu cartera</div>
     <div id="riskBox"></div>
@@ -358,7 +373,10 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
     <div class="panel"><div class="tscroll"><table class="big"><thead><tr>
       <th class="l">Id</th><th class="l">Valor</th><th class="l">Opción</th><th>Pagaste</th><th>Vendiste</th><th>Resultado</th><th>Abierta → cerrada</th><th class="l">Motivo</th>
     </tr></thead><tbody id="portClosed"></tbody></table></div></div>
-    <div class="section-t">Estrategia automática <span class="muted small">(la herramienta sola, con otros $10.000: compra cada ENTRADA)</span></div>
+    <div class="section-t">Añadir una operación hecha fuera de la web</div>
+    <div class="panel" style="padding:14px" id="extBox"></div>
+    <div class="section-t">Robot · estrategia automática <span class="muted small">(la web sola, con otros $10.000)</span></div>
+    <div class="help small" id="robotRules"></div>
     <div class="kpis" id="akpis"></div>
     <div class="panel"><div class="tscroll"><table class="big"><thead><tr>
       <th class="l">Id</th><th class="l">Valor</th><th class="l">Opción</th><th>Coste</th><th>Valor hoy</th><th>Resultado</th><th>Abierta</th><th class="l">Qué hacer / motivo</th>
@@ -895,7 +913,7 @@ async function loadPaperFresh(){const [d,pv]=await Promise.all([ghRaw("data","pa
   let best=S.paper;const od=x=>x?(x.orders_done||0):-1,ts=x=>x?String(x.generated_at||""):"";
   for(const c of [d,pv]){if(!c)continue;if(!best||od(c)>od(best)||(od(c)===od(best)&&!c.preview&&ts(c)>ts(best)))best=c;}
   const ch=best!==S.paper;S.paper=best;return ch;}
-function heldSet(){return new Set(((S.paper&&S.paper.trades)||[]).filter(t=>t.status==="OPEN"&&t.source==="MANUAL").map(t=>t.ticker));}
+function heldSet(){return new Set(((S.paper&&S.paper.trades)||[]).filter(t=>t.status==="OPEN"&&t.source!=="AUTO").map(t=>t.ticker));}
 let toastT=null;
 function toast(html,kind="",ms=0){const t=$("#toast");t.className="toast "+kind;t.innerHTML=html;t.style.display="block";
   clearTimeout(toastT);if(ms)toastT=setTimeout(()=>t.style.display="none",ms);}
@@ -933,26 +951,55 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-buy]");if(
   const tk=($("#drawer").dataset.tk)||"";const r=(S.latest&&S.latest.records||[]).find(x=>x.ticker===tk);if(!r||!r.idea)return;
   const I=r.idea;let leg=b.dataset.buy==="main"?(I.legs||[])[0]:(I.choices||[])[+b.dataset.buy];if(!leg)return;
   const lo=S.live[r.ticker]&&S.live[r.ticker].options[leg.symbol];if(lo&&lo.mid>0)leg={...leg,mid:lo.mid,iv:lo.iv??leg.iv};
-  const unit=Math.round(leg.mid*100*100)/100;const A=(S.paper&&S.paper.summary&&S.paper.summary.account)||{max_per_trade:500,cash:10000};
+  const unit=Math.round(leg.mid*100*100)/100;let acc=S.acct;
+  let A=acctSum((S.paper&&S.paper.summary)||{},acc)||{max_per_trade:500,cash:10000};
   const sug=Math.max(1,Math.floor((A.max_per_trade||500)/unit));
   const box=$("#buyBox");if(!box)return;
   box.innerHTML=`<div class="buybox"><b>Comprar ${leg.kind==="C"?"CALL":"PUT"} ${esc(r.ticker)} ${leg.strike} · vence ${esc(leg.expiration)}</b>
     <div class="small" style="margin:6px 0">Precio: <b>$${leg.mid}</b> por opción → <b>${money(unit)}</b> por contrato (100 opciones).
     Lo máximo que puedes perder es lo que pagas.</div>
+    <label class="small">Cartera <select id="buyAcc">${USER_ACC.map(k=>`<option value="${k}" ${k===acc?"selected":""}>${ACC[k]}</option>`).join("")}</select></label>
     <label class="small">Contratos <input type="number" min="1" step="1" value="${sug}" id="buyN"></label>
     <textarea id="buyWhy" rows="2" placeholder="Diario: ¿por qué compras? (opcional, te ayudará a aprender)"></textarea>
     <span class="small" id="buyTot" style="margin-left:10px"></span>
     <div style="margin-top:10px;display:flex;gap:8px"><button class="btn" id="buyGo">Confirmar compra</button><button class="btn sec" id="buyNo">Cancelar</button></div></div>`;
   const upd=()=>{const n=Math.max(1,parseInt($("#buyN").value||"1"));const tot=n*unit;
     $("#buyTot").innerHTML=`Total <b>${money(tot)}</b> · saldo después ${moneyF((A.cash??10000)-tot)}${tot>(A.max_per_trade||500)?' · <span class="warn">supera tu máximo por operación ('+moneyF(A.max_per_trade||500)+')</span>':""}`;};
-  upd();$("#buyN").addEventListener("input",upd);$("#buyNo").onclick=()=>box.innerHTML="";
+  upd();$("#buyN").addEventListener("input",upd);
+  $("#buyAcc").addEventListener("change",()=>{acc=$("#buyAcc").value;A=acctSum((S.paper&&S.paper.summary)||{},acc)||{max_per_trade:500,cash:10000};upd();});$("#buyNo").onclick=()=>box.innerHTML="";
   $("#buyGo").onclick=()=>{const n=Math.max(1,parseInt($("#buyN").value||"1"));
-    placeOrder("PAPER ABRIR "+r.ticker,{ticker:r.ticker,direction:r.direction,price:r.price,contracts:n,
+    if(USER_ACC.includes(acc)&&acc!==S.acct){S.acct=acc;try{localStorage.setItem("opscan_acct",acc);}catch(e){}}
+    placeOrder("PAPER ABRIR "+r.ticker,{ticker:r.ticker,direction:r.direction,price:r.price,contracts:n,account:acc,
       structure:(leg.kind==="C"?"Call":"Put")+" comprada"+(leg.label?" "+String(leg.label).toLowerCase():""),
       legs:[{action:"COMPRAR",symbol:leg.symbol,kind:leg.kind,strike:leg.strike,expiration:leg.expiration,mid:leg.mid,iv:leg.iv,delta:leg.delta}],
       notes:(r.reasons||[]).slice(0,3).join("; "),why:($("#buyWhy").value||"").trim()},`compra de ${n} ${leg.kind==="C"?"call":"put"} ${r.ticker} ${leg.strike}`);
     box.innerHTML="";};
   box.scrollIntoView({behavior:"smooth",block:"nearest"});});
+
+// ---------- operacion hecha fuera de la web (p. ej. tu estrategia de soportes + RSI)
+function occSymbol(tk,exp,kind,strike){const d=exp.replace(/-/g,"").slice(2);return tk.replace(/[^A-Z]/g,"")+d+kind+String(Math.round(strike*1000)).padStart(8,"0");}
+function renderExt(){const box=$("#extBox");if(!box||box.dataset.ready)return;box.dataset.ready="1";
+  const today=new Date().toISOString().slice(0,10);
+  box.innerHTML=`<div class="small muted" style="margin-bottom:8px">Para apuntar compras que has decidido por tu cuenta (por ejemplo con soportes y RSI). Pon el precio que pagaste por opción; desde el siguiente escaneo se revalora sola.</div>
+    <div class="extf">
+      <label>Cartera<select id="exAcc">${USER_ACC.map(k=>`<option value="${k}" ${k==="RSI"?"selected":""}>${ACC[k]}</option>`).join("")}</select></label>
+      <label>Valor (ticker)<input id="exTk" type="text" placeholder="HD" autocomplete="off"></label>
+      <label>Tipo<select id="exKind"><option value="C">Call (sube)</option><option value="P">Put (baja)</option></select></label>
+      <label>Strike<input id="exK" type="number" step="0.5" min="0" placeholder="300"></label>
+      <label>Vencimiento<input id="exExp" type="date"></label>
+      <label>Precio pagado (por opción)<input id="exPx" type="number" step="0.01" min="0.01" placeholder="2.32"></label>
+      <label>Contratos<input id="exN" type="number" step="1" min="1" value="1"></label>
+      <label>Fecha de compra<input id="exD" type="date" value="${today}" max="${today}"></label></div>
+    <textarea id="exWhy" rows="2" style="margin-top:8px" placeholder="Diario: ¿por qué entraste? (p. ej. rebote en soporte 295 con RSI 28)"></textarea>
+    <div style="margin-top:10px;display:flex;gap:10px;align-items:center"><button class="btn" id="exGo">Añadir a la cartera</button><span class="small" id="exMsg"></span></div>`;
+  $("#exGo").onclick=()=>{const tk=($("#exTk").value||"").trim().toUpperCase(),kind=$("#exKind").value,K=parseFloat($("#exK").value),
+      exp=$("#exExp").value,px=parseFloat($("#exPx").value),n=Math.max(1,parseInt($("#exN").value||"1")),d=$("#exD").value,acc=$("#exAcc").value;
+    const err=!/^[A-Z.]{1,6}$/.test(tk)?"Pon un ticker válido":!(K>0)?"Pon el strike":!exp?"Pon el vencimiento":!(px>0)?"Pon el precio que pagaste":exp<d?"El vencimiento es anterior a la compra":"";
+    if(err){$("#exMsg").innerHTML=`<span class="down">${err}</span>`;return;}
+    const sym=occSymbol(tk,exp,kind,K);$("#exMsg").textContent="";
+    placeOrder("PAPER ABRIR "+tk,{ticker:tk,direction:kind==="C"?"ALCISTA":"BAJISTA",account:acc,contracts:n,opened:d,
+      structure:(kind==="C"?"Call":"Put")+" comprada",legs:[{action:"COMPRAR",symbol:sym,kind,strike:K,expiration:exp,mid:px}],
+      why:($("#exWhy").value||"").trim()},`${ACC[acc]}: ${n} ${kind==="C"?"call":"put"} ${tk} ${K} (${exp}) a $${px}`);};}
 
 // ---------- precios en vivo (via tu Cloudflare Worker)
 const LIVE={k:"opscan_live_url",get(){try{return localStorage.getItem(this.k)||"";}catch(e){return "";}},
@@ -1009,11 +1056,28 @@ function liveAccount(A,trades){if(!A||!Object.keys(S.live).length)return A;let o
   trades.filter(t=>t.status==="OPEN").forEach(t=>{const lv=liveTrade(t);if(lv)any=true;ov+=lv?lv.value:(t.value??t.entry_cost);inv+=t.entry_cost;});
   if(!any)return A;const eq=A.cash+ov;return {...A,open_value:Math.round(ov*100)/100,unrealized:Math.round((ov-inv)*100)/100,equity:Math.round(eq*100)/100,
     return_pct:Math.round((eq/A.capital-1)*10000)/100};}
-function renderPort(){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];const recs={};((S.latest&&S.latest.records)||[]).forEach(r=>recs[r.ticker]=r);
+const ACC={MANUAL:"OpScan",RSI:"Soportes + RSI",AUTO:"Robot"},USER_ACC=["MANUAL","RSI"];
+S.acct=(()=>{try{const v=localStorage.getItem("opscan_acct");return USER_ACC.includes(v)?v:"MANUAL";}catch(e){return "MANUAL";}})();
+function setAcct(a){if(!USER_ACC.includes(a))return;S.acct=a;try{localStorage.setItem("opscan_acct",a);}catch(e){}renderPort();}
+function acctSum(sm,src){return (sm.accounts&&sm.accounts[src])||(src==="AUTO"?sm.account_auto:src==="RSI"?sm.account_rsi:sm.account)||null;}
+function renderCmp(P){const sm=P.summary||{},tr=P.trades||[];
+  $("#cmpK").innerHTML=Object.keys(ACC).map(k=>{const A0=acctSum(sm,k);if(!A0)return `<div class="cmp static"><div class="nm2">${ACC[k]}</div><div class="muted small">Se creará en el próximo escaneo</div></div>`;
+    const A=liveAccount(A0,tr.filter(t=>t.source===k));const cl=(A0.closed)||{};const user=USER_ACC.includes(k);
+    return `<button class="cmp ${user?"":"static"} ${k===S.acct?"on":""}" ${user?`data-acct="${k}"`:'data-robot="1"'}><div class="nm2">${ACC[k]}${k==="AUTO"?' <span class="muted small">automática</span>':""}</div>
+      <div class="big2 num">${moneyF(A.equity)}</div><div class="small">${pnlH(A.equity-A.capital,A.return_pct)}</div>
+      <div class="small muted">${A.n_open||0} abiertas · ${A.n_closed||0} cerradas${cl.win_rate!=null?" · "+cl.win_rate+"% ganadoras":""}</div></button>`;}).join("");
+  $("#acctSw").innerHTML=USER_ACC.map(k=>`<button role="tab" aria-selected="${k===S.acct}" class="${k===S.acct?"on":""}" data-acct="${k}">${ACC[k]}</button>`).join("");
+  const R=P.rules||{};$("#robotRules").innerHTML=`Reglas: compra cada ENTRADA (máx. 3 al día, ${R.max_pct_trade||5}% por operación, vencimiento ≥ ${R.min_dte_auto||30} días, al <b>ask</b>);
+    no compra puts de índices; con semáforo ámbar solo score ≥ ${R.amber_min_score||55} y en rojo nada; tras una pérdida espera ${R.cooldown_days||4} días para volver al mismo valor.
+    Decide las salidas <b>una vez al día, al cierre</b> y vende al <b>bid</b>: +${R.target_pct||100}% objetivo, ${R.stop_pct||-50}% stop, a +${R.half_at_pct||50}% vende la mitad y protege el resto, y cierra si su consejo dice CERRAR.`;}
+document.addEventListener("click",e=>{const a=e.target.closest("[data-acct]");if(a){setAcct(a.dataset.acct);return;}
+  const rb=e.target.closest("[data-robot]");if(rb){const t=$("#akpis");if(t)t.scrollIntoView({behavior:"smooth"});}});
+function renderPort(){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];renderCmp(P);renderExt();const recs={};((S.latest&&S.latest.records)||[]).forEach(r=>recs[r.ticker]=r);
   const liveAt=Object.values(S.live).map(x=>x.at).sort((a,b)=>a-b).pop();
   $("#liveInfo").innerHTML=liveErr?` · <span class="down">precios en vivo: ${esc(liveErr)}</span>`:liveAt?` · <span class="up">● EN VIVO</span> ${liveAt.toLocaleTimeString("es-ES")} (Cboe, 15 min de retraso)`:"";
-  $("#portK").innerHTML=acctKPIs(liveAccount(sm.account,tr.filter(t=>t.source==="MANUAL")),(P.curves||{}).MANUAL,"Valor de mi cartera")||`<div class="empty">Aún no hay datos de la cartera.</div>`;
-  const mine=tr.filter(t=>t.source==="MANUAL"),op=mine.filter(t=>t.status==="OPEN"),cl=mine.filter(t=>t.status!=="OPEN").reverse();
+  const A0=acctSum(sm,S.acct);
+  $("#portK").innerHTML=(A0?acctKPIs(liveAccount(A0,tr.filter(t=>t.source===S.acct)),(P.curves||{})[S.acct],"Valor · "+ACC[S.acct]):"")||`<div class="empty">Aún no hay datos de esta cartera: se crea en el próximo escaneo.</div>`;
+  const mine=tr.filter(t=>t.source===S.acct),op=mine.filter(t=>t.status==="OPEN"),cl=mine.filter(t=>t.status!=="OPEN").reverse();
   $("#portOpen").innerHTML=op.map(t0=>{const lv=liveTrade(t0);const t=lv?{...t0,value:lv.value,pnl:lv.pnl,pnl_pct:lv.pnl_pct}:t0;
     const r=recs[t.ticker]||{};const l={...((t.legs||[])[0]||{}),...(lv?{last:lv.mid}:{})};const spot=lv&&lv.price!=null?lv.price:(t.underlying_last??r.price);
     const dte=daysTo(t.expiration),cat=t.catalyst||{},cd=daysTo(cat.date);const A=t.advice||{};
@@ -1022,20 +1086,20 @@ function renderPort(){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];const
       <div class="pc">${legShort(t)}</div><div class="muted small">${esc(t.id)} · comprada ${esc(t.opened)}${lv?' · <span class="up">● en vivo '+lv.at.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})+'</span>':P.preview?' · <span class="warn">pendiente de revalorar</span>':""}</div></div>
       <div class="pnl">${pnlH(t.pnl||0)}<div class="small ${(t.pnl_pct||0)>=0?"up":"down"}">${(t.pnl_pct||0)>=0?"+":""}${t.pnl_pct||0}%</div></div></div>
       <div class="grid4">${M("Pagaste",moneyF(t.entry_cost),"$"+(l.entry??"—")+" por opción")}${M("Vale hoy",moneyF(t.value),"$"+(l.last??"—")+" por opción")}
-        ${M("Acción",`$${t.underlying_entry??"—"} → $${spot??"—"}`)}${M("Vence en",dte!=null?dte+" días":"—")}</div>
+        ${M("Acción",`${t.underlying_entry!=null?"$"+t.underlying_entry+" → ":""}$${spot??"—"}`)}${M("Vence en",dte!=null?dte+" días":"—")}</div>
       ${cat.date?`<div class="small" style="margin-top:6px">Catalizador: <b>${esc(cat.type||"")}</b> ${esc(cat.date)} (${cd>=0?"en "+cd+" días":"ya pasó"})</div>`:""}
       ${t.why?`<div class="journal">📝 <b>Por qué entré:</b> ${esc(t.why)}</div>`:""}
       <div class="adv ${esc(A.action||"MANTENER")}"><b class="${A.action==="CERRAR"?"down":A.action==="VIGILAR"?"warn":"up"}">${esc(A.action||"SIN DATOS AÚN")}</b> · ${esc((A.reasons||["Se valorará en el próximo escaneo"]).join(" · "))}</div>
       <div class="acts"><button class="btn sec" data-open="${esc(t.ticker)}">Ver ficha</button>
         <button class="btn sec" data-simp="${esc(t.id)}">📈 Escenarios</button>
         <button class="btn" style="background:var(--bad-txt)" data-sell="${esc(t.id)}" data-lbl="venta de ${esc(t.ticker)} (${esc(t.id)})">Vender (cerrar)</button></div>
-      <div data-sellbox="${esc(t.id)}"></div><div data-simbox="${esc(t.id)}"></div></div>`;}).join("")||`<div class="empty" style="grid-column:1/-1">No tienes posiciones abiertas. Abre la ficha de un valor del Radar y pulsa <b>Comprar</b>.</div>`;
+      <div data-sellbox="${esc(t.id)}"></div><div data-simbox="${esc(t.id)}"></div></div>`;}).join("")||`<div class="empty" style="grid-column:1/-1">No tienes posiciones abiertas en <b>${ACC[S.acct]}</b>. Abre la ficha de un valor del Radar y pulsa <b>Comprar</b>, o usa <b>Añadir una operación hecha fuera</b>.</div>`;
   $("#portClosed").innerHTML=cl.slice(0,100).map(t=>`<tr class="click" data-tk="${esc(t.ticker)}"><td class="l">${esc(t.id)}</td>
     <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${legShort(t)}</td>
     <td class="num">${moneyF(t.entry_cost)}</td><td class="num">${moneyF(t.exit_value)}</td><td class="num">${pnlH(t.pnl,t.pnl_pct)}</td>
     <td class="num">${esc(t.opened)} → ${esc(t.closed||"")}</td><td class="l small">${esc(t.close_reason||"")}${t.why?`<div class="muted">📝 ${esc(t.why)}</div>`:""}${t.lesson?`<div>💡 ${esc(t.lesson)}</div>`:""}</td></tr>`).join("")
     ||`<tr><td colspan="8" class="empty">Todavía no has cerrado ninguna operación.</td></tr>`;
-  $("#akpis").innerHTML=acctKPIs(liveAccount(sm.account_auto,tr.filter(t=>t.source==="AUTO")),(P.curves||{}).AUTO,"Valor estrategia automática");
+  $("#akpis").innerHTML=acctKPIs(liveAccount(acctSum(sm,"AUTO")||sm.account_auto,tr.filter(t=>t.source==="AUTO")),(P.curves||{}).AUTO,"Valor · Robot");
   const au=tr.filter(t=>t.source==="AUTO").sort((a,b)=>(a.status==="OPEN"?0:1)-(b.status==="OPEN"?0:1));
   $("#autoBody").innerHTML=au.slice(0,80).map(t0=>{const lv=t0.status==="OPEN"?liveTrade(t0):null;const t=lv?{...t0,value:lv.value,pnl:lv.pnl,pnl_pct:lv.pnl_pct}:t0;return `<tr class="click" data-tk="${esc(t.ticker)}"><td class="l">${esc(t.id)}</td>
     <td class="l"><span class="tk">${esc(t.ticker)}</span> ${dirHTML(t.direction)}</td><td class="l small">${legShort(t)}</td>
@@ -1147,8 +1211,8 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-simc]");if
     const l=t.legs[0];const box=document.querySelector(`[data-simbox="${CSS.escape(t.id)}"]`);
     simRender(box,{ticker:t.ticker,kind:l.kind,strike:l.strike,exp:l.expiration,iv:ivFor(t.ticker,l),cost:t.entry_cost,n:(t.contracts||1)*(l.qty||1),spot:spotFor(t.ticker,t.underlying_entry)});}});
 
-// panel de riesgo de la cartera (posiciones MANUAL abiertas)
-function renderRisk(){const box=$("#riskBox");if(!box)return;const tr=((S.paper&&S.paper.trades)||[]).filter(t=>t.status==="OPEN"&&t.source==="MANUAL");
+// panel de riesgo de la cartera elegida (OpScan o Soportes + RSI)
+function renderRisk(){const box=$("#riskBox");if(!box)return;const tr=((S.paper&&S.paper.trades)||[]).filter(t=>t.status==="OPEN"&&t.source===S.acct);
   if(!tr.length){box.innerHTML='<div class="muted small">Sin posiciones abiertas.</div>';return;}
   const recs={};((S.latest&&S.latest.records)||[]).forEach(r=>recs[r.ticker]=r);
   let theta=0,dUp=0,dDn=0,costUp=0,costDn=0;const sect={},events=[];
@@ -1158,7 +1222,7 @@ function renderRisk(){const box=$("#riskBox");if(!box)return;const tr=((S.paper&
     const sc=(recs[t.ticker]||{}).sector||"Otros";sect[sc]=(sect[sc]||0)+t.entry_cost;
     const c=t.catalyst;if(c&&c.date){const d=daysTo(c.date);if(d!=null&&d>=0&&d<=14)events.push(`${t.ticker}: ${c.type} en ${d} días`);}
     const dte=daysTo(l.expiration);if(dte!=null&&dte<=10)events.push(`${t.ticker}: vence en ${dte} días`);});
-  const tot=costUp+costDn,A=(S.paper.summary||{}).account||{},eq=A.equity||10000;
+  const tot=costUp+costDn,A=acctSum(S.paper.summary||{},S.acct)||{},eq=A.equity||10000;
   const topS=Object.entries(sect).sort((a,b)=>b[1]-a[1])[0];const warns=[];
   if(tot>eq*0.3)warns.push(`Tienes invertido el ${Math.round(tot/eq*100)}% de la cartera en opciones: es mucho riesgo.`);
   if(topS&&tr.length>=3&&topS[1]>tot*0.6)warns.push(`El ${Math.round(topS[1]/tot*100)}% está en un solo sector (${esc(topS[0])}).`);

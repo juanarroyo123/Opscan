@@ -162,7 +162,7 @@ def trade_idea(direction, m, b, next_cat, style="simple"):
     cat_days = None
     if next_cat and next_cat.get("days") is not None and next_cat["days"] >= 0:
         cat_days = next_cat["days"]
-        min_dte = max(21, cat_days + 5)
+        min_dte = max(30, cat_days + 5)     # minimo 30 dias: menos ruido y menos desgaste por tiempo
     grid = m.get("_grid") or {}
     exp, dte = None, None
     for e in sorted(grid.keys()):
