@@ -79,6 +79,16 @@ jobs:
             echo "Primera ejecucion: no hay rama data todavia"; mkdir -p data
           fi
 
+      - name: Recuperar valores calientes del mercado completo (rama amplio)
+        env:
+          REPO_URL: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+        run: |
+          if git ls-remote --exit-code --heads "$REPO_URL" amplio >/dev/null 2>&1; then
+            git clone --quiet --depth 1 --branch amplio "$REPO_URL" amplio
+          else
+            mkdir -p amplio
+          fi
+
       - name: Recuperar ordenes de la cartera (rama orders)
         env:
           REPO_URL: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
@@ -101,6 +111,7 @@ jobs:
         env:
           OPSCAN_DATA_DIR: ${{ github.workspace }}/data
           OPSCAN_ORDERS_DIR: ${{ github.workspace }}/orders
+          OPSCAN_HOT_FILE: ${{ github.workspace }}/amplio/hot.json
           OPSCAN_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
           FINNHUB_TOKEN: ${{ secrets.FINNHUB_TOKEN }}
           FMP_TOKEN: ${{ secrets.FMP_TOKEN }}
