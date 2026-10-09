@@ -119,3 +119,36 @@ def test_telegram_solo_operaciones():
     m = alerts.msg_buy(t)
     assert m.splitlines() == ["🟢 09/10/2026 · Robot COMPRA", "PUT NFLX 71 · vence 20/11/2026", "2 contratos · prima $2,09"]
     assert "%" not in m
+
+
+def test_dividendo_dentro_de_la_vida_de_la_call():
+    import datetime as dt
+    from opscan import dividends, scoring
+    dv = dividends.info({"ex_div_date": "2026-07-20", "dividend_rate": 4.0}, 100.0, dt.date(2026, 10, 7),
+                        ["2026-01-20", "2026-04-20"])
+    assert dv["next_ex"] == "2026-10-19" and dv["estimated"] and dv["amount"] == 1.0
+    idea = {"legs": [{"kind": "C", "mid": 2.0, "expiration": "2026-11-20"}],
+            "choices": [{"kind": "C", "strike": 105, "mid": 2.0, "breakeven": 107.0, "iv": 0.3, "dte": 44,
+                         "expiration": "2026-11-20", "pop": 30.0}]}
+    dividends.adjust_idea(idea, dv, 100.0, dt.date(2026, 10, 7), scoring.prob_profit)
+    c = idea["choices"][0]
+    assert c["pop"] < scoring.prob_profit("C", 100.0, 107.0, 0.3, 44) and c["div_share"] == 0.5
+    assert idea["dividend"]["share_of_premium"] == 0.5 and "EN CONTRA" in idea["dividend_note"]
+    # el Robot no compra esa call (dividendo = 50% del precio de la opcion)
+    paper.configure({"paper": {"capital": 10000, "max_pct_trade": 5}})
+    r = {"ticker": "DIV", "score": 70, "direction": "ALCISTA", "price": 100, "checklist": {"entrada": True},
+         "idea": {**idea, "legs": [{"symbol": "DIV1", "kind": "C", "strike": 105, "expiration": "2026-11-20",
+                                    "action": "COMPRAR", "mid": 2.0}]}}
+    assert paper.auto_open({"trades": [], "seq": 0}, [r], "2026-10-07", {"level": "verde"}) == 0
+
+
+def test_robot_guarda_explicacion():
+    book = {"trades": [], "seq": 0}
+    r = _rec("XPL", 70)
+    r.update(reasons=["4 alerta(s) confirmadas por subida de OI (+20)"], signal="ALTA",
+             checklist={"entrada": True, "puntos": 4, "flujo_confirmado": True})
+    assert paper.auto_open(book, [r], "2026-10-06", {"level": "verde"}) == 1
+    why = book["trades"][0]["why"]
+    assert "confirmadas por subida de OI" in why and "Contrato elegido" in why and "Señal alcista" in why
+    from opscan import alerts
+    assert "Por qué" not in alerts.msg_buy(book["trades"][0])          # la explicacion va en la web, no en Telegram

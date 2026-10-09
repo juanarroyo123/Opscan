@@ -893,6 +893,7 @@ function openDetail(tk){S._detailTk=tk;const r=(S.latest&&S.latest.records||[]).
     ${I.pop!=null?`<div class="small" style="margin-top:6px">Probabilidad de acabar ganando al vencimiento: <b>${I.pop}%</b> <span class="muted">(según la volatilidad que descuentan las opciones; no es una predicción)</span></div>`:""}`:"";
   const idea=I?`${I.liquidity==="mala"?'<div class="risk-w" style="margin-top:10px">⚠️ <b>Señal interesante, pero difícil de operar:</b> las opciones de este valor tienen mucha diferencia entre precio de compra y de venta. Entrarías perdiendo parte solo por eso. Si operas, usa órdenes limitadas al precio medio y pocos contratos.</div>':""}<div class="idea"><div><b>Idea de estructura (educativa):</b> ${esc(I.structure)}${I.expiration?` · vencimiento ${esc(I.expiration)} (${I.dte}d)`:""}</div>
     <div class="small">${esc(I.strikes)} · ${esc(I.why_structure)}</div>${legRows}<div class="small" style="margin-top:6px">${esc(I.management)}</div>
+    ${I.dividend_note?`<div class="adv VIGILAR" style="margin-top:8px">💵 <b>Dividendo:</b> ${esc(I.dividend_note)}</div>`:""}
     <div class="small muted">${esc(I.note)}</div>${I.legs?`<div style="margin-top:8px"><button class="btn" data-buy="main">Comprar en mi cartera</button>
     <span class="small muted"> cartera simulada, sin dinero real</span></div><div id="buyBox"></div>`:""}</div>`:"";
   const ER=r.earnings;const earnH=ER?`<div class="section-t">Resultados: ¿opciones caras o baratas?</div>
@@ -1281,8 +1282,8 @@ function renderPort(force){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];
         <td class="l"><span class="badge ${esc(Ad.action||"NA")}">${esc(Ad.action||"SIN DATOS")}</span></td></tr>
       ${isOpen?`<tr class="dt"><td colspan="12"><div class="ib-dt"><div>
           <div class="adv ${esc(Ad.action||"MANTENER")}" style="margin-top:0"><b class="${Ad.action==="CERRAR"?"down":Ad.action==="VIGILAR"?"warn":"up"}">${esc(Ad.action||"SIN DATOS AÚN")}</b> · ${esc((Ad.reasons||["Se valorará en el próximo escaneo"]).join(" · "))}</div>
-          ${t.why?`<div class="journal">📝 <b>Por qué entré:</b> ${esc(t.why)}</div>`:""}
-          ${src==="AUTO"&&t.notes?`<div class="journal">🤖 ${esc(t.notes)}</div>`:""}
+          ${t.why?`<div class="journal" style="white-space:pre-line">${src==="AUTO"?"🤖 <b>Por qué compró el Robot:</b>\n":"📝 <b>Por qué entré:</b> "}${esc(t.why)}</div>`
+            :src==="AUTO"&&t.notes?`<div class="journal">🤖 ${esc(t.notes)}</div>`:""}
           <div class="acts"><button class="btn sec" data-open="${esc(t.ticker)}">Ver ficha</button><button class="btn sec" data-simp="${esc(t.id)}">📈 Escenarios</button>
             ${user?`<button class="btn sec" data-edit="${esc(t.id)}">✏️ Corregir</button><button class="btn" style="background:var(--bad-txt)" data-sell="${esc(t.id)}">Vender (cerrar)</button>`:""}</div></div>
           <div class="kv"><span>Id</span><b>${esc(t.id)}</b><span>Dirección</span><span style="color:inherit">${dirHTML(t.direction)}</span>
@@ -1300,7 +1301,7 @@ function renderPort(force){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];
   $("#ibClosed").innerHTML=`<thead><tr><th class="l">Instrumento</th><th>Contratos</th><th>Coste</th><th>Venta</th><th>P&amp;L</th><th>%</th><th class="l">Abierta → cerrada</th><th class="l">Motivo</th></tr></thead><tbody>${
     cl.slice(0,100).map(t=>`<tr class="crow row" data-tk="${esc(t.ticker)}"><td class="l ins">${insName(t)}</td><td>${(t.contracts||1)}</td><td>${moneyF(t.entry_cost)}</td><td>${moneyF(t.exit_value)}</td>
       <td class="${cls(t.pnl)}">${sgn(t.pnl)}</td><td class="${cls(t.pnl_pct)}">${pct(t.pnl_pct,1)}</td><td class="l">${esc(t.opened)} → ${esc(t.closed||"")}</td>
-      <td class="l small" style="white-space:normal;min-width:220px">${esc(t.close_reason||"")}${t.lesson?`<div>💡 ${esc(t.lesson)}</div>`:""}</td></tr>`).join("")
+      <td class="l small" style="white-space:normal;min-width:260px"><b>${esc(t.close_reason||"")}</b>${t.exit_why?`<div class="muted">${esc(t.exit_why)}</div>`:""}${t.lesson?`<div>💡 ${esc(t.lesson)}</div>`:""}</td></tr>`).join("")
     ||`<tr><td colspan="8" class="l" style="padding:18px 8px;color:var(--mut)">Todavía no hay operaciones cerradas en esta cartera.</td></tr>`}</tbody>`;
   // secciones segun cartera
   $("#ibExtD").hidden=!user;$("#ibRobot").hidden=src!=="AUTO";

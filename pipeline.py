@@ -12,7 +12,7 @@ import shutil
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from . import (alerts, amplio, catalysts, congress, enrich, futures, insiders, market, options, paper, scoring, shorts, state,
+from . import (alerts, amplio, catalysts, congress, dividends, enrich, futures, insiders, market, options, paper, scoring, shorts, state,
                technicals, tracking, universe)
 from .config import DOCS_DIR, data_dir, load_config
 from .util import Status, iso_now, log, parse_date, read_json, rnd, today_et, write_json
@@ -222,10 +222,17 @@ def build_record(tk, res, meta, base, fs, cats, cong, fctx, enr, cfg, session=No
         "news": e.get("news") if e else None,
         "short": {"vol_ratio_5d": sv.get("ratio_5d"), "vol_ratio_last": sv.get("ratio_last"),
                   "pct_float": e.get("short_pct_float"), "days_to_cover": e.get("short_ratio")},
-        "squeeze": sq, "earnings": earn, "tech": tech, "dividend": ({"ex_div_date": e.get("ex_div_date"),
-                                                       "yield": e.get("dividend_yield")} if e.get("ex_div_date") else None),
+        "squeeze": sq, "earnings": earn, "tech": tech, "dividend": None,
         **s,
     }
+    try:     # dividendos: proximo ex-dividendo y su efecto sobre la idea (probabilidad corregida)
+        today = parse_date(session or m.get("session_date")) or today_et()
+        dv = dividends.info(e, m.get("price"), today, e.get("exdiv_hist")) if e else None
+        if dv:
+            rec["dividend"] = {**dv, "yield": dv.get("yield_pct")}
+            dividends.adjust_idea(rec.get("idea"), dv, m.get("price"), today, scoring.prob_profit)
+    except Exception as ex:
+        log(f"dividendo {tk}: {ex}")
     rec["unusual"] = unusual[:10]
     rec["score_split"] = market.split_score(rec, fs.get("prev_bull_premium"), fs.get("prev_bear_premium"), m)
     # registros sin interes: version compacta para que la web cargue rapido
@@ -425,7 +432,12 @@ def run(mode="full", tickers_override=None, offline_universe=False):
 
     def _enr(tk):
         e = ecache.get(tk)
-        return {**(e or {}), "form4": f4[tk]} if f4.get(tk) else e
+        if not e and not f4.get(tk):
+            return e
+        out = {**(e or {}), "exdiv_hist": exdiv.get(tk, [])}
+        if f4.get(tk):
+            out["form4"] = f4[tk]
+        return out
 
     prelim = []
     for tk, res in results.items():
@@ -503,6 +515,7 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     market_gex = {tk: res["gex"] for tk, res in results.items() if res.get("gex")}
     sem = market.semaforo(ok_recs, market_gex.get("SPX") or market_gex.get("SPY"), (fut or {}).get("regime"))
     n_auto = paper.auto_open(book, ok_recs, session, sem)
+    paper.backfill_why(book, {r["ticker"]: r for r in ok_recs}, session)
     to_close = paper.advise(book, {r["ticker"]: r for r in ok_recs}, session, cfg["scoring"]["media"])
     if mode in ("full", "smoke"):        # el Robot decide sus salidas una vez al dia, con el cierre
         paper.manage_auto(book, session)

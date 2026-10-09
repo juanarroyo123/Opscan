@@ -35,6 +35,7 @@ COOLDOWN_DAYS = 4        # Robot: tras cerrar con perdida no vuelve a entrar en 
 MIN_DTE_AUTO = 30        # Robot: vencimiento minimo de 30 dias
 AMBER_MIN_SCORE = 55     # Robot: con el semaforo en ambar solo entra con score >= 55 (en rojo, nada)
 NO_INDEX_PUTS = True     # Robot: no compra puts de indices (casi todo ese flujo son coberturas)
+MAX_DIV_SHARE = 0.30     # Robot: no compra una CALL si el dividendo dentro de su vida es >= 30% de su precio
 
 ACCOUNTS = {"MANUAL": "OpScan", "RSI": "Soportes + RSI", "AUTO": "Robot"}
 USER_ACCOUNTS = ("MANUAL", "RSI")
@@ -42,13 +43,14 @@ USER_ACCOUNTS = ("MANUAL", "RSI")
 
 def configure(cfg):
     global CAPITAL, MAX_PCT, MAX_NEW_DAY, MAX_OPEN_AUTO, SKIP_BAD_LIQ, HALF_PCT, COOLDOWN_DAYS, MIN_DTE_AUTO
-    global AMBER_MIN_SCORE, NO_INDEX_PUTS
+    global AMBER_MIN_SCORE, NO_INDEX_PUTS, MAX_DIV_SHARE
     pc = (cfg or {}).get("paper") or {}
     HALF_PCT = float(pc.get("half_at_pct", HALF_PCT))
     COOLDOWN_DAYS = int(pc.get("cooldown_days", COOLDOWN_DAYS))
     MIN_DTE_AUTO = int(pc.get("min_dte_auto", MIN_DTE_AUTO))
     AMBER_MIN_SCORE = float(pc.get("amber_min_score", AMBER_MIN_SCORE))
     NO_INDEX_PUTS = bool(pc.get("no_index_puts", NO_INDEX_PUTS))
+    MAX_DIV_SHARE = float(pc.get("max_div_share", MAX_DIV_SHARE))
     CAPITAL = float(pc.get("capital", CAPITAL))
     MAX_PCT = float(pc.get("max_pct_trade", MAX_PCT))
     MAX_NEW_DAY = int(pc.get("max_new_per_day", MAX_NEW_DAY))
@@ -260,6 +262,8 @@ def mark(book, prices, spots, session):
         t["last_update"] = session
         if expired:
             _close(t, session, "vencimiento", at_bid=False)
+            t["exit_why"] = ("Ha llegado el vencimiento: se liquida por su valor intrínseco "
+                             f"(${t['value']:,.0f}" + (", venció sin valor)." if not t["value"] else ")."))
     return book
 
 
@@ -274,16 +278,25 @@ def manage_auto(book, session):
         adv = t.get("advice") or {}
         if pnl >= TARGET_PCT:
             _close(t, session, f"objetivo +{TARGET_PCT:.0f}%")
+            t["exit_why"] = (f"La opción ha ganado un {pnl:+.0f}%: alcanza el objetivo (+{TARGET_PCT:.0f}%). "
+                             "Se asegura la ganancia en vez de esperar a que el tiempo y la volatilidad se la coman.")
         elif pnl <= STOP_PCT:
             _close(t, session, f"stop {STOP_PCT:.0f}% (al cierre)")
+            t["exit_why"] = (f"La opción pierde un {pnl:.0f}% al cierre: salta el stop ({STOP_PCT:.0f}%). "
+                             "Se corta la perdida para no arriesgar el resto de la prima.")
         elif t.get("protected") and pnl <= 0:
             _close(t, session, "proteccion: volvio al precio de entrada tras vender la mitad")
+            t["exit_why"] = ("Ya se vendió la mitad con ganancia y el resto ha vuelto al precio de compra: "
+                             "se cierra para no convertir una operación ganadora en perdedora.")
         elif adv.get("action") == "CERRAR":
             _close(t, session, "consejo CERRAR: " + "; ".join(adv.get("reasons") or [])[:150])
+            t["exit_why"] = "Su propio consejo ha pasado a CERRAR: " + "; ".join(adv.get("reasons") or []) + "."
         elif pnl >= HALF_PCT and not t.get("protected"):
             part = _split_half(book, t, session)
             t["protected"] = True
             if part:
+                part["exit_why"] = (f"La opción gana un {pnl:+.0f}%: se vende la mitad para asegurar ganancia y el resto "
+                                    "sigue abierto, protegido (si vuelve al precio de compra se cierra).")
                 out.append((part, "mitad"))
             continue
         else:
@@ -302,6 +315,61 @@ def _cooldown(book, ticker, session):
             if d and d0 and (d0 - d).days < COOLDOWN_DAYS:
                 return True
     return False
+
+
+def _fd(d):
+    p = str(d or "")[:10].split("-")
+    return f"{p[2]}/{p[1]}" if len(p) == 3 else str(d or "")
+
+
+def explain_entry(r, leg, semaforo=None, session=None):
+    """Explicacion escrita de por que el Robot compra (se guarda en la operacion y va a Telegram)."""
+    ck = r.get("checklist") or {}
+    idea = r.get("idea") or {}
+    kind = "CALL" if str(leg.get("kind", "C")).upper().startswith("C") else "PUT"
+    d0, de = parse_date(session), parse_date(leg.get("expiration"))
+    dte = (de - d0).days if d0 and de else leg.get("dte")
+    lines = [f"Señal {r.get('direction', '').lower()} con score {r.get('score')} ({r.get('signal')}): "
+             f"cumple la estrategia de ENTRADA ({ck.get('puntos', '?')} puntos del checklist)."]
+    parts = [n for k, n in (("congreso", "congresistas"), ("futuros", "futuros del sector"),
+                            ("directivos", "compras de directivos"), ("flujo_confirmado", "flujo de opciones confirmado por OI"))
+             if ck.get(k)]
+    if parts:
+        lines.append("A favor: " + ", ".join(parts) + ".")
+    for x in (r.get("reasons") or [])[:6]:
+        lines.append(x.rstrip(".") + ".")
+    nc = r.get("next_catalyst") or {}
+    if nc.get("date"):
+        lines.append(f"Catalizador: {nc.get('type')} el {_fd(nc['date'])} (en {nc.get('days')} días), antes del vencimiento.")
+    ch = next((c for c in (idea.get("choices") or []) if c.get("symbol") == leg.get("symbol")), {})
+    det = [f"{kind} strike {float(leg.get('strike', 0)):g}", f"vence el {_fd(leg.get('expiration'))} ({dte} días)"]
+    if leg.get("delta") is not None:
+        det.append(f"delta {abs(float(leg['delta'])):.2f}")
+    if ch.get("pop") is not None:
+        det.append(f"probabilidad de ganar ~{ch['pop']:.0f}% (estimada)")
+    if ch.get("breakeven"):
+        det.append(f"gana si al vencer la acción está {'por encima' if kind == 'CALL' else 'por debajo'} de ${ch['breakeven']:g}")
+    lines.append("Contrato elegido: " + ", ".join(det) + ". Strike moderado: equilibrio entre coste y probabilidad.")
+    if idea.get("dividend_note"):
+        lines.append(idea["dividend_note"])
+    elif r.get("dividend"):
+        lines.append("Paga dividendo, pero el próximo ex-dividendo cae después del vencimiento: no afecta.")
+    lv = (semaforo or {}).get("level")
+    if lv:
+        lines.append(f"Mercado: semáforo {lv}" + (" (solo entra con score ≥ 55)." if lv == "ambar" else "."))
+    lines.append("Salida prevista: +100% objetivo, −50% stop, a +50% vende la mitad, o antes si el consejo pasa a CERRAR.")
+    return "\n".join("- " + x for x in lines)
+
+
+def backfill_why(book, recs, session, semaforo=None):
+    """Operaciones del Robot abiertas antes de existir la explicacion: se reconstruye con los datos de hoy."""
+    for t in book["trades"]:
+        if t["source"] == "AUTO" and t["status"] == "OPEN" and not t.get("why") and t["ticker"] in recs:
+            try:
+                t["why"] = ("(Reconstruida con los datos de hoy: compró el " + _fd(t["opened"]) + ")\n"
+                            + explain_entry(recs[t["ticker"]], t["legs"][0], None, session))[:2500]
+            except Exception as e:
+                log(f"paper: explicacion {t['ticker']}: {e}")
 
 
 def auto_open(book, records, session, semaforo=None):
@@ -337,6 +405,11 @@ def auto_open(book, records, session, semaforo=None):
         if _cooldown(book, r["ticker"], session):
             log(f"paper: {r['ticker']} no abierta (cerro con perdida hace menos de {COOLDOWN_DAYS} dias)")
             continue
+        dv = idea.get("dividend") or {}
+        if str(dv.get("kind", "")).upper().startswith("C") and (dv.get("share_of_premium") or 0) >= MAX_DIV_SHARE:
+            log(f"paper: {r['ticker']} no abierta (el dividendo antes del vencimiento es el "
+                f"{dv['share_of_premium']*100:.0f}% del precio de la call)")
+            continue
         t = open_trade(book, r["ticker"], r["direction"], idea["legs"], session, "AUTO",
                        idea.get("structure", ""), r.get("price"),
                        notes="; ".join((r.get("reasons") or [])[:3]))
@@ -344,6 +417,10 @@ def auto_open(book, records, session, semaforo=None):
             nc = r.get("next_catalyst") or {}
             if nc.get("date") and nc["date"] <= t["expiration"]:
                 t["catalyst"] = {"date": nc["date"], "type": nc.get("type")}
+            try:
+                t["why"] = explain_entry(r, idea["legs"][0], semaforo, session)[:2500]
+            except Exception as e:
+                log(f"paper: explicacion {r['ticker']}: {e}")
             n += 1
             n_today += 1
             n_open += 1
