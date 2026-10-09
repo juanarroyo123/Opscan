@@ -143,5 +143,6 @@ futures:
 # ---------- Alertas (opcional) ----------
 alerts:
   telegram: true      # necesita los secrets TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID
+  mode: solo_operaciones   # solo: compras/ventas del Robot y aviso de CERRAR en tus carteras. Pon "completo" para recibir tambien senales, resumen diario e informe semanal
   min_score: 60
   only_entries: true  # solo valores que cumplen el checklist de entrada

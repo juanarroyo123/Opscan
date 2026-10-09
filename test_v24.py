@@ -109,3 +109,13 @@ def test_corregir_precio():
     assert paper.account(book, "RSI")["cash"] == 10000 - 515
     ok, _ = paper.apply_request(book, {"op": "edit", "id": "M0002"}, "2026-10-06")
     assert not ok                                                       # nada que cambiar
+
+
+def test_telegram_solo_operaciones():
+    from opscan import alerts
+    assert alerts.only_trades({"alerts": {}}) and not alerts.only_trades({"alerts": {"mode": "completo"}})
+    t = {"ticker": "NFLX", "opened": "2026-10-09", "contracts": 2, "source": "AUTO",
+         "legs": [{"kind": "P", "strike": 71.0, "expiration": "2026-11-20", "entry": 2.09}]}
+    m = alerts.msg_buy(t)
+    assert m.splitlines() == ["🟢 09/10/2026 · Robot COMPRA", "PUT NFLX 71 · vence 20/11/2026", "2 contratos · prima $2,09"]
+    assert "%" not in m

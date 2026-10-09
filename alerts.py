@@ -28,9 +28,54 @@ def send_telegram(text):
     return r.status_code == 200
 
 
+def only_trades(cfg):
+    """Modo 'solo operaciones': Telegram solo avisa de compras/ventas del Robot y de cuando cerrar."""
+    return str((cfg.get("alerts") or {}).get("mode", "solo_operaciones")) == "solo_operaciones"
+
+
+def _fd(d):
+    try:
+        y, m, dd = str(d)[:10].split("-")
+        return f"{dd}/{m}/{y}"
+    except ValueError:
+        return str(d or "")
+
+
+def _px(x):
+    return f"${x:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+
+def _leg_txt(t):
+    l = (t.get("legs") or [{}])[0]
+    kind = "CALL" if str(l.get("kind", "C")).upper().startswith("C") else "PUT"
+    return f"{kind} {t['ticker']} {l.get('strike', 0):g} · vence {_fd(l.get('expiration'))}", l
+
+
+def msg_buy(t):
+    txt, l = _leg_txt(t)
+    n = int(t.get("contracts") or 1)
+    return (f"🟢 {_fd(t.get('opened'))} · Robot COMPRA\n{txt}\n"
+            f"{n} contrato{'s' if n != 1 else ''} · prima {_px(l.get('entry') or 0)}")
+
+
+def msg_sell(t):
+    txt, l = _leg_txt(t)
+    n = int(t.get("contracts") or 1)
+    px = (t.get("exit_value") or 0) / (100 * n) if n else 0
+    return (f"🔴 {_fd(t.get('closed'))} · Robot VENDE\n{txt}\n"
+            f"{n} contrato{'s' if n != 1 else ''} · prima {_px(px)}")
+
+
+def msg_close_advice(t, session_date):
+    txt, _ = _leg_txt(t)
+    why = ((t.get("advice") or {}).get("reasons") or [""])[0]
+    acc = {"MANUAL": "OpScan", "RSI": "Soportes + RSI"}.get(t.get("source"), t.get("source"))
+    return f"⚠️ {_fd(session_date)} · Toca CERRAR ({acc})\n{txt}\n{why}".rstrip()
+
+
 def process(records, cfg, sent, session_date, status):
     acfg = cfg["alerts"]
-    if not acfg.get("telegram") or not os.environ.get("TELEGRAM_BOT_TOKEN"):
+    if not acfg.get("telegram") or not os.environ.get("TELEGRAM_BOT_TOKEN") or only_trades(cfg):
         return sent
     site = os.environ.get("OPSCAN_SITE_URL", "")
     n = 0

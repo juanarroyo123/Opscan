@@ -505,19 +505,25 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     n_auto = paper.auto_open(book, ok_recs, session, sem)
     to_close = paper.advise(book, {r["ticker"]: r for r in ok_recs}, session, cfg["scoring"]["media"])
     if mode in ("full", "smoke"):        # el Robot decide sus salidas una vez al dia, con el cierre
-        for t, why in paper.manage_auto(book, session):
-            try:
-                alerts.send_telegram(f"OpScan Robot - {t['ticker']} {t['id']}: {why}\n"
-                                     f"P&L {t.get('pnl_pct', 0):+.0f}% (${t.get('pnl', 0):+.0f})\n"
-                                     "(cartera simulada, no es asesoramiento)")
-            except Exception as e:
-                log(f"telegram robot: {e}")
-    for t in [x for x in to_close if x["source"] != "AUTO"]:      # avisos solo para TUS carteras
+        paper.manage_auto(book, session)
+    # Telegram: compras y ventas del Robot (una vez cada una) y aviso de CERRAR en tus carteras
+    tg_on = (cfg.get("alerts") or {}).get("telegram") and os.environ.get("TELEGRAM_BOT_TOKEN")
+    for t in book["trades"]:
+        if t["source"] != "AUTO":
+            continue
         try:
-            alerts.send_telegram(f"OpScan - CERRAR {t['id']} {t['ticker']} ({t['source']})\n"
-                                 f"P&L {t.get('pnl_pct', 0):+.0f}% (${t.get('pnl', 0):+.0f})\n- "
-                                 + "\n- ".join(t["advice"]["reasons"])
-                                 + "\n(cartera simulada, no es asesoramiento)")
+            if t.get("opened") == session and not t.get("tg_open") and not str(t["id"]).endswith("a"):
+                if not tg_on or alerts.send_telegram(alerts.msg_buy(t)):
+                    t["tg_open"] = True
+            if t["status"] == "CLOSED" and t.get("closed") == session and not t.get("tg_close"):
+                if not tg_on or alerts.send_telegram(alerts.msg_sell(t)):
+                    t["tg_close"] = True
+        except Exception as e:
+            log(f"telegram robot: {e}")
+    for t in [x for x in to_close if x["source"] != "AUTO" and x["status"] == "OPEN"]:
+        try:
+            if tg_on:
+                alerts.send_telegram(alerts.msg_close_advice(t, session))
         except Exception as e:
             log(f"telegram cierre: {e}")
     paper.snapshot(book, session)
@@ -535,7 +541,7 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     sent = state.load_cache("alerts.json", {})
     sent = alerts.process(ok_recs, cfg, sent, session, status)
     # informe semanal (lunes, una vez)
-    if today_et().weekday() == 0 and mode in ("premarket", "full", "intraday"):
+    if today_et().weekday() == 0 and mode in ("premarket", "full", "intraday") and not alerts.only_trades(cfg):
         wkey = f"{today_et().isocalendar()[0]}-W{today_et().isocalendar()[1]}:semanal"
         if wkey not in sent and os.environ.get("TELEGRAM_BOT_TOKEN"):
             try:
@@ -544,7 +550,7 @@ def run(mode="full", tickers_override=None, offline_universe=False):
                     sent[wkey] = True
             except Exception as e:
                 log(f"informe semanal: {e}")
-    if mode == "full":
+    if mode == "full" and not alerts.only_trades(cfg):
         conf_today = [c for c in confirmed_recent if c.get("checked_date") == session]
         sent = alerts.daily_summary(ok_recs, {
             "entradas": sum(1 for r in ok_recs if r.get("checklist", {}).get("entrada")),

@@ -318,6 +318,8 @@ def test_alerts_send_once(cfg, monkeypatch):
          "checklist": {"puntos": 3, "congreso": True, "futuros": False, "flujo_confirmado": True, "entrada": True},
          "idea": {"structure": "Call larga", "expiration": "2026-11-20", "strikes": "call ~3"}}
     st = util.Status()
+    cfg = {**cfg, "alerts": {**cfg["alerts"], "mode": "completo"}}     # modo con senales
+    assert alerts.process([r], {**cfg, "alerts": {**cfg["alerts"], "mode": "solo_operaciones"}}, {}, "2026-09-30", st) == {}
     sent = alerts.process([r], cfg, {}, "2026-09-30", st)
     sent = alerts.process([r], cfg, sent, "2026-09-30", st)   # no repite
     assert len(sent_msgs) == 1 and "RCKT" in sent_msgs[0]
