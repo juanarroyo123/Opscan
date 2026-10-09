@@ -48,29 +48,54 @@ def _px(x):
 def _leg_txt(t):
     l = (t.get("legs") or [{}])[0]
     kind = "CALL" if str(l.get("kind", "C")).upper().startswith("C") else "PUT"
-    return f"{kind} {t['ticker']} {l.get('strike', 0):g} · vence {_fd(l.get('expiration'))}", l
+    return f"{kind} {t['ticker']} strike {l.get('strike', 0):g}, vencimiento {_fd(l.get('expiration'))}", l
+
+
+def _ctr(n):
+    return f"{n} contrato{'s' if n != 1 else ''}"
 
 
 def msg_buy(t):
+    """Mensaje formal de compra del Robot, con el motivo completo (el mismo texto que en la web)."""
     txt, l = _leg_txt(t)
     n = int(t.get("contracts") or 1)
-    return (f"🟢 {_fd(t.get('opened'))} · Robot COMPRA\n{txt}\n"
-            f"{n} contrato{'s' if n != 1 else ''} · prima {_px(l.get('entry') or 0)}")
+    px = l.get("entry") or 0
+    out = ["OPSCAN | CARTERA AUTOMÁTICA | COMPRA", "",
+           f"Fecha: {_fd(t.get('opened'))}",
+           f"Operación: compra de {_ctr(n)} {txt}",
+           f"Prima: {_px(px)} por opción ({_px(px * 100 * n)} en total)"]
+    if t.get("why"):
+        out += ["", "Motivo de la entrada:", t["why"]]
+    return "\n".join(out)
 
 
 def msg_sell(t):
+    """Mensaje formal de venta del Robot, con el motivo de la salida."""
     txt, l = _leg_txt(t)
     n = int(t.get("contracts") or 1)
     px = (t.get("exit_value") or 0) / (100 * n) if n else 0
-    return (f"🔴 {_fd(t.get('closed'))} · Robot VENDE\n{txt}\n"
-            f"{n} contrato{'s' if n != 1 else ''} · prima {_px(px)}")
+    out = ["OPSCAN | CARTERA AUTOMÁTICA | VENTA", "",
+           f"Fecha: {_fd(t.get('closed'))}",
+           f"Operación: venta de {_ctr(n)} {txt}",
+           f"Prima: {_px(px)} por opción (compra a {_px(l.get('entry') or 0)})"]
+    why = t.get("exit_why") or t.get("close_reason")
+    if why:
+        out += ["", "Motivo de la salida:", why]
+    return "\n".join(out)
 
 
 def msg_close_advice(t, session_date):
+    """Aviso formal de que toca cerrar una posicion de tus carteras."""
     txt, _ = _leg_txt(t)
-    why = ((t.get("advice") or {}).get("reasons") or [""])[0]
     acc = {"MANUAL": "OpScan", "RSI": "Soportes + RSI"}.get(t.get("source"), t.get("source"))
-    return f"⚠️ {_fd(session_date)} · Toca CERRAR ({acc})\n{txt}\n{why}".rstrip()
+    out = [f"OPSCAN | AVISO DE CIERRE | {acc}", "",
+           f"Fecha: {_fd(session_date)}",
+           f"Posición: {_ctr(int(t.get('contracts') or 1))} {txt}",
+           "Recomendación: cerrar la posición"]
+    reasons = (t.get("advice") or {}).get("reasons") or []
+    if reasons:
+        out += ["", "Motivo:"] + [f"- {x}" for x in reasons]
+    return "\n".join(out)
 
 
 def process(records, cfg, sent, session_date, status):

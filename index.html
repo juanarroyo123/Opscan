@@ -446,7 +446,7 @@ table.sm th,table.sm td{font-size:12px;padding:6px 8px}
         <div class="tscroll"><table class="ib-t" id="ibPos"></table></div>
       </div>
 
-      <div class="ib-card" id="ibRobot" hidden><div class="ib-ct">Reglas del Robot</div><div class="small" id="robotRules" style="margin-top:6px;line-height:1.5"></div></div>
+      <div class="ib-card" id="ibRobot" hidden><div class="ib-ct">Reglas de la cartera automática</div><div class="small" id="robotRules" style="margin-top:6px;line-height:1.5"></div></div>
 
       <details class="ib-card ib-det" id="ibRiskD"><summary class="ib-ct">Riesgo de la cartera</summary><div id="riskBox" style="margin-top:10px"></div></details>
       <details class="ib-card ib-det" id="ibExtD"><summary class="ib-ct">+ Añadir una operación hecha fuera de la web</summary><div id="extBox" style="margin-top:10px"></div></details>
@@ -1136,7 +1136,7 @@ function liveAccount(A,trades){if(!A||!Object.keys(S.live).length)return A;let o
   trades.filter(t=>t.status==="OPEN").forEach(t=>{const lv=liveTrade(t);if(lv)any=true;ov+=lv?lv.value:(t.value??t.entry_cost);inv+=t.entry_cost;});
   if(!any)return A;const eq=A.cash+ov;return {...A,open_value:Math.round(ov*100)/100,unrealized:Math.round((ov-inv)*100)/100,equity:Math.round(eq*100)/100,
     return_pct:Math.round((eq/A.capital-1)*10000)/100};}
-const ACC={MANUAL:"OpScan",RSI:"Soportes + RSI",AUTO:"Robot"},USER_ACC=["MANUAL","RSI"],ALL_ACC=["MANUAL","RSI","AUTO"];
+const ACC={MANUAL:"OpScan",RSI:"Soportes + RSI",AUTO:"Automática"},USER_ACC=["MANUAL","RSI"],ALL_ACC=["MANUAL","RSI","AUTO"];
 const ACC_DESC={MANUAL:"Tus compras con las señales de OpScan.",RSI:"Tu estrategia propia de soportes/resistencias y RSI (no se usa para ajustar la web).",
   AUTO:"La web sola: compra cada ENTRADA y la gestiona con reglas fijas."};
 const lsGet=(k,d)=>{try{return localStorage.getItem(k)||d;}catch(e){return d;}},lsSet=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
@@ -1249,7 +1249,7 @@ function renderPort(force){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];
   // pestañas de cuenta con su valor
   const accs={};ALL_ACC.forEach(k=>{const A0=acctSum(sm,k);accs[k]=A0?liveAccount(A0,tr.filter(t=>t.source===k)):null;});
   $("#ibAccts").innerHTML=ALL_ACC.map(k=>{const A=accs[k];return `<button role="tab" aria-selected="${k===src}" class="${k===src?"on":""}" data-acct="${k}">
-    <span class="a1">${ACC[k]}${k==="AUTO"?" · automática":""}</span><span class="a2">${A?moneyF(A.equity)+` <span class="${cls(A.return_pct)} small">${pct(A.return_pct,2)}</span>`:'<span class="muted small">próximo escaneo</span>'}</span></button>`;}).join("");
+    <span class="a1">${ACC[k]}</span><span class="a2">${A?moneyF(A.equity)+` <span class="${cls(A.return_pct)} small">${pct(A.return_pct,2)}</span>`:'<span class="muted small">próximo escaneo</span>'}</span></button>`;}).join("");
   $("#ibDesc").textContent=ACC_DESC[src];
   const A=accs[src];
   // resumen tipo broker
@@ -1282,7 +1282,7 @@ function renderPort(force){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];
         <td class="l"><span class="badge ${esc(Ad.action||"NA")}">${esc(Ad.action||"SIN DATOS")}</span></td></tr>
       ${isOpen?`<tr class="dt"><td colspan="12"><div class="ib-dt"><div>
           <div class="adv ${esc(Ad.action||"MANTENER")}" style="margin-top:0"><b class="${Ad.action==="CERRAR"?"down":Ad.action==="VIGILAR"?"warn":"up"}">${esc(Ad.action||"SIN DATOS AÚN")}</b> · ${esc((Ad.reasons||["Se valorará en el próximo escaneo"]).join(" · "))}</div>
-          ${t.why?`<div class="journal" style="white-space:pre-line">${src==="AUTO"?"🤖 <b>Por qué compró el Robot:</b>\n":"📝 <b>Por qué entré:</b> "}${esc(t.why)}</div>`
+          ${t.why?`<div class="journal" style="white-space:pre-line">${src==="AUTO"?"<b>Motivo de la entrada:</b>\n":"📝 <b>Por qué entré:</b> "}${esc(t.why)}</div>`
             :src==="AUTO"&&t.notes?`<div class="journal">🤖 ${esc(t.notes)}</div>`:""}
           <div class="acts"><button class="btn sec" data-open="${esc(t.ticker)}">Ver ficha</button><button class="btn sec" data-simp="${esc(t.id)}">📈 Escenarios</button>
             ${user?`<button class="btn sec" data-edit="${esc(t.id)}">✏️ Corregir</button><button class="btn" style="background:var(--bad-txt)" data-sell="${esc(t.id)}">Vender (cerrar)</button>`:""}</div></div>
@@ -1294,7 +1294,7 @@ function renderPort(force){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];
             <span>Delta</span><b>${(g.delta*100*n).toFixed(0)} acciones equivalentes</b><span>Theta</span><b>${sgn(g.theta*100*n,usd2)} al día</b></div>
         </div><div data-sellbox="${esc(t.id)}"></div><div data-editbox="${esc(t.id)}"></div><div data-simbox="${esc(t.id)}"></div></td></tr>`:""}`;}).join("");
     $("#ibPos").innerHTML=`<thead><tr><th class="l">Instrumento</th><th>Contratos</th><th>Último</th><th>Precio medio</th><th>Valor mercado</th><th>P&amp;L no real.</th><th>%</th><th>Subyacente</th><th>Delta</th><th>Theta/día</th><th>Vence</th><th class="l">Consejo</th></tr></thead>
-      <tbody>${rows||`<tr><td colspan="12" class="l" style="padding:22px 8px;color:var(--mut)">${user?`No hay posiciones abiertas en <b>${ACC[src]}</b>. Compra desde la ficha de un valor del Radar o con <b>+ Añadir una operación</b>.`:"El Robot no tiene posiciones abiertas."}</td></tr>`}
+      <tbody>${rows||`<tr><td colspan="12" class="l" style="padding:22px 8px;color:var(--mut)">${user?`No hay posiciones abiertas en <b>${ACC[src]}</b>. Compra desde la ficha de un valor del Radar o con <b>+ Añadir una operación</b>.`:"La cartera automática no tiene posiciones abiertas."}</td></tr>`}
       ${op.length?`<tr class="tot"><td class="l">Total</td><td></td><td></td><td></td><td>${moneyF(tv)}</td><td class="${cls(tpl)}">${sgn(tpl)}</td><td class="${cls(tpl)}">${tc?pct(tpl/tc*100,1):"—"}</td><td></td><td></td><td class="${cls(tth)}">${sgn(tth,usd0)}</td><td></td><td></td></tr>`:""}</tbody>`;}
   // cerradas
   $("#ibClN").textContent=cl.length?`(${cl.length})`:"";

@@ -23,7 +23,7 @@ def test_seed_rsi_una_vez():
     a = paper.account(book, "RSI")
     assert a["cash"] == 10000 - 28 - 232 and paper.account(book, "MANUAL")["cash"] == 10000
     s = paper.summary(book)
-    assert s["accounts"]["RSI"]["name"] == "Soportes + RSI" and s["accounts"]["AUTO"]["name"] == "Robot"
+    assert s["accounts"]["RSI"]["name"] == "Soportes + RSI" and s["accounts"]["AUTO"]["name"] == "Automática"
 
 
 def test_orden_web_cartera_rsi_y_fecha():
@@ -117,8 +117,9 @@ def test_telegram_solo_operaciones():
     t = {"ticker": "NFLX", "opened": "2026-10-09", "contracts": 2, "source": "AUTO",
          "legs": [{"kind": "P", "strike": 71.0, "expiration": "2026-11-20", "entry": 2.09}]}
     m = alerts.msg_buy(t)
-    assert m.splitlines() == ["🟢 09/10/2026 · Robot COMPRA", "PUT NFLX 71 · vence 20/11/2026", "2 contratos · prima $2,09"]
-    assert "%" not in m
+    assert m.splitlines() == ["OPSCAN | CARTERA AUTOMÁTICA | COMPRA", "", "Fecha: 09/10/2026",
+                              "Operación: compra de 2 contratos PUT NFLX strike 71, vencimiento 20/11/2026",
+                              "Prima: $2,09 por opción ($418,00 en total)"]
 
 
 def test_dividendo_dentro_de_la_vida_de_la_call():
@@ -151,4 +152,6 @@ def test_robot_guarda_explicacion():
     why = book["trades"][0]["why"]
     assert "confirmadas por subida de OI" in why and "Contrato elegido" in why and "Señal alcista" in why
     from opscan import alerts
-    assert "Por qué" not in alerts.msg_buy(book["trades"][0])          # la explicacion va en la web, no en Telegram
+    m = alerts.msg_buy(book["trades"][0])
+    assert "Motivo de la entrada:" in m and "Contrato elegido" in m
+    assert all(ord(ch) < 0x2190 or ch in "≥−" for ch in m)              # formal: sin emojis

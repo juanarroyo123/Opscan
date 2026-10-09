@@ -37,7 +37,7 @@ AMBER_MIN_SCORE = 55     # Robot: con el semaforo en ambar solo entra con score 
 NO_INDEX_PUTS = True     # Robot: no compra puts de indices (casi todo ese flujo son coberturas)
 MAX_DIV_SHARE = 0.30     # Robot: no compra una CALL si el dividendo dentro de su vida es >= 30% de su precio
 
-ACCOUNTS = {"MANUAL": "OpScan", "RSI": "Soportes + RSI", "AUTO": "Robot"}
+ACCOUNTS = {"MANUAL": "OpScan", "RSI": "Soportes + RSI", "AUTO": "Automática"}
 USER_ACCOUNTS = ("MANUAL", "RSI")
 
 
@@ -340,7 +340,7 @@ def explain_entry(r, leg, semaforo=None, session=None):
         lines.append(x.rstrip(".") + ".")
     nc = r.get("next_catalyst") or {}
     if nc.get("date"):
-        lines.append(f"Catalizador: {nc.get('type')} el {_fd(nc['date'])} (en {nc.get('days')} días), antes del vencimiento.")
+        lines.append(f"Catalizador: {nc.get('type')} el {_fd(nc['date'])} (en {nc.get('days')} día{'' if nc.get('days') == 1 else 's'}), antes del vencimiento.")
     ch = next((c for c in (idea.get("choices") or []) if c.get("symbol") == leg.get("symbol")), {})
     det = [f"{kind} strike {float(leg.get('strike', 0)):g}", f"vence el {_fd(leg.get('expiration'))} ({dte} días)"]
     if leg.get("delta") is not None:
