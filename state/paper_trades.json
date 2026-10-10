@@ -1,0 +1,928 @@
+{
+ "trades": [
+  {
+   "id": "P0001",
+   "source": "MANUAL",
+   "opened": "2026-10-02",
+   "ticker": "SMMT",
+   "direction": "ALCISTA",
+   "structure": "Call comprada moderada",
+   "legs": [
+    {
+     "symbol": "SMMT261120C00020000",
+     "kind": "C",
+     "strike": 20.0,
+     "expiration": "2026-11-20",
+     "qty": 1,
+     "entry": 1.8,
+     "last": 1.55,
+     "bid": 1.3,
+     "ask": 1.8
+    }
+   ],
+   "entry_cost": 360.0,
+   "contracts": 2,
+   "unit_cost": 180.0,
+   "underlying_entry": 16.79,
+   "status": "OPEN",
+   "value": 310.0,
+   "pnl": -50.0,
+   "pnl_pct": -13.9,
+   "last_update": "2026-10-09",
+   "notes": "Sesiones previas: $1.51M en flujo inusual vigente; Puntos de flujo (+24); 5 alerta(s) confirmadas por subida de OI (+20)",
+   "issue": "1",
+   "expiration": "2026-11-20",
+   "underlying_last": 17.59,
+   "catalyst": {
+    "date": "2026-11-14",
+    "type": "PDUFA"
+   },
+   "advice": {
+    "action": "MANTENER",
+    "reasons": [
+     "Tesis intacta; PDUFA en 36 dias",
+     "vence en 42 dias"
+    ],
+    "date": "2026-10-09"
+   }
+  },
+  {
+   "id": "P0014",
+   "source": "AUTO",
+   "opened": "2026-10-02",
+   "ticker": "BAC",
+   "direction": "BAJISTA",
+   "structure": "Put comprada (opcion simple)",
+   "legs": [
+    {
+     "symbol": "BAC261023P00053000",
+     "kind": "P",
+     "strike": 53.0,
+     "expiration": "2026-10-23",
+     "qty": 1,
+     "entry": 1.2,
+     "last": 0.785,
+     "bid": 0.68,
+     "ask": 0.89
+    }
+   ],
+   "entry_cost": 480.0,
+   "contracts": 4,
+   "unit_cost": 120.0,
+   "underlying_entry": 53.76,
+   "status": "OPEN",
+   "value": 314.0,
+   "pnl": -166.0,
+   "pnl_pct": -34.6,
+   "last_update": "2026-10-09",
+   "notes": "Hoy: 2 contratos inusuales, $0.74M de prima; Sesiones previas: $1.99M en flujo inusual vigente; Puntos de flujo (+22)",
+   "issue": null,
+   "expiration": "2026-10-23",
+   "catalyst": {
+    "date": "2026-10-14",
+    "type": "Resultados"
+   },
+   "advice": {
+    "action": "VIGILAR",
+    "reasons": [
+     "Vas -35%: cerca del stop (-50%)"
+    ],
+    "date": "2026-10-09"
+   },
+   "underlying_last": 54.42,
+   "why": "(Reconstruida con los datos de hoy: compró el 02/10)\n- Señal alcista con score 45.1 (MEDIA): cumple la estrategia de ENTRADA (0 puntos del checklist).\n- Hoy: 10 contratos inusuales, $24.96M de prima.\n- Sesiones previas: $1.38M en flujo inusual vigente.\n- Puntos de flujo (+12).\n- 6 orden(es) ballena >= $1M.\n- Volumen de opciones 2.32x su media 20d (+6).\n- 10 alerta(s) confirmadas por subida de OI (+20).\n- Contrato elegido: PUT strike 53, vence el 23/10 (15 días). Strike moderado: equilibrio entre coste y probabilidad.\n- Paga dividendo, pero el próximo ex-dividendo cae después del vencimiento: no afecta.\n- Salida prevista: +100% objetivo, −50% stop, a +50% vende la mitad, o antes si el consejo pasa a CERRAR."
+  },
+  {
+   "id": "P0015",
+   "source": "AUTO",
+   "opened": "2026-10-02",
+   "ticker": "NFLX",
+   "direction": "ALCISTA",
+   "structure": "Call comprada (opcion simple)",
+   "legs": [
+    {
+     "symbol": "NFLX261030C00071000",
+     "kind": "C",
+     "strike": 71.0,
+     "expiration": "2026-10-30",
+     "qty": 1,
+     "entry": 2.09,
+     "last": 3.01,
+     "bid": 2.97,
+     "ask": 3.05
+    }
+   ],
+   "entry_cost": 209.0,
+   "contracts": 1,
+   "unit_cost": 209.0,
+   "underlying_entry": 67.49,
+   "status": "OPEN",
+   "value": 301.0,
+   "pnl": 92.0,
+   "pnl_pct": 44.0,
+   "last_update": "2026-10-09",
+   "notes": "Hoy: 4 contratos inusuales, $0.90M de prima; Sesiones previas: $4.79M en flujo inusual vigente; Puntos de flujo (+16)",
+   "issue": null,
+   "expiration": "2026-10-30",
+   "catalyst": {
+    "date": "2026-10-20",
+    "type": "Resultados"
+   },
+   "advice": {
+    "action": "MANTENER",
+    "reasons": [
+     "Tesis intacta; Resultados en 11 dias",
+     "vence en 21 dias"
+    ],
+    "date": "2026-10-09"
+   },
+   "underlying_last": 70.32,
+   "protected": true,
+   "why": "(Reconstruida con los datos de hoy: compró el 02/10)\n- Señal alcista con score 54.1 (MEDIA): cumple la estrategia de ENTRADA (3 puntos del checklist).\n- A favor: congresistas, flujo de opciones confirmado por OI.\n- Hoy: 29 contratos inusuales, $82.92M de prima.\n- Sesiones previas: $2.99M en flujo inusual vigente.\n- Puntos de flujo (+12).\n- 17 orden(es) ballena >= $1M.\n- 12 alerta(s) confirmadas por subida de OI (+20).\n- Acumulacion: flujo alcista en 4 sesiones distintas (+7).\n- Catalizador: Resultados el 20/10 (en 11 días), antes del vencimiento.\n- Contrato elegido: CALL strike 71, vence el 30/10 (22 días). Strike moderado: equilibrio entre coste y probabilidad.\n- Salida prevista: +100% objetivo, −50% stop, a +50% vende la mitad, o antes si el consejo pasa a CERRAR."
+  },
+  {
+   "id": "P0016",
+   "source": "AUTO",
+   "opened": "2026-10-02",
+   "ticker": "MRK",
+   "direction": "ALCISTA",
+   "structure": "Call comprada (opcion simple)",
+   "legs": [
+    {
+     "symbol": "MRK261023C00145000",
+     "kind": "C",
+     "strike": 145.0,
+     "expiration": "2026-10-23",
+     "qty": 1,
+     "entry": 3.33,
+     "last": 1.35
+    }
+   ],
+   "entry_cost": 333.0,
+   "contracts": 1,
+   "unit_cost": 333.0,
+   "underlying_entry": 143.74,
+   "status": "CLOSED",
+   "value": 135.0,
+   "pnl": -198.0,
+   "pnl_pct": -59.5,
+   "last_update": "2026-10-05",
+   "notes": "Hoy: 1 contratos inusuales, $0.31M de prima; Sesiones previas: $1.24M en flujo inusual vigente; Puntos de flujo (+15)",
+   "issue": null,
+   "expiration": "2026-10-23",
+   "catalyst": {
+    "date": "2026-10-10",
+    "type": "PDUFA"
+   },
+   "advice": {
+    "action": "MANTENER",
+    "reasons": [
+     "Tesis intacta; PDUFA en 8 dias",
+     "vence en 21 dias"
+    ],
+    "date": "2026-10-02"
+   },
+   "underlying_last": 139.25,
+   "closed": "2026-10-05",
+   "exit_value": 135.0,
+   "close_reason": "stop -50%"
+  },
+  {
+   "id": "M0001",
+   "source": "MANUAL",
+   "opened": "2026-10-02",
+   "ticker": "CSCO",
+   "direction": "BAJISTA",
+   "structure": "Put comprada agresiva",
+   "legs": [
+    {
+     "symbol": "CSCO261120P00100000",
+     "kind": "P",
+     "strike": 100.0,
+     "expiration": "2026-11-20",
+     "qty": 1,
+     "entry": 1.98,
+     "last": 0.9,
+     "bid": 0.85,
+     "ask": 0.95
+    }
+   ],
+   "entry_cost": 396.0,
+   "contracts": 2,
+   "unit_cost": 198.0,
+   "underlying_entry": 111.51,
+   "status": "OPEN",
+   "value": 180.0,
+   "pnl": -216.0,
+   "pnl_pct": -54.5,
+   "last_update": "2026-10-09",
+   "notes": "Hoy: 13 contratos inusuales, $1.37M de prima; Sesiones previas: $10.30M en flujo inusual vigente; Puntos de flujo (+27)",
+   "issue": null,
+   "expiration": "2026-11-20",
+   "underlying_last": 118.3,
+   "catalyst": {
+    "date": "2026-11-10",
+    "type": "Resultados"
+   },
+   "advice": {
+    "action": "CERRAR",
+    "reasons": [
+     "Stop alcanzado (-54%): corta la perdida, no esperes a que vuelva"
+    ],
+    "date": "2026-10-09"
+   }
+  },
+  {
+   "id": "P0017",
+   "source": "AUTO",
+   "opened": "2026-10-05",
+   "ticker": "MRK",
+   "direction": "ALCISTA",
+   "structure": "Call comprada (opcion simple)",
+   "legs": [
+    {
+     "symbol": "MRK261030C00144000",
+     "kind": "C",
+     "strike": 144.0,
+     "expiration": "2026-10-30",
+     "qty": 1,
+     "entry": 3.67,
+     "last": 6.05,
+     "iv": 0.3702,
+     "bid": 5.25,
+     "ask": 6.85
+    }
+   ],
+   "entry_cost": 367.0,
+   "contracts": 1,
+   "unit_cost": 367.0,
+   "underlying_entry": 139.25,
+   "status": "OPEN",
+   "value": 605.0,
+   "pnl": 238.0,
+   "pnl_pct": 64.9,
+   "last_update": "2026-10-09",
+   "notes": "Hoy: 3 contratos inusuales, $0.84M de prima; Sesiones previas: $2.65M en flujo inusual vigente; Puntos de flujo (+24)",
+   "issue": null,
+   "expiration": "2026-10-30",
+   "catalyst": {
+    "date": "2026-10-10",
+    "type": "PDUFA"
+   },
+   "advice": {
+    "action": "VIGILAR",
+    "reasons": [
+     "Vas +65%: valora vender la mitad y dejar correr el resto",
+     "PDUFA en 1 dia(s): decide si quieres estar dentro durante el evento (todo o nada)"
+    ],
+    "date": "2026-10-09"
+   },
+   "underlying_last": 145.6,
+   "why": "(Reconstruida con los datos de hoy: compró el 05/10)\n- Señal alcista con score 71.5 (ALTA): cumple la estrategia de ENTRADA (3 puntos del checklist).\n- A favor: congresistas, flujo de opciones confirmado por OI.\n- Hoy: 2 contratos inusuales, $4.45M de prima.\n- Sesiones previas: $3.48M en flujo inusual vigente.\n- Puntos de flujo (+22).\n- 100% de lo comprado hoy es FUERA del dinero ($0.69M): apuestas apalancadas a un movimiento, lo mas revelador.\n- 1 orden(es) ballena >= $1M.\n- Volumen de opciones 1.7x su media 20d (+3).\n- Catalizador: PDUFA el 10/10 (en 1 día), antes del vencimiento.\n- Contrato elegido: CALL strike 144, vence el 30/10 (22 días). Strike moderado: equilibrio entre coste y probabilidad.\n- Paga dividendo, pero el próximo ex-dividendo cae después del vencimiento: no afecta.\n- Salida prevista: +100% objetivo, −50% stop, a +50% vende la mitad, o antes si el consejo pasa a CERRAR.",
+   "protected": true
+  },
+  {
+   "id": "P0018",
+   "source": "AUTO",
+   "opened": "2026-10-05",
+   "ticker": "NEM",
+   "direction": "BAJISTA",
+   "structure": "Put comprada (opcion simple)",
+   "legs": [
+    {
+     "symbol": "NEM261030P00113000",
+     "kind": "P",
+     "strike": 113.0,
+     "expiration": "2026-10-30",
+     "qty": 1,
+     "entry": 3.85,
+     "last": 4.45,
+     "iv": 0.4343,
+     "bid": 4.15,
+     "ask": 4.75
+    }
+   ],
+   "entry_cost": 385.0,
+   "contracts": 1,
+   "unit_cost": 385.0,
+   "underlying_entry": 115.64,
+   "status": "CLOSED",
+   "value": 415.0,
+   "pnl": 30.0,
+   "pnl_pct": 7.8,
+   "last_update": "2026-10-07",
+   "notes": "Sesiones previas: $2.54M en flujo inusual vigente; Puntos de flujo (+20); 3 alerta(s) confirmadas por subida de OI (+20)",
+   "issue": null,
+   "expiration": "2026-10-30",
+   "catalyst": {
+    "date": "2026-10-22",
+    "type": "Resultados"
+   },
+   "advice": {
+    "action": "CERRAR",
+    "reasons": [
+     "El flujo de opciones ha girado a ALCISTA (score 37.1)"
+    ],
+    "date": "2026-10-07"
+   },
+   "underlying_last": 113.46,
+   "closed": "2026-10-07",
+   "exit_value": 415.0,
+   "close_reason": "consejo CERRAR: El flujo de opciones ha girado a ALCISTA (score 37.1)"
+  },
+  {
+   "id": "P0019",
+   "source": "AUTO",
+   "opened": "2026-10-05",
+   "ticker": "IWM",
+   "direction": "BAJISTA",
+   "structure": "Put comprada (opcion simple)",
+   "legs": [
+    {
+     "symbol": "IWM261106P00279000",
+     "kind": "P",
+     "strike": 279.0,
+     "expiration": "2026-11-06",
+     "qty": 1,
+     "entry": 4.73,
+     "last": 6.25,
+     "iv": 0.1931,
+     "bid": 6.21,
+     "ask": 6.29
+    }
+   ],
+   "entry_cost": 473.0,
+   "contracts": 1,
+   "unit_cost": 473.0,
+   "underlying_entry": 281.85,
+   "status": "CLOSED",
+   "value": 621.0,
+   "pnl": 148.0,
+   "pnl_pct": 31.3,
+   "last_update": "2026-10-07",
+   "notes": "Hoy: 10 contratos inusuales, $6.82M de prima; Sesiones previas: $11.10M en flujo inusual vigente; Puntos de flujo (+16)",
+   "issue": null,
+   "expiration": "2026-11-06",
+   "advice": {
+    "action": "CERRAR",
+    "reasons": [
+     "El flujo de opciones ha girado a ALCISTA (score 43.2)"
+    ],
+    "date": "2026-10-07"
+   },
+   "underlying_last": 277.76,
+   "closed": "2026-10-07",
+   "exit_value": 621.0,
+   "close_reason": "consejo CERRAR: El flujo de opciones ha girado a ALCISTA (score 43.2)"
+  },
+  {
+   "id": "R0001",
+   "source": "RSI",
+   "opened": "2026-10-05",
+   "ticker": "CHWY",
+   "direction": "ALCISTA",
+   "structure": "Call comprada",
+   "legs": [
+    {
+     "symbol": "CHWY261030C00020000",
+     "kind": "C",
+     "strike": 20.0,
+     "expiration": "2026-10-30",
+     "qty": 1,
+     "entry": 0.28,
+     "last": 0.435,
+     "bid": 0.4,
+     "ask": 0.47
+    }
+   ],
+   "entry_cost": 28.0,
+   "contracts": 1,
+   "unit_cost": 28.0,
+   "underlying_entry": null,
+   "status": "OPEN",
+   "value": 43.5,
+   "pnl": 15.5,
+   "pnl_pct": 55.4,
+   "last_update": "2026-10-09",
+   "notes": "",
+   "issue": null,
+   "expiration": "2026-10-30",
+   "why": "Soportes + RSI",
+   "underlying_last": 18.93,
+   "advice": {
+    "action": "VIGILAR",
+    "reasons": [
+     "Vas +55%: valora vender la mitad y dejar correr el resto"
+    ],
+    "date": "2026-10-09"
+   }
+  },
+  {
+   "id": "R0002",
+   "source": "RSI",
+   "opened": "2026-10-05",
+   "ticker": "EFX",
+   "direction": "ALCISTA",
+   "structure": "Call comprada",
+   "legs": [
+    {
+     "symbol": "EFX261016C00150000",
+     "kind": "C",
+     "strike": 150.0,
+     "expiration": "2026-10-16",
+     "qty": 1,
+     "entry": 1.53,
+     "last": 2.225,
+     "bid": 0.95,
+     "ask": 3.5
+    }
+   ],
+   "entry_cost": 153.0,
+   "contracts": 1,
+   "unit_cost": 153.0,
+   "underlying_entry": null,
+   "status": "CLOSED",
+   "value": 95.0,
+   "pnl": -58.0,
+   "pnl_pct": -37.9,
+   "last_update": "2026-10-07",
+   "notes": "",
+   "issue": null,
+   "expiration": "2026-10-16",
+   "why": "Soportes + RSI",
+   "underlying_last": 141.9,
+   "advice": {
+    "action": "MANTENER",
+    "reasons": [
+     "Tesis intacta",
+     "vence en 9 dias"
+    ],
+    "date": "2026-10-07"
+   },
+   "closed": "2026-10-07",
+   "exit_value": 95.0,
+   "close_reason": "cierre manual",
+   "lesson": "Opción que vence en 9 días al casi 50% cerramos"
+  },
+  {
+   "id": "R0003",
+   "source": "RSI",
+   "opened": "2026-10-05",
+   "ticker": "HD",
+   "direction": "ALCISTA",
+   "structure": "Call comprada",
+   "legs": [
+    {
+     "symbol": "HD261030C00300000",
+     "kind": "C",
+     "strike": 300.0,
+     "expiration": "2026-10-30",
+     "qty": 1,
+     "entry": 2.32,
+     "last": 6.35,
+     "bid": 6.05,
+     "ask": 6.65
+    }
+   ],
+   "entry_cost": 232.0,
+   "contracts": 1,
+   "unit_cost": 232.0,
+   "underlying_entry": null,
+   "status": "CLOSED",
+   "value": 605.0,
+   "pnl": 373.0,
+   "pnl_pct": 160.8,
+   "last_update": "2026-10-08",
+   "notes": "",
+   "issue": null,
+   "expiration": "2026-10-30",
+   "why": "Soportes + RSI",
+   "underlying_last": 295.5,
+   "advice": {
+    "action": "CERRAR",
+    "reasons": [
+     "Objetivo cumplido (+174%): asegura la ganancia"
+    ],
+    "date": "2026-10-08"
+   },
+   "closed": "2026-10-09",
+   "exit_value": 605.0,
+   "close_reason": "cierre manual"
+  },
+  {
+   "id": "M0002",
+   "source": "RSI",
+   "opened": "2026-10-06",
+   "ticker": "DDOG",
+   "direction": "BAJISTA",
+   "structure": "Put comprada",
+   "legs": [
+    {
+     "symbol": "DDOG261030P00250000",
+     "kind": "P",
+     "strike": 250.0,
+     "expiration": "2026-10-30",
+     "qty": 1,
+     "entry": 5.15,
+     "last": 2.355,
+     "bid": 1.56,
+     "ask": 3.15
+    }
+   ],
+   "entry_cost": 515.0,
+   "contracts": 1,
+   "unit_cost": 515.0,
+   "underlying_entry": null,
+   "status": "OPEN",
+   "value": 235.5,
+   "pnl": -279.5,
+   "pnl_pct": -54.3,
+   "last_update": "2026-10-09",
+   "notes": "",
+   "issue": null,
+   "expiration": "2026-10-30",
+   "why": "Tenemos una resistance bastante grnade RSI tocando ya parte superior y el dia anterior nos deja una vela perfecta para mañana distribuir a la baja también dentro de los volúmenes de opciones de data dog ratio open interest put/call -> 2.30 y volumen 4",
+   "underlying_last": 292.78,
+   "advice": {
+    "action": "CERRAR",
+    "reasons": [
+     "Stop alcanzado (-54%): corta la perdida, no esperes a que vuelva"
+    ],
+    "date": "2026-10-09"
+   },
+   "edits": [
+    {
+     "date": "2026-10-06",
+     "what": "precio $5.4 -> $5.15"
+    },
+    {
+     "date": "2026-10-06",
+     "what": "precio $5.15 -> $5.15"
+    }
+   ]
+  },
+  {
+   "id": "M0005",
+   "source": "MANUAL",
+   "opened": "2026-10-06",
+   "ticker": "MRK",
+   "direction": "ALCISTA",
+   "structure": "Call comprada agresiva",
+   "legs": [
+    {
+     "symbol": "MRK261106C00150000",
+     "kind": "C",
+     "strike": 150.0,
+     "expiration": "2026-11-06",
+     "qty": 1,
+     "entry": 2.855,
+     "last": 4.25,
+     "iv": 0.3611,
+     "bid": 3.95,
+     "ask": 4.55
+    }
+   ],
+   "entry_cost": 285.5,
+   "contracts": 1,
+   "unit_cost": 285.5,
+   "underlying_entry": 141.5,
+   "status": "OPEN",
+   "value": 425.0,
+   "pnl": 139.5,
+   "pnl_pct": 48.9,
+   "last_update": "2026-10-09",
+   "notes": "Hoy: 2 contratos inusuales, $0.28M de prima; Sesiones previas: $3.48M en flujo inusual vigente; Puntos de flujo (+26)",
+   "issue": null,
+   "expiration": "2026-11-06",
+   "why": "Clara compra con un un  ratio puts/call open interest 0.25 para el 30 de octubre. Compramosantes de PFDA, se espera aprobacion de medicamento",
+   "underlying_last": 145.6,
+   "catalyst": {
+    "date": "2026-10-10",
+    "type": "PDUFA"
+   },
+   "advice": {
+    "action": "VIGILAR",
+    "reasons": [
+     "PDUFA en 1 dia(s): decide si quieres estar dentro durante el evento (todo o nada)"
+    ],
+    "date": "2026-10-09"
+   }
+  },
+  {
+   "id": "P0020",
+   "source": "AUTO",
+   "opened": "2026-10-08",
+   "ticker": "PG",
+   "direction": "ALCISTA",
+   "structure": "Call comprada (opcion simple)",
+   "legs": [
+    {
+     "symbol": "PG261113C00155000",
+     "kind": "C",
+     "strike": 155.0,
+     "expiration": "2026-11-13",
+     "qty": 1,
+     "entry": 1.5,
+     "last": 2.215,
+     "iv": 0.2107,
+     "bid": 1.99,
+     "ask": 2.44
+    }
+   ],
+   "entry_cost": 450.0,
+   "contracts": 3,
+   "unit_cost": 150.0,
+   "underlying_entry": 148.52,
+   "status": "OPEN",
+   "value": 664.5,
+   "pnl": 214.5,
+   "pnl_pct": 47.7,
+   "last_update": "2026-10-09",
+   "notes": "Hoy: 2 contratos inusuales, $0.40M de prima; Sesiones previas: $2.94M en flujo inusual vigente; Puntos de flujo (+25)",
+   "issue": null,
+   "expiration": "2026-11-13",
+   "advice": {
+    "action": "MANTENER",
+    "reasons": [
+     "Tesis intacta; Resultados en 13 dias",
+     "vence en 35 dias"
+    ],
+    "date": "2026-10-09"
+   },
+   "underlying_last": 151.22,
+   "catalyst": {
+    "date": "2026-10-22",
+    "type": "Resultados"
+   },
+   "tg_open": true,
+   "why": "(Reconstruida con los datos de hoy: compró el 08/10)\n- Señal alcista con score 73.1 (ALTA): cumple la estrategia de ENTRADA (3 puntos del checklist).\n- A favor: congresistas, flujo de opciones confirmado por OI.\n- Hoy: 2 contratos inusuales, $0.43M de prima.\n- Sesiones previas: $2.94M en flujo inusual vigente.\n- Puntos de flujo (+25).\n- 3 alerta(s) confirmadas por subida de OI (+20).\n- Acumulacion: flujo alcista en 4 sesiones distintas (+7).\n- Tendencia a favor (precio sobre sus medias de 20 y 50 dias) (+3).\n- Catalizador: Resultados el 22/10 (en 13 días), antes del vencimiento.\n- Contrato elegido: CALL strike 155, vence el 13/11 (36 días), probabilidad de ganar ~22% (estimada), gana si al vencer la acción está por encima de $157.06. Strike moderado: equilibrio entre coste y probabilidad.\n- Ex-dividendo estimado ~2026-10-23, antes del vencimiento: ese día la acción baja ~$1.09 (lo que paga). El precio de la opción ya lo descuenta, pero juega EN CONTRA de las calls; la probabilidad de ganar ya está corregida.\n- Salida prevista: +100% objetivo, −50% stop, a +50% vende la mitad, o antes si el consejo pasa a CERRAR."
+  },
+  {
+   "id": "P0015a",
+   "source": "AUTO",
+   "opened": "2026-10-02",
+   "ticker": "NFLX",
+   "direction": "ALCISTA",
+   "structure": "Call comprada (opcion simple)",
+   "legs": [
+    {
+     "symbol": "NFLX261030C00071000",
+     "kind": "C",
+     "strike": 71.0,
+     "expiration": "2026-10-30",
+     "qty": 1,
+     "entry": 2.09,
+     "last": 3.8,
+     "bid": 3.75,
+     "ask": 3.85
+    }
+   ],
+   "entry_cost": 209.0,
+   "contracts": 1,
+   "unit_cost": 209.0,
+   "underlying_entry": 67.49,
+   "status": "CLOSED",
+   "value": 375.0,
+   "pnl": 166.0,
+   "pnl_pct": 79.4,
+   "last_update": "2026-10-08",
+   "notes": "Hoy: 4 contratos inusuales, $0.90M de prima; Sesiones previas: $4.79M en flujo inusual vigente; Puntos de flujo (+16)",
+   "issue": null,
+   "expiration": "2026-10-30",
+   "catalyst": {
+    "date": "2026-10-20",
+    "type": "Resultados"
+   },
+   "advice": null,
+   "underlying_last": 71.64,
+   "closed": "2026-10-08",
+   "exit_value": 375.0,
+   "close_reason": "mitad vendida a +50%",
+   "tg_close": true
+  },
+  {
+   "id": "P0021",
+   "source": "AUTO",
+   "opened": "2026-10-09",
+   "ticker": "WELL",
+   "direction": "BAJISTA",
+   "structure": "Put comprada (opcion simple)",
+   "legs": [
+    {
+     "symbol": "WELL261120P00220000",
+     "kind": "P",
+     "strike": 220.0,
+     "expiration": "2026-11-20",
+     "qty": 1,
+     "entry": 5.2,
+     "last": 5.25,
+     "iv": 0.2664,
+     "bid": 4.6,
+     "ask": 5.9
+    }
+   ],
+   "entry_cost": 520.0,
+   "contracts": 1,
+   "unit_cost": 520.0,
+   "underlying_entry": 227.16,
+   "status": "OPEN",
+   "value": 525.0,
+   "pnl": 5.0,
+   "pnl_pct": 1.0,
+   "last_update": "2026-10-09",
+   "notes": "Sesiones previas: $1.98M en flujo inusual vigente; Puntos de flujo (+26); 3 alerta(s) confirmadas por subida de OI (+20)",
+   "issue": null,
+   "expiration": "2026-11-20",
+   "why": "- Señal bajista con score 61.4 (ALTA): cumple la estrategia de ENTRADA (3 puntos del checklist).\n- A favor: futuros del sector, flujo de opciones confirmado por OI.\n- Sesiones previas: $1.98M en flujo inusual vigente.\n- Puntos de flujo (+26).\n- 3 alerta(s) confirmadas por subida de OI (+20).\n- Flujo anticipado/contrario: se apuesta en contra del movimiento de hoy (+1.8%).\n- Acumulacion: flujo bajista en 2 sesiones distintas (+4).\n- Tendencia a favor (precio bajo sus medias de 20 y 50 dias) (+3).\n- Contrato elegido: PUT strike 220, vence el 20/11 (42 días), delta 0.35, probabilidad de ganar ~28% (estimada), gana si al vencer la acción está por debajo de $215.05. Strike moderado: equilibrio entre coste y probabilidad.\n- Ex-dividendo estimado ~2026-11-11, antes del vencimiento: ese día la acción baja ~$0.85 (lo que paga). El precio de la opción ya lo descuenta, pero juega A FAVOR de las puts; la probabilidad de ganar ya está corregida.\n- Mercado: semáforo ambar (solo entra con score ≥ 55).\n- Salida prevista: +100% objetivo, −50% stop, a +50% vende la mitad, o antes si el consejo pasa a CERRAR.",
+   "advice": {
+    "action": "MANTENER",
+    "reasons": [
+     "Tesis intacta; Resultados en 17 dias",
+     "vence en 42 dias"
+    ],
+    "date": "2026-10-09"
+   },
+   "tg_open": true,
+   "underlying_last": 225.47,
+   "catalyst": {
+    "date": "2026-10-26",
+    "type": "Resultados"
+   }
+  },
+  {
+   "id": "P0022",
+   "source": "AUTO",
+   "opened": "2026-10-09",
+   "ticker": "CELH",
+   "direction": "ALCISTA",
+   "structure": "Call comprada (opcion simple)",
+   "legs": [
+    {
+     "symbol": "CELH261113C00030000",
+     "kind": "C",
+     "strike": 30.0,
+     "expiration": "2026-11-13",
+     "qty": 1,
+     "entry": 1.7,
+     "last": 1.63,
+     "iv": 0.6147,
+     "bid": 1.56,
+     "ask": 1.7
+    }
+   ],
+   "entry_cost": 510.0,
+   "contracts": 3,
+   "unit_cost": 170.0,
+   "underlying_entry": 28.68,
+   "status": "OPEN",
+   "value": 489.0,
+   "pnl": -21.0,
+   "pnl_pct": -4.1,
+   "last_update": "2026-10-09",
+   "notes": "Hoy: 2 contratos inusuales, $0.46M de prima; Sesiones previas: $0.24M en flujo inusual vigente; Puntos de flujo (+9)",
+   "issue": null,
+   "expiration": "2026-11-13",
+   "catalyst": {
+    "date": "2026-11-05",
+    "type": "Resultados"
+   },
+   "why": "- Señal alcista con score 45.3 (MEDIA): cumple la estrategia de ENTRADA (3 puntos del checklist).\n- A favor: compras de directivos, flujo de opciones confirmado por OI.\n- Hoy: 2 contratos inusuales, $0.46M de prima.\n- Sesiones previas: $0.24M en flujo inusual vigente.\n- Puntos de flujo (+9).\n- Volumen de opciones 2.11x su media 20d (+6).\n- 1 alerta(s) confirmadas por subida de OI (+8).\n- Flujo en parte reactivo: accion +4.3% hoy (flujo x0,85).\n- Catalizador: Resultados el 05/11 (en 27 días), antes del vencimiento.\n- Contrato elegido: CALL strike 30, vence el 13/11 (35 días), delta 0.44, probabilidad de ganar ~28% (estimada), gana si al vencer la acción está por encima de $31.63. Strike moderado: equilibrio entre coste y probabilidad.\n- Mercado: semáforo verde.\n- Salida prevista: +100% objetivo, −50% stop, a +50% vende la mitad, o antes si el consejo pasa a CERRAR.",
+   "advice": {
+    "action": "MANTENER",
+    "reasons": [
+     "Tesis intacta; Resultados en 27 dias",
+     "vence en 35 dias"
+    ],
+    "date": "2026-10-09"
+   },
+   "tg_open": true,
+   "underlying_last": 28.6
+  }
+ ],
+ "seq": 22,
+ "capital": 10000.0,
+ "rules_version": 2,
+ "curves": {
+  "MANUAL": [
+   {
+    "date": "2026-10-02",
+    "equity": 9973.0
+   },
+   {
+    "date": "2026-10-05",
+    "equity": 9948.0
+   },
+   {
+    "date": "2026-10-06",
+    "equity": 9785.0
+   },
+   {
+    "date": "2026-10-07",
+    "equity": 9852.5
+   },
+   {
+    "date": "2026-10-08",
+    "equity": 9845.0
+   },
+   {
+    "date": "2026-10-09",
+    "equity": 9873.5
+   }
+  ],
+  "AUTO": [
+   {
+    "date": "2026-10-02",
+    "equity": 9929.5
+   },
+   {
+    "date": "2026-10-05",
+    "equity": 9613.0
+   },
+   {
+    "date": "2026-10-06",
+    "equity": 9776.0
+   },
+   {
+    "date": "2026-10-07",
+    "equity": 10198.5
+   },
+   {
+    "date": "2026-10-08",
+    "equity": 10531.0
+   },
+   {
+    "date": "2026-10-09",
+    "equity": 10508.5
+   }
+  ],
+  "RSI": [
+   {
+    "date": "2026-10-06",
+    "equity": 10173.5
+   },
+   {
+    "date": "2026-10-07",
+    "equity": 10079.0
+   },
+   {
+    "date": "2026-10-08",
+    "equity": 10335.0
+   },
+   {
+    "date": "2026-10-09",
+    "equity": 10051.0
+   }
+  ]
+ },
+ "order_results": {
+  "rihvr58o": {
+   "ok": true,
+   "msg": "Abierta M0001 (CSCO): 2 contrato(s) x $198.0 = $396.0. Saldo disponible: $9244.0",
+   "n": 1,
+   "ts": "2026-10-02T17:58:01+00:00"
+  },
+  "cxbtao9j": {
+   "ok": true,
+   "msg": "Abierta M0002 (DDOG) en Soportes + RSI: 1 contrato(s) x $540.0 = $540.0. Saldo disponible: $9047.0",
+   "n": 2,
+   "ts": "2026-10-06T16:47:18+00:00"
+  },
+  "rw8oasrs": {
+   "ok": true,
+   "msg": "Corregida M0002 (DDOG): precio $5.4 -> $5.15. Coste ahora $515.0",
+   "n": 3,
+   "ts": "2026-10-06T17:17:10+00:00"
+  },
+  "jd1thb43": {
+   "ok": true,
+   "msg": "Corregida M0002 (DDOG): precio $5.15 -> $5.15. Coste ahora $515.0",
+   "n": 4,
+   "ts": "2026-10-06T17:17:24+00:00"
+  },
+  "95eleekn": {
+   "ok": true,
+   "msg": "Abierta M0005 (MRK) en OpScan: 1 contrato(s) x $285.5 = $285.5. Saldo disponible: $8958.5",
+   "n": 5,
+   "ts": "2026-10-06T17:40:41+00:00"
+  },
+  "mcqfgo72": {
+   "ok": true,
+   "msg": "Cerrada R0002 con P&L $-58.0 (-37.9%)",
+   "n": 6,
+   "ts": "2026-10-07T16:19:21+00:00"
+  },
+  "5z3nszb6": {
+   "ok": true,
+   "msg": "Cerrada R0003 con P&L $373.0 (160.8%)",
+   "n": 7,
+   "ts": "2026-10-09T09:34:32+00:00"
+  }
+ },
+ "orders_done": 7,
+ "rseq": 3,
+ "seeded": [
+  "RSI:CHWY261030C00020000:2026-10-05",
+  "RSI:EFX261016C00150000:2026-10-05",
+  "RSI:HD261030C00300000:2026-10-05"
+ ]
+}
