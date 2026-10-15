@@ -34,7 +34,10 @@ HALF_PCT = 50.0          # Robot: a +50% vende la mitad y el resto queda protegi
 COOLDOWN_DAYS = 4        # Robot: tras cerrar con perdida no vuelve a entrar en ese valor en 4 dias
 MIN_DTE_AUTO = 30        # Robot: vencimiento minimo de 30 dias
 AMBER_MIN_SCORE = 55     # Robot: con el semaforo en ambar solo entra con score >= 55 (en rojo, nada)
-NO_INDEX_PUTS = True     # Robot: no compra puts de indices (casi todo ese flujo son coberturas)
+NO_INDEX_PUTS = True     # (antiguo) sustituido por NO_INDEX
+NO_INDEX = True          # Automatica: ni calls ni puts de indices, ETF ni VIX (aciertan 36 %, act. 19)
+AUTO_MIN_SCORE = 50.0    # Automatica: score minimo 50 (por debajo de 45 las senales aciertan < 50 %, act. 19)
+BEAR_NEED_DOWNTREND = True  # Automatica: bajistas solo con la accion por debajo de su media de 50 dias
 MAX_DIV_SHARE = 0.30     # Robot: no compra una CALL si el dividendo dentro de su vida es >= 30% de su precio
 
 ACCOUNTS = {"MANUAL": "OpScan", "RSI": "Soportes + RSI", "AUTO": "Automática"}
@@ -43,7 +46,7 @@ USER_ACCOUNTS = ("MANUAL", "RSI")
 
 def configure(cfg):
     global CAPITAL, MAX_PCT, MAX_NEW_DAY, MAX_OPEN_AUTO, SKIP_BAD_LIQ, HALF_PCT, COOLDOWN_DAYS, MIN_DTE_AUTO
-    global AMBER_MIN_SCORE, NO_INDEX_PUTS, MAX_DIV_SHARE
+    global AMBER_MIN_SCORE, NO_INDEX_PUTS, MAX_DIV_SHARE, NO_INDEX, AUTO_MIN_SCORE, BEAR_NEED_DOWNTREND
     pc = (cfg or {}).get("paper") or {}
     HALF_PCT = float(pc.get("half_at_pct", HALF_PCT))
     COOLDOWN_DAYS = int(pc.get("cooldown_days", COOLDOWN_DAYS))
@@ -51,6 +54,9 @@ def configure(cfg):
     AMBER_MIN_SCORE = float(pc.get("amber_min_score", AMBER_MIN_SCORE))
     NO_INDEX_PUTS = bool(pc.get("no_index_puts", NO_INDEX_PUTS))
     MAX_DIV_SHARE = float(pc.get("max_div_share", MAX_DIV_SHARE))
+    NO_INDEX = bool(pc.get("no_index", NO_INDEX))
+    AUTO_MIN_SCORE = float(pc.get("auto_min_score", AUTO_MIN_SCORE))
+    BEAR_NEED_DOWNTREND = bool(pc.get("bearish_need_downtrend", BEAR_NEED_DOWNTREND))
     CAPITAL = float(pc.get("capital", CAPITAL))
     MAX_PCT = float(pc.get("max_pct_trade", MAX_PCT))
     MAX_NEW_DAY = int(pc.get("max_new_per_day", MAX_NEW_DAY))
@@ -394,9 +400,16 @@ def auto_open(book, records, session, semaforo=None):
         if SKIP_BAD_LIQ and idea.get("liquidity") == "mala":
             log(f"paper: {r['ticker']} no abierta (liquidez mala)")
             continue
+        if (r.get("score") or 0) < AUTO_MIN_SCORE:
+            continue
         if level == "ambar" and (r.get("score") or 0) < AMBER_MIN_SCORE:
             continue
-        if NO_INDEX_PUTS and r["ticker"] in INDEX_LIKE and r.get("direction") == "BAJISTA":
+        is_index = r["ticker"] in INDEX_LIKE or r["ticker"] in ("VIX", "VIXY", "UVXY") or \
+            bool({"etf", "indice"} & set(r.get("groups") or []))
+        if (NO_INDEX and is_index) or (NO_INDEX_PUTS and r["ticker"] in INDEX_LIKE and r.get("direction") == "BAJISTA"):
+            continue
+        if BEAR_NEED_DOWNTREND and r.get("direction") == "BAJISTA" and (r.get("tech") or {}).get("above50") is not False:
+            log(f"paper: {r['ticker']} bajista no abierta (la accion no esta por debajo de su media de 50 dias)")
             continue
         exps = [parse_date(l.get("expiration")) for l in idea["legs"]]
         if d0 and exps and all(exps) and (min(exps) - d0).days < MIN_DTE_AUTO:
@@ -525,7 +538,8 @@ def export(book):
             "rules": {"target_pct": TARGET_PCT, "stop_pct": STOP_PCT, "capital": float(book.get("capital") or CAPITAL),
                       "max_pct_trade": MAX_PCT, "half_at_pct": HALF_PCT, "cooldown_days": COOLDOWN_DAYS,
                       "min_dte_auto": MIN_DTE_AUTO, "amber_min_score": AMBER_MIN_SCORE,
-                      "no_index_puts": NO_INDEX_PUTS, "accounts": ACCOUNTS},
+                      "no_index_puts": NO_INDEX_PUTS, "no_index": NO_INDEX, "auto_min_score": AUTO_MIN_SCORE,
+                      "bearish_need_downtrend": BEAR_NEED_DOWNTREND, "accounts": ACCOUNTS},
             "curves": {k: v[-250:] for k, v in (book.get("curves") or {}).items()},
             "orders_done": int(book.get("orders_done") or 0),
             "order_results": book.get("order_results", {})}

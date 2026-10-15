@@ -155,3 +155,14 @@ def test_robot_guarda_explicacion():
     m = alerts.msg_buy(book["trades"][0])
     assert "Motivo de la entrada:" in m and "Contrato elegido" in m
     assert all(ord(ch) < 0x2190 or ch in "≥−" for ch in m)              # formal: sin emojis
+
+
+def test_act19_filtros_automatica():
+    book = {"trades": [], "seq": 0}
+    lo = _rec("LOW", 48)                                         # score < 50
+    vix = _rec("VIX", 70)                                        # indice, tambien en calls
+    etf = {**_rec("XLE", 70), "groups": ["etf"]}
+    bear_up = {**_rec("UPT", 70, "BAJISTA"), "tech": {"above50": True}}      # bajista contra tendencia
+    bear_dn = {**_rec("DNT", 70, "BAJISTA"), "tech": {"above50": False}}     # bajista con tendencia
+    n = paper.auto_open(book, [lo, vix, etf, bear_up, bear_dn], "2026-10-15", {"level": "verde"})
+    assert n == 1 and book["trades"][0]["ticker"] == "DNT"

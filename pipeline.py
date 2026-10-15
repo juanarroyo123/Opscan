@@ -533,7 +533,8 @@ def run(mode="full", tickers_override=None, offline_universe=False):
                     t["tg_close"] = True
         except Exception as e:
             log(f"telegram robot: {e}")
-    for t in [x for x in to_close if x["source"] != "AUTO" and x["status"] == "OPEN"]:
+    user_on = (cfg.get("paper") or {}).get("user_portfolios", True)
+    for t in [x for x in to_close if x["source"] != "AUTO" and x["status"] == "OPEN" and user_on]:
         try:
             if tg_on:
                 alerts.send_telegram(alerts.msg_close_advice(t, session))

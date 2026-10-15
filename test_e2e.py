@@ -184,7 +184,10 @@ def test_two_sessions_confirmation(env, monkeypatch):
     assert idea["choices"] and all(c["cost"] > 0 and c["kind"] == "C" for c in idea["choices"])
     paper_out = json.load(open(data / "paper.json"))
     auto = [t for t in paper_out["trades"] if t["source"] == "AUTO" and t["ticker"] == "RCKT"]
-    assert auto and auto[0]["status"] == "OPEN"            # la ENTRADA abre operacion simulada
+    if recs["RCKT"]["score"] >= paper_out["rules"].get("auto_min_score", 0):
+        assert auto and auto[0]["status"] == "OPEN"        # la ENTRADA abre operacion simulada
+    else:
+        assert not auto                                    # act. 19: score < 50 no entra
     latest_full = json.load(open(data / "latest.json"))
     assert "SPX" in latest_full["market_gex"] and latest_full["market_gex"]["SPX"]["regime"] in ("positiva", "negativa")
     assert latest_full["sectors"] and all("bias" in x for x in latest_full["sectors"])

@@ -72,6 +72,11 @@ paper:
   min_dte_auto: 30            # vencimiento minimo 30 dias
   amber_min_score: 55         # semaforo ambar: solo score >= 55 (rojo: no abre nada)
   no_index_puts: true         # no compra puts de indices (SPY, QQQ, IWM...): casi todo son coberturas
+  # --- act. 19 (conclusiones de las 2 primeras semanas) ---
+  auto_min_score: 50          # solo senales con score >= 50
+  no_index: true              # ni calls ni puts de indices, ETF ni VIX
+  bearish_need_downtrend: true  # bajistas solo si la accion esta por debajo de su media de 50 dias
+  user_portfolios: false      # carteras OpScan y Soportes + RSI desactivadas (solo la automatica)
   # --- operaciones hechas fuera de la web (se meten UNA vez; no borres las ya metidas) ---
   # account: MANUAL = OpScan, RSI = Soportes + RSI. symbol: TICKER + AAMMDD + C/P + strike x1000 (8 cifras)
   seed:

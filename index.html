@@ -550,7 +550,7 @@ function dirHTML(d){const ic={ALCISTA:"▲",BAJISTA:"▼"}[d]||"•";return `<sp
 function sigPill(r){return `<span class="pill p-${esc(r.signal||"BAJA")}">${r.signal==="ERR"?"ERR":(r.score??0)}</span>`;}
 function ckHTML(c){if(!c||c.puntos==null)return '<span class="muted">—</span>';
   return `<span class="ck" title="Congreso / Futuros / Directivos compran / Flujo confirmado por OI · ${c.puntos} pts"><i class="${c.congreso?'on':''}">C</i><i class="${c.futuros?'on':''}">F</i><i class="${c.directivos?'on':''}">D</i><i class="${c.flujo_confirmado?'on':''}">O</i></span>`+
-    (c.entrada?'<span class="entry">ENTRADA</span>':c.pre_alerta?'<span class="pre">PRE</span>':"");}
+    (c.entrada?'<span class="entry">ENTRADA</span>':"");}
 function biasBar(b){if(b==null)return"";const w=Math.min(50,Math.abs(b)*50);
   const col=b>=0?"var(--good)":"var(--bad)";const left=b>=0?50:50-w;
   return `<span class="biasbar" title="Sesgo del flujo ${b}"><b style="left:${left}%;width:${w}%;background:${col}"></b></span>`;}
@@ -583,7 +583,7 @@ $("#chg").addEventListener("click",e=>{const c=e.target.closest("[data-tk]");if(
 function renderKPIs(){renderSema();const L=S.latest;if(!L){$("#kpis").innerHTML="";return;}const s=L.summary||{};const reg=L.regime;
   $("#kpis").innerHTML=`
   <div class="kpi"><div class="lbl">Valores con datos</div><div class="val num">${s.con_datos??"—"}</div><div class="sub">${s.inusuales??0} contratos inusuales</div></div>
-  <div class="kpi"><div class="lbl">Entradas (checklist)</div><div class="val num" style="color:var(--good-txt)">${s.entradas??0}</div><div class="sub">${s.pre_alertas??0} pre-alertas</div></div>
+  <div class="kpi"><div class="lbl">Entradas (checklist)</div><div class="val num" style="color:var(--good-txt)">${s.entradas??0}</div><div class="sub">la cartera automática exige score ≥ 50</div></div>
   <div class="kpi"><div class="lbl">Señal ALTA</div><div class="val num">${s.alta??0}</div><div class="sub">${s.media??0} MEDIA</div></div>
   <div class="kpi"><div class="lbl">Ideas alcistas / bajistas</div><div class="val num"><span class="up">${s.alcistas??0}</span> / <span class="down">${s.bajistas??0}</span></div><div class="sub">score MEDIA o más</div></div>
   <div class="kpi"><div class="lbl">Régimen (futuros)</div><div class="val">${reg?dirHTML(reg.label):"—"}</div><div class="sub">sesgo ${reg?reg.bias:"—"}${(L.market_gex||{}).SPX?` · gamma SPX ${esc(L.market_gex.SPX.regime)}`:""}</div></div>
@@ -605,7 +605,7 @@ function renderRadar(){const L=S.latest;renderKPIs();
     const nc=x.next_catalyst;
     const cat=nc?`<span class="${nc.days<=10?'soon':''}"><b>${esc(nc.type)}</b> · ${nc.days}d</span><div class="nm">${esc(nc.date)}</div>`:'<span class="muted">—</span>';
     return `<tr class="click" data-tk="${esc(x.ticker)}">
-      <td class="l"><div class="tk">${esc(x.ticker)}${heldSet().has(x.ticker)?' <span class="tag g" title="Tienes una posición abierta">EN CARTERA</span>':""}${(x.groups||[]).includes("caliente")?' <span class="tag y" title="Detectado por actividad anómala en el escaneo del mercado completo">CALIENTE</span>':""}</div><div class="nm">${esc(x.name||"")}${x.sector?" · "+esc(x.sector):""}</div></td>
+      <td class="l"><div class="tk">${esc(x.ticker)}${heldSet().has(x.ticker)?' <span class="tag g" title="La cartera automática tiene una posición abierta">EN CARTERA</span>':""}${(x.groups||[]).includes("caliente")?' <span class="tag y" title="Detectado por actividad anómala en el escaneo del mercado completo">CALIENTE</span>':""}</div><div class="nm">${esc(x.name||"")}${x.sector?" · "+esc(x.sector):""}</div></td>
       <td class="num">${px(x.price)}<div class="small ${pctCls(x.change_pct)}">${pct(x.change_pct,2)}</div></td>
       <td>${sigPill(x)}${x.score_split&&x.score_split.provisional>=3?`<div class="split" title="Parte confirmada (fiable) / parte provisional del flujo de hoy (se confirma mañana con el OI)">✓${x.score_split.confirmed} · ~${x.score_split.provisional}</div>`:""}</td><td class="l">${dirHTML(x.direction)}${x.squeeze?` <span class="tag y" title="${esc((x.squeeze.reasons||[]).join(", "))}">cortos ${esc(x.squeeze.level)}</span>`:""}</td><td class="l">${ckHTML(x.checklist)}</td>
       <td class="num">${x.unusual_count?`${money(x.unusual_premium)} <span class="muted small">(${x.unusual_count})</span>${biasBar(x.flow_bias)}`:'<span class="muted">—</span>'}</td>
@@ -887,15 +887,14 @@ function openDetail(tk){S._detailTk=tk;const r=(S.latest&&S.latest.records||[]).
     <table class="sm" style="margin-top:4px"><thead><tr><th class="l">Tipo</th><th class="l">Contrato</th><th>Coste</th><th>Gana si pasa de</th><th>Mov. necesario</th><th title="Probabilidad de que al vencimiento la opción valga más de lo que pagaste (según la volatilidad que descuenta el mercado)">Prob. ganar</th><th>Delta</th><th></th></tr></thead><tbody>
     ${I.choices.map((c,ci)=>`<tr data-sym="${esc(c.symbol||"")}"><td class="l"><b>${esc(c.label)}</b></td><td class="l">${c.kind==="C"?"CALL":"PUT"} ${c.strike}</td><td class="num c-cost">${money(c.cost)}</td>
       <td class="num c-be">$${c.breakeven}</td><td class="num c-mv">${pct(c.breakeven_move_pct)}</td><td class="num c-pop">${c.pop!=null?c.pop+"%":"—"}</td><td class="num">${c.delta??"—"}</td>
-      <td style="white-space:nowrap"><button class="btn" style="padding:5px 10px" data-buy="${ci}">Comprar</button> <button class="btn sec" style="padding:5px 8px" data-simc="${ci}" title="Simular escenarios">📈</button></td></tr>`).join("")}</tbody></table>
+      <td style="white-space:nowrap"><button class="btn sec" style="padding:5px 8px" data-simc="${ci}" title="Simular escenarios">📈</button></td></tr>`).join("")}</tbody></table>
     <div id="simBox"></div>`:""}
     <div class="grid4" style="margin-top:8px">${M("Coste (1 contrato)",money(I.cost))}${M("Pérdida máxima",money(I.max_loss))}${M("Ganancia máxima",I.max_gain!=null?money(I.max_gain):"sin límite")}${M("Punto muerto",`$${I.breakeven} (${pct(I.breakeven_move_pct)})`)}</div>
     ${I.pop!=null?`<div class="small" style="margin-top:6px">Probabilidad de acabar ganando al vencimiento: <b>${I.pop}%</b> <span class="muted">(según la volatilidad que descuentan las opciones; no es una predicción)</span></div>`:""}`:"";
   const idea=I?`${I.liquidity==="mala"?'<div class="risk-w" style="margin-top:10px">⚠️ <b>Señal interesante, pero difícil de operar:</b> las opciones de este valor tienen mucha diferencia entre precio de compra y de venta. Entrarías perdiendo parte solo por eso. Si operas, usa órdenes limitadas al precio medio y pocos contratos.</div>':""}<div class="idea"><div><b>Idea de estructura (educativa):</b> ${esc(I.structure)}${I.expiration?` · vencimiento ${esc(I.expiration)} (${I.dte}d)`:""}</div>
     <div class="small">${esc(I.strikes)} · ${esc(I.why_structure)}</div>${legRows}<div class="small" style="margin-top:6px">${esc(I.management)}</div>
     ${I.dividend_note?`<div class="adv VIGILAR" style="margin-top:8px">💵 <b>Dividendo:</b> ${esc(I.dividend_note)}</div>`:""}
-    <div class="small muted">${esc(I.note)}</div>${I.legs?`<div style="margin-top:8px"><button class="btn" data-buy="main">Comprar en mi cartera</button>
-    <span class="small muted"> cartera simulada, sin dinero real</span></div><div id="buyBox"></div>`:""}</div>`:"";
+    <div class="small muted">${esc(I.note)}</div></div>`:"";
   const ER=r.earnings;const earnH=ER?`<div class="section-t">Resultados: ¿opciones caras o baratas?</div>
     <div class="grid4">${M("Resultados",esc(ER.date))}${M("Descuentan (hasta "+esc(String(ER.expiration).slice(5))+")","±"+ER.implied_pct+"%")}${M("Media histórica","±"+ER.hist_avg_pct+"%")}${M("Veredicto",`<span class="${ER.label==="baratas"?"up":ER.label==="caras"?"down":""}">${esc(ER.label||"—")}</span> (${ER.ratio}x)`)}</div>
     <div class="small muted" style="margin-top:4px">Últimas reacciones: ${(ER.moves||[]).map(x=>`${esc(x.date.slice(2))} <b class="${x.move_pct>=0?"up":"down"}">${x.move_pct>=0?"+":""}${x.move_pct}%</b>`).join(" · ")}</div>
@@ -993,7 +992,7 @@ async function loadPaperFresh(){const [d,pv]=await Promise.all([ghRaw("data","pa
   let best=S.paper;const od=x=>x?(x.orders_done||0):-1,ts=x=>x?String(x.generated_at||""):"";
   for(const c of [d,pv]){if(!c)continue;if(!best||od(c)>od(best)||(od(c)===od(best)&&!c.preview&&ts(c)>ts(best)))best=c;}
   const ch=best!==S.paper;S.paper=best;return ch;}
-function heldSet(){return new Set(((S.paper&&S.paper.trades)||[]).filter(t=>t.status==="OPEN"&&t.source!=="AUTO").map(t=>t.ticker));}
+function heldSet(){return new Set(((S.paper&&S.paper.trades)||[]).filter(t=>t.status==="OPEN"&&t.source==="AUTO").map(t=>t.ticker));}
 let toastT=null;
 function toast(html,kind="",ms=0){const t=$("#toast");t.className="toast "+kind;t.innerHTML=html;t.style.display="block";
   clearTimeout(toastT);if(ms)toastT=setTimeout(()=>t.style.display="none",ms);}
@@ -1136,11 +1135,11 @@ function liveAccount(A,trades){if(!A||!Object.keys(S.live).length)return A;let o
   trades.filter(t=>t.status==="OPEN").forEach(t=>{const lv=liveTrade(t);if(lv)any=true;ov+=lv?lv.value:(t.value??t.entry_cost);inv+=t.entry_cost;});
   if(!any)return A;const eq=A.cash+ov;return {...A,open_value:Math.round(ov*100)/100,unrealized:Math.round((ov-inv)*100)/100,equity:Math.round(eq*100)/100,
     return_pct:Math.round((eq/A.capital-1)*10000)/100};}
-const ACC={MANUAL:"OpScan",RSI:"Soportes + RSI",AUTO:"Automática"},USER_ACC=["MANUAL","RSI"],ALL_ACC=["MANUAL","RSI","AUTO"];
+const ACC={MANUAL:"OpScan",RSI:"Soportes + RSI",AUTO:"Cartera automática"},USER_ACC=[],ALL_ACC=["AUTO"];   // act. 19: solo la automatica
 const ACC_DESC={MANUAL:"Tus compras con las señales de OpScan.",RSI:"Tu estrategia propia de soportes/resistencias y RSI (no se usa para ajustar la web).",
   AUTO:"La web sola: compra cada ENTRADA y la gestiona con reglas fijas."};
 const lsGet=(k,d)=>{try{return localStorage.getItem(k)||d;}catch(e){return d;}},lsSet=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
-S.acct=(v=>ALL_ACC.includes(v)?v:"MANUAL")(lsGet("opscan_acct","MANUAL"));
+S.acct="AUTO";
 S.pRange=lsGet("opscan_prange","ALL");S.pGroup=lsGet("opscan_pgroup","D");S.ibOpen=new Set();
 function setAcct(a){if(!ALL_ACC.includes(a))return;S.acct=a;lsSet("opscan_acct",a);S.ibOpen.clear();renderPort(true);}
 function acctSum(sm,src){return (sm.accounts&&sm.accounts[src])||(src==="AUTO"?sm.account_auto:src==="RSI"?sm.account_rsi:sm.account)||null;}
@@ -1305,8 +1304,8 @@ function renderPort(force){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];
     ||`<tr><td colspan="8" class="l" style="padding:18px 8px;color:var(--mut)">Todavía no hay operaciones cerradas en esta cartera.</td></tr>`}</tbody>`;
   // secciones segun cartera
   $("#ibExtD").hidden=!user;$("#ibRobot").hidden=src!=="AUTO";
-  const R=P.rules||{};$("#robotRules").innerHTML=`Compra cada ENTRADA (máx. 3 al día, ${R.max_pct_trade||5}% por operación, vencimiento ≥ ${R.min_dte_auto||30} días, al <b>ask</b>);
-    no compra puts de índices; con semáforo ámbar solo score ≥ ${R.amber_min_score||55} y en rojo nada; tras una pérdida espera ${R.cooldown_days||4} días para volver al mismo valor.
+  const R=P.rules||{};$("#robotRules").innerHTML=`Compra cada ENTRADA con score ≥ ${R.auto_min_score||50} (máx. 3 al día, ${R.max_pct_trade||5}% por operación, vencimiento ≥ ${R.min_dte_auto||30} días, al <b>ask</b>);
+    no opera índices, ETF ni VIX; las bajistas solo si la acción está por debajo de su media de 50 días; con semáforo ámbar solo score ≥ ${R.amber_min_score||55} y en rojo nada; tras una pérdida espera ${R.cooldown_days||4} días para volver al mismo valor.
     Decide las salidas <b>una vez al día, al cierre</b>, y vende al <b>bid</b>: +${R.target_pct||100}% objetivo, ${R.stop_pct||-50}% stop, a +${R.half_at_pct||50}% vende la mitad y protege el resto, y cierra si su consejo dice CERRAR.`;
   renderGH();renderLiveBox();renderRisk();}
 document.addEventListener("click",e=>{const o=e.target.closest("[data-open]");if(o){openDetail(o.dataset.open);return;}
