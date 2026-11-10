@@ -101,3 +101,12 @@ def test_momento_a_favor():
     rs = [rec("UPC", 50, m5=3.0), rec("DNC", 50, m5=-3.0), rec("DNP", 60, "BAJISTA", m5=-4.0), rec("UPP", 60, "BAJISTA", m5=4.0)]
     assert paper.auto_open(book, rs, "2026-11-11", {"level": "verde"}) == 2
     assert {t["ticker"] for t in book["trades"]} == {"UPC", "DNP"}
+
+
+def test_put_cara_compra_1_contrato_si_cabe_en_el_maximo():
+    book = {"trades": [], "seq": 0}
+    r = rec("PUT4", 60, "BAJISTA", bid=3.9, ask=4.1)                   # $410: mas que la mitad ($250), menos que $500
+    assert paper.auto_open(book, [r], "2026-11-11", {"level": "verde"}) == 1
+    assert book["trades"][0]["contracts"] == 1
+    r = rec("PUT6", 60, "BAJISTA", bid=5.9, ask=6.1)                   # $610: no cabe ni en el maximo
+    assert paper.auto_open({"trades": [], "seq": 0}, [r], "2026-11-11", {"level": "verde"}) == 0

@@ -187,6 +187,8 @@ def open_trade(book, ticker, direction, legs, session, source="AUTO", structure=
     else:
         budget = acc["max_per_trade"] * size
         n = int(budget // unit)
+        if n < 1 and size < 1 and unit <= acc["max_per_trade"]:
+            n = 1                         # media posicion: si 1 contrato no cabe en la mitad, 1 contrato sin pasar del maximo
         if n < 1:
             if source == "AUTO":
                 book["_last_reject"] = f"1 contrato (${unit}) supera el maximo por operacion (${budget:.0f})"
