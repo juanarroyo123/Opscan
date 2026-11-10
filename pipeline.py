@@ -517,8 +517,8 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     n_auto = paper.auto_open(book, ok_recs, session, sem)
     paper.backfill_why(book, {r["ticker"]: r for r in ok_recs}, session)
     to_close = paper.advise(book, {r["ticker"]: r for r in ok_recs}, session, cfg["scoring"]["media"])
-    if mode in ("full", "smoke"):        # el Robot decide sus salidas una vez al dia, con el cierre
-        paper.manage_auto(book, session)
+    # salidas de la automatica: stop/objetivo/resultados en cada escaneo; consejo CERRAR al cierre (act. 20)
+    paper.manage_auto(book, session, mode, {r["ticker"]: r for r in ok_recs})
     # Telegram: compras y ventas del Robot (una vez cada una) y aviso de CERRAR en tus carteras
     tg_on = (cfg.get("alerts") or {}).get("telegram") and os.environ.get("TELEGRAM_BOT_TOKEN")
     for t in book["trades"]:

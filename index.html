@@ -1304,9 +1304,13 @@ function renderPort(force){const P=S.paper||{},sm=P.summary||{},tr=P.trades||[];
     ||`<tr><td colspan="8" class="l" style="padding:18px 8px;color:var(--mut)">Todavía no hay operaciones cerradas en esta cartera.</td></tr>`}</tbody>`;
   // secciones segun cartera
   $("#ibExtD").hidden=!user;$("#ibRobot").hidden=src!=="AUTO";
-  const R=P.rules||{};$("#robotRules").innerHTML=`Compra cada ENTRADA con score ≥ ${R.auto_min_score||50} (máx. 3 al día, ${R.max_pct_trade||5}% por operación, vencimiento ≥ ${R.min_dte_auto||30} días, al <b>ask</b>);
-    no opera índices, ETF ni VIX; las bajistas solo si la acción está por debajo de su media de 50 días; con semáforo ámbar solo score ≥ ${R.amber_min_score||55} y en rojo nada; tras una pérdida espera ${R.cooldown_days||4} días para volver al mismo valor.
-    Decide las salidas <b>una vez al día, al cierre</b>, y vende al <b>bid</b>: +${R.target_pct||100}% objetivo, ${R.stop_pct||-50}% stop, a +${R.half_at_pct||50}% vende la mitad y protege el resto, y cierra si su consejo dice CERRAR.`;
+  const R=P.rules||{};const bb=R.bull_score_band||[45,55],eb=R.bear_score_band||[45,65];
+  $("#robotRules").innerHTML=R.use_score_bands?`<b>Entrada (act. 20):</b> calls con score ${bb[0]}–${bb[1]} y puts con score ${eb[0]}–${eb[1]}${R.require_momentum?", solo si la acción ya se mueve a favor en los últimos 5 días":""};
+    nada de índices, ETF ni VIX; no abre si hay resultados en los próximos ${R.earnings_block_days??7} días; solo opciones con diferencia compra/venta ≤ ${R.max_entry_spread_pct??15}%;
+    calls al ${R.max_pct_trade||5}% de la cartera y puts al ${(R.max_pct_trade||5)*(R.put_size??0.5)}%; vencimiento ≥ ${R.min_dte_auto||30} días; máx. 3 al día; semáforo ámbar: score ≥ ${R.amber_min_score||50}, rojo: nada; ${R.cooldown_days||4} días de espera tras una pérdida.
+    <br><b>Salida:</b> en cada escaneo, stop ${R.stop_pct||-50}% confirmado en ${R.confirm_scans||2} escaneos (o ${R.hard_stop_pct??-65}% de golpe), objetivo +${R.target_pct||100}%, a +${R.half_at_pct||50}% vende la mitad y protege el resto; cierra la víspera de resultados;
+    al cierre del día, si su consejo dice CERRAR${R.put_hold_winners?" (una put que va ganando no se cierra solo porque gire el flujo)":""}. Compra al <b>ask</b> y vende al <b>bid</b>.`
+    :`Compra cada ENTRADA con score ≥ ${R.auto_min_score||50} (máx. 3 al día, ${R.max_pct_trade||5}% por operación, vencimiento ≥ ${R.min_dte_auto||30} días, al <b>ask</b>); vende al <b>bid</b>: +${R.target_pct||100}% objetivo, ${R.stop_pct||-50}% stop, a +${R.half_at_pct||50}% la mitad.`;
   renderGH();renderLiveBox();renderRisk();}
 document.addEventListener("click",e=>{const o=e.target.closest("[data-open]");if(o){openDetail(o.dataset.open);return;}
   const sb=e.target.closest("[data-sell]");if(!sb)return;const id=sb.dataset.sell;const box=document.querySelector(`[data-sellbox="${CSS.escape(id)}"]`);

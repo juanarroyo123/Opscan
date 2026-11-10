@@ -74,6 +74,7 @@ def test_tracking_evaluate():
 
 def test_paper_lifecycle(tmp_path, monkeypatch):
     monkeypatch.setenv("OPSCAN_DATA_DIR", str(tmp_path))
+    paper.configure({"paper": {"use_score_bands": False, "intraday_exits": False, "earnings_block_days": -1, "earnings_exit_days": -1, "max_entry_spread_pct": 0, "put_size": 1, "put_hold_winners": False, "require_momentum": False}})          # reglas antiguas
     book = paper.load()
     legs = [{"action": "COMPRAR", "symbol": "A1", "kind": "C", "strike": 100, "expiration": "2026-11-20", "mid": 5.0},
             {"action": "VENDER", "symbol": "A2", "kind": "C", "strike": 110, "expiration": "2026-11-20", "mid": 2.0}]
@@ -209,7 +210,7 @@ def test_oi_cero_no_desconfirma_y_sesion_previa():
 
 def test_cartera_con_capital():
     from opscan import paper
-    paper.configure({"paper": {"capital": 10000, "max_pct_trade": 5}})
+    paper.configure({"paper": {"capital": 10000, "max_pct_trade": 5, "use_score_bands": False, "intraday_exits": False, "earnings_block_days": -1, "earnings_exit_days": -1, "max_entry_spread_pct": 0, "put_size": 1, "put_hold_winners": False, "require_momentum": False, "amber_min_score": 55, "bearish_need_downtrend": True, "auto_min_score": 50}})   # reglas antiguas (act. 20 en test_v25)
     book = {"trades": [], "seq": 0}
     leg = lambda mid, k=20: [{"symbol": f"X{k}", "kind": "C", "strike": k, "expiration": "2026-11-20",
                               "action": "COMPRAR", "mid": mid}]
@@ -237,7 +238,7 @@ def test_cartera_con_capital():
 
 def test_gestion_y_limites_auto(monkeypatch):
     from opscan import paper
-    paper.configure({"paper": {"capital": 10000, "max_pct_trade": 5, "max_new_per_day": 2, "max_open_auto": 8}})
+    paper.configure({"paper": {"capital": 10000, "max_pct_trade": 5, "max_new_per_day": 2, "max_open_auto": 8, "use_score_bands": False, "intraday_exits": False, "earnings_block_days": -1, "earnings_exit_days": -1, "max_entry_spread_pct": 0, "put_size": 1, "put_hold_winners": False, "require_momentum": False}})
     book = {"trades": [], "seq": 0, "rules_version": paper.RULES_VERSION}
     leg = lambda tk: [{"symbol": f"{tk}C", "kind": "C", "strike": 20, "expiration": "2026-11-20",
                        "action": "COMPRAR", "mid": 1.0}]
@@ -269,7 +270,7 @@ def test_cola_de_ordenes(tmp_path, monkeypatch):
     import json
     from opscan import paper
     monkeypatch.setenv("OPSCAN_DATA_DIR", str(tmp_path / "data"))
-    paper.configure({"paper": {"capital": 10000, "max_pct_trade": 5}})
+    paper.configure({"paper": {"capital": 10000, "max_pct_trade": 5, "use_score_bands": False, "intraday_exits": False, "earnings_block_days": -1, "earnings_exit_days": -1, "max_entry_spread_pct": 0, "put_size": 1, "put_hold_winners": False, "require_momentum": False, "amber_min_score": 55, "bearish_need_downtrend": True, "auto_min_score": 50}})   # reglas antiguas (act. 20 en test_v25)
     od = str(tmp_path / "orders")
     body = json.dumps({"ticker": "NFLX", "direction": "ALCISTA", "contracts": 2, "nonce": "abc",
                        "legs": [{"symbol": "NFLX261030C00071000", "kind": "C", "strike": 71,

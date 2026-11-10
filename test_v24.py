@@ -8,7 +8,7 @@ def _leg(sym="X261120C00020000", k=20, mid=1.0, exp="2026-11-20", bid=None, ask=
 
 
 def setup_function(_):
-    paper.configure({"paper": {"capital": 10000, "max_pct_trade": 5}})
+    paper.configure({"paper": {"capital": 10000, "max_pct_trade": 5, "use_score_bands": False, "intraday_exits": False, "earnings_block_days": -1, "earnings_exit_days": -1, "max_entry_spread_pct": 0, "put_size": 1, "put_hold_winners": False, "require_momentum": False, "amber_min_score": 55, "bearish_need_downtrend": True, "auto_min_score": 50}})   # reglas antiguas (act. 20 en test_v25)
 
 
 def test_seed_rsi_una_vez():
@@ -136,7 +136,7 @@ def test_dividendo_dentro_de_la_vida_de_la_call():
     assert c["pop"] < scoring.prob_profit("C", 100.0, 107.0, 0.3, 44) and c["div_share"] == 0.5
     assert idea["dividend"]["share_of_premium"] == 0.5 and "EN CONTRA" in idea["dividend_note"]
     # el Robot no compra esa call (dividendo = 50% del precio de la opcion)
-    paper.configure({"paper": {"capital": 10000, "max_pct_trade": 5}})
+    paper.configure({"paper": {"capital": 10000, "max_pct_trade": 5, "use_score_bands": False, "intraday_exits": False, "earnings_block_days": -1, "earnings_exit_days": -1, "max_entry_spread_pct": 0, "put_size": 1, "put_hold_winners": False, "require_momentum": False, "amber_min_score": 55, "bearish_need_downtrend": True, "auto_min_score": 50}})   # reglas antiguas (act. 20 en test_v25)
     r = {"ticker": "DIV", "score": 70, "direction": "ALCISTA", "price": 100, "checklist": {"entrada": True},
          "idea": {**idea, "legs": [{"symbol": "DIV1", "kind": "C", "strike": 105, "expiration": "2026-11-20",
                                     "action": "COMPRAR", "mid": 2.0}]}}

@@ -39,6 +39,19 @@ NO_INDEX = True          # Automatica: ni calls ni puts de indices, ETF ni VIX (
 AUTO_MIN_SCORE = 50.0    # Automatica: score minimo 50 (por debajo de 45 las senales aciertan < 50 %, act. 19)
 BEAR_NEED_DOWNTREND = True  # Automatica: bajistas solo con la accion por debajo de su media de 50 dias
 MAX_DIV_SHARE = 0.30     # Robot: no compra una CALL si el dividendo dentro de su vida es >= 30% de su precio
+# --- act. 20 (estudio del 10/11: 29 operaciones cerradas, 2.547 senales) ---
+USE_BANDS = True         # entra por bandas de score (el checklist ENTRADA acertaba 33-41 %)
+BULL_BAND = (45.0, 55.0) # alcistas: de 55 a 65 acertaban un 32 % a 10 sesiones
+BEAR_BAND = (45.0, 65.0) # bajistas: 45-65 acertaban 58-70 %; por debajo de 45 son coberturas
+INTRADAY_EXITS = True    # stop y objetivo se revisan en cada escaneo (antes solo al cierre: stops del -71 %)
+CONFIRM_SCANS = 2        # dos escaneos seguidos por debajo del stop (o por encima del objetivo)
+HARD_STOP_PCT = -65.0    # o uno solo por debajo de -65 % (salto brusco)
+EARN_BLOCK_DAYS = 7      # no abre si hay resultados en los proximos 7 dias...
+EARN_EXIT_DAYS = 1       # ...y cierra la vispera de los resultados (las puts que los pasaron perdieron -59 %)
+MAX_ENTRY_SPREAD = 15.0  # no compra si la diferencia compra/venta supera el 15 %
+PUT_SIZE = 0.5           # las puts van a media posicion hasta que demuestren ventaja
+PUT_HOLD_WINNERS = True  # una put que va ganando no se cierra solo porque gire el flujo
+REQUIRE_MOMENTUM = True  # la accion ya se mueve a favor en 5 dias (con ello: 62 % a 10 sesiones frente a 55 %)
 
 ACCOUNTS = {"MANUAL": "OpScan", "RSI": "Soportes + RSI", "AUTO": "Automática"}
 USER_ACCOUNTS = ("MANUAL", "RSI")
@@ -47,7 +60,21 @@ USER_ACCOUNTS = ("MANUAL", "RSI")
 def configure(cfg):
     global CAPITAL, MAX_PCT, MAX_NEW_DAY, MAX_OPEN_AUTO, SKIP_BAD_LIQ, HALF_PCT, COOLDOWN_DAYS, MIN_DTE_AUTO
     global AMBER_MIN_SCORE, NO_INDEX_PUTS, MAX_DIV_SHARE, NO_INDEX, AUTO_MIN_SCORE, BEAR_NEED_DOWNTREND
+    global USE_BANDS, BULL_BAND, BEAR_BAND, INTRADAY_EXITS, CONFIRM_SCANS, HARD_STOP_PCT, EARN_BLOCK_DAYS
+    global EARN_EXIT_DAYS, MAX_ENTRY_SPREAD, PUT_SIZE, PUT_HOLD_WINNERS, REQUIRE_MOMENTUM
     pc = (cfg or {}).get("paper") or {}
+    USE_BANDS = bool(pc.get("use_score_bands", USE_BANDS))
+    BULL_BAND = tuple(float(x) for x in pc.get("bull_score_band", BULL_BAND))
+    BEAR_BAND = tuple(float(x) for x in pc.get("bear_score_band", BEAR_BAND))
+    INTRADAY_EXITS = bool(pc.get("intraday_exits", INTRADAY_EXITS))
+    CONFIRM_SCANS = int(pc.get("confirm_scans", CONFIRM_SCANS))
+    HARD_STOP_PCT = float(pc.get("hard_stop_pct", HARD_STOP_PCT))
+    EARN_BLOCK_DAYS = int(pc.get("earnings_block_days", EARN_BLOCK_DAYS))
+    EARN_EXIT_DAYS = int(pc.get("earnings_exit_days", EARN_EXIT_DAYS))
+    MAX_ENTRY_SPREAD = float(pc.get("max_entry_spread_pct", MAX_ENTRY_SPREAD) or 0)
+    PUT_SIZE = float(pc.get("put_size", PUT_SIZE))
+    PUT_HOLD_WINNERS = bool(pc.get("put_hold_winners", PUT_HOLD_WINNERS))
+    REQUIRE_MOMENTUM = bool(pc.get("require_momentum", REQUIRE_MOMENTUM))
     HALF_PCT = float(pc.get("half_at_pct", HALF_PCT))
     COOLDOWN_DAYS = int(pc.get("cooldown_days", COOLDOWN_DAYS))
     MIN_DTE_AUTO = int(pc.get("min_dte_auto", MIN_DTE_AUTO))
@@ -127,7 +154,7 @@ def _intrinsic(kind, strike, spot):
 
 
 def open_trade(book, ticker, direction, legs, session, source="AUTO", structure="", price=None,
-               notes="", issue=None, contracts=None, trade_id=None, opened=None):
+               notes="", issue=None, contracts=None, trade_id=None, opened=None, size=1.0):
     """legs: [{symbol, kind, strike, expiration, action COMPRAR/VENDER, mid}]
     El Robot (AUTO) compra al ask si lo hay (como en la realidad); las tuyas al precio que indiques."""
     if not legs:
@@ -158,10 +185,11 @@ def open_trade(book, ticker, direction, legs, session, source="AUTO", structure=
     if contracts:
         n = max(1, int(contracts))
     else:
-        n = int(acc["max_per_trade"] // unit)
+        budget = acc["max_per_trade"] * size
+        n = int(budget // unit)
         if n < 1:
             if source == "AUTO":
-                book["_last_reject"] = f"1 contrato (${unit}) supera el maximo por operacion (${acc['max_per_trade']})"
+                book["_last_reject"] = f"1 contrato (${unit}) supera el maximo por operacion (${budget:.0f})"
                 return None
             n = 1                         # manual: al menos 1 contrato si hay saldo
     if unit * n > acc["cash"]:
@@ -273,31 +301,66 @@ def mark(book, prices, spots, session):
     return book
 
 
-def manage_auto(book, session):
-    """Reglas de salida del Robot. Se llama SOLO con el escaneo de cierre (una decision al dia),
-    despues de advise(), para que el Robot haga lo mismo que te recomienda a ti."""
+def _earnings_date(r):
+    """Proxima fecha de resultados de un registro del radar (o None)."""
+    e = (r or {}).get("earnings") or {}
+    if e.get("date"):
+        return e["date"]
+    for c in (r or {}).get("catalysts") or []:
+        if c.get("type") == "Resultados" and (c.get("days") is None or c["days"] >= 0):
+            return c.get("date")
+    nc = (r or {}).get("next_catalyst") or {}
+    return nc.get("date") if nc.get("type") == "Resultados" else None
+
+
+def _confirm(t, key, cond):
+    """Cuenta escaneos seguidos que cumplen `cond`; se reinicia en cuanto deja de cumplirse."""
+    c = t.setdefault("_scans", {})
+    c[key] = (c.get(key, 0) + 1) if cond else 0
+    return c[key]
+
+
+def manage_auto(book, session, mode="full", recs=None):
+    """Reglas de salida de la cartera automatica.
+    - En cada escaneo (act. 20): stop con 2 escaneos seguidos <= -50 % o uno <= -65 %; objetivo +100 %
+      y venta de la mitad a +50 % con 2 escaneos seguidos; cierre la vispera de resultados.
+    - Solo con el escaneo de cierre: el consejo CERRAR (giro del flujo, catalizador pasado, vencimiento)."""
     out = []
+    full = mode in ("full", "smoke")
+    if not full and (not INTRADAY_EXITS or mode == "premarket"):
+        return out
+    d0 = parse_date(session)
     for t in list(book["trades"]):
         if t["source"] != "AUTO" or t["status"] != "OPEN":
             continue
         pnl = t.get("pnl_pct") or 0.0
         adv = t.get("advice") or {}
-        if pnl >= TARGET_PCT:
+        n_stop = _confirm(t, "stop", pnl <= STOP_PCT)
+        n_tgt = _confirm(t, "target", pnl >= TARGET_PCT)
+        n_half = _confirm(t, "half", pnl >= HALF_PCT)
+        need = 1 if (full and not INTRADAY_EXITS) else CONFIRM_SCANS
+        ed = parse_date(_earnings_date((recs or {}).get(t["ticker"])) or t.get("earnings_date"))
+        if ed and recs and t["ticker"] in recs:
+            t["earnings_date"] = ed.isoformat()
+        earn_soon = bool(ed and d0 and 0 <= (ed - d0).days <= EARN_EXIT_DAYS and ed.isoformat() <= t["expiration"])
+        if pnl <= HARD_STOP_PCT or n_stop >= need:
+            why = "salto brusco" if (pnl <= HARD_STOP_PCT and n_stop < need) else f"{n_stop} escaneo(s) seguidos"
+            _close(t, session, f"stop {STOP_PCT:.0f}% ({why})")
+            t["exit_why"] = (f"La opción pierde un {pnl:.0f}% ({why}): salta el stop ({STOP_PCT:.0f}%). "
+                             "Se corta en el momento, sin esperar al cierre, para no perder más de lo previsto.")
+        elif n_tgt >= need:
             _close(t, session, f"objetivo +{TARGET_PCT:.0f}%")
             t["exit_why"] = (f"La opción ha ganado un {pnl:+.0f}%: alcanza el objetivo (+{TARGET_PCT:.0f}%). "
                              "Se asegura la ganancia en vez de esperar a que el tiempo y la volatilidad se la coman.")
-        elif pnl <= STOP_PCT:
-            _close(t, session, f"stop {STOP_PCT:.0f}% (al cierre)")
-            t["exit_why"] = (f"La opción pierde un {pnl:.0f}% al cierre: salta el stop ({STOP_PCT:.0f}%). "
-                             "Se corta la perdida para no arriesgar el resto de la prima.")
         elif t.get("protected") and pnl <= 0:
             _close(t, session, "proteccion: volvio al precio de entrada tras vender la mitad")
             t["exit_why"] = ("Ya se vendió la mitad con ganancia y el resto ha vuelto al precio de compra: "
                              "se cierra para no convertir una operación ganadora en perdedora.")
-        elif adv.get("action") == "CERRAR":
-            _close(t, session, "consejo CERRAR: " + "; ".join(adv.get("reasons") or [])[:150])
-            t["exit_why"] = "Su propio consejo ha pasado a CERRAR: " + "; ".join(adv.get("reasons") or []) + "."
-        elif pnl >= HALF_PCT and not t.get("protected"):
+        elif earn_soon:
+            _close(t, session, f"antes de resultados ({ed.isoformat()})")
+            t["exit_why"] = (f"La empresa presenta resultados el {_fd(ed.isoformat())}: se cierra antes. Un resultado "
+                             "puede mover la acción un 10 % de golpe en contra, y ningún stop llega a tiempo.")
+        elif n_half >= need and not t.get("protected"):
             part = _split_half(book, t, session)
             t["protected"] = True
             if part:
@@ -305,11 +368,20 @@ def manage_auto(book, session):
                                     "sigue abierto, protegido (si vuelve al precio de compra se cierra).")
                 out.append((part, "mitad"))
             continue
+        elif full and adv.get("action") == "CERRAR":
+            reasons = adv.get("reasons") or []
+            only_flip = reasons and all(x.startswith("El flujo de opciones ha girado") for x in reasons)
+            if PUT_HOLD_WINNERS and t["direction"] == "BAJISTA" and pnl > 0 and only_flip:
+                t["kept_why"] = ("El flujo ha girado, pero la put va ganando: se mantiene y mandan el objetivo, "
+                                 "la venta de la mitad y el stop.")
+                continue
+            _close(t, session, "consejo CERRAR: " + "; ".join(reasons)[:150])
+            t["exit_why"] = "Su propio consejo ha pasado a CERRAR: " + "; ".join(reasons) + "."
         else:
             continue
         out.append((t, t["close_reason"]))
     for t, why in out:
-        log(f"paper: Robot {t['id']} {t['ticker']} -> {why} ({t.get('pnl_pct', 0):+.0f}%)")
+        log(f"paper: automatica {t['id']} {t['ticker']} -> {why} ({t.get('pnl_pct', 0):+.0f}%)")
     return out
 
 
@@ -336,7 +408,9 @@ def explain_entry(r, leg, semaforo=None, session=None):
     d0, de = parse_date(session), parse_date(leg.get("expiration"))
     dte = (de - d0).days if d0 and de else leg.get("dte")
     lines = [f"Señal {r.get('direction', '').lower()} con score {r.get('score')} ({r.get('signal')}): "
-             f"cumple la estrategia de ENTRADA ({ck.get('puntos', '?')} puntos del checklist)."]
+             + (f"está en la banda que mejor ha acertado ({BULL_BAND[0]:g}–{BULL_BAND[1]:g} en alcistas, "
+                f"{BEAR_BAND[0]:g}–{BEAR_BAND[1]:g} en bajistas)." if USE_BANDS else
+                f"cumple la estrategia de ENTRADA ({ck.get('puntos', '?')} puntos del checklist).")]
     parts = [n for k, n in (("congreso", "congresistas"), ("futuros", "futuros del sector"),
                             ("directivos", "compras de directivos"), ("flujo_confirmado", "flujo de opciones confirmado por OI"))
              if ck.get(k)]
@@ -363,7 +437,19 @@ def explain_entry(r, leg, semaforo=None, session=None):
     lv = (semaforo or {}).get("level")
     if lv:
         lines.append(f"Mercado: semáforo {lv}" + (" (solo entra con score ≥ 55)." if lv == "ambar" else "."))
-    lines.append("Salida prevista: +100% objetivo, −50% stop, a +50% vende la mitad, o antes si el consejo pasa a CERRAR.")
+    try:
+        sp = (float(leg["ask"]) - float(leg["bid"])) / ((float(leg["ask"]) + float(leg["bid"])) / 2) * 100
+        lines.append(f"Liquidez: diferencia compra/venta del {sp:.0f} % (máximo {MAX_ENTRY_SPREAD:g} %).")
+    except (KeyError, TypeError, ValueError, ZeroDivisionError):
+        pass
+    m5 = (r.get("tech") or {}).get("chg_5d")
+    if m5 is not None:
+        lines.append(f"Momento: la acción {'sube' if m5 > 0 else 'baja'} un {abs(m5):.1f} % en 5 días, a favor de la operación."
+                     if (m5 > 0) == (kind == "CALL") else f"Momento: la acción va {m5:+.1f} % en 5 días.")
+    if kind == "PUT" and PUT_SIZE < 1:
+        lines.append(f"Tamaño: media posición ({PUT_SIZE*MAX_PCT:g} % de la cartera), porque las puts aún no han demostrado ventaja.")
+    lines.append("Salida prevista: +100% objetivo, −50% stop revisado en cada escaneo, a +50% vende la mitad, "
+                 "cierre la víspera de resultados, o antes si el consejo pasa a CERRAR.")
     return "\n".join("- " + x for x in lines)
 
 
@@ -390,7 +476,14 @@ def auto_open(book, records, session, semaforo=None):
     n_today = sum(1 for t in book["trades"] if t["source"] == "AUTO" and t["opened"] == session)
     n_open = sum(1 for t in book["trades"] if t["source"] == "AUTO" and t["status"] == "OPEN")
     n = 0
-    cands = [r for r in records if (r.get("checklist") or {}).get("entrada") and (r.get("idea") or {}).get("legs")]
+    def in_band(r):
+        lo, hi = BULL_BAND if r.get("direction") == "ALCISTA" else BEAR_BAND
+        return lo <= (r.get("score") or 0) < hi
+    if USE_BANDS:
+        cands = [r for r in records if r.get("direction") in ("ALCISTA", "BAJISTA") and in_band(r)
+                 and (r.get("idea") or {}).get("legs")]
+    else:
+        cands = [r for r in records if (r.get("checklist") or {}).get("entrada") and (r.get("idea") or {}).get("legs")]
     for r in sorted(cands, key=lambda r: -(r.get("score") or 0)):
         idea = r["idea"]
         if n_today >= MAX_NEW_DAY or n_open >= MAX_OPEN_AUTO:
@@ -400,7 +493,7 @@ def auto_open(book, records, session, semaforo=None):
         if SKIP_BAD_LIQ and idea.get("liquidity") == "mala":
             log(f"paper: {r['ticker']} no abierta (liquidez mala)")
             continue
-        if (r.get("score") or 0) < AUTO_MIN_SCORE:
+        if not USE_BANDS and (r.get("score") or 0) < AUTO_MIN_SCORE:
             continue
         if level == "ambar" and (r.get("score") or 0) < AMBER_MIN_SCORE:
             continue
@@ -418,6 +511,25 @@ def auto_open(book, records, session, semaforo=None):
         if _cooldown(book, r["ticker"], session):
             log(f"paper: {r['ticker']} no abierta (cerro con perdida hace menos de {COOLDOWN_DAYS} dias)")
             continue
+        if REQUIRE_MOMENTUM:
+            m5 = (r.get("tech") or {}).get("chg_5d")
+            sign = 1 if r.get("direction") == "ALCISTA" else -1
+            if m5 is None or m5 * sign <= 0:
+                log(f"paper: {r['ticker']} no abierta (la accion no se mueve a favor en 5 dias: {m5})")
+                continue
+        ed = parse_date(_earnings_date(r))
+        if d0 and ed and 0 <= (ed - d0).days <= EARN_BLOCK_DAYS:
+            log(f"paper: {r['ticker']} no abierta (resultados el {ed.isoformat()}, en {(ed - d0).days} dias)")
+            continue
+        leg0 = idea["legs"][0]
+        try:
+            b_, a_ = float(leg0.get("bid") or 0), float(leg0.get("ask") or 0)
+            spread = (a_ - b_) / ((a_ + b_) / 2) * 100 if b_ > 0 and a_ > 0 else None
+        except (TypeError, ValueError):
+            spread = None
+        if MAX_ENTRY_SPREAD and (spread is None or spread > MAX_ENTRY_SPREAD):
+            log(f"paper: {r['ticker']} no abierta (diferencia compra/venta {spread if spread is None else round(spread)} %)")
+            continue
         dv = idea.get("dividend") or {}
         if str(dv.get("kind", "")).upper().startswith("C") and (dv.get("share_of_premium") or 0) >= MAX_DIV_SHARE:
             log(f"paper: {r['ticker']} no abierta (el dividendo antes del vencimiento es el "
@@ -425,8 +537,16 @@ def auto_open(book, records, session, semaforo=None):
             continue
         t = open_trade(book, r["ticker"], r["direction"], idea["legs"], session, "AUTO",
                        idea.get("structure", ""), r.get("price"),
-                       notes="; ".join((r.get("reasons") or [])[:3]))
+                       notes="; ".join((r.get("reasons") or [])[:3]),
+                       size=PUT_SIZE if r.get("direction") == "BAJISTA" else 1.0)
         if t:
+            t["entry_meta"] = {"score": r.get("score"), "signal": r.get("signal"),
+                               "spread_pct": round(spread, 1) if spread is not None else None,
+                               "flujo_confirmado": bool((r.get("checklist") or {}).get("flujo_confirmado")),
+                               "entrada_checklist": bool((r.get("checklist") or {}).get("entrada")),
+                               "earnings_date": ed.isoformat() if ed else None, "rules": "act20"}
+            if ed:
+                t["earnings_date"] = ed.isoformat()
             nc = r.get("next_catalyst") or {}
             if nc.get("date") and nc["date"] <= t["expiration"]:
                 t["catalyst"] = {"date": nc["date"], "type": nc.get("type")}
@@ -539,7 +659,12 @@ def export(book):
                       "max_pct_trade": MAX_PCT, "half_at_pct": HALF_PCT, "cooldown_days": COOLDOWN_DAYS,
                       "min_dte_auto": MIN_DTE_AUTO, "amber_min_score": AMBER_MIN_SCORE,
                       "no_index_puts": NO_INDEX_PUTS, "no_index": NO_INDEX, "auto_min_score": AUTO_MIN_SCORE,
-                      "bearish_need_downtrend": BEAR_NEED_DOWNTREND, "accounts": ACCOUNTS},
+                      "bearish_need_downtrend": BEAR_NEED_DOWNTREND, "accounts": ACCOUNTS,
+                      "use_score_bands": USE_BANDS, "bull_score_band": list(BULL_BAND), "bear_score_band": list(BEAR_BAND),
+                      "intraday_exits": INTRADAY_EXITS, "confirm_scans": CONFIRM_SCANS, "hard_stop_pct": HARD_STOP_PCT,
+                      "earnings_block_days": EARN_BLOCK_DAYS, "earnings_exit_days": EARN_EXIT_DAYS,
+                      "max_entry_spread_pct": MAX_ENTRY_SPREAD, "put_size": PUT_SIZE, "put_hold_winners": PUT_HOLD_WINNERS,
+                      "require_momentum": REQUIRE_MOMENTUM},
             "curves": {k: v[-250:] for k, v in (book.get("curves") or {}).items()},
             "orders_done": int(book.get("orders_done") or 0),
             "order_results": book.get("order_results", {})}
