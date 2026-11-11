@@ -63,9 +63,13 @@ def test_robot_mitad_a_50_y_proteccion():
 def test_robot_obedece_cerrar():
     book = {"trades": [], "seq": 0}
     t = paper.open_trade(book, "X", "ALCISTA", _leg(mid=1.0), "2026-10-01", "AUTO")
-    paper.advise(book, {"X": {"direction": "BAJISTA", "score": 40}}, "2026-10-02")
+    recs = {"X": {"direction": "BAJISTA", "score": 60}}            # act. 21: giro fuerte (>= 55)...
+    paper.advise(book, recs, "2026-10-02")
     assert t["advice"]["action"] == "CERRAR"
-    paper.manage_auto(book, "2026-10-02")
+    paper.manage_auto(book, "2026-10-02", "full", recs)
+    assert t["status"] == "OPEN"                                    # ...pero 1 sesion no basta
+    paper.advise(book, recs, "2026-10-03")
+    paper.manage_auto(book, "2026-10-03", "full", recs)
     assert t["status"] == "CLOSED" and t["close_reason"].startswith("consejo")
 
 

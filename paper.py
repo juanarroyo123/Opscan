@@ -52,6 +52,12 @@ MAX_ENTRY_SPREAD = 15.0  # no compra si la diferencia compra/venta supera el 15 
 PUT_SIZE = 0.5           # las puts van a media posicion hasta que demuestren ventaja
 PUT_HOLD_WINNERS = True  # una put que va ganando no se cierra solo porque gire el flujo
 REQUIRE_MOMENTUM = True  # la accion ya se mueve a favor en 5 dias (con ello: 62 % a 10 sesiones frente a 55 %)
+# --- act. 21 (11/11: SMCI e INTC abiertas y cerradas el mismo dia por un giro del flujo) ---
+# Tras una senal >= 45, el giro a la direccion contraria acierta solo un 42-44 % a 5/10 sesiones si su score
+# es < 55 (n=213 a 5d) y la accion se mueve de media a favor de la posicion original. Con score >= 55: 50-57 %.
+FLIP_MIN_SCORE = 55.0    # el giro solo cuenta para cerrar con score >= 55 (antes bastaba 30); por debajo, VIGILAR
+FLIP_CONFIRM = 2         # y repetido en 2 escaneos de cierre seguidos (2 sesiones), como el stop
+FLIP_NOT_ENTRY_DAY = True  # nunca se cierra por giro el mismo dia de la compra (ahi mandan solo los stops)
 
 ACCOUNTS = {"MANUAL": "OpScan", "RSI": "Soportes + RSI", "AUTO": "Automática"}
 USER_ACCOUNTS = ("MANUAL", "RSI")
@@ -62,7 +68,11 @@ def configure(cfg):
     global AMBER_MIN_SCORE, NO_INDEX_PUTS, MAX_DIV_SHARE, NO_INDEX, AUTO_MIN_SCORE, BEAR_NEED_DOWNTREND
     global USE_BANDS, BULL_BAND, BEAR_BAND, INTRADAY_EXITS, CONFIRM_SCANS, HARD_STOP_PCT, EARN_BLOCK_DAYS
     global EARN_EXIT_DAYS, MAX_ENTRY_SPREAD, PUT_SIZE, PUT_HOLD_WINNERS, REQUIRE_MOMENTUM
+    global FLIP_MIN_SCORE, FLIP_CONFIRM, FLIP_NOT_ENTRY_DAY
     pc = (cfg or {}).get("paper") or {}
+    FLIP_MIN_SCORE = float(pc.get("flip_min_score", FLIP_MIN_SCORE))
+    FLIP_CONFIRM = int(pc.get("flip_confirm_scans", FLIP_CONFIRM))
+    FLIP_NOT_ENTRY_DAY = bool(pc.get("flip_not_entry_day", FLIP_NOT_ENTRY_DAY))
     USE_BANDS = bool(pc.get("use_score_bands", USE_BANDS))
     BULL_BAND = tuple(float(x) for x in pc.get("bull_score_band", BULL_BAND))
     BEAR_BAND = tuple(float(x) for x in pc.get("bear_score_band", BEAR_BAND))
@@ -340,6 +350,13 @@ def manage_auto(book, session, mode="full", recs=None):
         n_stop = _confirm(t, "stop", pnl <= STOP_PCT)
         n_tgt = _confirm(t, "target", pnl >= TARGET_PCT)
         n_half = _confirm(t, "half", pnl >= HALF_PCT)
+        if full:   # el giro del flujo solo se cuenta en el escaneo de cierre (1 por sesion)
+            rf = (recs or {}).get(t["ticker"]) or {}
+            flip_now = (rf.get("direction") in ("ALCISTA", "BAJISTA") and rf.get("direction") != t["direction"]
+                        and (rf.get("score") or 0) >= FLIP_MIN_SCORE)
+            n_flip = _confirm(t, "flip", flip_now)
+        else:
+            n_flip = (t.get("_scans") or {}).get("flip", 0)
         need = 1 if (full and not INTRADAY_EXITS) else CONFIRM_SCANS
         ed = parse_date(_earnings_date((recs or {}).get(t["ticker"])) or t.get("earnings_date"))
         if ed and recs and t["ticker"] in recs:
@@ -370,6 +387,9 @@ def manage_auto(book, session, mode="full", recs=None):
                                     "sigue abierto, protegido (si vuelve al precio de compra se cierra).")
                 out.append((part, "mitad"))
             continue
+        elif full and adv.get("action") != "CERRAR" and t.get("kept_why"):
+            t.pop("kept_why", None)      # el motivo para mantenerla ya no aplica
+            continue
         elif full and adv.get("action") == "CERRAR":
             reasons = adv.get("reasons") or []
             only_flip = reasons and all(x.startswith("El flujo de opciones ha girado") for x in reasons)
@@ -377,6 +397,15 @@ def manage_auto(book, session, mode="full", recs=None):
                 t["kept_why"] = ("El flujo ha girado, pero la put va ganando: se mantiene y mandan el objetivo, "
                                  "la venta de la mitad y el stop.")
                 continue
+            if only_flip and FLIP_NOT_ENTRY_DAY and t.get("opened") == session:
+                t["kept_why"] = ("El flujo ha girado el mismo día de la compra: no se cierra por eso (sería pagar la "
+                                 "diferencia compra/venta dos veces por ruido). Ese día solo manda el stop.")
+                continue
+            if only_flip and n_flip < FLIP_CONFIRM:
+                t["kept_why"] = (f"El flujo ha girado ({n_flip} de {FLIP_CONFIRM} sesiones seguidas): se espera a que se "
+                                 "confirme antes de cerrar. Los giros sueltos aciertan menos de la mitad de las veces.")
+                continue
+            t.pop("kept_why", None)
             _close(t, session, "consejo CERRAR: " + "; ".join(reasons)[:150])
             t["exit_why"] = "Su propio consejo ha pasado a CERRAR: " + "; ".join(reasons) + "."
         else:
@@ -596,9 +625,16 @@ def advise(book, recs, session, media=30):
                          "opcion pierde valor aunque no se mueva la accion")
         own = t["source"] == "RSI"          # tu estrategia propia: no se juzga con el flujo de opciones
         rd = r.get("direction")
+        weak_flip = None
         if not own and rd in ("ALCISTA", "BAJISTA") and rd != t["direction"] and (r.get("score") or 0) >= media:
-            close.append(f"El flujo de opciones ha girado a {rd} (score {r.get('score')})")
+            if (r.get("score") or 0) >= FLIP_MIN_SCORE:
+                close.append(f"El flujo de opciones ha girado a {rd} (score {r.get('score')})")
+            else:
+                weak_flip = (f"El flujo ha girado a {rd} pero con fuerza moderada (score {r.get('score')}, < "
+                             f"{FLIP_MIN_SCORE:g}): estos giros aciertan menos de la mitad de las veces; no basta para cerrar")
         if not close:
+            if weak_flip:
+                watch.append(weak_flip)
             if pnl >= 50:
                 watch.append(f"Vas {pnl:+.0f}%: valora vender la mitad y dejar correr el resto")
             if pnl <= -30:
@@ -666,7 +702,8 @@ def export(book):
                       "intraday_exits": INTRADAY_EXITS, "confirm_scans": CONFIRM_SCANS, "hard_stop_pct": HARD_STOP_PCT,
                       "earnings_block_days": EARN_BLOCK_DAYS, "earnings_exit_days": EARN_EXIT_DAYS,
                       "max_entry_spread_pct": MAX_ENTRY_SPREAD, "put_size": PUT_SIZE, "put_hold_winners": PUT_HOLD_WINNERS,
-                      "require_momentum": REQUIRE_MOMENTUM},
+                      "require_momentum": REQUIRE_MOMENTUM, "flip_min_score": FLIP_MIN_SCORE,
+                      "flip_confirm_scans": FLIP_CONFIRM, "flip_not_entry_day": FLIP_NOT_ENTRY_DAY},
             "curves": {k: v[-250:] for k, v in (book.get("curves") or {}).items()},
             "orders_done": int(book.get("orders_done") or 0),
             "order_results": book.get("order_results", {})}

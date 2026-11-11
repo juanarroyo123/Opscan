@@ -90,6 +90,10 @@ paper:
   put_size: 0.5               # puts a media posicion (2,5 %) hasta que demuestren ventaja
   put_hold_winners: true      # una put ganadora no se cierra solo porque gire el flujo
   require_momentum: true      # la accion ya se mueve a favor en 5 dias (62 % a 10 sesiones frente a 55 % sin el filtro)
+  # act. 21 (11/11): giros del flujo. Tras una senal >= 45, el giro con score < 55 acierta 42-44 %
+  flip_min_score: 55          # el giro solo cierra con score >= 55 (antes 30); por debajo, VIGILAR
+  flip_confirm_scans: 2       # y repetido en 2 escaneos de cierre seguidos (2 sesiones)
+  flip_not_entry_day: true    # nunca se cierra por giro el mismo dia de la compra
   # --- operaciones hechas fuera de la web (se meten UNA vez; no borres las ya metidas) ---
   # account: MANUAL = OpScan, RSI = Soportes + RSI. symbol: TICKER + AAMMDD + C/P + strike x1000 (8 cifras)
   seed:

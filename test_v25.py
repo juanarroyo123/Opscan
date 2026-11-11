@@ -92,7 +92,11 @@ def test_put_ganadora_no_se_cierra_por_giro_del_flujo():
     paper.manage_auto(book, "2026-11-12", "full", {})
     assert t["status"] == "OPEN" and "kept_why" in t
     _mark(book, t, 1.8)                                              # va perdiendo
-    paper.manage_auto(book, "2026-11-13", "full", {})
+    flip = {t["ticker"]: {"direction": "ALCISTA", "score": 60}}       # act. 21: giro fuerte en 2 sesiones
+    t["advice"] = {"action": "CERRAR", "reasons": ["El flujo de opciones ha girado a ALCISTA (score 60)"]}
+    paper.manage_auto(book, "2026-11-13", "full", flip)
+    assert t["status"] == "OPEN"
+    paper.manage_auto(book, "2026-11-14", "full", flip)
     assert t["status"] == "CLOSED"
 
 
