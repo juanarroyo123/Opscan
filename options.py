@@ -72,16 +72,29 @@ def bs_greeks(kind, spot, strike, t_years, iv, r=0.04):
 
 
 # ------------------------------------------------------------------ descarga
+# Cabeceras de navegador para el CDN de Cboe (act. 22): sin Origin/Referer de cboe.com algunas
+# peticiones desde servidores en la nube se rechazan.
+CBOE_HEADERS = {"Origin": "https://www.cboe.com", "Referer": "https://www.cboe.com/",
+                "Accept": "application/json, text/plain, */*", "Accept-Language": "en-US,en;q=0.9",
+                "Sec-Fetch-Site": "same-site", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Dest": "empty"}
+CBOE_ERRORS = {}          # codigo de error -> veces (diagnostico en la pestana Estado)
+
+
 def fetch_cboe(ticker):
     sym = cboe_symbol(ticker)
     last = None
     for tpl in CBOE_URLS:
         try:
-            return get_json(tpl.format(sym=sym), timeout=30, retries=2)
+            return get_json(tpl.format(sym=sym), headers=CBOE_HEADERS, timeout=30, retries=2)
         except HttpError as e:
             last = e
+            CBOE_ERRORS[str(e.status)] = CBOE_ERRORS.get(str(e.status), 0) + 1
             if e.status == 404 or e.status == 403:
                 continue
+        except Exception as e:      # red, JSON invalido...
+            last = e
+            k = type(e).__name__
+            CBOE_ERRORS[k] = CBOE_ERRORS.get(k, 0) + 1
     raise last or HttpError("?", sym)
 
 

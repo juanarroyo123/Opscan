@@ -26,9 +26,10 @@ def semaforo(records, gex=None, regime=None):
     g = (gex or {}).get("regime")
     why, level = [], "verde"
     if v is not None:
+        hoy = f" ({vchg:+.1f}% hoy)" if vchg is not None else ""      # act. 22: sin variacion (dato de Yahoo) no falla
         if v >= 25 or (vchg or 0) >= 15:
             level = "rojo"
-            why.append(f"VIX {v:.1f} ({vchg:+.1f}% hoy): miedo alto, opciones muy caras")
+            why.append(f"VIX {v:.1f}{hoy}: miedo alto, opciones muy caras")
         elif v >= 18 or (vchg or 0) >= 8:
             level = "ambar"
             why.append(f"VIX {v:.1f}: algo de nerviosismo")

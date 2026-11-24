@@ -112,7 +112,12 @@ def scan_options(tickers, cfg, flags, status, allow_fallback=True, watch=None, k
             except Exception:
                 pass
             time.sleep(0.3)
-    status.ok("Cboe opciones", len(results), f"{len(failed)} fallos" if failed else "")
+    errs = ", ".join(f"{k}: {v}" for k, v in sorted(options.CBOE_ERRORS.items(), key=lambda kv: -kv[1])[:4])
+    if failed and len(failed) > 0.5 * max(1, len(tickers)):
+        status.fail("Cboe opciones", f"{len(results)} ok, {len(failed)} fallos ({errs or 'sin codigo'}). "
+                                     "Cboe no esta respondiendo: los datos de hoy son incompletos")
+    else:
+        status.ok("Cboe opciones", len(results), f"{len(failed)} fallos ({errs})" if failed else "")
     # respaldo Yahoo
     fb = list(failed.keys())[: int(ocfg["yfinance_fallback_max"])] if allow_fallback else []
     ok_fb = 0
@@ -513,12 +518,24 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     # 8) cartera simulada (AUTO abre cada ENTRADA), registro de aciertos, GEX y sectores
     ok_recs = [r for r in records if r.get("signal") != "ERR"]
     market_gex = {tk: res["gex"] for tk, res in results.items() if res.get("gex")}
-    sem = market.semaforo(ok_recs, market_gex.get("SPX") or market_gex.get("SPY"), (fut or {}).get("regime"))
-    n_auto = paper.auto_open(book, ok_recs, session, sem)
-    paper.backfill_why(book, {r["ticker"]: r for r in ok_recs}, session)
-    to_close = paper.advise(book, {r["ticker"]: r for r in ok_recs}, session, cfg["scoring"]["media"])
-    # salidas de la automatica: stop/objetivo/resultados en cada escaneo; consejo CERRAR al cierre (act. 20)
-    paper.manage_auto(book, session, mode, {r["ticker"]: r for r in ok_recs})
+    try:
+        sem = market.semaforo(ok_recs, market_gex.get("SPX") or market_gex.get("SPY"), (fut or {}).get("regime"))
+    except Exception as e:      # el semaforo es informativo: nunca debe tumbar el escaneo (act. 22)
+        log(f"semaforo: {e}")
+        sem = {"level": "ambar", "why": [f"Semaforo no disponible: {e}"], "advice": "Datos incompletos."}
+    # act. 22: con menos de la mitad del universo descargado, la cartera no abre ni cierra nada
+    # (precios viejos podrian disparar stops u objetivos falsos)
+    coverage = len(results) / max(1, len(uni))
+    if coverage < 0.5 and not tickers_override:
+        log(f"paper: solo {coverage:.0%} del universo con datos: la cartera automatica no opera en este escaneo")
+        status.fail("Cartera automatica", f"en pausa en este escaneo: solo {coverage:.0%} de los valores con datos")
+        n_auto, to_close = 0, []
+    else:
+        n_auto = paper.auto_open(book, ok_recs, session, sem)
+        paper.backfill_why(book, {r["ticker"]: r for r in ok_recs}, session)
+        to_close = paper.advise(book, {r["ticker"]: r for r in ok_recs}, session, cfg["scoring"]["media"])
+        # salidas de la automatica: stop/objetivo/resultados en cada escaneo; consejo CERRAR al cierre (act. 20)
+        paper.manage_auto(book, session, mode, {r["ticker"]: r for r in ok_recs})
     # Telegram: compras y ventas del Robot (una vez cada una) y aviso de CERRAR en tus carteras
     tg_on = (cfg.get("alerts") or {}).get("telegram") and os.environ.get("TELEGRAM_BOT_TOKEN")
     for t in book["trades"]:
