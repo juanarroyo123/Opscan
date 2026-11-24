@@ -373,15 +373,28 @@ def run(mode="full", tickers_override=None, offline_universe=False):
     results, failed = scan_options(list(uni.keys()), cfg, flags, status, allow_fallback=full or bool(tickers_override),
                                    watch=watch, keep_grid=set(cfg["universe"]["watchlist"]) | _recent_flag_tickers(flags))
     sessions = [r["metrics"]["session_date"] for r in results.values() if r["metrics"].get("session_date")]
-    session = max(set(sessions), key=sessions.count) if sessions else today_et().isoformat()
+    # act. 22c: la sesion es la fecha MAS RECIENTE que traen al menos el 20% de los valores (antes: la mas
+    # repetida). Desde nov. 2026 el CDN de Cboe sirve a veces ficheros de dias anteriores para parte del universo.
+    if sessions:
+        cnt = {d: sessions.count(d) for d in set(sessions)}
+        recent = [d for d in cnt if cnt[d] >= 0.2 * len(sessions)]
+        session = max(recent) if recent else max(cnt, key=cnt.get)
+    else:
+        session = today_et().isoformat()
+    stale = sorted(tk for tk, r in results.items() if (r["metrics"].get("session_date") or session) < session)
+    if stale:
+        log(f"datos atrasados (sesion anterior a {session}): {len(stale)} valores")
+        status.fail("Datos atrasados", f"{len(stale)} valores llegan con datos de una sesion anterior a {session}; "
+                                       "la cartera automatica no opera con ellos")
     for tk, res in results.items():
         sd = res["metrics"].get("session_date") or session
         flags = state.confirm_flags(flags, tk, res["oi_map"], sd, cfg["options"]["oi_confirm_ratio"])
         flags = state.add_flags(flags, res["unusual"], sd)
     flags = state.prune_flags(flags, ref=session)
     daily = state.upsert_daily(daily, [r["metrics"] for r in results.values()])
-    book = paper.mark(book, {tk: r.get("prices", {}) for tk, r in results.items()},
-                      {tk: r["metrics"].get("price") for tk, r in results.items()}, session)
+    fresh = {tk: r for tk, r in results.items() if tk not in set(stale)}      # act. 22c: sin precios atrasados
+    book = paper.mark(book, {tk: r.get("prices", {}) for tk, r in fresh.items()},
+                      {tk: r["metrics"].get("price") for tk, r in fresh.items()}, session)
 
     # ventas en corto (FINRA): diario en modos completos, cache en intradia
     short_vol = state.load_cache("shorts.json", {})
@@ -525,7 +538,9 @@ def run(mode="full", tickers_override=None, offline_universe=False):
         sem = {"level": "ambar", "why": [f"Semaforo no disponible: {e}"], "advice": "Datos incompletos."}
     # act. 22: con menos de la mitad del universo descargado, la cartera no abre ni cierra nada
     # (precios viejos podrian disparar stops u objetivos falsos)
-    coverage = len(results) / max(1, len(uni))
+    stale_set = set(stale)
+    ok_recs = [r for r in ok_recs if r["ticker"] not in stale_set]      # act. 22c: solo datos de la sesion actual
+    coverage = (len(results) - len(stale_set)) / max(1, len(uni))
     if coverage < 0.5 and not tickers_override:
         log(f"paper: solo {coverage:.0%} del universo con datos: la cartera automatica no opera en este escaneo")
         status.fail("Cartera automatica", f"en pausa en este escaneo: solo {coverage:.0%} de los valores con datos")

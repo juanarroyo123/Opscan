@@ -23,3 +23,10 @@ def test_fetch_cboe_registra_errores(monkeypatch):
     except HttpError:
         pass
     assert options.CBOE_ERRORS.get("403") == 2
+
+
+def test_sesion_mas_reciente_y_atrasados():
+    sessions = ["2026-11-20"] * 397 + ["2026-11-23"] * 368 + ["2026-11-10"]
+    cnt = {d: sessions.count(d) for d in set(sessions)}
+    recent = [d for d in cnt if cnt[d] >= 0.2 * len(sessions)]
+    assert max(recent) == "2026-11-23"
