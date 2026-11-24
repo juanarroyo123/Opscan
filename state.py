@@ -252,10 +252,16 @@ def flag_summary(flags, ticker, session, window_sessions=5, price=None, ex_divs=
     return out
 
 
-def prune_flags(flags, keep_days=45):
+def prune_flags(flags, keep_days=45, ref=None):
+    """Borra flags de mas de keep_days dias contados desde la sesion escaneada (ref, 'YYYY-MM-DD');
+    sin ref, desde hoy."""
     if not len(flags):
         return flags
-    cutoff = (dt.date.today() - dt.timedelta(days=keep_days)).isoformat()
+    try:
+        base = dt.date.fromisoformat(str(ref)[:10]) if ref else dt.date.today()
+    except ValueError:
+        base = dt.date.today()
+    cutoff = (base - dt.timedelta(days=keep_days)).isoformat()
     return flags[flags["date"] >= cutoff].reset_index(drop=True)
 
 

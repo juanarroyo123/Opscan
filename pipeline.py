@@ -378,7 +378,7 @@ def run(mode="full", tickers_override=None, offline_universe=False):
         sd = res["metrics"].get("session_date") or session
         flags = state.confirm_flags(flags, tk, res["oi_map"], sd, cfg["options"]["oi_confirm_ratio"])
         flags = state.add_flags(flags, res["unusual"], sd)
-    flags = state.prune_flags(flags)
+    flags = state.prune_flags(flags, ref=session)
     daily = state.upsert_daily(daily, [r["metrics"] for r in results.values()])
     book = paper.mark(book, {tk: r.get("prices", {}) for tk, r in results.items()},
                       {tk: r["metrics"].get("price") for tk, r in results.items()}, session)
